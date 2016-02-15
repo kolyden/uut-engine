@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="System">
+      <UniqueIdentifier>{ccb4975f-757f-4cce-949a-e876b2735280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Collections">
+      <UniqueIdentifier>{e38afce0-cdab-4405-bfc9-c91d70a0f9ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Windows">
+      <UniqueIdentifier>{24ef05b7-48d7-484f-b05d-097e98ca88eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Math">
+      <UniqueIdentifier>{17085e56-69f0-40d4-96f5-daf548940985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Video">
+      <UniqueIdentifier>{c894baef-d956-4476-a4cd-2b56effd8073}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\UUT\Core\Object.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\String.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Windows\Application.cpp">
+      <Filter>System\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Windows\Window.cpp">
+      <Filter>System\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\HashString.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Math\Vector2.cpp">
+      <Filter>System\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Math\IntVector2.cpp">
+      <Filter>System\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\Image.cpp">
+      <Filter>System\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\Renderer.cpp">
+      <Filter>System\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\Texture.cpp">
+      <Filter>System\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\RefCounted.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\Color32.cpp">
+      <Filter>System\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Timer.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\UUT\Core\Object.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Collections\ICollection.h">
+      <Filter>System\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Collections\IDictionary.h">
+      <Filter>System\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Collections\IEnumerable.h">
+      <Filter>System\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Collections\IList.h">
+      <Filter>System\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Collections\Array.h">
+      <Filter>System\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Collections\Dictionary.h">
+      <Filter>System\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Collections\List.h">
+      <Filter>System\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\String.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Windows\Application.h">
+      <Filter>System\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Windows\Window.h">
+      <Filter>System\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\HashString.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Collections\Enumerator.h">
+      <Filter>System\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\IEquatable.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Math\Vector2.h">
+      <Filter>System\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Math\IntVector2.h">
+      <Filter>System\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\Image.h">
+      <Filter>System\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\Renderer.h">
+      <Filter>System\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\Texture.h">
+      <Filter>System\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Ptr.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\RefCounted.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\Color32.h">
+      <Filter>System\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Timer.h">
+      <Filter>System</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
