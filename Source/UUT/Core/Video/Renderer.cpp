@@ -6,6 +6,8 @@ namespace uut
 	Renderer::Renderer()
 		: _data(nullptr)
 	{
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 	}
 
 	Renderer::~Renderer()
@@ -15,11 +17,11 @@ namespace uut
 
 	bool Renderer::Create(Window* window)
 	{
-		if (IsCreated() || window == nullptr)
+		if (IsCreated() || window == nullptr || !window->IsCreated())
 			return true;
 
 		_window = window;
-		auto win = (SDL_Window*)_window->GetInternalHandle();
+		auto win = reinterpret_cast<SDL_Window*>(_window->GetInternalHandle());
 		_data = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
 		return IsCreated();
 	}
@@ -43,7 +45,13 @@ namespace uut
 		if (!IsCreated())
 			return;
 
+		_drawColor = color;
 		SDL_SetRenderDrawColor(_data, color.r, color.g, color.b, color.a);
+	}
+
+	const Color32& Renderer::GetColor() const
+	{
+		return _drawColor;
 	}
 
 	void Renderer::Clear()
@@ -58,12 +66,12 @@ namespace uut
 			SDL_RenderPresent(_data);
 	}
 
-	void Renderer::DrawTexture(Texture* tex, int x, int y)
+	void Renderer::DrawTexture(Texture* tex, int x, int y) const
 	{
 		DrawTexture(tex, IntVector2(x, y));
 	}
 
-	void Renderer::DrawTexture(Texture* tex, const IntVector2& pos)
+	void Renderer::DrawTexture(Texture* tex, const IntVector2& pos) const
 	{
 		if (!IsCreated())
 			return;
@@ -92,6 +100,9 @@ namespace uut
 		case uut::TextureAccess::Target:
 			sdlAccess = SDL_TEXTUREACCESS_TARGET;
 			break;
+
+		default:
+			return SharedPtr<Texture>::EMPTY;
 		}
 
 		auto data = SDL_CreateTexture(_data,

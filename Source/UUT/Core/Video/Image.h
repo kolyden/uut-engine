@@ -17,6 +17,8 @@ namespace uut
 
 		const IntVector2& GetSize() const { return _size; }
 
+		uintptr_t GetInternalHandle() const;
+
 	protected:
 		IntVector2 _size;
 		SDL_Surface* _data;

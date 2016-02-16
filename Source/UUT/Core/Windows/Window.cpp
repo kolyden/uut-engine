@@ -1,10 +1,12 @@
 #include "Window.h"
+#include "Core/Video/Image.h"
+#include <Core/Debug.h>
 
 namespace uut
 {
 	Window::Window()
-		: _data(nullptr)
-		, _size(320, 200)
+		: _size(320, 200)
+		, _data(nullptr)
 	{
 	}
 
@@ -18,17 +20,23 @@ namespace uut
 		if (IsCreated())
 			return true;
 
+		const int flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
 		_data = SDL_CreateWindow(_title,
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
 			_size.x, _size.y,
-			SDL_WINDOW_OPENGL);
-
+			flags);
 		if (_data == nullptr)
 		{
-			printf("Could not create window: %s\n", SDL_GetError());
+			Debug::Log(LogType::Info, "Could not create window: %s", SDL_GetError());
+			//printf("Could not create window: %s\n", SDL_GetError());
 			return false;
 		}
+
+		SDL_SetWindowData(_data, "__handle__", this);
+
+		if (_icon)
+			SDL_SetWindowIcon(_data, reinterpret_cast<SDL_Surface*>(_icon->GetInternalHandle()));		
 
 		return true;
 	}
@@ -45,15 +53,6 @@ namespace uut
 	bool Window::IsCreated() const
 	{
 		return _data != nullptr;
-	}
-
-	void Window::PoolEvent()
-	{
-		SDL_Event evt;
-		while (SDL_PollEvent(&evt))
-		{
-
-		}
 	}
 
 	void Window::SetTitle(const String& title)
@@ -86,8 +85,37 @@ namespace uut
 		return _size;
 	}
 
+	void Window::SetIcon(Image* icon)
+	{
+		if (_icon == icon || (icon != nullptr && !icon->IsCreated()))
+			return;
+
+		_icon = icon;
+		if (IsCreated())
+			SDL_SetWindowIcon(_data, reinterpret_cast<SDL_Surface*>(_icon->GetInternalHandle()));
+	}
+
+	Image* Window::GetIcon() const
+	{
+		return _icon;
+	}
+
+	bool Window::IsMouseFocused() const
+	{
+		return IsCreated() ? SDL_GetMouseFocus() == _data : false;
+	}
+
+	Window* Window::GetFocusedWindow()
+	{
+		auto window = SDL_GetMouseFocus();
+		if (window == nullptr)
+			return nullptr;
+
+		return reinterpret_cast<Window*>(SDL_GetWindowData(window, "__handle__"));
+	}
+
 	uintptr_t Window::GetInternalHandle() const
 	{
-		return (uintptr_t)_data;
+		return reinterpret_cast<uintptr_t>(_data);
 	}
 }

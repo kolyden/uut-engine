@@ -36,4 +36,9 @@ namespace uut
 	{
 		return _data != nullptr;
 	}
+
+	uintptr_t Image::GetInternalHandle() const
+	{
+		return reinterpret_cast<uintptr_t>(_data);
+	}
 }

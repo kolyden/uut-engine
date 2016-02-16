@@ -1,6 +1,5 @@
 #pragma once
-#include "Core/Windows/Window.h"
-#include "Core/Video/Renderer.h"
+#include "Core/Windows/Application.h"
 #include "Core/Video/Texture.h"
 #include "Core/Timer.h"
 
@@ -9,18 +8,20 @@
 
 namespace uut
 {
-	class Application : public Object
+	class SampleApp : public Application
 	{
 	public:
-		Application();
-
-		void Run();
+		SampleApp();
 
 	protected:
-		bool _exit;
-		SharedPtr<Window> _window;
-		SharedPtr<Renderer> _renderer;
+		static const int texSize = 402;
+
 		SharedPtr<Texture> _texture;
 		Timer _timer;
+		uint32_t _palette[256];
+		int _plasma[texSize*texSize];
+
+		virtual void OnInit() override;
+		virtual void OnFrame() override;
 	};
 }

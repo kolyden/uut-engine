@@ -13,7 +13,7 @@ namespace uut
 
 		bool Equals(const String& str) const;
 
-		operator const char*() { return _data.c_str(); }
+		operator const char*() const { return _data.c_str(); }
 
 		bool operator == (const String& str) const { return Equals(str); }
 		bool operator != (const String& str) const { return !Equals(str); }

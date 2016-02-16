@@ -5,6 +5,11 @@ namespace uut
 	class IntVector2
 	{
 	public:
+		static const IntVector2 ZERO;
+		static const IntVector2 ONE;
+		static const IntVector2 AXIS_X;
+		static const IntVector2 AXIS_Y;
+
 		union
 		{
 			int data[2];

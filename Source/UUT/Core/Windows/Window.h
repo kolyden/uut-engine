@@ -5,6 +5,8 @@
 
 namespace uut
 {
+	class Image;
+
 	class Window : public Object
 	{
 	public:
@@ -15,19 +17,25 @@ namespace uut
 		void Destroy();
 		bool IsCreated() const;
 
-		void PoolEvent();
-
 		void SetTitle(const String& title);
 		const String& GetTitle() const;
 
 		void SetSize(const IntVector2& size);
 		const IntVector2& GetSize() const;
 
+		void SetIcon(Image* icon);
+		Image* GetIcon() const;
+
+		bool IsMouseFocused() const;
+
+		static Window* GetFocusedWindow();
+
 		uintptr_t GetInternalHandle() const;
 
 	protected:
 		String _title;
 		IntVector2 _size;
+		SharedPtr<Image> _icon;
 		SDL_Window* _data;
 	};
 }

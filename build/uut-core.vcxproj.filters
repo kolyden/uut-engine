@@ -16,6 +16,9 @@
     <Filter Include="System\Video">
       <UniqueIdentifier>{c894baef-d956-4476-a4cd-2b56effd8073}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\IO">
+      <UniqueIdentifier>{501cd357-7662-4db0-a5e7-cabf1b365b18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\UUT\Core\Object.cpp">
@@ -56,6 +59,21 @@
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Timer.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Engine.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\Color.cpp">
+      <Filter>System\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Math\Math.cpp">
+      <Filter>System\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Debug.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\IO\Input.cpp">
+      <Filter>System\IO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +145,21 @@
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Timer.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Engine.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\Color.h">
+      <Filter>System\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Math\Math.h">
+      <Filter>System\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Debug.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\IO\Input.h">
+      <Filter>System\IO</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

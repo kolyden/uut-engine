@@ -3,13 +3,14 @@
 
 namespace uut
 {
+	class Color;
+
 	class Color32
 	{
 	public:
 		union
 		{
-			uint32_t data;
-			uint8_t m[4];
+			uint8_t data[4];
 			struct
 			{
 				uint8_t r;
@@ -23,9 +24,13 @@ namespace uut
 		Color32(int r, int g, int b, int a = 255);
 		Color32(const Color32& color);
 		Color32(Color32&& color);
+		Color32(const Color& color);
+		explicit Color32(uint32_t color);
 
 		Color32& operator=(const Color32& color);
 		Color32& operator=(Color32&& color);
+
+		uint32_t ToInt() const;
 
 		static const Color32 EMPTY;
 		static const Color32 WHITE;
