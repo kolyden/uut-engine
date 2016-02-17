@@ -18,19 +18,14 @@ namespace uut
 		Texture();
 		virtual ~Texture();
 
-		void Destroy();
-		bool IsCreated() const;
-
 		const IntVector2& GetSize() const { return _size; }
+		int GetWidth() const { return _size.x; }
+		int GetHeight() const { return _size.y; }
 
-		void* Lock();
-		void Unlock();
+		virtual uintptr_t GetNativeHandle() const = 0;
 
 	protected:
 		IntVector2 _size;
-		SDL_Texture* _data;
 		TextureAccess _access;
-
-		friend class Renderer;
 	};
 }

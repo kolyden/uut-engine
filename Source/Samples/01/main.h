@@ -1,6 +1,5 @@
 #pragma once
 #include "Core/Windows/Application.h"
-#include "Core/Video/Texture.h"
 #include "Core/Timer.h"
 
 #pragma comment(lib, "SDL2/SDL2.lib")
@@ -16,7 +15,11 @@ namespace uut
 	protected:
 		static const int texSize = 402;
 
-		SharedPtr<Texture> _texture;
+		SharedPtr<Texture2D> _texture;
+		SharedPtr<VertexBuffer> _vb;
+		SharedPtr<IndexBuffer> _ib;
+		SharedPtr<VertexDeclaration> _vd;
+
 		Timer _timer;
 		uint32_t _palette[256];
 		int _plasma[texSize*texSize];

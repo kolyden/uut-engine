@@ -13,10 +13,10 @@ namespace uut
 			uint8_t data[4];
 			struct
 			{
+				uint8_t a;
 				uint8_t r;
 				uint8_t g;
 				uint8_t b;
-				uint8_t a;
 			};
 		};
 
@@ -30,7 +30,7 @@ namespace uut
 		Color32& operator=(const Color32& color);
 		Color32& operator=(Color32&& color);
 
-		uint32_t ToInt() const;
+		uint32_t ToInt() const; // ARGB
 
 		static const Color32 EMPTY;
 		static const Color32 WHITE;

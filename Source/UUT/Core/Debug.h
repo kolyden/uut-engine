@@ -16,6 +16,12 @@ namespace uut
 	class Debug
 	{
 	public:
-		static void Log(LogType type, const char* message, ...);
+		static void LogMessage(LogType type, const char* message, ...);
+		static void LogMessageV(LogType type, const char* message, va_list args);
+
+		static void Log(const char* message, ...);
+		static void LogDebug(const char* message, ...);
+		static void LogWarning(const char* message, ...);
+		static void LogError(const char* message, ...);
 	};
 }

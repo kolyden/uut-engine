@@ -19,6 +19,9 @@
     <Filter Include="System\IO">
       <UniqueIdentifier>{501cd357-7662-4db0-a5e7-cabf1b365b18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\Video\DX9">
+      <UniqueIdentifier>{f2edf4c2-44e8-4ca2-93fc-4c3dfdcf556d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\UUT\Core\Object.cpp">
@@ -74,6 +77,42 @@
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\IO\Input.cpp">
       <Filter>System\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\Texture2D.cpp">
+      <Filter>System\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9Renderer.cpp">
+      <Filter>System\Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9Texture2D.cpp">
+      <Filter>System\Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Math\IntRect.cpp">
+      <Filter>System\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Math\Rect.cpp">
+      <Filter>System\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\IndexBuffer.cpp">
+      <Filter>System\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\RenderBuffer.cpp">
+      <Filter>System\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\VertexBuffer.cpp">
+      <Filter>System\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9IndexBuffer.cpp">
+      <Filter>System\Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9VertexBuffer.cpp">
+      <Filter>System\Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\VertexDeclaration.cpp">
+      <Filter>System\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9VertexDeclaration.cpp">
+      <Filter>System\Video\DX9</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +199,45 @@
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\IO\Input.h">
       <Filter>System\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\Texture2D.h">
+      <Filter>System\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9Defs.h">
+      <Filter>System\Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9Renderer.h">
+      <Filter>System\Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9Texture2D.h">
+      <Filter>System\Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Math\IntRect.h">
+      <Filter>System\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Math\Rect.h">
+      <Filter>System\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\IndexBuffer.h">
+      <Filter>System\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\RenderBuffer.h">
+      <Filter>System\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\VertexBuffer.h">
+      <Filter>System\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9IndexBuffer.h">
+      <Filter>System\Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9VertexBuffer.h">
+      <Filter>System\Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\VertexDeclaration.h">
+      <Filter>System\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9VertexDeclaration.h">
+      <Filter>System\Video\DX9</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

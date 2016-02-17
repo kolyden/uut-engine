@@ -23,8 +23,10 @@
     <ClCompile Include="..\Source\UUT\Core\Engine.cpp" />
     <ClCompile Include="..\Source\UUT\Core\HashString.cpp" />
     <ClCompile Include="..\Source\UUT\Core\IO\Input.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Math\IntRect.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\IntVector2.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Math.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Math\Rect.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Vector2.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Object.cpp" />
     <ClCompile Include="..\Source\UUT\Core\RefCounted.cpp" />
@@ -32,9 +34,19 @@
     <ClCompile Include="..\Source\UUT\Core\Timer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Color.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Color32.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9IndexBuffer.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9Renderer.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9Texture2D.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9VertexBuffer.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9VertexDeclaration.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Image.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\IndexBuffer.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\RenderBuffer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Renderer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Texture.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\Texture2D.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\VertexBuffer.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\VertexDeclaration.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Windows\Application.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Windows\Window.cpp" />
   </ItemGroup>
@@ -52,8 +64,10 @@
     <ClInclude Include="..\Source\UUT\Core\HashString.h" />
     <ClInclude Include="..\Source\UUT\Core\IEquatable.h" />
     <ClInclude Include="..\Source\UUT\Core\IO\Input.h" />
+    <ClInclude Include="..\Source\UUT\Core\Math\IntRect.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\IntVector2.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Math.h" />
+    <ClInclude Include="..\Source\UUT\Core\Math\Rect.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Vector2.h" />
     <ClInclude Include="..\Source\UUT\Core\Object.h" />
     <ClInclude Include="..\Source\UUT\Core\Ptr.h" />
@@ -62,9 +76,20 @@
     <ClInclude Include="..\Source\UUT\Core\Timer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Color.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Color32.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9Defs.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9IndexBuffer.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9Renderer.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9Texture2D.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9VertexBuffer.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9VertexDeclaration.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Image.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\IndexBuffer.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\RenderBuffer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Renderer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Texture.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\Texture2D.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\VertexBuffer.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\VertexDeclaration.h" />
     <ClInclude Include="..\Source\UUT\Core\Windows\Application.h" />
     <ClInclude Include="..\Source\UUT\Core\Windows\Window.h" />
   </ItemGroup>
@@ -127,11 +152,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../Source/UUT/;../Source/ThirdParty/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;../Source/UUT;../Source/ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;../Source/ThirdParty;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -140,10 +168,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;../Source/UUT;../Source/ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;../Source/ThirdParty;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -154,13 +186,16 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../Source/UUT/;../Source/ThirdParty/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;../Source/UUT;../Source/ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;../Source/ThirdParty;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -171,12 +206,16 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;../Source/UUT;../Source/ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;../Source/ThirdParty;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

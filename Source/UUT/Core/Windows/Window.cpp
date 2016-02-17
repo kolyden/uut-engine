@@ -20,7 +20,7 @@ namespace uut
 		if (IsCreated())
 			return true;
 
-		const int flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
+		const int flags = SDL_WINDOW_SHOWN;
 		_data = SDL_CreateWindow(_title,
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
@@ -28,7 +28,7 @@ namespace uut
 			flags);
 		if (_data == nullptr)
 		{
-			Debug::Log(LogType::Info, "Could not create window: %s", SDL_GetError());
+			Debug::LogError("Could not create window: %s", SDL_GetError());
 			//printf("Could not create window: %s\n", SDL_GetError());
 			return false;
 		}
