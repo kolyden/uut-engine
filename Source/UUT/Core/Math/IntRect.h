@@ -35,5 +35,7 @@ namespace uut
 
 		bool operator == (const IntRect& rect) const;
 		bool operator != (const IntRect& rect) const;
+
+		static IntRect FromLBRT(int left, int bottom, int right, int top);
 	};
 }

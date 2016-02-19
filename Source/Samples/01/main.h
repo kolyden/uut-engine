@@ -1,6 +1,8 @@
 #pragma once
 #include "Core/Windows/Application.h"
 #include "Core/Timer.h"
+#include "Core/GUI/ImGuiModule.h"
+#include "Core/Video/Effects/Plasma.h"
 
 #pragma comment(lib, "SDL2/SDL2.lib")
 #pragma comment(lib, "SDL2/SDL2main.lib")
@@ -19,10 +21,11 @@ namespace uut
 		SharedPtr<VertexBuffer> _vb;
 		SharedPtr<IndexBuffer> _ib;
 		SharedPtr<VertexDeclaration> _vd;
+		SharedPtr<ImGuiModule> _gui;
+		SharedPtr<Plasma> _plasma;
 
 		Timer _timer;
-		uint32_t _palette[256];
-		int _plasma[texSize*texSize];
+		Matrix4 _matProj;
 
 		virtual void OnInit() override;
 		virtual void OnFrame() override;

@@ -15,6 +15,7 @@ namespace uut
 		static float Sin(float f);
 		static float Cos(float f);
 		static float Tan(float f);
+		static float Cot(float f);
 		static float Asin(float f);
 		static float Acos(float f);
 		static float Atan(float f);

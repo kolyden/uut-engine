@@ -12,7 +12,7 @@ namespace uut
 		_data->Release();
 	}
 
-	void* DX9VertexBuffer::Lock(uint32_t offset, uint32_t size)
+	void* DX9VertexBuffer::Lock(uint32_t size, uint32_t offset)
 	{
 		void* buf;
 		HRESULT ret = _data->Lock(offset, size, &buf, D3DLOCK_DISCARD);

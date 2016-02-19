@@ -57,4 +57,9 @@ namespace uut
 	{
 		return !(*this == rect);
 	}
+
+	IntRect IntRect::FromLBRT(int left, int bottom, int right, int top)
+	{
+		return IntRect(left, bottom, right - left, top - bottom);
+	}
 }

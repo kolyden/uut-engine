@@ -12,7 +12,7 @@ namespace uut
 		if (buffer == nullptr)
 			return false;
 
-		void* dest = Lock(offset, size);
+		void* dest = Lock(size, offset);
 		if (dest == nullptr)
 			return false;
 

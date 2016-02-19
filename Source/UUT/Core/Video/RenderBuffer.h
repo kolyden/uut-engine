@@ -11,7 +11,7 @@ namespace uut
 
 		uint32_t GetSize() const { return _size; }
 
-		virtual void* Lock(uint32_t offset, uint32_t size) = 0;
+		virtual void* Lock(uint32_t size, uint32_t offset = 0) = 0;
 		virtual void Unlock() = 0;
 
 		bool UpdateData(const void* buffer, uint32_t size, uint32_t offset = 0);

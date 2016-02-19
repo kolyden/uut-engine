@@ -10,7 +10,7 @@ namespace uut
 		DX9IndexBuffer();
 		virtual ~DX9IndexBuffer();
 
-		virtual void* Lock(uint32_t offset, uint32_t size) override;
+		virtual void* Lock(uint32_t size, uint32_t offset) override;
 		virtual void Unlock() override;
 
 		uint32_t GetInternalHandle() const override;

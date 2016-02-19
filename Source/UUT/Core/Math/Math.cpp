@@ -16,6 +16,8 @@ namespace uut
 
 	float Math::Tan(float f) { return ::tan(f); }
 
+	float Math::Cot(float f) { return 1.0f / ::tan(f); }
+
 	float Math::Asin(float f) { return ::asin(f); }
 
 	float Math::Acos(float f) { return ::acos(f); }

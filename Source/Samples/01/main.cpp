@@ -44,24 +44,8 @@ namespace uut
 
 	void SampleApp::OnInit()
 	{
-		for (int i = 0; i < 256; i++)
-		{
-			const int r = Math::RoundToInt(128.0f + 128.0f*sinf(Math::PI * i / 32));
-			const int g = Math::RoundToInt(128.0f + 128.0f*sinf(Math::PI * i / 64));
-			const int b = Math::RoundToInt(128.0f + 128.0f*sinf(Math::PI * i / 128));
-			_palette[i] = Color32(Math::Clamp(r, 0, 255), Math::Clamp(g, 0, 255), Math::Clamp(b, 0, 255)).ToInt();
-		}
-
-		for (int y = 0; y < texSize; y++)
-		for (int x = 0; x < texSize; x++)
-		{
-			const int color = int(
-				128.0f + (128.0f*sinf(x / 16.0f)) +
-				128.0f + (128.0f*sinf(y / 16.0f)));
-			_plasma[x + y*texSize] = color;
-		}
-
 		_texture = _renderer->CreateTexture(IntVector2(texSize), TextureAccess::Streaming);
+		_plasma = new Plasma(_texture->GetSize());
 
 		_vb = _renderer->CreateVertexBuffer(sizeof(Vertex) * 4);
 		if (_vb) _vb->UpdateData(g_verts, _vb->GetSize());
@@ -71,41 +55,59 @@ namespace uut
 
 		_vd = _renderer->CreateVertexDeclaration(g_declare, 3);
 
+		_gui = new ImGuiModule(_renderer, _input);
+
+		auto& size = _renderer->GetScreenSize();
+		_matProj = Matrix4::OrthoProjection(
+			0, static_cast<float>(size.x),
+			0, static_cast<float>(size.y),
+			0, 100);
 		_timer.Start();
 	}
+
+	static bool show_test_window = false;
 
 	void SampleApp::OnFrame()
 	{
 		_timer.Update();
+		_gui->NewFrame();
+
+		///////////////////////////////////////////////////////////////
+		{
+			static float f = 0.0f;
+			ImGui::Text("Hello, world!");
+			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+			if (ImGui::Button("Test Window")) show_test_window ^= 1;
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		}
+
+		if (show_test_window)
+		{
+			ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
+			ImGui::ShowTestWindow(&show_test_window);
+		}
+
+		///////////////////////////////////////////////////////////////
 		_renderer->ResetStates();
-		_renderer->Clear(Color::WHITE);
+
+		_renderer->SetTransform(RT_PROJECTION, _matProj);
+
+		_renderer->Clear(Color32(114, 144, 154));
 		if (_renderer->BeginScene())
 		{
-			if (_texture)
-			{
-				int pitch;
-				void* buf = _texture->Lock(&pitch);
-				if (buf != nullptr)
-				{
-					const int paletteShift = Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10);
+			_plasma->Apply(_texture,
+				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10));
 
-					for (int y = 0; y < texSize; y++)
-					for (int x = 0; x < texSize; x++)
-					{
-						auto ptr = (uint32_t*)((char*)buf + x * 4 + y *pitch);
-						*ptr = _palette[(_plasma[x + y*texSize] + paletteShift) % 256];
-					}
-
-					_texture->Unlock();
-				}
-			}
-
+// 			_renderer->SetTransform(RT_VIEW, Matrix4::Translation(100, 0, 0));
+			_renderer->SetState(RenderState::AlphaBlend, false);
 			_renderer->SetTexture(0, _texture);
 			_renderer->SetVertexBuffer(_vb, sizeof(Vertex));
 			_renderer->SetIndexBuffer(_ib);
 			_renderer->SetVertexDeclaration(_vd);
-// 			_renderer->DrawPrimitive(Topology::TrinagleList, 1);
 			_renderer->DrawIndexedPrimitive(Topology::TrinagleList, 0, 0, 4, 0, 2);
+
+// 			_renderer->SetTransform(RT_VIEW, Matrix4::IDENTITY);
+			_gui->Draw();
 
 			_renderer->EndScene();
 		}

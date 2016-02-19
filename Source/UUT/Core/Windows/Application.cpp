@@ -22,6 +22,8 @@ namespace uut
 		_window->SetSize(IntVector2(_windowSize));
 		_window->Create();
 
+		_input = new Input();
+
 		_renderer = DynamicCast<Renderer>(DX9Renderer::Create(_window));
 		if (_renderer == nullptr)
 			return;
@@ -31,6 +33,7 @@ namespace uut
 
 		while (_engine->Run())
 		{
+			_input->UpdateState();
 			OnFrame();
 			_renderer->Present();
 		}

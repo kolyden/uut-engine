@@ -21,13 +21,17 @@
   <ItemGroup>
     <ClCompile Include="..\Source\UUT\Core\Debug.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Engine.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\GUI\ImGuiModule.cpp" />
     <ClCompile Include="..\Source\UUT\Core\HashString.cpp" />
     <ClCompile Include="..\Source\UUT\Core\IO\Input.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Math\Angle.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\IntRect.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\IntVector2.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Math.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Math\Matrix4.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Rect.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Vector2.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Math\Vector3.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Object.cpp" />
     <ClCompile Include="..\Source\UUT\Core\RefCounted.cpp" />
     <ClCompile Include="..\Source\UUT\Core\String.cpp" />
@@ -39,6 +43,7 @@
     <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9Texture2D.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9VertexBuffer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9VertexDeclaration.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\Effects\Plasma.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Image.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\IndexBuffer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\RenderBuffer.cpp" />
@@ -61,14 +66,18 @@
     <ClInclude Include="..\Source\UUT\Core\Collections\List.h" />
     <ClInclude Include="..\Source\UUT\Core\Debug.h" />
     <ClInclude Include="..\Source\UUT\Core\Engine.h" />
+    <ClInclude Include="..\Source\UUT\Core\GUI\ImGuiModule.h" />
     <ClInclude Include="..\Source\UUT\Core\HashString.h" />
     <ClInclude Include="..\Source\UUT\Core\IEquatable.h" />
     <ClInclude Include="..\Source\UUT\Core\IO\Input.h" />
+    <ClInclude Include="..\Source\UUT\Core\Math\Angle.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\IntRect.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\IntVector2.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Math.h" />
+    <ClInclude Include="..\Source\UUT\Core\Math\Matrix4.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Rect.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Vector2.h" />
+    <ClInclude Include="..\Source\UUT\Core\Math\Vector3.h" />
     <ClInclude Include="..\Source\UUT\Core\Object.h" />
     <ClInclude Include="..\Source\UUT\Core\Ptr.h" />
     <ClInclude Include="..\Source\UUT\Core\RefCounted.h" />
@@ -82,6 +91,7 @@
     <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9Texture2D.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9VertexBuffer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9VertexDeclaration.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\Effects\Plasma.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Image.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\IndexBuffer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\RenderBuffer.h" />
@@ -92,6 +102,11 @@
     <ClInclude Include="..\Source\UUT\Core\Video\VertexDeclaration.h" />
     <ClInclude Include="..\Source\UUT\Core\Windows\Application.h" />
     <ClInclude Include="..\Source\UUT\Core\Windows\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="ImGui.vcxproj">
+      <Project>{87f49fa2-bc9f-4e43-8947-a6a5581d48a1}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D7E670A5-F52C-42A0-ABA3-077E694C2A2F}</ProjectGuid>

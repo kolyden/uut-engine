@@ -26,6 +26,8 @@ namespace uut
 		IntVector2(const IntVector2& vec);
 		IntVector2(IntVector2&& vec);
 
+		int Area() const { return x*y; }
+
 		IntVector2& operator = (const IntVector2& vec);
 		IntVector2& operator = (IntVector2&& vec);
 

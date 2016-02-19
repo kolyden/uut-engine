@@ -9,7 +9,9 @@
 #include <Core/Debug.h>
 
 #include <d3dx9.h>
+#include <DxErr.h>
 #pragma comment(lib, "d3dx9.lib")
+#pragma comment(lib, "dxerr.lib")
 
 namespace uut
 {
@@ -40,15 +42,15 @@ namespace uut
 		_d3ddev->SetRenderState(D3DRS_SCISSORTESTENABLE, false);
 // 		_d3ddev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
 // 		_d3ddev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
-// 		_d3ddev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
-// 		_d3ddev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-// 		_d3ddev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
+		_d3ddev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+		_d3ddev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+		_d3ddev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
 
 		_d3ddev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 		_d3ddev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-		_d3ddev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
-		_d3ddev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
-		_d3ddev->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+// 		_d3ddev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+// 		_d3ddev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
+// 		_d3ddev->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
 
 		D3DXMATRIX matWorld;
 		D3DXMatrixIdentity(&matWorld);
@@ -59,10 +61,11 @@ namespace uut
 		_d3ddev->SetTransform(D3DTS_VIEW, &matView);
 
 		D3DXMATRIX matProjection;     // the projection transform matrix
-		D3DXMatrixOrthoOffCenterLH(&matProjection,
-			0, static_cast<float>(_screenSize.x),
-			0, static_cast<float>(_screenSize.y),
-			0.1f, 100.0f);
+		D3DXMatrixIdentity(&matProjection);
+// 		D3DXMatrixOrthoOffCenterLH(&matProjection,
+// 			0, static_cast<float>(_screenSize.x),
+// 			0, static_cast<float>(_screenSize.y),
+// 			0.1f, 100.0f);
 		_d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);
 	}
 
@@ -72,6 +75,10 @@ namespace uut
 		{
 		case RenderState::AlphaBlend:
 			_d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, enabled);
+			break;
+
+		case RenderState::AlphaTest:
+			_d3ddev->SetRenderState(D3DRS_ALPHATESTENABLE, enabled);
 			break;
 
 		case RenderState::ScissorTest:
@@ -90,10 +97,16 @@ namespace uut
 		_d3ddev->SetScissorRect(&r);
 	}
 
+	bool DX9Renderer::SetTransform(RenderTransform type, const Matrix4& mat)
+	{
+		HRESULT ret = _d3ddev->SetTransform(Convert(type), (D3DMATRIX*)&mat);
+		return TestReturnCode(ret);
+	}
+
 	bool DX9Renderer::BeginScene()
 	{
 		HRESULT ret = _d3ddev->BeginScene();
-		return ret == D3D_OK;
+		return TestReturnCode(ret);
 	}
 
 	void DX9Renderer::EndScene()
@@ -103,23 +116,30 @@ namespace uut
 
 	bool DX9Renderer::SetTexture(int stage, Texture2D* texture)
 	{
-		auto data =  texture ? reinterpret_cast<LPDIRECT3DTEXTURE9>(texture->GetNativeHandle()) : nullptr;
-		HRESULT ret = _d3ddev->SetTexture(stage, data);
-		return ret == D3D_OK;
+		HRESULT ret;
+		if (texture == nullptr)
+			ret = _d3ddev->SetTexture(stage, nullptr);
+		else
+		{
+			auto data = texture ? reinterpret_cast<LPDIRECT3DTEXTURE9>(texture->GetNativeHandle()) : nullptr;
+			ret = _d3ddev->SetTexture(stage, data);
+		}
+	
+		return TestReturnCode(ret);
 	}
 
 	bool DX9Renderer::SetVertexBuffer(VertexBuffer* buffer, uint16_t stride, uint32_t offset)
 	{
 		auto data = buffer ? reinterpret_cast<LPDIRECT3DVERTEXBUFFER9>(buffer->GetInternalHandle()) : nullptr;
 		HRESULT ret = _d3ddev->SetStreamSource(0, data, offset, stride);
-		return ret == D3D_OK;
+		return TestReturnCode(ret);
 	}
 
 	bool DX9Renderer::SetIndexBuffer(IndexBuffer* buffer)
 	{
 		auto data = buffer ? reinterpret_cast<LPDIRECT3DINDEXBUFFER9>(buffer->GetInternalHandle()) : nullptr;
 		HRESULT ret = _d3ddev->SetIndices(data);
-		return ret == D3D_OK;
+		return TestReturnCode(ret);
 	}
 
 	bool DX9Renderer::SetVertexDeclaration(VertexDeclaration* declare)
@@ -133,7 +153,7 @@ namespace uut
 			ret = _d3ddev->SetVertexDeclaration(data);
 		}
 
-		return ret == D3D_OK;
+		return TestReturnCode(ret);
 	}
 
 	bool DX9Renderer::DrawPrimitive(Topology topology, uint32_t primitiveCount, uint32_t offset)
@@ -146,19 +166,20 @@ namespace uut
 	{
 		HRESULT ret = _d3ddev->DrawIndexedPrimitive(Convert(topology),
 			BaseVertexIndex, MinVertexIndex, NumVertices, startIndex, primitiveCount);
-		return ret == D3D_OK;
+		return TestReturnCode(ret);
 	}
 
-	void DX9Renderer::Clear(const Color& color, float z, uint32_t stencil)
+	bool DX9Renderer::Clear(const Color& color, float z, uint32_t stencil)
 	{
-		const int flags = D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL;
-		const D3DCOLOR col = D3DCOLOR_COLORVALUE(color.r, color.g, color.b, color.a);
-		_d3ddev->Clear(0, nullptr, flags, col, z, stencil);
+		const int flags = D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER;
+		HRESULT ret = _d3ddev->Clear(0, nullptr, flags, color.ToInt(), z, stencil);
+		return TestReturnCode(ret);
 	}
 
-	void DX9Renderer::Present()
+	bool DX9Renderer::Present()
 	{
-		_d3ddev->Present(nullptr, nullptr, nullptr, nullptr);
+		HRESULT ret = _d3ddev->Present(nullptr, nullptr, nullptr, nullptr);
+		return TestReturnCode(ret);
 	}
 
 	SharedPtr<Texture2D> DX9Renderer::CreateTexture(const IntVector2& size, TextureAccess access)
@@ -166,7 +187,7 @@ namespace uut
 		LPDIRECT3DTEXTURE9 data;
 		HRESULT ret = _d3ddev->CreateTexture(size.x, size.y, 1,
 			D3DUSAGE_DYNAMIC, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &data, nullptr);
-		if (ret != D3D_OK)
+		if (!TestReturnCode(ret))
 			return SharedPtr<Texture2D>::EMPTY;
 
 		SharedPtr<DX9Texture2D> tex(new DX9Texture2D());
@@ -184,7 +205,7 @@ namespace uut
 		LPDIRECT3DVERTEXBUFFER9 data;
 		HRESULT ret = _d3ddev->CreateVertexBuffer(size,
 			D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY, 0, D3DPOOL_DEFAULT, &data, nullptr);
-		if (ret != D3D_OK)
+		if (!TestReturnCode(ret))
 			return SharedPtr<VertexBuffer>::EMPTY;
 
 		SharedPtr<DX9VertexBuffer> vb(new DX9VertexBuffer());
@@ -203,7 +224,7 @@ namespace uut
 		D3DFORMAT format = use32 ? D3DFMT_INDEX32 : D3DFMT_INDEX16;
 		HRESULT ret = _d3ddev->CreateIndexBuffer(size,
 			D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY, format, D3DPOOL_DEFAULT, &data, nullptr);
-		if (ret != D3D_OK)
+		if (!TestReturnCode(ret))
 			return SharedPtr<IndexBuffer>::EMPTY;
 
 		SharedPtr<DX9IndexBuffer> vb(new DX9IndexBuffer());
@@ -233,7 +254,7 @@ namespace uut
 		LPDIRECT3DVERTEXDECLARATION9 data;
 		HRESULT ret = _d3ddev->CreateVertexDeclaration(declare, &data);
 		delete[] declare;
-		if (ret != D3D_OK)
+		if (!TestReturnCode(ret))
 			return SharedPtr<VertexDeclaration>::EMPTY;
 
 		SharedPtr<DX9VertexDeclaration> vd(new DX9VertexDeclaration());
@@ -288,6 +309,31 @@ namespace uut
 	}
 
 	///////////////////////////////////////////////////////////////////////////
+	bool DX9Renderer::TestReturnCode(HRESULT ret) const
+	{
+		if (ret != D3D_OK)
+		{
+			Debug::LogError("DirectX9: %s - %s",
+				DXGetErrorStringA(ret),
+				DXGetErrorDescriptionA(ret));
+			return false;
+		}
+
+		return true;
+	}
+
+	D3DTRANSFORMSTATETYPE DX9Renderer::Convert(RenderTransform type)
+	{
+		switch (type)
+		{
+		case RenderTransform::RT_VIEW: return D3DTS_VIEW;
+		case RenderTransform::RT_PROJECTION: return D3DTS_PROJECTION;
+		case RenderTransform::RT_WORLD: return D3DTS_WORLD;
+		}
+
+		return D3DTS_FORCE_DWORD;
+	}
+
 	D3DPRIMITIVETYPE DX9Renderer::Convert(Topology topology)
 	{
 		switch (topology)
