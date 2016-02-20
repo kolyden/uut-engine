@@ -16,9 +16,9 @@ namespace uut
 		float tx, ty;
 	};
 
-	static VertexElement g_declare[] = {
+	static List<VertexElement> g_declare = {
 		VertexElement(VertexElement::DT_FLOAT3, VertexElement::UT_POSITION),
-		VertexElement(VertexElement::DT_COLOR, VertexElement::UT_COLOR, offsetof(UIVertex, col)),
+		VertexElement(VertexElement::DT_COLOR32, VertexElement::UT_COLOR, offsetof(UIVertex, col)),
 		VertexElement(VertexElement::DT_FLOAT2, VertexElement::UT_TEXCOORD, offsetof(UIVertex, tx)),
 	};
 
@@ -56,7 +56,7 @@ namespace uut
 
 		io.RenderDrawListsFn = &StaticRenderDrawLists;
 
-		_vd = _renderer->CreateVertexDeclaration(g_declare, 3);
+		_vd = _renderer->CreateVertexDeclaration(g_declare);
 		_timer.Start();
 
 		unsigned char* pixels;

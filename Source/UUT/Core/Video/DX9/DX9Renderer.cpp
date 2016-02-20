@@ -234,9 +234,10 @@ namespace uut
 		return DynamicCast<IndexBuffer>(vb);
 	}
 
-	SharedPtr<VertexDeclaration> DX9Renderer::CreateVertexDeclaration(const VertexElement* elements, uint8_t count)
+	SharedPtr<VertexDeclaration> DX9Renderer::CreateVertexDeclaration(const List<VertexElement>& elements)
 	{
-		if (count == 0 || elements == nullptr)
+		const int count = elements.Count();
+		if (count == 0)
 			return SharedPtr<VertexDeclaration>::EMPTY;
 
 		auto declare = new D3DVERTEXELEMENT9[count + 1];
@@ -258,7 +259,7 @@ namespace uut
 			return SharedPtr<VertexDeclaration>::EMPTY;
 
 		SharedPtr<DX9VertexDeclaration> vd(new DX9VertexDeclaration());
-		vd->_elements = std::vector<VertexElement>(elements, elements + count);
+		vd->_elements = elements;
 		vd->_data = data;
 		return DynamicCast<VertexDeclaration>(vd);
 	}
@@ -357,7 +358,7 @@ namespace uut
 		case VertexElement::DT_FLOAT2: return D3DDECLTYPE_FLOAT2;
 		case VertexElement::DT_FLOAT3: return D3DDECLTYPE_FLOAT3;
 		case VertexElement::DT_FLOAT4: return D3DDECLTYPE_FLOAT4;
-		case VertexElement::DT_COLOR: return D3DDECLTYPE_D3DCOLOR;
+		case VertexElement::DT_COLOR32: return D3DDECLTYPE_D3DCOLOR;
 		}
 
 		return D3DDECLTYPE_UNUSED;

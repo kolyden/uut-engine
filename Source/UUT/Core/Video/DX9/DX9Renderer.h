@@ -32,7 +32,7 @@ namespace uut
 		virtual SharedPtr<Texture2D> CreateTexture(const IntVector2& size, TextureAccess access) override;
 		virtual SharedPtr<VertexBuffer> CreateVertexBuffer(uint32_t size) override;
 		virtual SharedPtr<IndexBuffer> CreateIndexBuffer(uint32_t size, bool use32) override;
-		virtual SharedPtr<VertexDeclaration> CreateVertexDeclaration(const VertexElement* elements, uint8_t count) override;
+		virtual SharedPtr<VertexDeclaration> CreateVertexDeclaration(const List<VertexElement>& elements) override;
 
 		static SharedPtr<DX9Renderer> Create(Window* window);
 

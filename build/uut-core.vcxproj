@@ -44,12 +44,15 @@
     <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9VertexBuffer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9VertexDeclaration.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Effects\Plasma.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\Geometry.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\Graphics.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Image.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\IndexBuffer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\RenderBuffer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Renderer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Texture.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Texture2D.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\Vertex.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\VertexBuffer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\VertexDeclaration.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Windows\Application.cpp" />
@@ -58,11 +61,7 @@
   <ItemGroup>
     <ClInclude Include="..\Source\UUT\Core\Collections\Array.h" />
     <ClInclude Include="..\Source\UUT\Core\Collections\Dictionary.h" />
-    <ClInclude Include="..\Source\UUT\Core\Collections\Enumerator.h" />
-    <ClInclude Include="..\Source\UUT\Core\Collections\ICollection.h" />
-    <ClInclude Include="..\Source\UUT\Core\Collections\IDictionary.h" />
-    <ClInclude Include="..\Source\UUT\Core\Collections\IEnumerable.h" />
-    <ClInclude Include="..\Source\UUT\Core\Collections\IList.h" />
+    <ClInclude Include="..\Source\UUT\Core\Collections\IComparer.h" />
     <ClInclude Include="..\Source\UUT\Core\Collections\List.h" />
     <ClInclude Include="..\Source\UUT\Core\Debug.h" />
     <ClInclude Include="..\Source\UUT\Core\Engine.h" />
@@ -92,12 +91,15 @@
     <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9VertexBuffer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9VertexDeclaration.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Effects\Plasma.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\Geometry.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\Graphics.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Image.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\IndexBuffer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\RenderBuffer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Renderer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Texture.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Texture2D.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\Vertex.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\VertexBuffer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\VertexDeclaration.h" />
     <ClInclude Include="..\Source\UUT\Core\Windows\Application.h" />

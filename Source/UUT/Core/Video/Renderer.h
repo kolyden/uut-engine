@@ -6,6 +6,7 @@
 #include "Core/Math/IntRect.h"
 #include "Core/Math/Matrix4.h"
 #include "VertexDeclaration.h"
+#include <Core/Collections/List.h>
 
 namespace uut
 {
@@ -71,7 +72,7 @@ namespace uut
 		virtual SharedPtr<Texture2D> CreateTexture(const IntVector2& size, TextureAccess access = TextureAccess::Streaming) = 0;
 		virtual SharedPtr<VertexBuffer> CreateVertexBuffer(uint32_t size) = 0;
 		virtual SharedPtr<IndexBuffer> CreateIndexBuffer(uint32_t size, bool use32 = false) = 0;
-		virtual SharedPtr<VertexDeclaration> CreateVertexDeclaration(const VertexElement* elements, uint8_t count) = 0;
+		virtual SharedPtr<VertexDeclaration> CreateVertexDeclaration(const List<VertexElement>& elements) = 0;
 
 	protected:
 		SharedPtr<Window> _window;

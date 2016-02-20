@@ -2,28 +2,23 @@
 #include <Core/Math/Math.h>
 #include "Core/Video/VertexBuffer.h"
 #include "Core/Video/IndexBuffer.h"
+#include <Core/Math/Vector3.h>
+#include "Core/Video/Vertex.h"
 
 namespace uut
 {
-	struct Vertex
+	struct MyVertex
 	{
-		float x, y, z;
+		Vector3 pos;
 		uint32_t color;
-		float tx, ty;
+		Vector2 tex;
 	};
 
-	static const Vertex g_verts[] = {
-
-// 		{ 10.0f, 400.0f, 5.0f, 0xFFFFFFFF, 0.0f, 0.0f },
-// 		{ 400.0f, 400.0f, 5.0f, 0xFF0000FF, 1.0f, 1.0f },
-// 		{ 400.0f, 10.0f, 5.0f, 0xFFFF0000, 1.0f, 0.0f },
-// 		{ 10.0f, 10.0f, 5.0f, 0xFF00FF00, 0.0f, 1.0f },
-
-		{ 10.0f, 400.0f, 5.0f, 0xFFFFFFFF, 0.0f, 0.0f },
-		{ 400.0f, 400.0f, 5.0f, 0xFFFFFFFF, 1.0f, 0.0f },
-		{ 400.0f, 10.0f, 5.0f, 0xFFFFFFFF, 1.0f, 1.0f },
-		{ 10.0f, 10.0f, 5.0f, 0xFFFFFFFF, 0.0f, 1.0f },
-
+	static const MyVertex g_verts[] = {
+		{ Vector3(10.0f, 400.0f, 5.0f), 0xFFFFFFFF, Vector2(0.0f, 0.0f) },
+		{ Vector3(400.0f, 400.0f, 5.0f), 0xFFFFFFFF, Vector2(1.0f, 0.0f) },
+		{ Vector3(400.0f, 10.0f, 5.0f), 0xFFFFFFFF, Vector2(1.0f, 1.0f) },
+		{ Vector3(10.0f, 10.0f, 5.0f), 0xFFFFFFFF, Vector2(0.0f, 1.0f) },
 	};
 
 	static const uint16_t g_indeces[] = {
@@ -31,10 +26,10 @@ namespace uut
 		3, 0, 2,
 	};
 
-	static const VertexElement g_declare[] = {
+	static const List<VertexElement> g_declare = {
 		VertexElement(VertexElement::DT_FLOAT3, VertexElement::UT_POSITION),
-		VertexElement(VertexElement::DT_COLOR, VertexElement::UT_COLOR, sizeof(float) * 3),
-		VertexElement(VertexElement::DT_FLOAT2, VertexElement::UT_TEXCOORD, sizeof(float) * 3 + 4),
+		VertexElement(VertexElement::DT_COLOR32, VertexElement::UT_COLOR, offsetof(MyVertex, color)),
+		VertexElement(VertexElement::DT_FLOAT2, VertexElement::UT_TEXCOORD, offsetof(MyVertex, tex)),
 	};
 
 	SampleApp::SampleApp()
@@ -47,13 +42,13 @@ namespace uut
 		_texture = _renderer->CreateTexture(IntVector2(texSize), TextureAccess::Streaming);
 		_plasma = new Plasma(_texture->GetSize());
 
-		_vb = _renderer->CreateVertexBuffer(sizeof(Vertex) * 4);
+		_vb = _renderer->CreateVertexBuffer(sizeof(MyVertex) * 4);
 		if (_vb) _vb->UpdateData(g_verts, _vb->GetSize());
 
 		_ib = _renderer->CreateIndexBuffer(sizeof(uint16_t) * 6);
 		if (_ib) _ib->UpdateData(g_indeces, _vb->GetSize());
 
-		_vd = _renderer->CreateVertexDeclaration(g_declare, 3);
+		_vd = _renderer->CreateVertexDeclaration(g_declare);
 
 		_gui = new ImGuiModule(_renderer, _input);
 
@@ -101,7 +96,7 @@ namespace uut
 // 			_renderer->SetTransform(RT_VIEW, Matrix4::Translation(100, 0, 0));
 			_renderer->SetState(RenderState::AlphaBlend, false);
 			_renderer->SetTexture(0, _texture);
-			_renderer->SetVertexBuffer(_vb, sizeof(Vertex));
+			_renderer->SetVertexBuffer(_vb, sizeof(MyVertex));
 			_renderer->SetIndexBuffer(_ib);
 			_renderer->SetVertexDeclaration(_vd);
 			_renderer->DrawIndexedPrimitive(Topology::TrinagleList, 0, 0, 4, 0, 2);

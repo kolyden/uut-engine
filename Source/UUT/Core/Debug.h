@@ -25,3 +25,5 @@ namespace uut
 		static void LogError(const char* message, ...);
 	};
 }
+
+#define UUT_ASSERT(condition) SDL_assert(condition)

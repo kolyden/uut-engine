@@ -135,22 +135,19 @@
     <ClCompile Include="..\Source\UUT\Core\Video\Effects\Plasma.cpp">
       <Filter>Sources\Video\Effects</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\Graphics.cpp">
+      <Filter>Sources\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\Vertex.cpp">
+      <Filter>Sources\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\Geometry.cpp">
+      <Filter>Sources\Video</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\UUT\Core\Object.h">
       <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Collections\ICollection.h">
-      <Filter>Sources\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Collections\IDictionary.h">
-      <Filter>Sources\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Collections\IEnumerable.h">
-      <Filter>Sources\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Collections\IList.h">
-      <Filter>Sources\Collections</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Collections\Array.h">
       <Filter>Sources\Collections</Filter>
@@ -172,9 +169,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\HashString.h">
       <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Collections\Enumerator.h">
-      <Filter>Sources\Collections</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\IEquatable.h">
       <Filter>Sources</Filter>
@@ -274,6 +268,18 @@
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Video\Effects\Plasma.h">
       <Filter>Sources\Video\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Collections\IComparer.h">
+      <Filter>Sources\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\Graphics.h">
+      <Filter>Sources\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\Vertex.h">
+      <Filter>Sources\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\Geometry.h">
+      <Filter>Sources\Video</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

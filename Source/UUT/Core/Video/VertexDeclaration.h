@@ -1,6 +1,6 @@
 #pragma once
 #include "Core/Object.h"
-#include <vector>
+#include <Core/Collections/List.h>
 
 namespace uut
 {
@@ -12,7 +12,7 @@ namespace uut
 			DT_FLOAT2,
 			DT_FLOAT3,
 			DT_FLOAT4,
-			DT_COLOR, // uint32
+			DT_COLOR32, // uint32
 		};
 
 		enum UsageType
@@ -40,9 +40,9 @@ namespace uut
 	public:
 		virtual uintptr_t GetInternalHandle() const = 0;
 
-		const std::vector<VertexElement>& GetElements() const { return _elements; }
+		const List<VertexElement>& GetElements() const { return _elements; }
 
 	protected:
-		std::vector<VertexElement> _elements;
+		List<VertexElement> _elements;
 	};
 }

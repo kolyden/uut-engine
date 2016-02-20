@@ -13,10 +13,10 @@ namespace uut
 			float data[4];
 			struct
 			{
+				float a;
 				float r;
 				float g;
 				float b;
-				float a;
 			};
 		};
 
