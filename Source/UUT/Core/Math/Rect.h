@@ -2,6 +2,7 @@
 
 namespace uut
 {
+	class IntRect;
 	class Vector2;
 
 	class Rect
@@ -25,6 +26,7 @@ namespace uut
 		Rect(float x, float y, float width, float height);
 		Rect(const Rect& rect);
 		Rect(Rect&& rect);
+		Rect(const IntRect& rect);
 
 		float GetLeft() const { return x; }
 		float GetRight() const { return x + width; }

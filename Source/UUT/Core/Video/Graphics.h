@@ -35,7 +35,6 @@ namespace uut
 		SharedPtr<VertexDeclaration> _vdec;
 
 		int _vbufCount;
-		int _ibufCount;
 
 		Topology _topology;
 		SharedPtr<Texture2D> _texture;

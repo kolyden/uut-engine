@@ -64,7 +64,7 @@ namespace uut
 			_plasma->Apply(_texture,
 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10));
 
-			_graphics->DrawQuad(Rect(10, 10, 400, 400), 15, _texture);
+			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
 			_graphics->Flush();
 
 			_gui->Draw();

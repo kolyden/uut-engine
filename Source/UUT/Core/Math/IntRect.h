@@ -3,6 +3,8 @@
 
 namespace uut
 {
+	class Rect;
+
 	class IntRect
 	{
 	public:
@@ -24,6 +26,7 @@ namespace uut
 		IntRect(int x, int y, int width, int height);
 		IntRect(const IntRect& rect);
 		IntRect(IntRect&& rect);
+		IntRect(const Rect& rect);
 
 		int GetLeft() const { return x; }
 		int GetRight() const { return x + width; }

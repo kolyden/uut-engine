@@ -1,6 +1,7 @@
 #include "Rect.h"
 #include <algorithm>
 #include "Vector2.h"
+#include "IntRect.h"
 
 namespace uut
 {
@@ -32,6 +33,14 @@ namespace uut
 	Rect::Rect(Rect&& rect)
 	{
 		std::swap_ranges(data, data + 4, rect.data);
+	}
+
+	Rect::Rect(const IntRect& rect)
+		: x(1.0f*rect.x)
+		, y(1.0f*rect.y)
+		, width(1.0f*rect.width)
+		, height(1.0f*rect.height)
+	{
 	}
 
 	Rect& Rect::operator=(const Rect& rect)

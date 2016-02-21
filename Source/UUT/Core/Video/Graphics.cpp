@@ -9,7 +9,6 @@ namespace uut
 	Graphics::Graphics(Renderer* renderer)
 		: _renderer(renderer)
 		, _vbufCount(5000)
-		, _ibufCount(10000)
 		, _topology(Topology::TrinagleList)
 		, _vertices(nullptr)
 		, _vdxIndex(0)
