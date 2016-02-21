@@ -1,8 +1,13 @@
 #include "Quaternion.h"
 #include "Math.h"
+#include "Matrix3.h"
+#include "Matrix4.h"
 
 namespace uut
 {
+	const Quaternion Quaternion::ZERO(0, 0, 0, 0);
+	const Quaternion Quaternion::IDENTITY(0, 0, 0, 1);
+
 	Quaternion::Quaternion()
 	{
 	}
@@ -10,6 +15,53 @@ namespace uut
 	Quaternion::Quaternion(float _x, float _y, float _z, float _w)
 		: x(_x), y(_y), z(_z), w(_w)
 	{
+	}
+
+	Quaternion::Quaternion(const Vector3& axis, float angle)
+	{
+		const float hangle = angle / 2.0f;
+		float sin;
+		Math::SinCos(hangle, sin, w);
+		x = axis.x * sin;
+		y = axis.y * sin;
+		z = axis.z * sin;
+	}
+
+	void Quaternion::Set(float _x, float _y, float _z, float _w)
+	{
+		x = _x;
+		y = _y;
+		z = _z;
+		w = _w;
+	}
+
+	void Quaternion::SetAngles(float _x, float _y, float _z)
+	{
+		float angle;
+
+		angle = x * 0.5;
+		const float sr = Math::Sin(angle);
+		const float cr = Math::Cos(angle);
+
+		angle = y * 0.5;
+		const float sp = Math::Sin(angle);
+		const float cp = Math::Cos(angle);
+
+		angle = z * 0.5;
+		const float sy = Math::Sin(angle);
+		const float cy = Math::Cos(angle);
+
+		const float cpcy = cp * cy;
+		const float spcy = sp * cy;
+		const float cpsy = cp * sy;
+		const float spsy = sp * sy;
+
+		x = (sr * cpcy - cr * spsy);
+		y = (cr * spcy + sr * cpsy);
+		z = (cr * cpsy - sr * spcy);
+		w = (cr * cpcy + sr * spsy);
+
+		Normalize();
 	}
 
 	Quaternion Quaternion::operator-() const
@@ -147,5 +199,61 @@ namespace uut
 		Quaternion q(*this);
 		q.Normalize();
 		return q;
+	}
+
+	Matrix3 Quaternion::ToMat3() const
+	{
+		Matrix3	mat;
+		float wx, wy, wz;
+		float xx, yy, yz;
+		float xy, xz, zz;
+		float x2, y2, z2;
+
+		x2 = x + x;
+		y2 = y + y;
+		z2 = z + z;
+
+		xx = x * x2;
+		xy = x * y2;
+		xz = x * z2;
+
+		yy = y * y2;
+		yz = y * z2;
+		zz = z * z2;
+
+		wx = w * x2;
+		wy = w * y2;
+		wz = w * z2;
+
+		mat.m00 = 1.0f - (yy + zz);
+		mat.m01 = xy - wz;
+		mat.m02 = xz + wy;
+
+		mat.m10 = xy + wz;
+		mat.m11 = 1.0f - (xx + zz);
+		mat.m12 = yz - wx;
+
+		mat.m20 = xz - wy;
+		mat.m21 = yz + wx;
+		mat.m22 = 1.0f - (xx + yy);
+
+		return mat;
+	}
+
+	Matrix4 Quaternion::ToMat4() const
+	{
+		return ToMat3().ToMat4();
+	}
+
+	Quaternion Quaternion::FromEuler(float x, float y, float z)
+	{
+		Quaternion q;
+		q.SetAngles(x, y, z);
+		return q;
+	}
+
+	Quaternion Quaternion::FromEuler(const Vector3& angles)
+	{
+		return FromEuler(angles.x, angles.y, angles.z);
 	}
 }

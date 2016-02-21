@@ -159,6 +159,9 @@
     <ClCompile Include="..\Source\UUT\Core\Math\Ray3.cpp">
       <Filter>Sources\Math</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Math\Matrix3.cpp">
+      <Filter>Sources\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\UUT\Core\Object.h">
@@ -312,6 +315,9 @@
       <Filter>Sources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Ray3.h">
+      <Filter>Sources\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Math\Matrix3.h">
       <Filter>Sources\Math</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,6 +4,7 @@
 #include <Core/Math/IntVector2.h>
 #include <Core/Math/Vector3.h>
 #include <Core/Math/Vector2.h>
+#include <Core/Math/Quaternion.h>
 
 namespace uut
 {
@@ -26,6 +27,9 @@ namespace uut
 		void SetPosition(const Vector3& position);
 		const Vector3& GetPosition() const;
 
+		void SetRotation(const Quaternion& roatation);
+		const Quaternion& GetRotation() const;
+
 		void SetFov(float fov);
 		float GetFov() const;
 
@@ -43,6 +47,8 @@ namespace uut
 	protected:
 		CameraType _type;
 		Vector3 _position;
+		Quaternion _rotation;
+
 		Matrix4 _matView;
 		Matrix4 _matProj;
 		bool _updateView;

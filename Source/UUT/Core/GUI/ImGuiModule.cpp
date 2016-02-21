@@ -97,6 +97,8 @@ namespace uut
 
 	void ImGuiModule::Draw() const
 	{
+		_renderer->SetTransform(RT_VIEW, Matrix4::IDENTITY);
+		_renderer->SetTransform(RT_WORLD, Matrix4::IDENTITY);
 		ImGui::Render();
 	}
 

@@ -14,6 +14,12 @@ namespace uut
 
 	float Math::Cos(float f) { return ::cos(f); }
 
+	void Math::SinCos(float angle, float& sin, float& cos)
+	{
+		sin = Sin(angle);
+		cos = Cos(angle);
+	}
+
 	float Math::Tan(float f) { return ::tan(f); }
 
 	float Math::Cot(float f) { return 1.0f / ::tan(f); }

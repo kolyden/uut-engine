@@ -8,6 +8,7 @@
 namespace uut
 {
 	SampleApp::SampleApp()
+		: _position(0)
 	{
 		_windowSize = IntVector2(800, 600);
 	}
@@ -17,11 +18,14 @@ namespace uut
 		_window->SetTitle("Sample 02");
 		_gui = new ImGuiModule(_renderer, _input);
 
-		auto& size = _renderer->GetScreenSize();
-		_matProj = Matrix4::OrthoProjection(
-			0, static_cast<float>(size.x),
-			0, static_cast<float>(size.y),
-			0, 100);
+		_graphics = new Graphics(_renderer);
+
+		_camera = new Camera();
+		_camera->SetCameraType(CameraType::Orthogonal);
+		_camera->SetSize(_renderer->GetScreenSize());
+		_camera->SetNearClipPlane(0);
+
+		_timer.Start();
 	}
 
 	static bool show_test_window = false;
@@ -29,6 +33,7 @@ namespace uut
 	void SampleApp::OnFrame()
 	{
 		_gui->NewFrame();
+		_timer.Update();
 
 		///////////////////////////////////////////////////////////////
 		{
@@ -45,13 +50,18 @@ namespace uut
 			ImGui::ShowTestWindow(&show_test_window);
 		}
 
+// 		_position.z += _timer.GetDeltaTime() * Math::PI /6;
+// 		_camera->SetRotation(Quaternion::FromEuler(_position));
+
 		///////////////////////////////////////////////////////////////
 		_renderer->ResetStates();
-		_renderer->SetTransform(RT_PROJECTION, _matProj);
+		_camera->Apply(_renderer);
 
 		_renderer->Clear(Color32(114, 144, 154));
 		if (_renderer->BeginScene())
 		{
+			_graphics->Flush();
+
 			_gui->Draw();
 
 			_renderer->EndScene();

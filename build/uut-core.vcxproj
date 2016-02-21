@@ -28,6 +28,7 @@
     <ClCompile Include="..\Source\UUT\Core\Math\IntRect.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\IntVector2.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Math.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Math\Matrix3.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Matrix4.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Plane.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Quaternion.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="..\Source\UUT\Core\Math\IntRect.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\IntVector2.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Math.h" />
+    <ClInclude Include="..\Source\UUT\Core\Math\Matrix3.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Matrix4.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Plane.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Quaternion.h" />
