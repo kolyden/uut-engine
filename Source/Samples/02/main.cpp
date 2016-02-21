@@ -1,37 +1,33 @@
 #include "main.h"
 #include <Core/Math/Math.h>
+#include <Core/Math/Vector3.h>
+#include "Core/Video/Vertex.h"
+#include <Core/Math/Random.h>
 #include <Core/Math/Rect.h>
 
 namespace uut
 {
 	SampleApp::SampleApp()
 	{
-		_windowSize = IntVector2(texSize * 2);
+		_windowSize = IntVector2(800, 600);
 	}
 
 	void SampleApp::OnInit()
 	{
-		_texture = _renderer->CreateTexture(IntVector2(texSize), TextureAccess::Streaming);
-		_plasma = new Plasma(_texture->GetSize());
-
+		_window->SetTitle("Sample 02");
 		_gui = new ImGuiModule(_renderer, _input);
-		_graphics = new Graphics(_renderer);
 
 		auto& size = _renderer->GetScreenSize();
 		_matProj = Matrix4::OrthoProjection(
 			0, static_cast<float>(size.x),
 			0, static_cast<float>(size.y),
 			0, 100);
-		_timer.Start();
 	}
 
 	static bool show_test_window = false;
 
 	void SampleApp::OnFrame()
 	{
-		auto& size = _renderer->GetScreenSize();
-
-		_timer.Update();
 		_gui->NewFrame();
 
 		///////////////////////////////////////////////////////////////
@@ -56,12 +52,6 @@ namespace uut
 		_renderer->Clear(Color32(114, 144, 154));
 		if (_renderer->BeginScene())
 		{
-			_plasma->Apply(_texture,
-				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10));
-
-			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
-			_graphics->Flush();
-
 			_gui->Draw();
 
 			_renderer->EndScene();

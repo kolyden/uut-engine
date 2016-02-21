@@ -147,6 +147,18 @@
     <ClCompile Include="..\Source\UUT\Core\Math\Random.cpp">
       <Filter>Sources\Math</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\Camera.cpp">
+      <Filter>Sources\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Math\Quaternion.cpp">
+      <Filter>Sources\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Math\Plane.cpp">
+      <Filter>Sources\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Math\Ray3.cpp">
+      <Filter>Sources\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\UUT\Core\Object.h">
@@ -288,6 +300,18 @@
       <Filter>Sources\Video</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Random.h">
+      <Filter>Sources\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\Camera.h">
+      <Filter>Sources\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Math\Quaternion.h">
+      <Filter>Sources\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Math\Plane.h">
+      <Filter>Sources\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Math\Ray3.h">
       <Filter>Sources\Math</Filter>
     </ClInclude>
   </ItemGroup>
