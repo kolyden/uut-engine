@@ -4,34 +4,11 @@
 #include "Core/Video/IndexBuffer.h"
 #include <Core/Math/Vector3.h>
 #include "Core/Video/Vertex.h"
+#include <Core/Math/Random.h>
+#include <Core/Math/Rect.h>
 
 namespace uut
 {
-	struct MyVertex
-	{
-		Vector3 pos;
-		uint32_t color;
-		Vector2 tex;
-	};
-
-	static const MyVertex g_verts[] = {
-		{ Vector3(10.0f, 400.0f, 5.0f), 0xFFFFFFFF, Vector2(0.0f, 0.0f) },
-		{ Vector3(400.0f, 400.0f, 5.0f), 0xFFFFFFFF, Vector2(1.0f, 0.0f) },
-		{ Vector3(400.0f, 10.0f, 5.0f), 0xFFFFFFFF, Vector2(1.0f, 1.0f) },
-		{ Vector3(10.0f, 10.0f, 5.0f), 0xFFFFFFFF, Vector2(0.0f, 1.0f) },
-	};
-
-	static const uint16_t g_indeces[] = {
-		0, 1, 2,
-		3, 0, 2,
-	};
-
-	static const List<VertexElement> g_declare = {
-		VertexElement(VertexElement::DT_FLOAT3, VertexElement::UT_POSITION),
-		VertexElement(VertexElement::DT_COLOR32, VertexElement::UT_COLOR, offsetof(MyVertex, color)),
-		VertexElement(VertexElement::DT_FLOAT2, VertexElement::UT_TEXCOORD, offsetof(MyVertex, tex)),
-	};
-
 	SampleApp::SampleApp()
 	{
 		_windowSize = IntVector2(texSize * 2);
@@ -42,15 +19,8 @@ namespace uut
 		_texture = _renderer->CreateTexture(IntVector2(texSize), TextureAccess::Streaming);
 		_plasma = new Plasma(_texture->GetSize());
 
-		_vb = _renderer->CreateVertexBuffer(sizeof(MyVertex) * 4);
-		if (_vb) _vb->UpdateData(g_verts, _vb->GetSize());
-
-		_ib = _renderer->CreateIndexBuffer(sizeof(uint16_t) * 6);
-		if (_ib) _ib->UpdateData(g_indeces, _vb->GetSize());
-
-		_vd = _renderer->CreateVertexDeclaration(g_declare);
-
 		_gui = new ImGuiModule(_renderer, _input);
+		_graphics = new Graphics(_renderer);
 
 		auto& size = _renderer->GetScreenSize();
 		_matProj = Matrix4::OrthoProjection(
@@ -64,6 +34,8 @@ namespace uut
 
 	void SampleApp::OnFrame()
 	{
+		auto& size = _renderer->GetScreenSize();
+
 		_timer.Update();
 		_gui->NewFrame();
 
@@ -84,7 +56,6 @@ namespace uut
 
 		///////////////////////////////////////////////////////////////
 		_renderer->ResetStates();
-
 		_renderer->SetTransform(RT_PROJECTION, _matProj);
 
 		_renderer->Clear(Color32(114, 144, 154));
@@ -93,15 +64,9 @@ namespace uut
 			_plasma->Apply(_texture,
 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10));
 
-// 			_renderer->SetTransform(RT_VIEW, Matrix4::Translation(100, 0, 0));
-			_renderer->SetState(RenderState::AlphaBlend, false);
-			_renderer->SetTexture(0, _texture);
-			_renderer->SetVertexBuffer(_vb, sizeof(MyVertex));
-			_renderer->SetIndexBuffer(_ib);
-			_renderer->SetVertexDeclaration(_vd);
-			_renderer->DrawIndexedPrimitive(Topology::TrinagleList, 0, 0, 4, 0, 2);
+			_graphics->DrawQuad(Rect(10, 10, 400, 400), 15, _texture);
+			_graphics->Flush();
 
-// 			_renderer->SetTransform(RT_VIEW, Matrix4::IDENTITY);
 			_gui->Draw();
 
 			_renderer->EndScene();

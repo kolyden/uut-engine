@@ -13,17 +13,17 @@ namespace uut
 	const Color32 Color32::BLUE(0, 0, 255);
 
 	Color32::Color32()
-		: r(255), g(255), b(255), a(255)
+		: a(255), r(255), g(255), b(255)
 	{
 	}
 
 	Color32::Color32(int _r, int _g, int _b, int _a /*= 255*/)
-		: r(_r), g(_g), b(_b), a(_a)
+		: a(_a), r(_r), g(_g), b(_b)
 	{
 	}
 
 	Color32::Color32(const Color32& color)
-		: r(color.r), g(color.g), b(color.b), a(color.a)
+		: a(color.a), r(color.r), g(color.g), b(color.b)
 	{
 	}
 
@@ -33,18 +33,18 @@ namespace uut
 	}
 
 	Color32::Color32(const Color& color)
-		: r(Math::RoundToInt(color.r * 255))
+		: a(Math::RoundToInt(color.a * 255))
+		, r(Math::RoundToInt(color.r * 255))
 		, g(Math::RoundToInt(color.g * 255))
 		, b(Math::RoundToInt(color.b * 255))
-		, a(Math::RoundToInt(color.a * 255))
 	{
 	}
 
-	Color32::Color32(uint32_t color)
-		: r(color >> 24)
-		, g((color >> 16) & 0xFF)
-		, b((color >> 8) & 0xFF)
-		, a(color & 0xFF)
+	Color32::Color32(uint32_t argb)
+		: a(argb >> 24)
+		, r((argb >> 16) & 0xFF)
+		, g((argb >> 8) & 0xFF)
+		, b(argb & 0xFF)
 	{
 	}
 
@@ -66,6 +66,6 @@ namespace uut
 
 	uint32_t Color32::ToInt() const
 	{
-		return (a << 24) + (r << 16) + (g << 8) + b;
+		return static_cast<uint32_t>((a << 24) | (r << 16) | (g << 8) | b);
 	}
 }

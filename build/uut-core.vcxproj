@@ -29,6 +29,7 @@
     <ClCompile Include="..\Source\UUT\Core\Math\IntVector2.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Math.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Matrix4.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Math\Random.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Rect.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Vector2.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Vector3.cpp" />
@@ -74,6 +75,7 @@
     <ClInclude Include="..\Source\UUT\Core\Math\IntVector2.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Math.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Matrix4.h" />
+    <ClInclude Include="..\Source\UUT\Core\Math\Random.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Rect.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Vector2.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Vector3.h" />
@@ -99,6 +101,7 @@
     <ClInclude Include="..\Source\UUT\Core\Video\Renderer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Texture.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Texture2D.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\Topology.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Vertex.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\VertexBuffer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\VertexDeclaration.h" />

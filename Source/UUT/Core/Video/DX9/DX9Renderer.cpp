@@ -34,6 +34,7 @@ namespace uut
 		_d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 		_d3ddev->SetRenderState(D3DRS_LIGHTING, false);
 		_d3ddev->SetRenderState(D3DRS_ZENABLE, false);
+		_d3ddev->SetRenderState(D3DRS_ZWRITEENABLE, false);
 		_d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 		_d3ddev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 		_d3ddev->SetRenderState(D3DRS_ALPHATESTENABLE, false);
@@ -358,7 +359,8 @@ namespace uut
 		case VertexElement::DT_FLOAT2: return D3DDECLTYPE_FLOAT2;
 		case VertexElement::DT_FLOAT3: return D3DDECLTYPE_FLOAT3;
 		case VertexElement::DT_FLOAT4: return D3DDECLTYPE_FLOAT4;
-		case VertexElement::DT_COLOR32: return D3DDECLTYPE_D3DCOLOR;
+		case VertexElement::DT_DWORD: return D3DDECLTYPE_D3DCOLOR;
+		case VertexElement::DT_UBYTE4: return D3DDECLTYPE_UBYTE4;
 		}
 
 		return D3DDECLTYPE_UNUSED;

@@ -25,7 +25,7 @@ namespace uut
 		Color32(const Color32& color);
 		Color32(Color32&& color);
 		Color32(const Color& color);
-		explicit Color32(uint32_t color);
+		explicit Color32(uint32_t argb);
 
 		Color32& operator=(const Color32& color);
 		Color32& operator=(Color32&& color);

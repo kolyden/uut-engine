@@ -18,7 +18,7 @@ namespace uut
 
 	static List<VertexElement> g_declare = {
 		VertexElement(VertexElement::DT_FLOAT3, VertexElement::UT_POSITION),
-		VertexElement(VertexElement::DT_COLOR32, VertexElement::UT_COLOR, offsetof(UIVertex, col)),
+		VertexElement(VertexElement::DT_DWORD, VertexElement::UT_COLOR, offsetof(UIVertex, col)),
 		VertexElement(VertexElement::DT_FLOAT2, VertexElement::UT_TEXCOORD, offsetof(UIVertex, tx)),
 	};
 

@@ -12,7 +12,8 @@ namespace uut
 			DT_FLOAT2,
 			DT_FLOAT3,
 			DT_FLOAT4,
-			DT_COLOR32, // uint32
+			DT_DWORD, // uint32
+			DT_UBYTE4,
 		};
 
 		enum UsageType

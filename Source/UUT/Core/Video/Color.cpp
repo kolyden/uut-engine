@@ -19,12 +19,12 @@ namespace uut
 	}
 
 	Color::Color(float _r, float _g, float _b, float _a)
-		: r(_r), g(_g), b(_b), a(_a)
+		: a(_a), r(_r), g(_g), b(_b)
 	{
 	}
 
 	Color::Color(const Color& color)
-		: r(color.r), g(color.g), b(color.b), a(color.a)
+		: a(color.a), r(color.r), g(color.g), b(color.b)
 	{
 
 	}
@@ -35,10 +35,10 @@ namespace uut
 	}
 
 	Color::Color(const Color32& color)
-		: r(invInt*color.r)
+		: a(invInt*color.a)
+		, r(invInt*color.r)
 		, g(invInt*color.g)
 		, b(invInt*color.b)
-		, a(invInt*color.a)
 	{
 	}
 
@@ -49,10 +49,10 @@ namespace uut
 
 	Color& Color::operator=(const Color& color)
 	{
+		a = color.a;
 		r = color.r;
 		g = color.g;
 		b = color.b;
-		a = color.a;
 		return *this;
 	}
 

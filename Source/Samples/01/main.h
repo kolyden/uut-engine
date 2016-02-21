@@ -3,6 +3,7 @@
 #include "Core/Timer.h"
 #include "Core/GUI/ImGuiModule.h"
 #include "Core/Video/Effects/Plasma.h"
+#include <Core/Video/Graphics.h>
 
 #pragma comment(lib, "SDL2/SDL2.lib")
 #pragma comment(lib, "SDL2/SDL2main.lib")
@@ -18,11 +19,9 @@ namespace uut
 		static const int texSize = 402;
 
 		SharedPtr<Texture2D> _texture;
-		SharedPtr<VertexBuffer> _vb;
-		SharedPtr<IndexBuffer> _ib;
-		SharedPtr<VertexDeclaration> _vd;
 		SharedPtr<ImGuiModule> _gui;
 		SharedPtr<Plasma> _plasma;
+		SharedPtr<Graphics> _graphics;
 
 		Timer _timer;
 		Matrix4 _matProj;

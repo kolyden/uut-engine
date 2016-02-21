@@ -6,6 +6,7 @@
 #include "Core/Math/IntRect.h"
 #include "Core/Math/Matrix4.h"
 #include "VertexDeclaration.h"
+#include "Topology.h"
 #include <Core/Collections/List.h>
 
 namespace uut
@@ -21,16 +22,6 @@ namespace uut
 		AlphaTest,
 		ScissorTest,
 		Lightning,
-	};
-
-	enum class Topology
-	{
-		PointList,
-		LineList,
-		LineStrip,
-		TrinagleList,
-		TrinagleStrip,
-		TrinagleFan,
 	};
 
 	enum RenderTransform
