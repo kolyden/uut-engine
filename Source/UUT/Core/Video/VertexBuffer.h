@@ -1,9 +1,9 @@
 #pragma once
-#include "RenderBuffer.h"
+#include "BufferObject.h"
 
 namespace uut
 {
-	class VertexBuffer : public RenderBuffer
+	class VertexBuffer : public BufferObject
 	{
 	public:
 	};

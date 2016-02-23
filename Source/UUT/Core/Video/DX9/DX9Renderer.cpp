@@ -63,10 +63,10 @@ namespace uut
 
 		D3DXMATRIX matProjection;     // the projection transform matrix
 		D3DXMatrixIdentity(&matProjection);
-// 		D3DXMatrixOrthoOffCenterLH(&matProjection,
-// 			0, static_cast<float>(_screenSize.x),
-// 			0, static_cast<float>(_screenSize.y),
-// 			0.1f, 100.0f);
+		D3DXMatrixOrthoOffCenterLH(&matProjection,
+			0, static_cast<float>(_screenSize.x),
+			0, static_cast<float>(_screenSize.y),
+			0.1f, 100.0f);
 		_d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);
 	}
 

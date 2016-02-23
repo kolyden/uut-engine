@@ -4,6 +4,7 @@
 #include "IMGUI/imgui.h"
 #include "Core/Math/Vector2.h"
 #include "Core/Video/Color.h"
+#include <Core/Math/Matrix4.h>
 
 namespace uut
 {
@@ -20,6 +21,8 @@ namespace uut
 		explicit ImGuiModule(Renderer* renderer, Input* input);
 
 		void NewFrame();
+
+		void SetupCamera();
 		void Draw() const;
 
 	protected:
@@ -30,6 +33,7 @@ namespace uut
 		SharedPtr<VertexDeclaration> _vd;
 		SharedPtr<IndexBuffer> _ib;
 		SharedPtr<Texture2D> _font;
+		Matrix4 _matProj;
 
 		int _vbSize;
 		int _ibSize;

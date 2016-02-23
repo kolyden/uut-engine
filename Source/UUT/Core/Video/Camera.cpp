@@ -52,6 +52,30 @@ namespace uut
 		return _rotation;
 	}
 
+	void Camera::Move(float dx, float dy, float dz)
+	{
+		_position.x += dx;
+		_position.y += dy;
+		_position.z += dz;
+		_updateView = true;
+	}
+
+	void Camera::Move(const Vector3& delta)
+	{
+		Move(delta.x, delta.y, delta.z);
+	}
+
+	void Camera::Rotate(float x, float y, float z)
+	{
+		Rotate(Vector3(x, y, z));
+	}
+
+	void Camera::Rotate(const Vector3& angles)
+	{
+		_rotation += Quaternion::FromEuler(angles);
+		_updateView = true;
+	}
+
 	void Camera::SetFov(float fov)
 	{
 		_fov = fov;

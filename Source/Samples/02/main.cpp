@@ -8,7 +8,6 @@
 namespace uut
 {
 	SampleApp::SampleApp()
-		: _position(0)
 	{
 		_windowSize = IntVector2(800, 600);
 	}
@@ -23,7 +22,7 @@ namespace uut
 		_camera = new Camera();
 		_camera->SetCameraType(CameraType::Orthogonal);
 		_camera->SetSize(_renderer->GetScreenSize());
-		_camera->SetNearClipPlane(0);
+		_camera->SetNearClipPlane(-5);
 
 		_timer.Start();
 	}
@@ -53,15 +52,40 @@ namespace uut
 // 		_position.z += _timer.GetDeltaTime() * Math::PI /6;
 // 		_camera->SetRotation(Quaternion::FromEuler(_position));
 
+		const float moveSpeed = 50.0f;
+		const float rotateSpeed = Math::PI / 2;
+
+		if (_input->IsKey(SDL_SCANCODE_A))
+			_camera->Move(-moveSpeed * _timer.GetDeltaTime(), 0, 0);
+		if (_input->IsKey(SDL_SCANCODE_D))
+			_camera->Move(+moveSpeed * _timer.GetDeltaTime(), 0, 0);
+		if (_input->IsKey(SDL_SCANCODE_S))
+			_camera->Move(0, -moveSpeed * _timer.GetDeltaTime(), 0);
+		if (_input->IsKey(SDL_SCANCODE_W))
+			_camera->Move(0, +moveSpeed * _timer.GetDeltaTime(), 0);
+
+// 		if (_input->IsKey(SDL_SCANCODE_LEFT))
+// 			_camera->Rotate(-rotateSpeed * _timer.GetDeltaTime(), 0, 0);
+// 		if (_input->IsKey(SDL_SCANCODE_RIGHT))
+// 			_camera->Rotate(+rotateSpeed * _timer.GetDeltaTime(), 0, 0);
+
 		///////////////////////////////////////////////////////////////
 		_renderer->ResetStates();
-		_camera->Apply(_renderer);
-
 		_renderer->Clear(Color32(114, 144, 154));
 		if (_renderer->BeginScene())
 		{
+			_camera->Apply(_renderer);
+			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_X * 1000, Color32::RED);
+			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_Y * 1000, Color32::GREEN);
+			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_Z * 1000, Color32::BLUE);
+
+			_graphics->DrawTrinagle(
+				Vertex(Vector3(0, 0, 0)),
+				Vertex(Vector3(0, 100, 0)),
+				Vertex(Vector3(100, 0, 0)));
 			_graphics->Flush();
 
+			_gui->SetupCamera();
 			_gui->Draw();
 
 			_renderer->EndScene();

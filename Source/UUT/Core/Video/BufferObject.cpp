@@ -1,13 +1,13 @@
-#include "RenderBuffer.h"
+#include "BufferObject.h"
 
 namespace uut
 {
-	RenderBuffer::RenderBuffer()
+	BufferObject::BufferObject()
 		: _size(0)
 	{
 	}
 
-	bool RenderBuffer::UpdateData(const void* buffer, uint32_t size, uint32_t offset /* = 0 */)
+	bool BufferObject::UpdateData(const void* buffer, uint32_t size, uint32_t offset /* = 0 */)
 	{
 		if (buffer == nullptr)
 			return false;

@@ -30,6 +30,12 @@ namespace uut
 		void SetRotation(const Quaternion& roatation);
 		const Quaternion& GetRotation() const;
 
+		void Move(float dx, float dy, float dz);
+		void Move(const Vector3& delta);
+
+		void Rotate(float x, float y, float z);
+		void Rotate(const Vector3& angles);
+
 		void SetFov(float fov);
 		float GetFov() const;
 

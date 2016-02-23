@@ -54,7 +54,7 @@
     <ClCompile Include="..\Source\UUT\Core\Video\Graphics.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Image.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\IndexBuffer.cpp" />
-    <ClCompile Include="..\Source\UUT\Core\Video\RenderBuffer.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\BufferObject.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Renderer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Texture.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Texture2D.cpp" />
@@ -107,7 +107,7 @@
     <ClInclude Include="..\Source\UUT\Core\Video\Graphics.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Image.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\IndexBuffer.h" />
-    <ClInclude Include="..\Source\UUT\Core\Video\RenderBuffer.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\BufferObject.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Renderer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Texture.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Texture2D.h" />

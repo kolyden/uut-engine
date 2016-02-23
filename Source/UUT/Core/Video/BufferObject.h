@@ -3,11 +3,11 @@
 
 namespace uut
 {
-	class RenderBuffer : public Object
+	class BufferObject : public Object
 	{
 	public:
-		RenderBuffer();
-		virtual ~RenderBuffer() {}
+		BufferObject();
+		virtual ~BufferObject() {}
 
 		uint32_t GetSize() const { return _size; }
 

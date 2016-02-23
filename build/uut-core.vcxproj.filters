@@ -102,9 +102,6 @@
     <ClCompile Include="..\Source\UUT\Core\Video\IndexBuffer.cpp">
       <Filter>Sources\Video</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\RenderBuffer.cpp">
-      <Filter>Sources\Video</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Video\VertexBuffer.cpp">
       <Filter>Sources\Video</Filter>
     </ClCompile>
@@ -161,6 +158,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Matrix3.cpp">
       <Filter>Sources\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\BufferObject.cpp">
+      <Filter>Sources\Video</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,9 +254,6 @@
     <ClInclude Include="..\Source\UUT\Core\Video\IndexBuffer.h">
       <Filter>Sources\Video</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\RenderBuffer.h">
-      <Filter>Sources\Video</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Video\VertexBuffer.h">
       <Filter>Sources\Video</Filter>
     </ClInclude>
@@ -319,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Matrix3.h">
       <Filter>Sources\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\BufferObject.h">
+      <Filter>Sources\Video</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

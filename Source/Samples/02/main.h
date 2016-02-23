@@ -19,7 +19,6 @@ namespace uut
 		SharedPtr<Graphics> _graphics;
 		SharedPtr<ImGuiModule> _gui;
 		Timer _timer;
-		Vector3 _position;
 
 		virtual void OnInit() override;
 		virtual void OnFrame() override;

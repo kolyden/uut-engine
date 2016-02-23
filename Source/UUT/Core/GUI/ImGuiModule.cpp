@@ -92,13 +92,21 @@ namespace uut
 		io.MouseDown[0] = _input->IsMouseButton(0);
 		io.MouseDown[1] = _input->IsMouseButton(1);
 
+		_matProj = Matrix4::OrthoProjection(
+			0, size.x, 0, size.y, 0.1, 100.0f);
+
 		ImGui::NewFrame();
+	}
+
+	void ImGuiModule::SetupCamera()
+	{
+		_renderer->SetTransform(RT_VIEW, Matrix4::IDENTITY);
+		_renderer->SetTransform(RT_WORLD, Matrix4::IDENTITY);
+		_renderer->SetTransform(RT_PROJECTION, _matProj);
 	}
 
 	void ImGuiModule::Draw() const
 	{
-		_renderer->SetTransform(RT_VIEW, Matrix4::IDENTITY);
-		_renderer->SetTransform(RT_WORLD, Matrix4::IDENTITY);
 		ImGui::Render();
 	}
 
@@ -131,7 +139,7 @@ namespace uut
 			{
 				vtx_dst->x = vtx_src->pos.x;
 				vtx_dst->y = size.y - vtx_src->pos.y;
-				vtx_dst->z = 5.0f;
+				vtx_dst->z = 10.0f;
 				vtx_dst->col = (vtx_src->col & 0xFF00FF00) | ((vtx_src->col & 0xFF0000) >> 16) | ((vtx_src->col & 0xFF) << 16);     // RGBA --> ARGB for DirectX9
 				vtx_dst->tx = vtx_src->uv.x;
 				vtx_dst->ty = vtx_src->uv.y;
