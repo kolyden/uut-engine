@@ -1,9 +1,10 @@
 #pragma once
 #include "Vector2.h"
+#include <cassert>
 
 namespace uut
 {
-	class Matrix4;
+	class Radian;
 
 	class Matrix3
 	{
@@ -16,11 +17,8 @@ namespace uut
 		void MakeZero();
 		void MakeIdentity();
 
-		operator float* () { return m; }
-		operator const float* () const { return m; }
-
-		float& operator[](unsigned int i) { return m[i]; }
-		const float& operator[](unsigned int i) const { return m[i]; }
+		operator float* () { return _m; }
+		operator const float* () const { return _m; }
 
 		Matrix3	operator + (const Matrix3& mat) const { Matrix3 m(*this); return m.Add(mat); }
 		Matrix3	operator - (const Matrix3& mat) const { Matrix3 m(*this); return m.Sub(mat); }
@@ -65,7 +63,7 @@ namespace uut
 		Matrix3& Multiply(float f);
 		Matrix3& Divide(float f);
 
-		Matrix4 ToMat4() const;
+		bool ToEulerAngles(Radian& xAngle, Radian& yAngle, Radian& zAngle);
 
 		static Matrix3 Inverse(const Matrix3& mat);
 		static Matrix3 Adjoint(const Matrix3& mat);
@@ -95,7 +93,8 @@ namespace uut
 
 		union
 		{
-			float m[9];
+			float _m[9];
+			float m[3][3];
 			struct
 			{
 				float m00, m01, m02;

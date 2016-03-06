@@ -9,11 +9,25 @@ namespace uut
 	{
 	public:
 		Plane();
-		Plane(float a, float b, float c, float d);
-		Plane(const Vector3& normal, float dist);
-		Plane(const Vector3& p1, const Vector3& p2, const Vector3& p3);
+		Plane(float fa, float fb, float fc, float fd);
+		Plane(const Vector3& point, const Vector3& normal);
+		Plane(const Vector3& v1, const Vector3& v2, const Vector3& v3);
 
-		bool Intersect(const Ray3& ray, float& dist) const;
+		operator float* () { return data; }
+		operator const float* () const { return data; }
+
+		Plane operator + () const;
+		Plane operator - () const;
+
+		bool operator == (const Plane& p) const;
+		bool operator != (const Plane& p) const;
+
+		Plane& Normalize();
+		Plane Normalized() const;
+
+		bool IntersectLine(const Vector3& v1, const Vector3& v2, Vector3& out) const;
+
+		static const Plane EMPTY;
 
 		union
 		{

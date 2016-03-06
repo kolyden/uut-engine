@@ -33,8 +33,7 @@ namespace uut
 		void Move(float dx, float dy, float dz);
 		void Move(const Vector3& delta);
 
-		void Rotate(float x, float y, float z);
-		void Rotate(const Vector3& angles);
+		void Rotate(const Quaternion& delta);
 
 		void SetFov(float fov);
 		float GetFov() const;

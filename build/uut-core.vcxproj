@@ -24,7 +24,7 @@
     <ClCompile Include="..\Source\UUT\Core\GUI\ImGuiModule.cpp" />
     <ClCompile Include="..\Source\UUT\Core\HashString.cpp" />
     <ClCompile Include="..\Source\UUT\Core\IO\Input.cpp" />
-    <ClCompile Include="..\Source\UUT\Core\Math\Angle.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Math\Degree.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\IntRect.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\IntVector2.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Math.cpp" />
@@ -32,11 +32,13 @@
     <ClCompile Include="..\Source\UUT\Core\Math\Matrix4.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Plane.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Quaternion.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Math\Radian.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Random.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Ray3.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Rect.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Vector2.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Vector3.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Math\Vector4.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Object.cpp" />
     <ClCompile Include="..\Source\UUT\Core\RefCounted.cpp" />
     <ClCompile Include="..\Source\UUT\Core\String.cpp" />
@@ -75,7 +77,7 @@
     <ClInclude Include="..\Source\UUT\Core\HashString.h" />
     <ClInclude Include="..\Source\UUT\Core\IEquatable.h" />
     <ClInclude Include="..\Source\UUT\Core\IO\Input.h" />
-    <ClInclude Include="..\Source\UUT\Core\Math\Angle.h" />
+    <ClInclude Include="..\Source\UUT\Core\Math\Degree.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\IntRect.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\IntVector2.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Math.h" />
@@ -83,11 +85,13 @@
     <ClInclude Include="..\Source\UUT\Core\Math\Matrix4.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Plane.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Quaternion.h" />
+    <ClInclude Include="..\Source\UUT\Core\Math\Radian.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Random.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Ray3.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Rect.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Vector2.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Vector3.h" />
+    <ClInclude Include="..\Source\UUT\Core\Math\Vector4.h" />
     <ClInclude Include="..\Source\UUT\Core\Object.h" />
     <ClInclude Include="..\Source\UUT\Core\Ptr.h" />
     <ClInclude Include="..\Source\UUT\Core\RefCounted.h" />

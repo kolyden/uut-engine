@@ -81,19 +81,19 @@ namespace uut
 	void ImGuiModule::NewFrame()
 	{
 		_timer.Update();
-		auto& size = _renderer->GetScreenSize();
+		Vector2 size = _renderer->GetScreenSize();
 		auto& io = ImGui::GetIO();
 
-		io.DisplaySize.x = static_cast<float>(size.x);
-		io.DisplaySize.y = static_cast<float>(size.y);
+		io.DisplaySize.x = size.x;
+		io.DisplaySize.y = size.y;
 		io.DeltaTime = _timer.GetDeltaTime();
 		io.MousePos.x = static_cast<float>(_input->GetMousePos().x);
 		io.MousePos.y = static_cast<float>(_input->GetMousePos().y);
 		io.MouseDown[0] = _input->IsMouseButton(0);
 		io.MouseDown[1] = _input->IsMouseButton(1);
 
-		_matProj = Matrix4::OrthoProjection(
-			0, size.x, 0, size.y, 0.1, 100.0f);
+		_matProj = Matrix4::OrthoOffCenter(
+			0, size.x, 0, size.y, 0.1f, 100.0f);
 
 		ImGui::NewFrame();
 	}

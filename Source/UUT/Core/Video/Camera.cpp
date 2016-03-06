@@ -5,13 +5,13 @@ namespace uut
 {
 	Camera::Camera()
 		: _type(CameraType::Perspective)
-		, _position(0)
+		, _position(0, 0, 0)
 		, _rotation(Quaternion::IDENTITY)
 		, _updateView(true)
 		, _updateProj(true)
 		, _nearClipPlane(0.01f)
 		, _farClipPlane(1000.0f)
-		, _fov(50)
+		, _fov(65)
 		, _size(800, 600)
 	{
 	}
@@ -65,14 +65,9 @@ namespace uut
 		Move(delta.x, delta.y, delta.z);
 	}
 
-	void Camera::Rotate(float x, float y, float z)
+	void Camera::Rotate(const Quaternion& delta)
 	{
-		Rotate(Vector3(x, y, z));
-	}
-
-	void Camera::Rotate(const Vector3& angles)
-	{
-		_rotation += Quaternion::FromEuler(angles);
+		_rotation += delta;
 		_updateView = true;
 	}
 
@@ -130,8 +125,8 @@ namespace uut
 		if (_updateView)
 		{
 			_updateView = false;
-			_matView = //Matrix4::Translate(_position);
-				Matrix4::Transform(_position, _rotation, Vector3::ONE);
+			_matView = //Matrix4::Rotate(_rotation) * 
+				Matrix4::Transformation(_position, _rotation, Vector3::ONE);
 		}
 
 		if (_updateProj)
@@ -140,13 +135,13 @@ namespace uut
 			switch (_type)
 			{
 			case CameraType::Orthogonal:
-				_matProj = Matrix4::OrthoProjection(
+				_matProj = Matrix4::OrthoOffCenter(
 					0, _size.x, 0, _size.y,
 					_nearClipPlane, _farClipPlane);
 				break;
 
 			case CameraType::Perspective:
-				_matProj = Matrix4::PerspectiveFovLH(_fov,
+				_matProj = Matrix4::PerspectiveFov(_fov,
 					_size.x / _size.y, _nearClipPlane, _farClipPlane);
 				break;
 			}

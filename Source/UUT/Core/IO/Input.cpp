@@ -28,7 +28,7 @@ namespace uut
 
 	bool Input::IsKey(int key)
 	{
-		return g_this && g_this->_kbState ? g_this->_kbState[key] : false;
+		return g_this && g_this->_kbState ? g_this->_kbState[key] > 0 : false;
 	}
 
 	void Input::UpdateState()

@@ -63,6 +63,8 @@ namespace uut
 
 		D3DXMATRIX matProjection;     // the projection transform matrix
 		D3DXMatrixIdentity(&matProjection);
+// 		D3DXMatrixPerspectiveLH(&matProjection,
+// 			_screenSize.x, _screenSize.y, 0.1f, 1000.0f);
 		D3DXMatrixOrthoOffCenterLH(&matProjection,
 			0, static_cast<float>(_screenSize.x),
 			0, static_cast<float>(_screenSize.y),
@@ -173,7 +175,7 @@ namespace uut
 	bool DX9Renderer::Clear(const Color& color, float z, uint32_t stencil)
 	{
 		const int flags = D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER;
-		HRESULT ret = _d3ddev->Clear(0, nullptr, flags, color.ToInt(), z, stencil);
+		HRESULT ret = _d3ddev->Clear(0, nullptr, flags, color, z, stencil);
 		return TestReturnCode(ret);
 	}
 

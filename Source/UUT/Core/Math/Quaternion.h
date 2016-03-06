@@ -4,43 +4,57 @@
 namespace uut
 {
 	class Matrix4;
-	class Matrix3;
+	class Radian;
 
 	class Quaternion
 	{
 	public:
 		Quaternion();
-		Quaternion(float x, float y, float z, float w);
-		Quaternion(const Vector3& axis, float angle);
+		Quaternion(float fx, float fy, float fz, float fw);
+		Quaternion(const Vector3& axis, const Radian& angle);
+		explicit Quaternion(const float* pf);
 
-		void Set(float x, float y, float z, float w);
-		void SetAngles(float x, float y, float z);
+		operator float* () { return data; }
+		operator const float* () const { return data; }
 
-		Quaternion operator-() const;
-		Quaternion operator=(const Quaternion& quat);
-		Quaternion operator+(const Quaternion& a) const;
-		Quaternion& operator+=(const Quaternion& a);
-		Quaternion operator-(const Quaternion& a) const;
-		Quaternion& operator-=(const Quaternion &a);
-		Quaternion operator*(const Quaternion& a) const;
-		Vector3 operator*(const Vector3& a) const;
-		Quaternion operator*(float a) const;
-		Quaternion& operator*=(const Quaternion& a);
-		Quaternion& operator*=(float a);
+		Quaternion& operator += (const Quaternion& quat);
+		Quaternion& operator -= (const Quaternion& quat);
+		Quaternion& operator *= (const Quaternion& quat);
+		Quaternion& operator *= (float f);
+		Quaternion& operator /= (float f);
+
+		Quaternion  operator + () const;
+		Quaternion  operator - () const;
+
+		Quaternion operator + (const Quaternion& quat) const;
+		Quaternion operator - (const Quaternion& quat) const;
+		Quaternion operator * (const Quaternion& quat) const;
+		Quaternion operator * (float f) const;
+		Quaternion operator / (float f) const;
+
+		friend Quaternion operator * (float f, const Quaternion& quat);
+
+		bool operator == (const Quaternion& quat) const;
+		bool operator != (const Quaternion& quat) const;
 
 		float Length() const;
-
-		Quaternion& Invert();
-		Quaternion Inverted() const;
+		float LengthSq() const;
 
 		Quaternion& Normalize();
 		Quaternion Normalized() const;
 
-		Matrix3 ToMat3() const;
-		Matrix4 ToMat4() const;
+		Quaternion Conjugate() const;
+		Quaternion Inverse() const;
 
-		static Quaternion FromEuler(float x, float y, float z);
-		static Quaternion FromEuler(const Vector3& angles);
+		void ToAxisAngle(Vector3& axis, Radian& angle) const;
+
+		static float Dot(const Quaternion& q1, const Quaternion& q2);
+		static Quaternion Multiply(const Quaternion& q1, const Quaternion& q2);
+		static Quaternion RotationAxis(const Vector3& axis, const Radian& angle);
+		static Quaternion RotationMatrix(const Matrix4& mat);
+		static Quaternion RotationYawPitchRoll(const Radian& yaw, const Radian& pitch, const Radian& roll);
+
+		static Quaternion Slerp(const Quaternion& q1, const Quaternion& q2, float t);
 
 		static const Quaternion ZERO;
 		static const Quaternion IDENTITY;

@@ -1,4 +1,6 @@
 #pragma once
+#include "Radian.h"
+#include "Degree.h"
 
 namespace uut
 {
@@ -6,24 +8,42 @@ namespace uut
 	{
 	public:
 		static const float PI;
-		static const float Infinity;
-		static const float NegativeInfinity;
-		static const float Rad2Deg;
-		static const float Deg2Rad;
+		static const float TWO_PI;
+		static const float HALF_PI;
+
+		static const float POS_INFINITY;
+		static const float NEG_INFINITY;
+		static const float RAD2DEG;
+		static const float DEG2RAD;
 		static const float Epsilon;
 
 		static float Sin(float f);
+		static float Sin(const Radian& f);
+
 		static float Cos(float f);
+		static float Cos(const Radian& f);
+
 		static void SinCos(float angle, float& sin, float& cos);
+		static void SinCos(const Radian& angle, float& sin, float& cos);
 
 		static float Tan(float f);
+		static float Tan(const Radian& f);
+
 		static float Cot(float f);
-		static float Asin(float f);
-		static float Acos(float f);
-		static float Atan(float f);
-		static float Atan2(float y, float x);
+		static float Cot(const Radian& f);
+
+		static Radian Asin(float f);
+		static Radian Acos(float f);
+		static Radian Atan(float f);
+		static Radian Atan2(float y, float x);
+
 		static float Sqrt(float f);
+		static Radian Sqrt(const Radian& f);
+		static Degree Sqrt(const Degree& f);
+
 		static float Abs(float f);
+		static Radian Abs(const Radian& f);
+		static Degree Abs(const Degree& f);
 
 		static float Min(float a, float b);
 		static int Min(int a, int b);
@@ -59,6 +79,7 @@ namespace uut
 // 		static float MoveTowards(float current, float target, float maxDelta);
 
 		static bool Approximately(float a, float b);
+		static bool IsNaN(float value);
 
 		static float Repeat(float t, float length);
 		static float PingPong(float t, float length);

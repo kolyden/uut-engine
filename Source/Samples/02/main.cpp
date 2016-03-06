@@ -20,7 +20,7 @@ namespace uut
 		_graphics = new Graphics(_renderer);
 
 		_camera = new Camera();
-		_camera->SetCameraType(CameraType::Orthogonal);
+		_camera->SetCameraType(CameraType::Perspective);
 		_camera->SetSize(_renderer->GetScreenSize());
 		_camera->SetNearClipPlane(-5);
 
@@ -40,17 +40,16 @@ namespace uut
 			ImGui::Text("Hello, world!");
 			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
 			if (ImGui::Button("Test Window")) show_test_window ^= 1;
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
+				1000.0f / ImGui::GetIO().Framerate,
+				ImGui::GetIO().Framerate);
 		}
 
 		if (show_test_window)
 		{
-			ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
+			ImGui::SetNextWindowPos(ImVec2(200, 20), ImGuiSetCond_FirstUseEver);
 			ImGui::ShowTestWindow(&show_test_window);
 		}
-
-// 		_position.z += _timer.GetDeltaTime() * Math::PI /6;
-// 		_camera->SetRotation(Quaternion::FromEuler(_position));
 
 		const float moveSpeed = 50.0f;
 		const float rotateSpeed = Math::PI / 2;
@@ -63,11 +62,23 @@ namespace uut
 			_camera->Move(0, -moveSpeed * _timer.GetDeltaTime(), 0);
 		if (_input->IsKey(SDL_SCANCODE_W))
 			_camera->Move(0, +moveSpeed * _timer.GetDeltaTime(), 0);
+		if (_input->IsKey(SDL_SCANCODE_Q))
+			_camera->Move(0, 0, -moveSpeed * _timer.GetDeltaTime());
+		if (_input->IsKey(SDL_SCANCODE_E))
+			_camera->Move(0, 0, +moveSpeed * _timer.GetDeltaTime());
 
-// 		if (_input->IsKey(SDL_SCANCODE_LEFT))
-// 			_camera->Rotate(-rotateSpeed * _timer.GetDeltaTime(), 0, 0);
-// 		if (_input->IsKey(SDL_SCANCODE_RIGHT))
-// 			_camera->Rotate(+rotateSpeed * _timer.GetDeltaTime(), 0, 0);
+		if (_input->IsKey(SDL_SCANCODE_LEFT))
+			_camera->Rotate(Quaternion::RotationAxis(Vector3::AXIS_X, -Radian(rotateSpeed * _timer.GetDeltaTime())));
+		if (_input->IsKey(SDL_SCANCODE_RIGHT))
+			_camera->Rotate(Quaternion::RotationAxis(Vector3::AXIS_X, +Radian(rotateSpeed * _timer.GetDeltaTime())));
+		if (_input->IsKey(SDL_SCANCODE_UP))
+			_camera->Rotate(Quaternion::RotationAxis(Vector3::AXIS_Y, -Radian(rotateSpeed * _timer.GetDeltaTime())));
+		if (_input->IsKey(SDL_SCANCODE_DOWN))
+			_camera->Rotate(Quaternion::RotationAxis(Vector3::AXIS_Y, +Radian(rotateSpeed * _timer.GetDeltaTime())));
+		if (_input->IsKey(SDL_SCANCODE_Z))
+			_camera->Rotate(Quaternion::RotationAxis(Vector3::AXIS_Z, -Radian(rotateSpeed * _timer.GetDeltaTime())));
+		if (_input->IsKey(SDL_SCANCODE_X))
+			_camera->Rotate(Quaternion::RotationAxis(Vector3::AXIS_Z, +Radian(rotateSpeed * _timer.GetDeltaTime())));
 
 		///////////////////////////////////////////////////////////////
 		_renderer->ResetStates();

@@ -1,45 +1,100 @@
 #include "Plane.h"
 #include "Vector3.h"
 #include "Ray3.h"
+#include "Math.h"
 
 namespace uut
 {
+	const Plane Plane::EMPTY(0, 0, 0, 0);
+
 	Plane::Plane()
 	{
 	}
 
-	Plane::Plane(float _a, float _b, float _c, float _d)
-		: a(_a), b(_b), c(_c), d(_d)
+	Plane::Plane(float fa, float fb, float fc, float fd)
+		: a(fa), b(fb), c(fc), d(fd)
 	{
 	}
 
-	Plane::Plane(const Vector3& normal, float dist)
-		: a(normal.x), b(normal.y), c(normal.z), d(-dist)
+	Plane::Plane(const Vector3& point, const Vector3& normal)
+		: a(normal.x)
+		, b(normal.y)
+		, c(normal.z)
+		, d(Vector3::Dot(point, normal))
 	{
 	}
 
-	Plane::Plane(const Vector3& p1, const Vector3& p2, const Vector3& p3)
+	Plane::Plane(const Vector3& v1, const Vector3& v2, const Vector3& v3)
 	{
-		auto normal = (p1 - p2).Cross(p3 - p2);
-		normal.Normalize();
-		
+		Vector3 edge1 = Vector3::Sub(v2, v1);
+		Vector3 edge2 = Vector3::Sub(v3, v1);
+		Vector3 normal = Vector3::Cross(edge1, edge2).Normalized();
+
 		a = normal.x;
 		b = normal.y;
 		c = normal.z;
-		d = -normal.Dot(p2);
+		d = Vector3::Dot(v1, normal);
 	}
 
-	bool Plane::Intersect(const Ray3& ray, float& dist) const
+	Plane Plane::operator+() const
 	{
-		float d1, d2;
+		return *this;
+	}
 
+	Plane Plane::operator-() const
+	{
+		return Plane(-a, -b, -c, -d);
+	}
+
+	bool Plane::operator==(const Plane& pl) const
+	{
+		return a == pl.a && b == pl.b && c == pl.c && d == pl.d;
+	}
+
+	bool Plane::operator!=(const Plane& pl) const
+	{
+		return a != pl.a || b != pl.b || c != pl.c || d != pl.d;
+	}
+
+	Plane& Plane::Normalize()
+	{
+		const float norm = Math::Sqrt(a * a + b * b + c * c);
+		if (norm)
+		{
+			a /= norm;
+			b /= norm;
+			c /= norm;
+			d /= norm;
+		}
+		else
+		{
+			a = 0;
+			b = 0;
+			c = 0;
+			d = 0;
+		}
+
+		return *this;
+	}
+
+	Plane Plane::Normalized() const
+	{
+		const float norm = Math::Sqrt(a * a + b * b + c * c);
+		if (norm)
+			return Plane(a / norm, b / norm, c / norm, d / norm);
+
+		return EMPTY;
+	}
+
+	bool Plane::IntersectLine(const Vector3& v1, const Vector3& v2, Vector3& out) const
+	{
 		Vector3 normal(a, b, c);
-		d1 = normal.Dot(ray.origin) + d;
-		d2 = normal.Dot(ray.direction);
-		if (d2 == 0.0f)
-			return false;
+		Vector3 direction = v2 - v1;
+		const float dot = Vector3::Dot(normal, direction);
+		if (!dot) return false;
 
-		dist = -(d1 / d2);
+		const float temp = d + Vector3::Dot(normal, v1) / dot;
+		out = v1 - temp * direction;
 		return true;
 	}
 }

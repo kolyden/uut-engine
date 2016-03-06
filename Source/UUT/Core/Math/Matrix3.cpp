@@ -55,9 +55,9 @@ namespace uut
 	{
 		float val;
 
-		val = m[0 * 3 + 0] * ((m[1 * 3 + 1] * m[2 * 3 + 2]) - (m[2 * 3 + 1] * m[1 * 3 + 2]));
-		val -= m[0 * 3 + 1] * ((m[1 * 3 + 0] * m[2 * 3 + 2]) - (m[2 * 3 + 0] * m[1 * 3 + 2]));
-		val += m[0 * 3 + 2] * ((m[1 * 3 + 0] * m[2 * 3 + 1]) - (m[2 * 3 + 0] * m[1 * 3 + 1]));
+		val = _m[0 * 3 + 0] * ((_m[1 * 3 + 1] * _m[2 * 3 + 2]) - (_m[2 * 3 + 1] * _m[1 * 3 + 2]));
+		val -= _m[0 * 3 + 1] * ((_m[1 * 3 + 0] * _m[2 * 3 + 2]) - (_m[2 * 3 + 0] * _m[1 * 3 + 2]));
+		val += _m[0 * 3 + 2] * ((_m[1 * 3 + 0] * _m[2 * 3 + 1]) - (_m[2 * 3 + 0] * _m[1 * 3 + 1]));
 
 		return val;
 	}
@@ -84,30 +84,30 @@ namespace uut
 
 	Matrix3& Matrix3::Add(const Matrix3& mat)
 	{
-		m[0 * 3 + 0] += mat.m[0 * 3 + 0];
-		m[0 * 3 + 1] += mat.m[0 * 3 + 1];
-		m[0 * 3 + 2] += mat.m[0 * 3 + 2];
-		m[1 * 3 + 0] += mat.m[1 * 3 + 0];
-		m[1 * 3 + 1] += mat.m[1 * 3 + 1];
-		m[1 * 3 + 2] += mat.m[1 * 3 + 2];
-		m[2 * 3 + 0] += mat.m[2 * 3 + 0];
-		m[2 * 3 + 1] += mat.m[2 * 3 + 1];
-		m[2 * 3 + 2] += mat.m[2 * 3 + 2];
+		_m[0 * 3 + 0] += mat._m[0 * 3 + 0];
+		_m[0 * 3 + 1] += mat._m[0 * 3 + 1];
+		_m[0 * 3 + 2] += mat._m[0 * 3 + 2];
+		_m[1 * 3 + 0] += mat._m[1 * 3 + 0];
+		_m[1 * 3 + 1] += mat._m[1 * 3 + 1];
+		_m[1 * 3 + 2] += mat._m[1 * 3 + 2];
+		_m[2 * 3 + 0] += mat._m[2 * 3 + 0];
+		_m[2 * 3 + 1] += mat._m[2 * 3 + 1];
+		_m[2 * 3 + 2] += mat._m[2 * 3 + 2];
 
 		return *this;
 	}
 
 	Matrix3& Matrix3::Sub(const Matrix3& mat)
 	{
-		m[0 * 3 + 0] -= mat.m[0 * 3 + 0];
-		m[0 * 3 + 1] -= mat.m[0 * 3 + 1];
-		m[0 * 3 + 2] -= mat.m[0 * 3 + 2];
-		m[1 * 3 + 0] -= mat.m[1 * 3 + 0];
-		m[1 * 3 + 1] -= mat.m[1 * 3 + 1];
-		m[1 * 3 + 2] -= mat.m[1 * 3 + 2];
-		m[2 * 3 + 0] -= mat.m[2 * 3 + 0];
-		m[2 * 3 + 1] -= mat.m[2 * 3 + 1];
-		m[2 * 3 + 2] -= mat.m[2 * 3 + 2];
+		_m[0 * 3 + 0] -= mat._m[0 * 3 + 0];
+		_m[0 * 3 + 1] -= mat._m[0 * 3 + 1];
+		_m[0 * 3 + 2] -= mat._m[0 * 3 + 2];
+		_m[1 * 3 + 0] -= mat._m[1 * 3 + 0];
+		_m[1 * 3 + 1] -= mat._m[1 * 3 + 1];
+		_m[1 * 3 + 2] -= mat._m[1 * 3 + 2];
+		_m[2 * 3 + 0] -= mat._m[2 * 3 + 0];
+		_m[2 * 3 + 1] -= mat._m[2 * 3 + 1];
+		_m[2 * 3 + 2] -= mat._m[2 * 3 + 2];
 
 		return *this;
 	}
@@ -116,15 +116,15 @@ namespace uut
 	{
 		Matrix3 result;
 
-		result.m[0] = m[0] * mat.m[0] + m[3] * mat.m[1] + m[6] * mat.m[2];
-		result.m[1] = m[1] * mat.m[0] + m[4] * mat.m[1] + m[7] * mat.m[2];
-		result.m[2] = m[2] * mat.m[0] + m[5] * mat.m[1] + m[8] * mat.m[2];
-		result.m[3] = m[0] * mat.m[3] + m[3] * mat.m[4] + m[6] * mat.m[5];
-		result.m[4] = m[1] * mat.m[3] + m[4] * mat.m[4] + m[7] * mat.m[5];
-		result.m[5] = m[2] * mat.m[3] + m[5] * mat.m[4] + m[8] * mat.m[5];
-		result.m[6] = m[0] * mat.m[6] + m[3] * mat.m[7] + m[6] * mat.m[8];
-		result.m[7] = m[1] * mat.m[6] + m[4] * mat.m[7] + m[7] * mat.m[8];
-		result.m[8] = m[2] * mat.m[6] + m[5] * mat.m[7] + m[8] * mat.m[8];
+		result._m[0] = _m[0] * mat._m[0] + _m[3] * mat._m[1] + _m[6] * mat._m[2];
+		result._m[1] = _m[1] * mat._m[0] + _m[4] * mat._m[1] + _m[7] * mat._m[2];
+		result._m[2] = _m[2] * mat._m[0] + _m[5] * mat._m[1] + _m[8] * mat._m[2];
+		result._m[3] = _m[0] * mat._m[3] + _m[3] * mat._m[4] + _m[6] * mat._m[5];
+		result._m[4] = _m[1] * mat._m[3] + _m[4] * mat._m[4] + _m[7] * mat._m[5];
+		result._m[5] = _m[2] * mat._m[3] + _m[5] * mat._m[4] + _m[8] * mat._m[5];
+		result._m[6] = _m[0] * mat._m[6] + _m[3] * mat._m[7] + _m[6] * mat._m[8];
+		result._m[7] = _m[1] * mat._m[6] + _m[4] * mat._m[7] + _m[7] * mat._m[8];
+		result._m[8] = _m[2] * mat._m[6] + _m[5] * mat._m[7] + _m[8] * mat._m[8];
 
 		*this = result;
 		return *this;
@@ -134,15 +134,15 @@ namespace uut
 	{
 		Matrix3 result;
 
-		result.m[0] = m[0] / mat.m[0] + m[3] / mat.m[1] + m[6] / mat.m[2];
-		result.m[1] = m[1] / mat.m[0] + m[4] / mat.m[1] + m[7] / mat.m[2];
-		result.m[2] = m[2] / mat.m[0] + m[5] / mat.m[1] + m[8] / mat.m[2];
-		result.m[3] = m[0] / mat.m[3] + m[3] / mat.m[4] + m[6] / mat.m[5];
-		result.m[4] = m[1] / mat.m[3] + m[4] / mat.m[4] + m[7] / mat.m[5];
-		result.m[5] = m[2] / mat.m[3] + m[5] / mat.m[4] + m[8] / mat.m[5];
-		result.m[6] = m[0] / mat.m[6] + m[3] / mat.m[7] + m[6] / mat.m[8];
-		result.m[7] = m[1] / mat.m[6] + m[4] / mat.m[7] + m[7] / mat.m[8];
-		result.m[8] = m[2] / mat.m[6] + m[5] / mat.m[7] + m[8] / mat.m[8];
+		result._m[0] = _m[0] / mat._m[0] + _m[3] / mat._m[1] + _m[6] / mat._m[2];
+		result._m[1] = _m[1] / mat._m[0] + _m[4] / mat._m[1] + _m[7] / mat._m[2];
+		result._m[2] = _m[2] / mat._m[0] + _m[5] / mat._m[1] + _m[8] / mat._m[2];
+		result._m[3] = _m[0] / mat._m[3] + _m[3] / mat._m[4] + _m[6] / mat._m[5];
+		result._m[4] = _m[1] / mat._m[3] + _m[4] / mat._m[4] + _m[7] / mat._m[5];
+		result._m[5] = _m[2] / mat._m[3] + _m[5] / mat._m[4] + _m[8] / mat._m[5];
+		result._m[6] = _m[0] / mat._m[6] + _m[3] / mat._m[7] + _m[6] / mat._m[8];
+		result._m[7] = _m[1] / mat._m[6] + _m[4] / mat._m[7] + _m[7] / mat._m[8];
+		result._m[8] = _m[2] / mat._m[6] + _m[5] / mat._m[7] + _m[8] / mat._m[8];
 
 		*this = result;
 		return *this;
@@ -164,41 +164,65 @@ namespace uut
 
 	Matrix3& Matrix3::Multiply(float f)
 	{
-		m[0] *= f;
-		m[1] *= f;
-		m[2] *= f;
-		m[3] *= f;
-		m[4] *= f;
-		m[5] *= f;
-		m[6] *= f;
-		m[7] *= f;
-		m[8] *= f;
+		_m[0] *= f;
+		_m[1] *= f;
+		_m[2] *= f;
+		_m[3] *= f;
+		_m[4] *= f;
+		_m[5] *= f;
+		_m[6] *= f;
+		_m[7] *= f;
+		_m[8] *= f;
 
 		return *this;
 	}
 
 	Matrix3& Matrix3::Divide(float f)
 	{
-		m[0] /= f;
-		m[1] /= f;
-		m[2] /= f;
-		m[3] /= f;
-		m[4] /= f;
-		m[5] /= f;
-		m[6] /= f;
-		m[7] /= f;
-		m[8] /= f;
+		_m[0] /= f;
+		_m[1] /= f;
+		_m[2] /= f;
+		_m[3] /= f;
+		_m[4] /= f;
+		_m[5] /= f;
+		_m[6] /= f;
+		_m[7] /= f;
+		_m[8] /= f;
 
 		return *this;
 	}
 
-	Matrix4 Matrix3::ToMat4() const
+	bool Matrix3::ToEulerAngles(Radian& xAngle, Radian& yAngle, Radian& zAngle)
 	{
-		return Matrix4(
-			m00, m10, m20, 0.0f,
-			m01, m11, m21, 0.0f,
-			m02, m12, m22, 0.0f,
-			0.0f, 0.0f, 0.0f, 1.0f);
+		xAngle = -Radian(Math::Asin(m[1][2]));
+		if (xAngle < Radian(Math::HALF_PI))
+		{
+			if (xAngle > Radian(-Math::HALF_PI))
+			{
+				yAngle = Math::Atan2(m[0][2], m[2][2]);
+				zAngle = Math::Atan2(m[1][0], m[1][1]);
+
+				return true;
+			}
+			else
+			{
+				// Note: Not an unique solution.
+				xAngle = Radian(-Math::HALF_PI);
+				yAngle = Math::Atan2(-m[0][1], m[0][0]);
+				zAngle = Radian(0.0f);
+
+				return false;
+			}
+		}
+		else
+		{
+			// Note: Not an unique solution.
+			xAngle = Radian(Math::HALF_PI);
+			yAngle = Math::Atan2(m[0][1], m[0][0]);
+			zAngle = Radian(0.0f);
+
+			return false;
+		}
 	}
 
 	Matrix3 Matrix3::Inverse(const Matrix3& mat)
@@ -206,7 +230,7 @@ namespace uut
 		Matrix3 result = Matrix3::Adjoint(mat);
 		const float d = 1.0f / mat.Det();
 		for (int i = 0; i < 9; i++)
-			result.m[i] *= d;
+			result._m[i] *= d;
 
 		return result;
 	}
@@ -214,15 +238,15 @@ namespace uut
 	Matrix3	Matrix3::Adjoint(const Matrix3& mat)
 	{
 		Matrix3 result;
-		result.m[0 * 3 + 0] = ((mat.m[1 * 3 + 1] * mat.m[2 * 3 + 2]) - (mat.m[1 * 3 + 2] * mat.m[2 * 3 + 1]));
-		result.m[1 * 3 + 0] = -((mat.m[1 * 3 + 0] * mat.m[2 * 3 + 2]) - (mat.m[1 * 3 + 2] * mat.m[2 * 3 + 0]));
-		result.m[2 * 3 + 0] = ((mat.m[1 * 3 + 0] * mat.m[2 * 3 + 1]) - (mat.m[1 * 3 + 1] * mat.m[2 * 3 + 0]));
-		result.m[0 * 3 + 1] = -((mat.m[0 * 3 + 1] * mat.m[2 * 3 + 2]) - (mat.m[0 * 3 + 2] * mat.m[2 * 3 + 1]));
-		result.m[1 * 3 + 1] = ((mat.m[0 * 3 + 0] * mat.m[2 * 3 + 2]) - (mat.m[0 * 3 + 2] * mat.m[2 * 3 + 0]));
-		result.m[2 * 3 + 1] = -((mat.m[0 * 3 + 0] * mat.m[2 * 3 + 1]) - (mat.m[0 * 3 + 1] * mat.m[2 * 3 + 0]));
-		result.m[0 * 3 + 2] = ((mat.m[0 * 3 + 1] * mat.m[1 * 3 + 2]) - (mat.m[0 * 3 + 2] * mat.m[1 * 3 + 1]));
-		result.m[1 * 3 + 2] = -((mat.m[0 * 3 + 0] * mat.m[1 * 3 + 2]) - (mat.m[0 * 3 + 2] * mat.m[1 * 3 + 0]));
-		result.m[2 * 3 + 2] = ((mat.m[0 * 3 + 0] * mat.m[1 * 3 + 1]) - (mat.m[0 * 3 + 1] * mat.m[1 * 3 + 0]));
+		result._m[0 * 3 + 0] = ((mat._m[1 * 3 + 1] * mat._m[2 * 3 + 2]) - (mat._m[1 * 3 + 2] * mat._m[2 * 3 + 1]));
+		result._m[1 * 3 + 0] = -((mat._m[1 * 3 + 0] * mat._m[2 * 3 + 2]) - (mat._m[1 * 3 + 2] * mat._m[2 * 3 + 0]));
+		result._m[2 * 3 + 0] = ((mat._m[1 * 3 + 0] * mat._m[2 * 3 + 1]) - (mat._m[1 * 3 + 1] * mat._m[2 * 3 + 0]));
+		result._m[0 * 3 + 1] = -((mat._m[0 * 3 + 1] * mat._m[2 * 3 + 2]) - (mat._m[0 * 3 + 2] * mat._m[2 * 3 + 1]));
+		result._m[1 * 3 + 1] = ((mat._m[0 * 3 + 0] * mat._m[2 * 3 + 2]) - (mat._m[0 * 3 + 2] * mat._m[2 * 3 + 0]));
+		result._m[2 * 3 + 1] = -((mat._m[0 * 3 + 0] * mat._m[2 * 3 + 1]) - (mat._m[0 * 3 + 1] * mat._m[2 * 3 + 0]));
+		result._m[0 * 3 + 2] = ((mat._m[0 * 3 + 1] * mat._m[1 * 3 + 2]) - (mat._m[0 * 3 + 2] * mat._m[1 * 3 + 1]));
+		result._m[1 * 3 + 2] = -((mat._m[0 * 3 + 0] * mat._m[1 * 3 + 2]) - (mat._m[0 * 3 + 2] * mat._m[1 * 3 + 0]));
+		result._m[2 * 3 + 2] = ((mat._m[0 * 3 + 0] * mat._m[1 * 3 + 1]) - (mat._m[0 * 3 + 1] * mat._m[1 * 3 + 0]));
 		return result;
 	}
 
@@ -231,18 +255,18 @@ namespace uut
 		Vector3 c[3];
 
 		for (int i = 0; i < 3; i++)
-			c[i] = Vector3(mat.m[i * 3 + 0], mat.m[i * 3 + 1], mat.m[i * 3 + 2]);
+			c[i] = Vector3(mat._m[i * 3 + 0], mat._m[i * 3 + 1], mat._m[i * 3 + 2]);
 
 		c[0].Normalize();
-		c[2] = c[0].Cross(c[1]).Normalized();
-		c[1] = c[2].Cross(c[0]).Normalized();
+		c[2] = Vector3::Cross(c[0], c[1]).Normalized();
+		c[1] = Vector3::Cross(c[2], c[0]).Normalized();
 
 		Matrix3 m;
 		for (int i = 0; i < 3; i++)
 		{
-			m.m[i * 3 + 0] = c[i].x;
-			m.m[i * 3 + 1] = c[i].y;
-			m.m[i * 3 + 2] = c[i].z;
+			m._m[i * 3 + 0] = c[i].x;
+			m._m[i * 3 + 1] = c[i].y;
+			m._m[i * 3 + 2] = c[i].z;
 		}
 		return mat;
 	}
@@ -288,7 +312,7 @@ namespace uut
 
 	Matrix3	Matrix3::RotateDeg(float rot)
 	{
-		return RotateRad(Math::Deg2Rad * rot);
+		return RotateRad(Math::DEG2RAD * rot);
 	}
 
 	Matrix3	Matrix3::Scale(const Vector2& scale)
@@ -317,7 +341,7 @@ namespace uut
 
 	Matrix3	Matrix3::Transform(const Vector2& pos, float angleDeg, const Vector2& scale)
 	{
-		const float rot = Math::Deg2Rad *angleDeg;
+		const float rot = Math::DEG2RAD *angleDeg;
 		const float sinRot = -Math::Sin(rot);
 		const float cosRot = Math::Cos(rot);
 

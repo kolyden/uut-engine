@@ -3,16 +3,29 @@
 
 namespace uut
 {
-	const float Math::PI = 3.14159274f;
-	const float Math::Infinity = std::numeric_limits<float>::max();
-	const float Math::NegativeInfinity = std::numeric_limits<float>::min();
-	const float Math::Rad2Deg = 0.0174532924f;
-	const float Math::Deg2Rad = 57.29578f;
+	const float Math::PI = 3.141592654f;
+	const float Math::TWO_PI = PI * 2.0f;
+	const float Math::HALF_PI = PI / 2.0f;
+
+	const float Math::POS_INFINITY = std::numeric_limits<float>::max();
+	const float Math::NEG_INFINITY = -std::numeric_limits<float>::min();
+	const float Math::RAD2DEG = 180.0f / PI;
+	const float Math::DEG2RAD = PI / 180.0f;
 	const float Math::Epsilon = 0.000001f;
 
 	float Math::Sin(float f) { return ::sin(f); }
 
+	float Math::Sin(const Radian& f)
+	{
+		return std::sin(f.GetRadians());
+	}
+
 	float Math::Cos(float f) { return ::cos(f); }
+
+	float Math::Cos(const Radian& f)
+	{
+		return std::cos(f.GetRadians());
+	}
 
 	void Math::SinCos(float angle, float& sin, float& cos)
 	{
@@ -20,21 +33,57 @@ namespace uut
 		cos = Cos(angle);
 	}
 
+	void Math::SinCos(const Radian& angle, float& sin, float& cos)
+	{
+		sin = Sin(angle.GetRadians());
+		cos = Cos(angle.GetRadians());
+	}
+
 	float Math::Tan(float f) { return ::tan(f); }
+
+	float Math::Tan(const Radian& f)
+	{
+		return std::tan(f.GetRadians());
+	}
 
 	float Math::Cot(float f) { return 1.0f / ::tan(f); }
 
-	float Math::Asin(float f) { return ::asin(f); }
+	float Math::Cot(const Radian& f)
+	{
+		return Cot(f.GetRadians());
+	}
 
-	float Math::Acos(float f) { return ::acos(f); }
+	Radian Math::Asin(float f) { return Radian(::asin(f)); }
 
-	float Math::Atan(float f) { return ::atan(f); }
+	Radian Math::Acos(float f) { return Radian(::acos(f)); }
 
-	float Math::Atan2(float y, float x) { return ::atan2(y, x); }
+	Radian Math::Atan(float f) { return Radian(::atan(f)); }
+
+	Radian Math::Atan2(float y, float x) { return Radian(::atan2(y, x)); }
 
 	float Math::Sqrt(float f) { return ::sqrt(f); }
 
+	Radian Math::Sqrt(const Radian& f)
+	{
+		return Radian(std::sqrtf(f.GetRadians()));
+	}
+
+	Degree Math::Sqrt(const Degree& f)
+	{
+		return Degree(std::sqrtf(f.GetDegrees()));
+	}
+
 	float Math::Abs(float f) { return ::abs(f); }
+
+	Radian Math::Abs(const Radian& f)
+	{
+		return Radian(std::abs(f.GetRadians()));
+	}
+
+	Degree Math::Abs(const Degree& f)
+	{
+		return Degree(std::abs(f.GetDegrees()));
+	}
 
 	float Math::Min(float a, float b) { return a >= b ? b : a; }
 
@@ -172,6 +221,18 @@ namespace uut
 	{
 		return Abs(b - a) < Max(1e-06f * Max(Abs(a), Abs(b)), Epsilon * 8.0f);
 	}
+
+#ifndef __GNUC__
+	bool Math::IsNaN(float value) { return value != value; }
+#else
+
+	bool Math::IsNaN(float value)
+	{
+		unsigned u = *(unsigned*)(&value);
+		return (u & 0x7fffffff) > 0x7f800000;
+	}
+
+#endif
 
 	float Math::Repeat(float t, float length) { return t - Floor(t / length) *length; }
 

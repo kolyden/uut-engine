@@ -1,104 +1,93 @@
 #pragma once
-#include <cstring>
 #include "Vector3.h"
 
 namespace uut
 {
+	class Plane;
+	class Radian;
 	class Quaternion;
 
+	// row-major matrix
 	class Matrix4
 	{
 	public:
 		Matrix4() {}
-		Matrix4(float _m00, float _m01, float _m02, float _m03,
-			float _m10, float _m11, float _m12, float _m13,
-			float _m20, float _m21, float _m22, float _m23,
-			float _m30, float _m31, float _m32, float _m33);
+		Matrix4(float f11, float f12, float f13, float f14,
+			float f21, float f22, float f23, float f24,
+			float f31, float f32, float f33, float f34,
+			float f41, float f42, float f43, float f44);
+		explicit Matrix4(const float* pf);
 
-		void MakeZero();
-		void MakeIdentity();
+		float& operator () (int row, int col);
+		float operator () (int row, int col) const;
 
-		operator float*() { return m; }
-		operator const float*() const { return m; }
+		operator float*() { return data; }
+		operator const float*() const { return data; }
 
-		float& operator[](unsigned int i) { return m[i]; }
-		const float& operator[](unsigned int i) const { return m[i]; }
+		Matrix4& operator *= (const Matrix4& mat);
+		Matrix4& operator += (const Matrix4& mat);
+		Matrix4& operator -= (const Matrix4& mat);
+		Matrix4& operator *= (float f);
+		Matrix4& operator /= (float f);
 
-		Matrix4	operator + (const Matrix4& mat) const { Matrix4 m(*this); return m.Add(mat); }
-		Matrix4	operator - (const Matrix4& mat) const { Matrix4 m(*this); return m.Sub(mat); }
-		Matrix4	operator * (const Matrix4& mat) const { Matrix4 m(*this); return m.Multiply(mat); }
+		Matrix4 operator + () const;
+		Matrix4 operator - () const;
 
-		Vector3 operator * (const Vector3& vec) const { Matrix4 m(*this); return m.Multiply(vec); }
+		Matrix4 operator * (const Matrix4& mat) const;
+		Matrix4 operator + (const Matrix4& mat) const;
+		Matrix4 operator - (const Matrix4& mat) const;
+		Matrix4 operator * (float f) const;
+		Matrix4 operator / (float f) const;
 
-		Matrix4	operator * (float f) const { Matrix4 m(*this); return m.Multiply(f); }
-		Matrix4	operator / (float f) const { Matrix4 m(*this); return m.Divide(f); }
+		friend Matrix4 operator *(float f, const Matrix4& mat);
 
-		Matrix4& operator += (const Matrix4& mat) { return Add(mat); }
-		Matrix4& operator -= (const Matrix4& mat) { return Sub(mat); }
-		Matrix4& operator *= (const Matrix4& mat) { return Multiply(mat); }
+		bool operator == (const Matrix4& mat) const;
+		bool operator != (const Matrix4& mat) const;
 
-		Vector3 operator *= (const Vector3& vec) { return Multiply(vec); }
+		bool Decompose(Quaternion& rotation, Vector3& translation, Vector3& scale);
+		float Determinant() const;
+		Matrix4 Transpose() const;
 
-		void operator = (const Matrix4& mat) { memcpy(m, mat.m, sizeof(m)); }
+		Vector3 VectorTransform(const Vector3& vec) const;
 
-		bool operator == (const Matrix4& mat) const { return IsEqual(mat); }
-		bool operator != (const Matrix4& mat) const { return !IsEqual(mat); }
+		static Matrix4 Multiply(const Matrix4& m1, const Matrix4& m2);
 
-		bool IsZero() const;
-		bool IsIdentity() const;
+		static Matrix4 LookAt(const Vector3& eye, const Vector3& at, const Vector3& up);
+		static Matrix4 Ortho(float width, float height, float znear, float zfar);
+		static Matrix4 OrthoOffCenter(float left, float right, float bottom, float top, float znear, float zfar);
+		static Matrix4 PerspectiveFov(float fovy, float aspect, float znear, float zfar);
+		static Matrix4 Perspective(float width, float height, float znear, float zfar);
 
-		float Det() const;
-		Matrix4& Inverse();
+		static Matrix4 Reflect(const Plane& plane);
 
-		bool IsEqual(const Matrix4& mat) const;
-		Matrix4& Add(const Matrix4& mat);
-		Matrix4& Sub(const Matrix4& mat);
-		Matrix4& Multiply(const Matrix4& mat);
+		static Matrix4 Translation(const Vector3& translation);
+		static Matrix4 Translation(float x, float y, float z);
 
-		Vector3 Multiply(const Vector3& vec);
+		static Matrix4 RotationAxis(const Vector3& axis, const Radian& angle);
+		static Matrix4 RotationQuaternion(const Quaternion& quat);
+		static Matrix4 RotationX(const Radian& angle);
+		static Matrix4 RotationY(const Radian& angle);
+		static Matrix4 RotationZ(const Radian& angle);
+		static Matrix4 RotationYawPitchRoll(const Radian& yaw, const Radian& pitch, const Radian& roll);
 
-		Matrix4& Multiply(float f);
-		Matrix4& Divide(float f);
+		static Matrix4 Scaling(const Vector3& scale);
+		static Matrix4 Scaling(float sx, float sy, float sz);
 
-		static Matrix4 Inverse(const Matrix4& mat);
-		static Matrix4 Transpose(const Matrix4& mat);
-
-		static Matrix4 Add(const Matrix4& a, const Matrix4& b) { Matrix4 dest = b + a; return dest; }
-		static Matrix4 Sub(const Matrix4& a, const Matrix4& b) { Matrix4 dest = b - a; return dest; }
-		static Matrix4 Multiply(const Matrix4& a, const Matrix4& b) { Matrix4 dest = b * a; return dest; }
-		static Vector3 Multiply(const Matrix4& mat, const Vector3& vec) { Matrix4 dest(mat); return dest * vec; }
-
-		static Matrix4 Translate(const Vector3& pos);
-		static Matrix4 Translate(float dx, float dy, float dz);
-
-		static Matrix4 RotateRad(const Vector3& axis, float angle);
-		static Matrix4 RotateDeg(const Vector3& axis, float angle);
-
-		static Matrix4 Scale(const Vector3& scale);
-		static Matrix4 Scale(float scale);
-		static Matrix4 Scale(float scalex, float scaley, float scalez);
-
-		static Matrix4 Transform(const Vector3& position, const Quaternion& rotation, const Vector3& scale);
-
-		static Matrix4 LookAtLH(const Vector3& eye, const Vector3& at, const Vector3& up);
-		static Matrix4 OrthoProjection(float width, float height, float znear, float zfar);
-		static Matrix4 OrthoProjection(float l, float r, float b, float t, float znear, float zfar);
-		static Matrix4 PerspectiveFovLH(float fovy, float aspect, float znear, float zfar);
-		static Matrix4 PerspectiveLH(float w, float h, float znear, float zfar);
+		static Matrix4 Transformation(const Vector3& translation, const Quaternion& rotation, const Vector3& scale);
 
 		static const Matrix4 ZERO;
 		static const Matrix4 IDENTITY;
 
 		union
 		{
-			float m[16];
-			float mtx[4][4];
+			float data[16];
+			float m[4][4];
 			struct
 			{
-				float m00, m01, m02, m03;
-				float m10, m11, m12, m13;
-				float m20, m21, m22, m23;
-				float m30, m31, m32, m33;
+				float _11, _12, _13, _14;
+				float _21, _22, _23, _24;
+				float _31, _32, _33, _34;
+				float _41, _42, _43, _44;
 			};
 		};
 	};
