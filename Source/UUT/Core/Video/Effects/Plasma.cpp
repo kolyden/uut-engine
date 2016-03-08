@@ -20,9 +20,9 @@ namespace uut
 
 		for (int i = 0; i < 256; i++)
 		{
-			const int r = Math::RoundToInt(128.0f + 128.0f*sinf(Math::PI * i / 32));
-			const int g = Math::RoundToInt(128.0f + 128.0f*sinf(Math::PI * i / 64));
-			const int b = Math::RoundToInt(128.0f + 128.0f*sinf(Math::PI * i / 128));
+			const int r = Math::RoundToInt(128.0f + 128.0f*Math::Sin(Math::PI * i / 32));
+			const int g = Math::RoundToInt(128.0f + 128.0f*Math::Sin(Math::PI * i / 64));
+			const int b = Math::RoundToInt(128.0f + 128.0f*Math::Sin(Math::PI * i / 128));
 			_palette[i] = Color32(Math::Clamp(r, 0, 255), Math::Clamp(g, 0, 255), Math::Clamp(b, 0, 255)).ToInt();
 		}
 	}

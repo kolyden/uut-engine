@@ -304,7 +304,7 @@ namespace uut
 			-1.0f - 2.0f*l / (r - l), 1.0f + 2.0f*t / (b - t), zn / (zn - zf), 1);
 	}
 
-	Matrix4 Matrix4::PerspectiveFov(float fovy, float aspect, float zn, float zf)
+	Matrix4 Matrix4::PerspectiveFov(const Radian& fovy, float aspect, float zn, float zf)
 	{
 		const float tan = Math::Tan(fovy / 2.0f);
 		return Matrix4(

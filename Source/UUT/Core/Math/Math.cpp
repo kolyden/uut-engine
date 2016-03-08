@@ -3,14 +3,14 @@
 
 namespace uut
 {
-	const float Math::PI = 3.141592654f;
-	const float Math::TWO_PI = PI * 2.0f;
-	const float Math::HALF_PI = PI / 2.0f;
+	const Radian Math::PI(3.141592654f);
+	const Radian Math::TWO_PI = PI * 2.0f;
+	const Radian Math::HALF_PI = PI / 2.0f;
 
 	const float Math::POS_INFINITY = std::numeric_limits<float>::max();
 	const float Math::NEG_INFINITY = -std::numeric_limits<float>::min();
-	const float Math::RAD2DEG = 180.0f / PI;
-	const float Math::DEG2RAD = PI / 180.0f;
+	const float Math::RAD2DEG = (180.0f / PI).GetRadians();
+	const float Math::DEG2RAD = (PI / 180.0f).GetRadians();
 	const float Math::Epsilon = 0.000001f;
 
 	float Math::Sin(float f) { return ::sin(f); }

@@ -31,6 +31,7 @@ namespace uut
 		Radian& operator-= (const Radian& r) { _angle -= r._angle; return *this; }
 		Radian& operator-= (const Degree& d);
 		Radian operator* (float f) const { return Radian(_angle * f); }
+		Radian operator* (int i) const { return Radian(_angle * static_cast<float>(i)); }
 		Radian operator* (const Radian& f) const { return Radian(_angle * f._angle); }
 		Radian& operator*= (float f) { _angle *= f; return *this; }
 		Radian operator/ (float f) const { return Radian(_angle / f); }

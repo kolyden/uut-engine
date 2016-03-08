@@ -19,9 +19,9 @@ namespace uut
 
 	Radian& Radian::Clamp()
 	{
-		_angle = fmodf(_angle, Math::TWO_PI);
+		_angle = fmodf(_angle, Math::TWO_PI.GetRadians());
 		if (_angle < 0)
-			_angle += Math::TWO_PI;
+			_angle += Math::TWO_PI.GetRadians();
 
 		return *this;
 	}

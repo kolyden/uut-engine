@@ -1,5 +1,7 @@
 #include "IntVector2.h"
 #include <algorithm>
+#include "Math.h"
+#include "Vector2.h"
 
 namespace uut
 {
@@ -12,8 +14,8 @@ namespace uut
 	{
 	}
 
-	IntVector2::IntVector2(int _x, int _y)
-		: x(_x), y(_y)
+	IntVector2::IntVector2(int ix, int iy)
+		: x(ix), y(iy)
 	{
 	}
 
@@ -23,14 +25,61 @@ namespace uut
 	}
 
 	IntVector2::IntVector2(const IntVector2& vec)
-		: x(vec.x), y(vec.y)
+		: x(vec.x)
+		, y(vec.y)
 	{
 	}
 
-	IntVector2::IntVector2(IntVector2&& vec)
+	IntVector2::IntVector2(const Vector2& vec)
+		: x(Math::RoundToInt(vec.x))
+		, y(Math::RoundToInt(vec.y))
 	{
-		std::swap(x, vec.x);
-		std::swap(y, vec.y);
+	}
+
+	IntVector2& IntVector2::operator+=(const IntVector2& vec)
+	{
+		x += vec.x;
+		y += vec.y;
+		return *this;
+	}
+
+	IntVector2& IntVector2::operator-=(const IntVector2& vec)
+	{
+		x -= vec.x;
+		y -= vec.y;
+		return *this;
+	}
+
+	IntVector2& IntVector2::operator*=(int s)
+	{
+		x *= s;
+		y *= s;
+		return *this;
+	}
+
+	IntVector2 IntVector2::operator+() const
+	{
+		return *this;
+	}
+
+	IntVector2 IntVector2::operator-() const
+	{
+		return IntVector2(-x, -y);
+	}
+
+	IntVector2 IntVector2::operator+(const IntVector2& vec) const
+	{
+		return IntVector2(x + vec.x, y + vec.y);
+	}
+
+	IntVector2 IntVector2::operator-(const IntVector2& vec) const
+	{
+		return IntVector2(x - vec.x, y - vec.y);
+	}
+
+	IntVector2 IntVector2::operator*(int s) const
+	{
+		return IntVector2(x * s, y * s);
 	}
 
 	IntVector2& IntVector2::operator=(const IntVector2& vec)

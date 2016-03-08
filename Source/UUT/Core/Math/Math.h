@@ -7,9 +7,9 @@ namespace uut
 	class Math
 	{
 	public:
-		static const float PI;
-		static const float TWO_PI;
-		static const float HALF_PI;
+		static const Radian PI;
+		static const Radian TWO_PI;
+		static const Radian HALF_PI;
 
 		static const float POS_INFINITY;
 		static const float NEG_INFINITY;

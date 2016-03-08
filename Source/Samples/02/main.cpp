@@ -19,12 +19,13 @@ namespace uut
 
 		_graphics = new Graphics(_renderer);
 
-		_camera = new Camera();
-		_camera->SetCameraType(CameraType::Perspective);
-		_camera->SetSize(_renderer->GetScreenSize());
-		_camera->SetNearClipPlane(-5);
+		_camera = new FreeCamera();
+		_camera->SetPosition(Vector3(0, 0, -20));
 
 		_timer.Start();
+
+		const Vector2 size = _renderer->GetScreenSize();
+		_matProj = Matrix4::PerspectiveFov(Math::PI / 4, size.x / size.y, 0.1f, 1000.0f);
 	}
 
 	static bool show_test_window = false;
@@ -52,48 +53,50 @@ namespace uut
 		}
 
 		const float moveSpeed = 50.0f;
-		const float rotateSpeed = Math::PI / 2;
+		const Radian rotateSpeed = Math::PI / 2;
 
 		if (_input->IsKey(SDL_SCANCODE_A))
-			_camera->Move(-moveSpeed * _timer.GetDeltaTime(), 0, 0);
+			_camera->MoveRight(-moveSpeed * _timer.GetDeltaTime());
 		if (_input->IsKey(SDL_SCANCODE_D))
-			_camera->Move(+moveSpeed * _timer.GetDeltaTime(), 0, 0);
+			_camera->MoveRight(+moveSpeed * _timer.GetDeltaTime());
 		if (_input->IsKey(SDL_SCANCODE_S))
-			_camera->Move(0, -moveSpeed * _timer.GetDeltaTime(), 0);
+			_camera->MoveForward(-moveSpeed * _timer.GetDeltaTime());
 		if (_input->IsKey(SDL_SCANCODE_W))
-			_camera->Move(0, +moveSpeed * _timer.GetDeltaTime(), 0);
+			_camera->MoveForward(+moveSpeed * _timer.GetDeltaTime());
 		if (_input->IsKey(SDL_SCANCODE_Q))
-			_camera->Move(0, 0, -moveSpeed * _timer.GetDeltaTime());
+			_camera->MoveUp(-moveSpeed * _timer.GetDeltaTime());
 		if (_input->IsKey(SDL_SCANCODE_E))
-			_camera->Move(0, 0, +moveSpeed * _timer.GetDeltaTime());
+			_camera->MoveUp(+moveSpeed * _timer.GetDeltaTime());
 
 		if (_input->IsKey(SDL_SCANCODE_LEFT))
-			_camera->Rotate(Quaternion::RotationAxis(Vector3::AXIS_X, -Radian(rotateSpeed * _timer.GetDeltaTime())));
+			_camera->Yaw(-rotateSpeed * _timer.GetDeltaTime());
 		if (_input->IsKey(SDL_SCANCODE_RIGHT))
-			_camera->Rotate(Quaternion::RotationAxis(Vector3::AXIS_X, +Radian(rotateSpeed * _timer.GetDeltaTime())));
+			_camera->Yaw(rotateSpeed * _timer.GetDeltaTime());
 		if (_input->IsKey(SDL_SCANCODE_UP))
-			_camera->Rotate(Quaternion::RotationAxis(Vector3::AXIS_Y, -Radian(rotateSpeed * _timer.GetDeltaTime())));
+			_camera->Pitch(rotateSpeed * _timer.GetDeltaTime());
 		if (_input->IsKey(SDL_SCANCODE_DOWN))
-			_camera->Rotate(Quaternion::RotationAxis(Vector3::AXIS_Y, +Radian(rotateSpeed * _timer.GetDeltaTime())));
+			_camera->Pitch(rotateSpeed * _timer.GetDeltaTime());
 		if (_input->IsKey(SDL_SCANCODE_Z))
-			_camera->Rotate(Quaternion::RotationAxis(Vector3::AXIS_Z, -Radian(rotateSpeed * _timer.GetDeltaTime())));
+			_camera->Roll(rotateSpeed * _timer.GetDeltaTime());
 		if (_input->IsKey(SDL_SCANCODE_X))
-			_camera->Rotate(Quaternion::RotationAxis(Vector3::AXIS_Z, +Radian(rotateSpeed * _timer.GetDeltaTime())));
+			_camera->Roll(rotateSpeed * _timer.GetDeltaTime());
 
 		///////////////////////////////////////////////////////////////
 		_renderer->ResetStates();
 		_renderer->Clear(Color32(114, 144, 154));
 		if (_renderer->BeginScene())
 		{
-			_camera->Apply(_renderer);
+			_renderer->SetTransform(RT_PROJECTION, _matProj);
+			_camera->Setup(_renderer);
+
 			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_X * 1000, Color32::RED);
 			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_Y * 1000, Color32::GREEN);
 			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_Z * 1000, Color32::BLUE);
 
 			_graphics->DrawTrinagle(
-				Vertex(Vector3(0, 0, 0)),
-				Vertex(Vector3(0, 100, 0)),
-				Vertex(Vector3(100, 0, 0)));
+				Vertex(Vector3(0, 0, 0), Color32::BLUE),
+				Vertex(Vector3(0, 100, 0), Color32::GREEN),
+				Vertex(Vector3(100, 0, 0), Color32::RED));
 			_graphics->Flush();
 
 			_gui->SetupCamera();
