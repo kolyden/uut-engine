@@ -27,6 +27,8 @@ namespace uut
 		void DrawQuad(const Vertex& v0, const Vertex& v1, const Vertex& v2, const Vertex& v3, Texture2D* texture = nullptr);
 		void DrawQuad(const Rect& rect, float z = 0.0f, Texture2D* texture = nullptr, const Color32& color = Color32::WHITE);
 
+		void DrawSolidCube(const Vector3& center, float side, const Color32& color = Color32::WHITE);
+
 		void Flush();
 
 	protected:

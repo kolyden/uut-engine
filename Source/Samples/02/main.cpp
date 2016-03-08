@@ -8,6 +8,7 @@
 namespace uut
 {
 	SampleApp::SampleApp()
+		: _dragStart(false)
 	{
 		_windowSize = IntVector2(800, 600);
 	}
@@ -81,6 +82,29 @@ namespace uut
 		if (_input->IsKey(SDL_SCANCODE_X))
 			_camera->Roll(rotateSpeed * _timer.GetDeltaTime());
 
+		if (_input->IsMouseButton(0))
+		{
+			if (_dragStart)
+			{
+				const Degree dragMove(0.1f);
+
+				auto& curPos = _input->GetMousePos();
+				const auto delta = curPos - _dragPos;
+				_dragPos = curPos;
+
+				if (delta.x != 0)
+					_camera->Yaw(dragMove*delta.x);
+				if (delta.y != 0)
+					_camera->Pitch(dragMove*delta.y);
+			}
+			else
+			{
+				_dragStart = true;
+				_dragPos = _input->GetMousePos();
+			}
+		}
+		else _dragStart = false;
+
 		///////////////////////////////////////////////////////////////
 		_renderer->ResetStates();
 		_renderer->Clear(Color32(114, 144, 154));
@@ -93,10 +117,7 @@ namespace uut
 			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_Y * 1000, Color32::GREEN);
 			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_Z * 1000, Color32::BLUE);
 
-			_graphics->DrawTrinagle(
-				Vertex(Vector3(0, 0, 0), Color32::BLUE),
-				Vertex(Vector3(0, 100, 0), Color32::GREEN),
-				Vertex(Vector3(100, 0, 0), Color32::RED));
+			_graphics->DrawSolidCube(Vector3::ZERO, 5);
 			_graphics->Flush();
 
 			_gui->SetupCamera();

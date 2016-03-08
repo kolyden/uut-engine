@@ -95,6 +95,63 @@ namespace uut
 			texture);
 	}
 
+	void Graphics::DrawSolidCube(const Vector3& center, float side, const Color32& color)
+	{
+		const float hsize = side / 2;
+
+		const Vector3 v0(center.x - hsize, center.y + hsize, center.z - hsize);
+		const Vector3 v1(center.x + hsize, center.y + hsize, center.z - hsize);
+		const Vector3 v2(center.x + hsize, center.y - hsize, center.z - hsize);
+		const Vector3 v3(center.x - hsize, center.y - hsize, center.z - hsize);
+
+		const Vector3 v4(center.x - hsize, center.y + hsize, center.z + hsize);
+		const Vector3 v5(center.x + hsize, center.y + hsize, center.z + hsize);
+		const Vector3 v6(center.x + hsize, center.y - hsize, center.z + hsize);
+		const Vector3 v7(center.x - hsize, center.y - hsize, center.z + hsize);
+
+		// FRONT
+		DrawQuad(
+			Vertex(v0, color, Vector2::ZERO),
+			Vertex(v1, color, Vector2::AXIS_X),
+			Vertex(v2, color, Vector2::ONE),
+			Vertex(v3, color, Vector2::AXIS_Y));
+
+		//BACK
+		DrawQuad(
+			Vertex(v5, color, Vector2::ZERO),
+			Vertex(v4, color, Vector2::AXIS_X),
+			Vertex(v7, color, Vector2::ONE),
+			Vertex(v6, color, Vector2::AXIS_Y));
+
+		// TOP
+		DrawQuad(
+			Vertex(v4, color, Vector2::ZERO),
+			Vertex(v5, color, Vector2::AXIS_X),
+			Vertex(v1, color, Vector2::ONE),
+			Vertex(v0, color, Vector2::AXIS_Y));
+
+		// BOTTOM
+		DrawQuad(
+			Vertex(v3, color, Vector2::ZERO),
+			Vertex(v2, color, Vector2::AXIS_X),
+			Vertex(v6, color, Vector2::ONE),
+			Vertex(v7, color, Vector2::AXIS_Y));
+
+		// LEFT
+		DrawQuad(
+			Vertex(v4, color, Vector2::ZERO),
+			Vertex(v0, color, Vector2::AXIS_X),
+			Vertex(v3, color, Vector2::ONE),
+			Vertex(v7, color, Vector2::AXIS_Y));
+
+		// RIGHT
+		DrawQuad(
+			Vertex(v1, color, Vector2::ZERO),
+			Vertex(v5, color, Vector2::AXIS_X),
+			Vertex(v6, color, Vector2::ONE),
+			Vertex(v2, color, Vector2::AXIS_Y));
+	}
+
 	void Graphics::Flush()
 	{
 		DrawAll();

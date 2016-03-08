@@ -31,7 +31,7 @@ namespace uut
 	{
 		_d3ddev->SetPixelShader(nullptr);
 		_d3ddev->SetVertexShader(nullptr);
-		_d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+		_d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 		_d3ddev->SetRenderState(D3DRS_LIGHTING, false);
 		_d3ddev->SetRenderState(D3DRS_ZENABLE, false);
 		_d3ddev->SetRenderState(D3DRS_ZWRITEENABLE, false);

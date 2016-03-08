@@ -21,6 +21,9 @@ namespace uut
 		Timer _timer;
 		Matrix4 _matProj;
 
+		bool _dragStart;
+		IntVector2 _dragPos;
+
 		virtual void OnInit() override;
 		virtual void OnFrame() override;
 	};
