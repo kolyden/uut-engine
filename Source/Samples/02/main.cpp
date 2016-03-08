@@ -38,6 +38,7 @@ namespace uut
 
 		///////////////////////////////////////////////////////////////
 		{
+			ImGui::Begin("Test");
 			static float f = 0.0f;
 			ImGui::Text("Hello, world!");
 			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
@@ -45,6 +46,7 @@ namespace uut
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
 				1000.0f / ImGui::GetIO().Framerate,
 				ImGui::GetIO().Framerate);
+			ImGui::End();
 		}
 
 		if (show_test_window)
@@ -82,7 +84,7 @@ namespace uut
 		if (_input->IsKey(SDL_SCANCODE_X))
 			_camera->Roll(rotateSpeed * _timer.GetDeltaTime());
 
-		if (_input->IsMouseButton(0))
+		if (_input->IsMouseButton(0) && !ImGui::IsMouseHoveringAnyWindow())
 		{
 			if (_dragStart)
 			{

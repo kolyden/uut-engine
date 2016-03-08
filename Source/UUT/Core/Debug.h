@@ -1,6 +1,5 @@
 #pragma once
 #include "Core/String.h"
-#include "SDL2/SDL.h"
 
 namespace uut
 {
@@ -25,5 +24,3 @@ namespace uut
 		static void LogError(const char* message, ...);
 	};
 }
-
-#define UUT_ASSERT(condition) SDL_assert(condition)

@@ -23,12 +23,18 @@
     <ClCompile Include="..\Source\UUT\Core\Engine.cpp" />
     <ClCompile Include="..\Source\UUT\Core\GUI\ImGuiModule.cpp" />
     <ClCompile Include="..\Source\UUT\Core\HashString.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\IO\Directory.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\IO\File.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\IO\FileStream.cpp" />
     <ClCompile Include="..\Source\UUT\Core\IO\Input.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\IO\MemoryStream.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\IO\Path.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\IO\Stream.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\IO\TextReader.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Degree.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\IntRect.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\IntVector2.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Math.cpp" />
-    <ClCompile Include="..\Source\UUT\Core\Math\Matrix3.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Matrix4.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Plane.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Math\Quaternion.cpp" />
@@ -68,6 +74,7 @@
     <ClCompile Include="..\Source\UUT\Core\Windows\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Source\UUT\Core\Assert.h" />
     <ClInclude Include="..\Source\UUT\Core\Collections\Array.h" />
     <ClInclude Include="..\Source\UUT\Core\Collections\Dictionary.h" />
     <ClInclude Include="..\Source\UUT\Core\Collections\IComparer.h" />
@@ -77,12 +84,19 @@
     <ClInclude Include="..\Source\UUT\Core\GUI\ImGuiModule.h" />
     <ClInclude Include="..\Source\UUT\Core\HashString.h" />
     <ClInclude Include="..\Source\UUT\Core\IEquatable.h" />
+    <ClInclude Include="..\Source\UUT\Core\IO\Directory.h" />
+    <ClInclude Include="..\Source\UUT\Core\IO\File.h" />
+    <ClInclude Include="..\Source\UUT\Core\IO\FileMode.h" />
+    <ClInclude Include="..\Source\UUT\Core\IO\FileStream.h" />
     <ClInclude Include="..\Source\UUT\Core\IO\Input.h" />
+    <ClInclude Include="..\Source\UUT\Core\IO\MemoryStream.h" />
+    <ClInclude Include="..\Source\UUT\Core\IO\Path.h" />
+    <ClInclude Include="..\Source\UUT\Core\IO\Stream.h" />
+    <ClInclude Include="..\Source\UUT\Core\IO\TextReader.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Degree.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\IntRect.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\IntVector2.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Math.h" />
-    <ClInclude Include="..\Source\UUT\Core\Math\Matrix3.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Matrix4.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Plane.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Quaternion.h" />

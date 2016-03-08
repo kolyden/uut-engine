@@ -50,6 +50,9 @@ namespace uut
 // 		static int Min(const List<int>& values);
 // 		static float Min(const List<float>& values);
 
+		template<typename T>
+		static int Min(const T& a, const T& b) { return a >= b ? b : a; }
+
 		static float Max(float a, float b);
 		static int Max(int a, int b);
 // 		static int Max(const List<int>& values);
@@ -73,6 +76,9 @@ namespace uut
 		static float Clamp(float val, float min, float max);
 		static int Clamp(int val, int min, int max);
 		static float Clamp01(float val);
+
+		template<typename T>
+		static int Compare(const T& a, const T& b) { return a > b ? +1 : (a < b ? -1 : 0); }
 
 		static float Lerp(float from, float to, float t);
 // 		static float LerpAngle(float a, float b, float t);

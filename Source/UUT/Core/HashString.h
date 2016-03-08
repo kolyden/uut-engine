@@ -13,6 +13,7 @@ namespace uut
 
 		void Clear();
 
+		const char* GetData() const { return _data.c_str(); }
 		int GetHash() const { return _hash; }
 
 		bool Equals(const HashString& str) const;

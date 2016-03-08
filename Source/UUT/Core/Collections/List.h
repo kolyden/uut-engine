@@ -1,9 +1,9 @@
 #pragma once
 #include "IComparer.h"
-#include "Core/Debug.h"
 #include <functional>
 #include <algorithm>
 #include <vector>
+#include <Core/Assert.h>
 
 namespace uut
 {
@@ -21,7 +21,7 @@ namespace uut
 		typedef std::function<int(const T& a, const T& b)> Comparison;
 
 		List() {}
-		List(const List<T>& other) : _data(other) {}
+		List(const List<T>& other) : _data(other._data) {}
 		List(List<T>&& other) { _data = std::move(other._data); }
 		explicit List(const T& data, int count = 1) : _data(data, count) {}
 		List(const T* data, unsigned int count) : _data(data, data + count) {}
