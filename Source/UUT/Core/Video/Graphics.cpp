@@ -17,6 +17,10 @@ namespace uut
 		_vdec = _renderer->CreateVertexDeclaration(Vertex::DECLARE);
 
 		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
+
+		_renderState.zwriteEnable = true;
+		_renderState.sampler[0].minFilter = TextureFilter::Linear;
+		_renderState.sampler[0].magFilter = TextureFilter::Linear;
 	}
 
 	void Graphics::DrawPoint(const Vector3& point, const Color32& color /* = Color32::WHITE */)
@@ -152,6 +156,69 @@ namespace uut
 			Vertex(v2, color, Vector2::AXIS_Y));
 	}
 
+	void Graphics::DrawCube(const Vector3& center, float side, const Color32& color, Texture2D* texture)
+	{
+		const float hsize = side / 2;
+
+		const Vector3 v0(center.x - hsize, center.y + hsize, center.z - hsize);
+		const Vector3 v1(center.x + hsize, center.y + hsize, center.z - hsize);
+		const Vector3 v2(center.x + hsize, center.y - hsize, center.z - hsize);
+		const Vector3 v3(center.x - hsize, center.y - hsize, center.z - hsize);
+
+		const Vector3 v4(center.x - hsize, center.y + hsize, center.z + hsize);
+		const Vector3 v5(center.x + hsize, center.y + hsize, center.z + hsize);
+		const Vector3 v6(center.x + hsize, center.y - hsize, center.z + hsize);
+		const Vector3 v7(center.x - hsize, center.y - hsize, center.z + hsize);
+
+		// FRONT
+		DrawQuad(
+			Vertex(v0, color, Vector2::ZERO),
+			Vertex(v1, color, Vector2::AXIS_X),
+			Vertex(v2, color, Vector2::ONE),
+			Vertex(v3, color, Vector2::AXIS_Y),
+			texture);
+
+		//BACK
+		DrawQuad(
+			Vertex(v5, color, Vector2::ZERO),
+			Vertex(v4, color, Vector2::AXIS_X),
+			Vertex(v7, color, Vector2::ONE),
+			Vertex(v6, color, Vector2::AXIS_Y),
+			texture);
+
+		// TOP
+		DrawQuad(
+			Vertex(v4, color, Vector2::ZERO),
+			Vertex(v5, color, Vector2::AXIS_X),
+			Vertex(v1, color, Vector2::ONE),
+			Vertex(v0, color, Vector2::AXIS_Y),
+			texture);
+
+		// BOTTOM
+		DrawQuad(
+			Vertex(v3, color, Vector2::ZERO),
+			Vertex(v2, color, Vector2::AXIS_X),
+			Vertex(v6, color, Vector2::ONE),
+			Vertex(v7, color, Vector2::AXIS_Y),
+			texture);
+
+		// LEFT
+		DrawQuad(
+			Vertex(v4, color, Vector2::ZERO),
+			Vertex(v0, color, Vector2::AXIS_X),
+			Vertex(v3, color, Vector2::ONE),
+			Vertex(v7, color, Vector2::AXIS_Y),
+			texture);
+
+		// RIGHT
+		DrawQuad(
+			Vertex(v1, color, Vector2::ZERO),
+			Vertex(v5, color, Vector2::AXIS_X),
+			Vertex(v6, color, Vector2::ONE),
+			Vertex(v2, color, Vector2::AXIS_Y),
+			texture);
+	}
+
 	void Graphics::Flush()
 	{
 		DrawAll();
@@ -175,6 +242,8 @@ namespace uut
 	{
 		_vbuf->Unlock();
 
+		_renderer->SetState(_renderState);
+// 		_renderer->ResetStates();
 		_renderer->SetTexture(0, _texture);
 		_renderer->SetVertexBuffer(_vbuf, Vertex::SIZE);
 		_renderer->SetVertexDeclaration(_vdec);

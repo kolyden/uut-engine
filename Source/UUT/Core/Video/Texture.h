@@ -1,7 +1,6 @@
 #pragma once
-#include "Core/Object.h"
-#include "Core/Math/IntVector2.h"
-#include "SDL2/SDL.h"
+#include <Core/Resources/Resource.h>
+#include <Core/Math/IntVector2.h>
 
 namespace uut
 {
@@ -12,7 +11,7 @@ namespace uut
 		Target,
 	};
 
-	class Texture : public Object
+	class Texture : public Resource
 	{
 	public:
 		Texture();

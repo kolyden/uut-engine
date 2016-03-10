@@ -9,6 +9,9 @@
 
 namespace uut
 {
+	class Plasma;
+	class ResourceLoader;
+
 	class SampleApp : public Application
 	{
 	public:
@@ -18,8 +21,15 @@ namespace uut
 		SharedPtr<FreeCamera> _camera;
 		SharedPtr<Graphics> _graphics;
 		SharedPtr<ImGuiModule> _gui;
+		SharedPtr<Texture2D> _tex0;
+		SharedPtr<Texture2D> _tex1;
+		SharedPtr<Plasma> _plasma;
+		SharedPtr<ResourceLoader> _texLoader;
 		Timer _timer;
 		Matrix4 _matProj;
+		int _frameCounter;
+		float _frameTimer;
+		int _fpsCount;
 
 		bool _dragStart;
 		IntVector2 _dragPos;

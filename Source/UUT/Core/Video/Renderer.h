@@ -11,24 +11,23 @@
 
 namespace uut
 {
+	struct RenderState;
 	class Window;
 	class Texture2D;
 	class VertexBuffer;
 	class IndexBuffer;
-
-	enum class RenderState
-	{
-		AlphaBlend,
-		AlphaTest,
-		ScissorTest,
-		Lightning,
-	};
 
 	enum RenderTransform
 	{
 		RT_VIEW,
 		RT_WORLD,
 		RT_PROJECTION,
+	};
+
+	struct RendererStatistics
+	{
+		int drawCall;
+		int verticesCount;
 	};
 
 	class Renderer : public Object
@@ -41,8 +40,10 @@ namespace uut
 		Window* GetWindow() const { return _window; }
 
 		virtual void ResetStates() = 0;
-		virtual void SetState(RenderState state, bool enabled) = 0;
+		virtual void SetState(const RenderState& state, bool force = false) = 0;
 		virtual void SetScissorRect(const IntRect& rect) = 0;
+
+		virtual const RendererStatistics& GetStatistics() const = 0;
 
 		virtual bool SetTransform(RenderTransform type, const Matrix4& mat) = 0;
 
@@ -57,7 +58,7 @@ namespace uut
 		virtual bool DrawPrimitive(Topology topology, uint32_t primitiveCount, uint32_t offset = 0) = 0;
 		virtual bool DrawIndexedPrimitive(Topology topology, int baseVertexIndex, uint32_t minVertexIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount) = 0;
 
-		virtual bool Clear(const Color& color = Color::WHITE, float z = 1.0f, uint32_t stencil = 0) = 0;
+		virtual bool Clear(const Color32& color = Color32::WHITE, float z = 1.0f, uint32_t stencil = 0) = 0;
 		virtual bool Present() = 0;
 
 		virtual SharedPtr<Texture2D> CreateTexture(const IntVector2& size, TextureAccess access = TextureAccess::Streaming) = 0;

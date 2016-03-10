@@ -5,6 +5,7 @@
 #include "Core/Math/Vector2.h"
 #include "Core/Video/Color.h"
 #include <Core/Math/Matrix4.h>
+#include <Core/Video/RenderState.h>
 
 namespace uut
 {
@@ -34,6 +35,7 @@ namespace uut
 		SharedPtr<IndexBuffer> _ib;
 		SharedPtr<Texture2D> _font;
 		Matrix4 _matProj;
+		RenderState _renderState;
 
 		int _vbSize;
 		int _ibSize;

@@ -8,6 +8,7 @@ namespace uut
 	{
 	public:
 		Vector3();
+		explicit Vector3(float f);
 		Vector3(float fx, float fy);
 		Vector3(float fx, float fy, float fz);
 		Vector3(const Vector2& v);

@@ -23,6 +23,8 @@ namespace uut
 		virtual unsigned GetPosition() const = 0;
 		virtual unsigned GetLength() const = 0;
 
+		bool Seek(SeekMethod method, int offset);
+
 		virtual int Read(void* buffer, unsigned size) = 0;
 		virtual int Write(const void* buffer, unsigned size) = 0;
 	};

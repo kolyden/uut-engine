@@ -2,6 +2,7 @@
 #include "Core/Object.h"
 #include "Topology.h"
 #include "Color32.h"
+#include "RenderState.h"
 
 namespace uut
 {
@@ -28,6 +29,7 @@ namespace uut
 		void DrawQuad(const Rect& rect, float z = 0.0f, Texture2D* texture = nullptr, const Color32& color = Color32::WHITE);
 
 		void DrawSolidCube(const Vector3& center, float side, const Color32& color = Color32::WHITE);
+		void DrawCube(const Vector3& center, float side, const Color32& color = Color32::WHITE, Texture2D* texture = nullptr);
 
 		void Flush();
 
@@ -42,6 +44,7 @@ namespace uut
 		SharedPtr<Texture2D> _texture;
 		Vertex* _vertices;
 		int _vdxIndex;
+		RenderState _renderState;
 
 		void TestBatch(Topology topology, Texture2D* tex, int vrtCount);
 		void DrawAll();

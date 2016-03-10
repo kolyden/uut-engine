@@ -20,7 +20,6 @@ namespace uut
 			return stream;
 
 		return SharedPtr<FileStream>::EMPTY;
-
 	}
 
 	SharedPtr<FileStream> File::OpenRead(const Path& path)

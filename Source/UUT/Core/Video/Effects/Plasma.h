@@ -17,6 +17,8 @@ namespace uut
 
 		bool Apply(Texture2D* texture, int shift = 0);
 
+		const IntVector2& GetSize() const { return _size; }
+
 	protected:
 		IntVector2 _size;
 		uint32_t _lookupCount;

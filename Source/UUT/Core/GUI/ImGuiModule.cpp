@@ -76,6 +76,23 @@ namespace uut
 		_font->Unlock();
 
 		io.Fonts->TexID = static_cast<void*>(_font);
+
+		_renderState.cullMode = CullMode::Disabled;
+		_renderState.lightning = false;
+		_renderState.zbuffer = ZBufferMode::Disable;
+		_renderState.zwriteEnable = false;
+		_renderState.alphaBlend = true;
+		_renderState.blendOp = RenderState::BLENDOP_ADD;
+		_renderState.alphaTest = false;
+		_renderState.srcBlend = RenderState::BLEND_SRCALPHA;
+		_renderState.destBlend = RenderState::BLEND_INVSRCALPHA;
+		_renderState.scissorTest = true;
+
+		_renderState.textureStage[0].alphaOp = TextureOperation::Modulate;
+		_renderState.textureStage[0].alphaArg1 = TextureArgument::Texture;
+		_renderState.textureStage[0].alphaArg2 = TextureArgument::Diffuse;
+		_renderState.sampler[0].minFilter = TextureFilter::Linear;
+		_renderState.sampler[0].magFilter = TextureFilter::Linear;
 	}
 
 	void ImGuiModule::NewFrame()
@@ -152,12 +169,10 @@ namespace uut
 		_vb->Unlock();
 		_ib->Unlock();
 
-		_renderer->SetState(RenderState::AlphaBlend, true);
-		_renderer->SetState(RenderState::ScissorTest, true);
-
+		_renderer->SetState(_renderState);
 		_renderer->SetVertexBuffer(_vb, sizeof(UIVertex));
 		_renderer->SetIndexBuffer(_ib);
-		_renderer->SetVertexDeclaration(_vd);		
+		_renderer->SetVertexDeclaration(_vd);
 
 		// Render command lists
 		int vtx_offset = 0;
@@ -185,6 +200,11 @@ namespace uut
 			}
 			vtx_offset += cmd_list->VtxBuffer.size();
 		}
+
+		_renderer->SetVertexBuffer(nullptr, 0);
+		_renderer->SetIndexBuffer(nullptr);
+		_renderer->SetVertexDeclaration(nullptr);
+		_renderer->SetTexture(0, nullptr);
 	}
 
 	void ImGuiModule::StaticRenderDrawLists(ImDrawData* draw_data)

@@ -28,6 +28,12 @@
     <Filter Include="Sources\Video\Effects">
       <UniqueIdentifier>{e831d501-35e8-4d45-9ce5-ac244eeae6c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Resources">
+      <UniqueIdentifier>{d02556fe-cbe7-45b8-8d3b-cf3769e2a1cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Video\Loaders">
+      <UniqueIdentifier>{648405ac-6d52-4d18-b445-3f085f0e906c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\UUT\Core\Object.cpp">
@@ -188,6 +194,21 @@
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\IO\TextReader.cpp">
       <Filter>Sources\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\RenderState.cpp">
+      <Filter>Sources\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Resources\Resource.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Resources\ResourceLoader.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Resources\ResourceCache.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\Loaders\Texture2DLoader.cpp">
+      <Filter>Sources\Video\Loaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -379,6 +400,21 @@
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Assert.h">
       <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\RenderState.h">
+      <Filter>Sources\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Resources\Resource.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Resources\ResourceLoader.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Resources\ResourceCache.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\Loaders\Texture2DLoader.h">
+      <Filter>Sources\Video\Loaders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,14 +1,21 @@
 #include "main.h"
 #include <Core/Math/Math.h>
 #include <Core/Math/Vector3.h>
-#include "Core/Video/Vertex.h"
-#include <Core/Math/Random.h>
-#include <Core/Math/Rect.h>
+#include <Core/Video/Vertex.h>
+#include <Core/Video/Effects/Plasma.h>
+#include <Core/Video/Loaders/Texture2DLoader.h>
+#include <Core/IO/File.h>
+#include <Core/IO/FileStream.h>
 
 namespace uut
 {
+	static bool pausePlasma = false;
+
 	SampleApp::SampleApp()
-		: _dragStart(false)
+		: _frameCounter(0)
+		, _frameTimer(0)
+		, _fpsCount(0)
+		, _dragStart(false)
 	{
 		_windowSize = IntVector2(800, 600);
 	}
@@ -21,12 +28,19 @@ namespace uut
 		_graphics = new Graphics(_renderer);
 
 		_camera = new FreeCamera();
-		_camera->SetPosition(Vector3(0, 0, -20));
+		_camera->SetPosition(Vector3(10, 8, -20));
 
 		_timer.Start();
 
 		const Vector2 size = _renderer->GetScreenSize();
-		_matProj = Matrix4::PerspectiveFov(Math::PI / 4, size.x / size.y, 0.1f, 1000.0f);
+		_matProj = Matrix4::PerspectiveFov(Math::PI / 4, size.x / size.y, 0.001f, 1000.0f);
+
+		_plasma = new Plasma(IntVector2(201, 201));
+		_tex0 = _renderer->CreateTexture(_plasma->GetSize());
+		_plasma->Apply(_tex0);
+
+		_texLoader = new Texture2DLoader(_renderer);
+		_tex1 = DynamicCast<Texture2D>(_texLoader->Load(File::OpenRead("brick_dark0.png")));
 	}
 
 	static bool show_test_window = false;
@@ -38,14 +52,12 @@ namespace uut
 
 		///////////////////////////////////////////////////////////////
 		{
+			auto& pos = _camera->GetPosition();
 			ImGui::Begin("Test");
-			static float f = 0.0f;
-			ImGui::Text("Hello, world!");
-			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-			if (ImGui::Button("Test Window")) show_test_window ^= 1;
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
-				1000.0f / ImGui::GetIO().Framerate,
-				ImGui::GetIO().Framerate);
+			ImGui::Text("FPS: %d", _fpsCount);
+			ImGui::Text("DrawCall: %d", _renderer->GetStatistics().drawCall);
+			ImGui::Text("Pos (%.1f;%.1f;%.1f)", pos.x, pos.y, pos.z);
+			ImGui::Checkbox("Pause plasma", &pausePlasma);
 			ImGui::End();
 		}
 
@@ -55,8 +67,13 @@ namespace uut
 			ImGui::ShowTestWindow(&show_test_window);
 		}
 
-		const float moveSpeed = 50.0f;
-		const Radian rotateSpeed = Math::PI / 2;
+		float moveSpeed = 50.0f;
+		Radian rotateSpeed = Math::PI / 2;
+		if (_input->IsKey(SDL_SCANCODE_SPACE))
+		{
+			moveSpeed *= 4;
+			rotateSpeed *= 2;
+		}
 
 		if (_input->IsKey(SDL_SCANCODE_A))
 			_camera->MoveRight(-moveSpeed * _timer.GetDeltaTime());
@@ -88,7 +105,9 @@ namespace uut
 		{
 			if (_dragStart)
 			{
-				const Degree dragMove(0.1f);
+				Degree dragMove(0.1f);
+				if (_input->IsKey(SDL_SCANCODE_SPACE))
+					dragMove *= 2;
 
 				auto& curPos = _input->GetMousePos();
 				const auto delta = curPos - _dragPos;
@@ -107,25 +126,56 @@ namespace uut
 		}
 		else _dragStart = false;
 
+		if (!pausePlasma)
+		{
+			const float shiftSpeed = 100.0f;
+			static float plasmaTime = 0.0f;
+
+			plasmaTime += shiftSpeed * _timer.GetDeltaTime();
+			_plasma->Apply(_tex0, Math::RoundToInt(plasmaTime));
+		}
+
+		const float frameDelta = 1.0f;
+		_frameTimer += _timer.GetDeltaTime();
+		if (_frameTimer >= frameDelta)
+		{
+			_fpsCount = _frameCounter;
+			_frameCounter = 0;
+			_frameTimer -= frameDelta;
+		}
+
 		///////////////////////////////////////////////////////////////
-		_renderer->ResetStates();
-		_renderer->Clear(Color32(114, 144, 154));
 		if (_renderer->BeginScene())
 		{
-			_renderer->SetTransform(RT_PROJECTION, _matProj);
 			_camera->Setup(_renderer);
+			_renderer->SetTransform(RT_PROJECTION, _matProj);
+// 			_renderer->SetState(_renderState);
+			_renderer->Clear(Color32(114, 144, 154));
 
+			_graphics->DrawQuad(
+				Vertex(Vector3::ZERO, Vector2::AXIS_Y),
+				Vertex(Vector3(0, 0, 100), Vector2::ZERO),
+				Vertex(Vector3(100, 0, 100), Vector2::AXIS_X),
+				Vertex(Vector3(100, 0, 0), Vector2::ONE), _tex0);
 			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_X * 1000, Color32::RED);
 			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_Y * 1000, Color32::GREEN);
 			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_Z * 1000, Color32::BLUE);
 
-			_graphics->DrawSolidCube(Vector3::ZERO, 5);
+			const float cubeSize = 5.0f;
+			for (int i = 0; i < 10; i++)
+			{
+				auto tex = i % 2 == 0 ? _tex1 : _tex0;
+				_graphics->DrawCube(Vector3(cubeSize / 2 + cubeSize*i, cubeSize / 2, cubeSize / 2), cubeSize, Color32::WHITE, tex);
+			}
+
+// 			_graphics->DrawSolidCube(Vector3::ZERO, 5);
 			_graphics->Flush();
 
 			_gui->SetupCamera();
 			_gui->Draw();
 
 			_renderer->EndScene();
+			_frameCounter++;
 		}
 	}
 }

@@ -63,6 +63,15 @@ namespace uut
 		return *this;
 	}
 
+	bool Color32::operator==(const Color32& color) const
+	{
+		return r == color.r && g == color.g && b == color.b && a == color.a;
+	}
+
+	bool Color32::operator!=(const Color32& color) const
+	{
+		return r != color.r || g != color.g || b != color.b || a != color.a;
+	}
 
 	uint32_t Color32::ToInt() const
 	{

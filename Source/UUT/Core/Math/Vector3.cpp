@@ -14,6 +14,11 @@ namespace uut
 	{
 	}
 
+	Vector3::Vector3(float f)
+		: x(f), y(f), z(f)
+	{
+	}
+
 	Vector3::Vector3(float fx, float fy)
 		: x(fx), y(fy), z(0)
 	{

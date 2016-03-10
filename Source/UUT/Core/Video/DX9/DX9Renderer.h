@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/Video/Renderer.h"
 #include "DX9Defs.h"
+#include <Core/Video/RenderState.h>
 
 namespace uut
 {
@@ -10,8 +11,10 @@ namespace uut
 		virtual ~DX9Renderer();
 
 		virtual void ResetStates() override;
-		virtual void SetState(RenderState state, bool enabled) override;
+		virtual void SetState(const RenderState& state, bool force) override;
 		virtual void SetScissorRect(const IntRect& rect) override;
+
+		virtual const RendererStatistics& GetStatistics() const override;
 
 		virtual bool SetTransform(RenderTransform type, const Matrix4& mat) override;
 
@@ -26,7 +29,7 @@ namespace uut
 		virtual bool DrawPrimitive(Topology topology, uint32_t primitiveCount, uint32_t offset) override;
 		virtual bool DrawIndexedPrimitive(Topology topology, int baseVertexIndex, uint32_t minVertexIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount) override;
 
-		virtual bool Clear(const Color& color, float z, uint32_t stencil) override;
+		virtual bool Clear(const Color32& color, float z, uint32_t stencil) override;
 		virtual bool Present() override;
 
 		virtual SharedPtr<Texture2D> CreateTexture(const IntVector2& size, TextureAccess access) override;
@@ -39,14 +42,30 @@ namespace uut
 	protected:
 		LPDIRECT3D9 _d3d;
 		LPDIRECT3DDEVICE9 _d3ddev;
+		RenderState _state;
+		RendererStatistics _statistics;
 
 		DX9Renderer();
 
-		bool TestReturnCode(HRESULT ret) const;
+		static bool TestReturnCode(HRESULT ret);
 
 		static D3DTRANSFORMSTATETYPE Convert(RenderTransform type);
 		static D3DPRIMITIVETYPE Convert(Topology topology);
 		static D3DDECLTYPE Convert(VertexElement::DeclareType type);
 		static D3DDECLUSAGE Convert(VertexElement::UsageType usage);
+
+		static D3DZBUFFERTYPE Convert(ZBufferMode type);
+		static D3DFILLMODE Convert(FillMode mode);
+		static D3DSHADEMODE Convert(ShadeMode mode);
+		static D3DCULL Convert(CullMode mode);
+		static D3DCMPFUNC Convert(CompareFunc func);
+
+		static D3DTEXTUREOP Convert(TextureOperation op);
+		static DWORD Convert(TextureArgument arg);
+		static D3DTEXTUREFILTERTYPE Convert(TextureFilter filter);
+		static D3DTEXTUREADDRESS Convert(TextureAddress address);
+
+		static D3DBLENDOP Convert(RenderState::BlendOp op);
+		static D3DBLEND Convert(RenderState::Blend blend);
 	};
 }
