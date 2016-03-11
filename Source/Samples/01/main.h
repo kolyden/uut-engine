@@ -24,7 +24,6 @@ namespace uut
 		SharedPtr<Graphics> _graphics;
 
 		Timer _timer;
-		Matrix4 _matProj;
 
 		virtual void OnInit() override;
 		virtual void OnFrame() override;

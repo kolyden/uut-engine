@@ -3,6 +3,7 @@
 #include "Topology.h"
 #include "Color32.h"
 #include "RenderState.h"
+#include <Core/Math/Matrix4.h>
 
 namespace uut
 {
@@ -17,7 +18,16 @@ namespace uut
 	class Graphics : public Object
 	{
 	public:
+		enum ProjectionMode
+		{
+			PM_NONE,
+			PM_2D,
+			PM_3D,
+		};
+
 		explicit Graphics(Renderer* renderer);
+
+		void SetProjection(ProjectionMode mode);
 
 		void DrawPoint(const Vector3& point, const Color32& color = Color32::WHITE);
 		void DrawLine(const Vector3& p0, const Vector3& p1, const Color32& color = Color32::WHITE);
@@ -45,6 +55,9 @@ namespace uut
 		Vertex* _vertices;
 		int _vdxIndex;
 		RenderState _renderState;
+		Matrix4 _matProj;
+
+		ProjectionMode _currentPM, _nextPM;
 
 		void TestBatch(Topology topology, Texture2D* tex, int vrtCount);
 		void DrawAll();

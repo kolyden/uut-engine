@@ -317,6 +317,11 @@ namespace uut
 			return -1;
 		}
 
+		void Insert(int index, const T& item)
+		{
+			_data.insert(index, item);
+		}
+
 		bool TrueForAll(Predicate match) const
 		{
 			for (auto& it : _data)

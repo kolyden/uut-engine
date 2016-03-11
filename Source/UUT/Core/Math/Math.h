@@ -1,6 +1,7 @@
 #pragma once
 #include "Radian.h"
 #include "Degree.h"
+#include <cstdlib>
 
 namespace uut
 {
@@ -91,6 +92,8 @@ namespace uut
 		static float PingPong(float t, float length);
 
 		static float DeltaAngle(float current, float target);
+
+		static div_t Div(int numerator, int denomenator) { return div(numerator, denomenator); }
 
 // 		static bool LineIntersect(const vec2f& p1, const vec2f& p2, const vec2f& p3, const vec2f& p4, vec2f* result);
 // 		static bool LineSegmentIntersect(const vec2f& p1, const vec2f& p2, const vec2f& p3, const vec2f& p4, vec2f* result);

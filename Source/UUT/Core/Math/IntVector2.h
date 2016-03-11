@@ -29,6 +29,8 @@ namespace uut
 
 		friend IntVector2 operator * (int s, const IntVector2& vec) { return IntVector2(vec.x*s, vec.y*s); }
 
+		void Set(int i) { x = i; y = i; }
+		void Set(int ix, int iy) { x = ix; y = iy; }
 		int Area() const { return x*y; }
 
 		IntVector2& operator = (const IntVector2& vec);

@@ -26,7 +26,6 @@ namespace uut
 		SharedPtr<Plasma> _plasma;
 		SharedPtr<ResourceLoader> _texLoader;
 		Timer _timer;
-		Matrix4 _matProj;
 		int _frameCounter;
 		float _frameTimer;
 		int _fpsCount;

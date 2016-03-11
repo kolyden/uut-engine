@@ -17,7 +17,7 @@ namespace uut
 		, _fpsCount(0)
 		, _dragStart(false)
 	{
-		_windowSize = IntVector2(800, 600);
+		_windowSize = IntVector2(1024, 768);
 	}
 
 	void SampleApp::OnInit()
@@ -26,14 +26,12 @@ namespace uut
 		_gui = new ImGuiModule(_renderer, _input);
 
 		_graphics = new Graphics(_renderer);
+		_graphics->SetProjection(Graphics::PM_3D);
 
 		_camera = new FreeCamera();
 		_camera->SetPosition(Vector3(10, 8, -20));
 
 		_timer.Start();
-
-		const Vector2 size = _renderer->GetScreenSize();
-		_matProj = Matrix4::PerspectiveFov(Math::PI / 4, size.x / size.y, 0.001f, 1000.0f);
 
 		_plasma = new Plasma(IntVector2(201, 201));
 		_tex0 = _renderer->CreateTexture(_plasma->GetSize());
@@ -148,8 +146,6 @@ namespace uut
 		if (_renderer->BeginScene())
 		{
 			_camera->Setup(_renderer);
-			_renderer->SetTransform(RT_PROJECTION, _matProj);
-// 			_renderer->SetState(_renderState);
 			_renderer->Clear(Color32(114, 144, 154));
 
 			_graphics->DrawQuad(
@@ -168,7 +164,6 @@ namespace uut
 				_graphics->DrawCube(Vector3(cubeSize / 2 + cubeSize*i, cubeSize / 2, cubeSize / 2), cubeSize, Color32::WHITE, tex);
 			}
 
-// 			_graphics->DrawSolidCube(Vector3::ZERO, 5);
 			_graphics->Flush();
 
 			_gui->SetupCamera();

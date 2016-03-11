@@ -16,12 +16,8 @@ namespace uut
 
 		_gui = new ImGuiModule(_renderer, _input);
 		_graphics = new Graphics(_renderer);
+		_graphics->SetProjection(Graphics::PM_2D);
 
-		auto& size = _renderer->GetScreenSize();
-		_matProj = Matrix4::OrthoProjection(
-			0, static_cast<float>(size.x),
-			0, static_cast<float>(size.y),
-			0, 100);
 		_timer.Start();
 	}
 
@@ -29,8 +25,6 @@ namespace uut
 
 	void SampleApp::OnFrame()
 	{
-		auto& size = _renderer->GetScreenSize();
-
 		_timer.Update();
 		_gui->NewFrame();
 
@@ -50,9 +44,6 @@ namespace uut
 		}
 
 		///////////////////////////////////////////////////////////////
-		_renderer->ResetStates();
-		_renderer->SetTransform(RT_PROJECTION, _matProj);
-
 		_renderer->Clear(Color32(114, 144, 154));
 		if (_renderer->BeginScene())
 		{
@@ -62,6 +53,7 @@ namespace uut
 			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
 			_graphics->Flush();
 
+			_gui->SetupCamera();
 			_gui->Draw();
 
 			_renderer->EndScene();

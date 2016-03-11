@@ -88,7 +88,7 @@ namespace uut
 			return 0;
 
 		auto ret = SDL_RWtell(_handle);
-		return ret >= 0 ? ret : 0;
+		return ret >= 0 ? static_cast<unsigned int>(ret) : 0;
 	}
 
 	unsigned FileStream::GetLength() const
@@ -96,7 +96,8 @@ namespace uut
 		if (!IsOpened())
 			return 0;
 
-		return SDL_RWsize(_handle);
+		auto ret = SDL_RWsize(_handle);
+		return ret >= 0 ? static_cast<unsigned int>(ret) : 0;
 	}
 
 	int FileStream::Read(void* buffer, unsigned size)

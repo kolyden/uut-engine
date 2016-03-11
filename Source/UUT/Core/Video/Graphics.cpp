@@ -3,6 +3,7 @@
 #include "Vertex.h"
 #include "VertexBuffer.h"
 #include <Core/Math/Rect.h>
+#include <Core/Math/Math.h>
 
 namespace uut
 {
@@ -12,6 +13,8 @@ namespace uut
 		, _topology(Topology::TrinagleList)
 		, _vertices(nullptr)
 		, _vdxIndex(0)
+		, _currentPM(PM_NONE)
+		, _nextPM(PM_NONE)
 	{
 		_vbuf = _renderer->CreateVertexBuffer(Vertex::SIZE*_vbufCount);
 		_vdec = _renderer->CreateVertexDeclaration(Vertex::DECLARE);
@@ -21,6 +24,11 @@ namespace uut
 		_renderState.zwriteEnable = true;
 		_renderState.sampler[0].minFilter = TextureFilter::Linear;
 		_renderState.sampler[0].magFilter = TextureFilter::Linear;
+	}
+
+	void Graphics::SetProjection(ProjectionMode mode)
+	{
+		_nextPM = mode;
 	}
 
 	void Graphics::DrawPoint(const Vector3& point, const Color32& color /* = Color32::WHITE */)
@@ -243,7 +251,26 @@ namespace uut
 		_vbuf->Unlock();
 
 		_renderer->SetState(_renderState);
-// 		_renderer->ResetStates();
+		if (_currentPM != _nextPM)
+		{
+			_currentPM = _nextPM;
+			const Vector2 size = _renderer->GetScreenSize();
+
+			switch (_currentPM)
+			{
+			case PM_2D:
+				_matProj = Matrix4::OrthoOffCenter(0, size.x, 0, size.y, 0.01f, 100.0f);
+				break;
+
+			case PM_3D:
+				_matProj = Matrix4::PerspectiveFov(Math::PI / 4, size.x / size.y, 1.0f, 1000.0f);
+				break;
+			}
+		}
+
+		if (_currentPM != PM_NONE)
+			_renderer->SetTransform(RT_PROJECTION, _matProj);
+
 		_renderer->SetTexture(0, _texture);
 		_renderer->SetVertexBuffer(_vbuf, Vertex::SIZE);
 		_renderer->SetVertexDeclaration(_vdec);
