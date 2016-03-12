@@ -12,9 +12,11 @@
 namespace uut
 {
 	SampleApp::SampleApp()
-		: _dragStart(false)
+		: _groundHit(Vector3::Zero)
+		, _dragStart(false)
 	{
 		_windowSize = IntVector2(1024, 768);
+		_ground = Plane(Vector3::Zero, Vector3::Up);
 	}
 
 	void SampleApp::OnInit()
@@ -128,15 +130,25 @@ namespace uut
 
 		_level->Update(_timer.GetDeltaTime());
 
+		if (_input->IsMouseButton(0))
+		{
+			auto ray = _camera->CastRay(_input->GetMousePos(), _renderer->GetScreenSize());
+			float dist;
+			if (_ground.Intersect(ray, dist))
+				_groundHit = ray.GetPoint(dist);
+		}
+
 		///////////////////////////////////////////////////////////////
 		if (_renderer->BeginScene())
 		{
 			_camera->Setup(_renderer);
 			_renderer->Clear(Color32(114, 144, 154));
 
-			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_X * 1000, Color32::RED);
-			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_Y * 1000, Color32::GREEN);
-			_graphics->DrawLine(Vector3::ZERO, Vector3::AXIS_Z * 1000, Color32::BLUE);
+			_graphics->DrawLine(Vector3::Zero, Vector3::Right * 1000, Color32::Red);
+			_graphics->DrawLine(Vector3::Zero, Vector3::Up * 1000, Color32::Green);
+			_graphics->DrawLine(Vector3::Zero, Vector3::Forward * 1000, Color32::Blue);
+
+			_graphics->DrawLine(_groundHit, _groundHit + Vector3::Up * 20, Color32(255, 0, 255));
 
 			_level->Draw(_graphics);
 

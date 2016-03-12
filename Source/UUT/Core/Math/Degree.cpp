@@ -5,7 +5,7 @@
 
 namespace uut
 {
-	const Degree Degree::EMPTY;
+	const Degree Degree::Zero;
 
 	Degree::Degree(const Radian& angle)
 		: _angle(angle.GetDegrees())

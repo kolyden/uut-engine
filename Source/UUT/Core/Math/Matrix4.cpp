@@ -7,13 +7,13 @@
 
 namespace uut
 {
-	const Matrix4 Matrix4::ZERO(
+	const Matrix4 Matrix4::Zero(
 		0, 0, 0, 0,
 		0, 0, 0, 0,
 		0, 0, 0, 0,
 		0, 0, 0, 0);
 
-	const Matrix4 Matrix4::IDENTITY(
+	const Matrix4 Matrix4::Identity(
 		1, 0, 0, 0,
 		0, 1, 0, 0,
 		0, 0, 1, 0,
@@ -235,6 +235,78 @@ namespace uut
 		return out;
 	}
 
+	Matrix4 Matrix4::Inverse(float* determinant /*= nullptr*/) const
+	{
+		float t[3], v[16];
+
+		t[0] = m[2][2] * m[3][3] - m[2][3] * m[3][2];
+		t[1] = m[1][2] * m[3][3] - m[1][3] * m[3][2];
+		t[2] = m[1][2] * m[2][3] - m[1][3] * m[2][2];
+		v[0] = m[1][1] * t[0] - m[2][1] * t[1] + m[3][1] * t[2];
+		v[4] = -m[1][0] * t[0] + m[2][0] * t[1] - m[3][0] * t[2];
+
+		t[0] = m[1][0] * m[2][1] - m[2][0] * m[1][1];
+		t[1] = m[1][0] * m[3][1] - m[3][0] * m[1][1];
+		t[2] = m[2][0] * m[3][1] - m[3][0] * m[2][1];
+		v[8] = m[3][3] * t[0] - m[2][3] * t[1] + m[1][3] * t[2];
+		v[12] = -m[3][2] * t[0] + m[2][2] * t[1] - m[1][2] * t[2];
+
+		float det = m[0][0] * v[0] + m[0][1] * v[4] +
+			m[0][2] * v[8] + m[0][3] * v[12];
+
+		if (det == 0.0f)
+			return Zero;
+		if (determinant != nullptr)
+			*determinant = det;
+
+		t[0] = m[2][2] * m[3][3] - m[2][3] * m[3][2];
+		t[1] = m[0][2] * m[3][3] - m[0][3] * m[3][2];
+		t[2] = m[0][2] * m[2][3] - m[0][3] * m[2][2];
+		v[1] = -m[0][1] * t[0] + m[2][1] * t[1] - m[3][1] * t[2];
+		v[5] = m[0][0] * t[0] - m[2][0] * t[1] + m[3][0] * t[2];
+
+		t[0] = m[0][0] * m[2][1] - m[2][0] * m[0][1];
+		t[1] = m[3][0] * m[0][1] - m[0][0] * m[3][1];
+		t[2] = m[2][0] * m[3][1] - m[3][0] * m[2][1];
+		v[9] = -m[3][3] * t[0] - m[2][3] * t[1] - m[0][3] * t[2];
+		v[13] = m[3][2] * t[0] + m[2][2] * t[1] + m[0][2] * t[2];
+
+		t[0] = m[1][2] * m[3][3] - m[1][3] * m[3][2];
+		t[1] = m[0][2] * m[3][3] - m[0][3] * m[3][2];
+		t[2] = m[0][2] * m[1][3] - m[0][3] * m[1][2];
+		v[2] = m[0][1] * t[0] - m[1][1] * t[1] + m[3][1] * t[2];
+		v[6] = -m[0][0] * t[0] + m[1][0] * t[1] - m[3][0] * t[2];
+
+		t[0] = m[0][0] * m[1][1] - m[1][0] * m[0][1];
+		t[1] = m[3][0] * m[0][1] - m[0][0] * m[3][1];
+		t[2] = m[1][0] * m[3][1] - m[3][0] * m[1][1];
+		v[10] = m[3][3] * t[0] + m[1][3] * t[1] + m[0][3] * t[2];
+		v[14] = -m[3][2] * t[0] - m[1][2] * t[1] - m[0][2] * t[2];
+
+		t[0] = m[1][2] * m[2][3] - m[1][3] * m[2][2];
+		t[1] = m[0][2] * m[2][3] - m[0][3] * m[2][2];
+		t[2] = m[0][2] * m[1][3] - m[0][3] * m[1][2];
+		v[3] = -m[0][1] * t[0] + m[1][1] * t[1] - m[2][1] * t[2];
+		v[7] = m[0][0] * t[0] - m[1][0] * t[1] + m[2][0] * t[2];
+
+		v[11] = -m[0][0] * (m[1][1] * m[2][3] - m[1][3] * m[2][1]) +
+			m[1][0] * (m[0][1] * m[2][3] - m[0][3] * m[2][1]) -
+			m[2][0] * (m[0][1] * m[1][3] - m[0][3] * m[1][1]);
+
+		v[15] = m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) -
+			m[1][0] * (m[0][1] * m[2][2] - m[0][2] * m[2][1]) +
+			m[2][0] * (m[0][1] * m[1][2] - m[0][2] * m[1][1]);
+
+		det = 1.0f / det;
+
+		Matrix4 out;
+		for (int i = 0; i < 4; i++)
+			for (int j = 0; j < 4; j++)
+				out.m[i][j] = v[4 * i + j] * det;
+
+		return out;
+	}
+
 	Vector3 Matrix4::VectorTransform(const Vector3& v) const
 	{
 		const float norm = m[0][3] * v.x + m[1][3] * v.y + m[2][3] * v.z + m[3][3];
@@ -326,7 +398,7 @@ namespace uut
 	Matrix4 Matrix4::Reflect(const Plane& plane)
 	{
 		Plane Nplane = plane.Normalized();
-		Matrix4 u = IDENTITY;
+		Matrix4 u = Identity;
 		u.m[0][0] = 1.0f - 2.0f * Nplane.a * Nplane.a;
 		u.m[0][1] = -2.0f * Nplane.a * Nplane.b;
 		u.m[0][2] = -2.0f * Nplane.a * Nplane.c;
@@ -386,7 +458,7 @@ namespace uut
 
 	Matrix4 Matrix4::RotationQuaternion(const Quaternion& q)
 	{
-		Matrix4 u = IDENTITY;
+		Matrix4 u = Identity;
 		u.m[0][0] = 1.0f - 2.0f * (q.y * q.y + q.z * q.z);
 		u.m[0][1] = 2.0f * (q.x *q.y + q.z * q.w);
 		u.m[0][2] = 2.0f * (q.x * q.z - q.y * q.w);
@@ -401,7 +473,7 @@ namespace uut
 
 	Matrix4 Matrix4::RotationX(const Radian& angle)
 	{
-		Matrix4 u = IDENTITY;
+		Matrix4 u = Identity;
 		u.m[1][1] = Math::Cos(angle);
 		u.m[2][2] = Math::Cos(angle);
 		u.m[1][2] = Math::Sin(angle);
@@ -411,7 +483,7 @@ namespace uut
 
 	Matrix4 Matrix4::RotationY(const Radian& angle)
 	{
-		Matrix4 u = IDENTITY;
+		Matrix4 u = Identity;
 		u.m[0][0] = Math::Cos(angle);
 		u.m[2][2] = Math::Cos(angle);
 		u.m[0][2] = -Math::Sin(angle);
@@ -421,7 +493,7 @@ namespace uut
 
 	Matrix4 Matrix4::RotationZ(const Radian& angle)
 	{
-		Matrix4 u = IDENTITY;
+		Matrix4 u = Identity;
 		u.m[0][0] = Math::Cos(angle);
 		u.m[1][1] = Math::Cos(angle);
 		u.m[0][1] = Math::Sin(angle);

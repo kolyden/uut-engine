@@ -110,10 +110,10 @@ namespace uut
 	{
 		graphics->SetMaterial(Graphics::MT_OPAQUE);
 		graphics->DrawQuad(
-			Vertex(center + Vector3(-LevelCell::HALF_SIZE, 0, -LevelCell::HALF_SIZE), Vector2::AXIS_Y),
-			Vertex(center + Vector3(-LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE), Vector2::ZERO),
-			Vertex(center + Vector3(+LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE), Vector2::AXIS_X),
-			Vertex(center + Vector3(+LevelCell::HALF_SIZE, 0, -LevelCell::HALF_SIZE), Vector2::ONE),
+			Vertex(center + Vector3(-LevelCell::HALF_SIZE, 0, -LevelCell::HALF_SIZE), Vector2::Up),
+			Vertex(center + Vector3(-LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE), Vector2::Zero),
+			Vertex(center + Vector3(+LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE), Vector2::Right),
+			Vertex(center + Vector3(+LevelCell::HALF_SIZE, 0, -LevelCell::HALF_SIZE), Vector2::One),
 			tile.texture);
 	}
 
@@ -123,7 +123,7 @@ namespace uut
 		{
 			Matrix4::RotationY(Degree(180)),
 			Matrix4::RotationY(Degree(270)),
-			Matrix4::IDENTITY,
+			Matrix4::Identity,
 			Matrix4::RotationY(Degree(90)),
 		};
 
@@ -135,10 +135,10 @@ namespace uut
 		const int i = static_cast<int>(dir);
 		graphics->SetMaterial(Graphics::MT_OPAQUE);
 		graphics->DrawQuad(
-			Vertex(center + rotMat[i].VectorTransform(v0), Vector2::ZERO),
-			Vertex(center + rotMat[i].VectorTransform(v1), Vector2::AXIS_X),
-			Vertex(center + rotMat[i].VectorTransform(v2), Vector2::ONE),
-			Vertex(center + rotMat[i].VectorTransform(v3), Vector2::AXIS_Y),
+			Vertex(center + rotMat[i].VectorTransform(v0), Vector2::Zero),
+			Vertex(center + rotMat[i].VectorTransform(v1), Vector2::Right),
+			Vertex(center + rotMat[i].VectorTransform(v2), Vector2::One),
+			Vertex(center + rotMat[i].VectorTransform(v3), Vector2::Up),
 			tile.texture);
 	}
 
@@ -148,7 +148,7 @@ namespace uut
 		{
 			Matrix4::RotationY(Degree(180)),
 			Matrix4::RotationY(Degree(270)),
-			Matrix4::IDENTITY,
+			Matrix4::Identity,
 			Matrix4::RotationY(Degree(90)),
 		};
 
@@ -160,10 +160,10 @@ namespace uut
 		const int i = static_cast<int>(dir);
 		graphics->SetMaterial(Graphics::MT_OPAQUE);
 		graphics->DrawQuad(
-			Vertex(center + rotMat[i].VectorTransform(v0), Vector2::ZERO),
-			Vertex(center + rotMat[i].VectorTransform(v1), Vector2::AXIS_X),
-			Vertex(center + rotMat[i].VectorTransform(v2), Vector2::ONE),
-			Vertex(center + rotMat[i].VectorTransform(v3), Vector2::AXIS_Y),
+			Vertex(center + rotMat[i].VectorTransform(v0), Vector2::Zero),
+			Vertex(center + rotMat[i].VectorTransform(v1), Vector2::Right),
+			Vertex(center + rotMat[i].VectorTransform(v2), Vector2::One),
+			Vertex(center + rotMat[i].VectorTransform(v3), Vector2::Up),
 			tile.texture);
 	}
 }

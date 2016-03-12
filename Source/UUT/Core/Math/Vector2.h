@@ -51,10 +51,12 @@ namespace uut
 
 		static Vector2 Scale(const Vector2& vec, float s);
 
-		static const Vector2 ZERO;
-		static const Vector2 ONE;
-		static const Vector2 AXIS_X;
-		static const Vector2 AXIS_Y;
+		static const Vector2 Zero;
+		static const Vector2 One;
+		static const Vector2 Left;
+		static const Vector2 Right;
+		static const Vector2 Up;
+		static const Vector2 Down;
 
 		union
 		{

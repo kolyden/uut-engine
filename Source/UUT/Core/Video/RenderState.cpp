@@ -39,7 +39,7 @@ namespace uut
 		: addressu(TextureAddress::Wrap)
 		, addressv(TextureAddress::Wrap)
 		, addressw(TextureAddress::Wrap)
-		, borderColor(Color32::EMPTY)
+		, borderColor(Color32::Clear)
 		, minFilter(TextureFilter::Point)
 		, magFilter(TextureFilter::Point)
 		, mipFilter(TextureFilter::NoFilter)
@@ -60,7 +60,7 @@ namespace uut
 
 		, alphaBlend(false)
 		, fogEnabled(false)
-		, fogColor(Color32::EMPTY)
+		, fogColor(Color32::Clear)
 		, lightning(false)
 		, blendOp(BLENDOP_ADD)
 		, scissorTest(false)

@@ -27,6 +27,7 @@ namespace uut
 		return stream->IsEOF() ? 1 : 0;
 	}
 
+	///////////////////////////////////////////////////////////////////////////
 	Texture2DLoader::Texture2DLoader(Renderer* renderer)
 		: _renderer(renderer)
 	{
@@ -50,13 +51,18 @@ namespace uut
 			return SharedPtr<Resource>::EMPTY;
 
 		int pitch;
-		auto dest = static_cast<char*>(tex->Lock(&pitch));
+		auto dest = static_cast<stbi_uc*>(tex->Lock(&pitch));
 		if (!dest)
 			return SharedPtr<Resource>::EMPTY;
 
 		for (int y = 0; y < size.y; y++)
 		{
-			memcpy(dest + y*pitch, source + y*size.x*comp, size.x * comp);
+			for (int x = 0; x < size.x; x++)
+			{
+				const uint32_t col = ((uint32_t*)(source + y*size.x*comp + x*comp))[0];
+				((uint32_t*)(dest + y*pitch + x*comp))[0] = Color32::FromABGR(col).ToInt();
+			}
+			//memcpy(dest + y*pitch, source + y*size.x*comp, size.x * comp);
 		}
 
 		tex->Unlock();

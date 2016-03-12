@@ -23,12 +23,15 @@ namespace uut
 
 		uint32_t ToInt() const; // ARGB
 
-		static const Color32 EMPTY;
-		static const Color32 WHITE;
-		static const Color32 BLACK;
-		static const Color32 GREEN;
-		static const Color32 RED;
-		static const Color32 BLUE;
+		static Color32 FromRGBA(uint32_t argb);
+		static Color32 FromABGR(uint32_t abgr);
+
+		static const Color32 Clear;
+		static const Color32 White;
+		static const Color32 Black;
+		static const Color32 Green;
+		static const Color32 Red;
+		static const Color32 Blue;
 
 		union
 		{

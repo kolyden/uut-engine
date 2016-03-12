@@ -7,12 +7,12 @@ namespace uut
 {
 	static const float invInt = 1.0f / 255.0f;
 
-	const Color Color::EMPTY(0, 0, 0, 0);
-	const Color Color::WHITE(1, 1, 1, 1);
-	const Color Color::BLACK(0, 0, 0);
-	const Color Color::GREEN(1, 0, 0);
-	const Color Color::RED(0, 1, 0);
-	const Color Color::BLUE(0, 0, 1);
+	const Color Color::Clear(0, 0, 0, 0);
+	const Color Color::White(1, 1, 1, 1);
+	const Color Color::Black(0, 0, 0);
+	const Color Color::Green(1, 0, 0);
+	const Color Color::Red(0, 1, 0);
+	const Color Color::Blue(0, 0, 1);
 
 	Color::Color()
 	{

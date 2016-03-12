@@ -5,7 +5,7 @@
 
 namespace uut
 {
-	const Radian Radian::EMPTY;
+	const Radian Radian::Zero;
 
 	Radian::Radian(const Degree& angle)
 		: _angle(angle.GetRadians())

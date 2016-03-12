@@ -5,7 +5,7 @@
 
 namespace uut
 {
-	const Plane Plane::EMPTY(0, 0, 0, 0);
+	const Plane Plane::Zero(0, 0, 0, 0);
 
 	Plane::Plane()
 	{
@@ -83,18 +83,30 @@ namespace uut
 		if (norm)
 			return Plane(a / norm, b / norm, c / norm, d / norm);
 
-		return EMPTY;
+		return Zero;
 	}
 
 	bool Plane::IntersectLine(const Vector3& v1, const Vector3& v2, Vector3& out) const
 	{
-		Vector3 normal(a, b, c);
-		Vector3 direction = v2 - v1;
+		const Vector3 normal(a, b, c);
+		const Vector3 direction = v2 - v1;
 		const float dot = Vector3::Dot(normal, direction);
-		if (!dot) return false;
+		if (!dot)
+			return false;
 
 		const float temp = d + Vector3::Dot(normal, v1) / dot;
 		out = v1 - temp * direction;
+		return true;
+	}
+
+	bool Plane::Intersect(const Ray3& ray, float& dist) const
+	{
+		const Vector3 normal(a, b, c);
+		const float dot = Vector3::Dot(normal, ray.direction);
+		if (!dot)
+			return false;
+
+		dist = d + Vector3::Dot(normal, ray.origin) / dot;
 		return true;
 	}
 }

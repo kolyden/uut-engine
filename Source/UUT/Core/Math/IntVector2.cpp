@@ -5,10 +5,12 @@
 
 namespace uut
 {
-	const IntVector2 IntVector2::ZERO(0, 0);
-	const IntVector2 IntVector2::ONE(1, 1);
-	const IntVector2 IntVector2::AXIS_X(1, 0);
-	const IntVector2 IntVector2::AXIS_Y(0, 1);
+	const IntVector2 IntVector2::Zero(0, 0);
+	const IntVector2 IntVector2::One(1, 1);
+	const IntVector2 IntVector2::Left(-1, 0);
+	const IntVector2 IntVector2::Right(1, 0);
+	const IntVector2 IntVector2::Up(0, 1);
+	const IntVector2 IntVector2::Down(0, -1);
 
 	IntVector2::IntVector2()
 	{

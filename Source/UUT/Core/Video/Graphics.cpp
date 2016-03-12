@@ -130,45 +130,45 @@ namespace uut
 
 		// FRONT
 		DrawQuad(
-			Vertex(v0, color, Vector2::ZERO),
-			Vertex(v1, color, Vector2::AXIS_X),
-			Vertex(v2, color, Vector2::ONE),
-			Vertex(v3, color, Vector2::AXIS_Y));
+			Vertex(v0, color, Vector2::Zero),
+			Vertex(v1, color, Vector2::Right),
+			Vertex(v2, color, Vector2::One),
+			Vertex(v3, color, Vector2::Up));
 
 		//BACK
 		DrawQuad(
-			Vertex(v5, color, Vector2::ZERO),
-			Vertex(v4, color, Vector2::AXIS_X),
-			Vertex(v7, color, Vector2::ONE),
-			Vertex(v6, color, Vector2::AXIS_Y));
+			Vertex(v5, color, Vector2::Zero),
+			Vertex(v4, color, Vector2::Right),
+			Vertex(v7, color, Vector2::One),
+			Vertex(v6, color, Vector2::Up));
 
 		// TOP
 		DrawQuad(
-			Vertex(v4, color, Vector2::ZERO),
-			Vertex(v5, color, Vector2::AXIS_X),
-			Vertex(v1, color, Vector2::ONE),
-			Vertex(v0, color, Vector2::AXIS_Y));
+			Vertex(v4, color, Vector2::Zero),
+			Vertex(v5, color, Vector2::Right),
+			Vertex(v1, color, Vector2::One),
+			Vertex(v0, color, Vector2::Up));
 
 		// BOTTOM
 		DrawQuad(
-			Vertex(v3, color, Vector2::ZERO),
-			Vertex(v2, color, Vector2::AXIS_X),
-			Vertex(v6, color, Vector2::ONE),
-			Vertex(v7, color, Vector2::AXIS_Y));
+			Vertex(v3, color, Vector2::Zero),
+			Vertex(v2, color, Vector2::Right),
+			Vertex(v6, color, Vector2::One),
+			Vertex(v7, color, Vector2::Up));
 
 		// LEFT
 		DrawQuad(
-			Vertex(v4, color, Vector2::ZERO),
-			Vertex(v0, color, Vector2::AXIS_X),
-			Vertex(v3, color, Vector2::ONE),
-			Vertex(v7, color, Vector2::AXIS_Y));
+			Vertex(v4, color, Vector2::Zero),
+			Vertex(v0, color, Vector2::Right),
+			Vertex(v3, color, Vector2::One),
+			Vertex(v7, color, Vector2::Up));
 
 		// RIGHT
 		DrawQuad(
-			Vertex(v1, color, Vector2::ZERO),
-			Vertex(v5, color, Vector2::AXIS_X),
-			Vertex(v6, color, Vector2::ONE),
-			Vertex(v2, color, Vector2::AXIS_Y));
+			Vertex(v1, color, Vector2::Zero),
+			Vertex(v5, color, Vector2::Right),
+			Vertex(v6, color, Vector2::One),
+			Vertex(v2, color, Vector2::Up));
 	}
 
 	void Graphics::DrawCube(const Vector3& center, float side, const Color32& color, Texture2D* texture)
@@ -187,50 +187,50 @@ namespace uut
 
 		// FRONT
 		DrawQuad(
-			Vertex(v0, color, Vector2::ZERO),
-			Vertex(v1, color, Vector2::AXIS_X),
-			Vertex(v2, color, Vector2::ONE),
-			Vertex(v3, color, Vector2::AXIS_Y),
+			Vertex(v0, color, Vector2::Zero),
+			Vertex(v1, color, Vector2::Right),
+			Vertex(v2, color, Vector2::One),
+			Vertex(v3, color, Vector2::Up),
 			texture);
 
 		//BACK
 		DrawQuad(
-			Vertex(v5, color, Vector2::ZERO),
-			Vertex(v4, color, Vector2::AXIS_X),
-			Vertex(v7, color, Vector2::ONE),
-			Vertex(v6, color, Vector2::AXIS_Y),
+			Vertex(v5, color, Vector2::Zero),
+			Vertex(v4, color, Vector2::Right),
+			Vertex(v7, color, Vector2::One),
+			Vertex(v6, color, Vector2::Up),
 			texture);
 
 		// TOP
 		DrawQuad(
-			Vertex(v4, color, Vector2::ZERO),
-			Vertex(v5, color, Vector2::AXIS_X),
-			Vertex(v1, color, Vector2::ONE),
-			Vertex(v0, color, Vector2::AXIS_Y),
+			Vertex(v4, color, Vector2::Zero),
+			Vertex(v5, color, Vector2::Right),
+			Vertex(v1, color, Vector2::One),
+			Vertex(v0, color, Vector2::Up),
 			texture);
 
 		// BOTTOM
 		DrawQuad(
-			Vertex(v3, color, Vector2::ZERO),
-			Vertex(v2, color, Vector2::AXIS_X),
-			Vertex(v6, color, Vector2::ONE),
-			Vertex(v7, color, Vector2::AXIS_Y),
+			Vertex(v3, color, Vector2::Zero),
+			Vertex(v2, color, Vector2::Right),
+			Vertex(v6, color, Vector2::One),
+			Vertex(v7, color, Vector2::Up),
 			texture);
 
 		// LEFT
 		DrawQuad(
-			Vertex(v4, color, Vector2::ZERO),
-			Vertex(v0, color, Vector2::AXIS_X),
-			Vertex(v3, color, Vector2::ONE),
-			Vertex(v7, color, Vector2::AXIS_Y),
+			Vertex(v4, color, Vector2::Zero),
+			Vertex(v0, color, Vector2::Right),
+			Vertex(v3, color, Vector2::One),
+			Vertex(v7, color, Vector2::Up),
 			texture);
 
 		// RIGHT
 		DrawQuad(
-			Vertex(v1, color, Vector2::ZERO),
-			Vertex(v5, color, Vector2::AXIS_X),
-			Vertex(v6, color, Vector2::ONE),
-			Vertex(v2, color, Vector2::AXIS_Y),
+			Vertex(v1, color, Vector2::Zero),
+			Vertex(v5, color, Vector2::Right),
+			Vertex(v6, color, Vector2::One),
+			Vertex(v2, color, Vector2::Up),
 			texture);
 	}
 

@@ -8,19 +8,6 @@ namespace uut
 	class Rect
 	{
 	public:
-		static const Rect EMPTY;
-
-		union
-		{
-			float data[4];
-			struct
-			{
-				float x, y;
-				float width;
-				float height;
-			};
-		};
-
 		Rect();
 		Rect(const Vector2& pos, const Vector2& size);
 		Rect(float x, float y, float width, float height);
@@ -40,5 +27,18 @@ namespace uut
 		bool operator != (const Rect& rect) const;
 
 		static Rect FromLBRT(float left, float bottom, float right, float top);
+
+		static const Rect Zero;
+
+		union
+		{
+			float data[4];
+			struct
+			{
+				float x, y;
+				float width;
+				float height;
+			};
+		};
 	};
 }

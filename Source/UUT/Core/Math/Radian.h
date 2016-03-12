@@ -51,7 +51,7 @@ namespace uut
 		bool operator>= (const Radian& r) const { return _angle >= r._angle; }
 		bool operator>  (const Radian& r) const { return _angle > r._angle; }
 
-		static const Radian EMPTY;
+		static const Radian Zero;
 
 	protected:
 		float _angle;

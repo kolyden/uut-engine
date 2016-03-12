@@ -57,7 +57,7 @@ namespace uut
 		bool operator>= (const Degree& d) const { return _angle >= d._angle; }
 		bool operator>  (const Degree& d) const { return _angle > d._angle; }
 
-		static const Degree EMPTY;
+		static const Degree Zero;
 
 	protected:
 		float _angle;

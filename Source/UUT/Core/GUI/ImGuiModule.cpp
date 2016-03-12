@@ -117,8 +117,8 @@ namespace uut
 
 	void ImGuiModule::SetupCamera()
 	{
-		_renderer->SetTransform(RT_VIEW, Matrix4::IDENTITY);
-		_renderer->SetTransform(RT_WORLD, Matrix4::IDENTITY);
+		_renderer->SetTransform(RT_VIEW, Matrix4::Identity);
+		_renderer->SetTransform(RT_WORLD, Matrix4::Identity);
 		_renderer->SetTransform(RT_PROJECTION, _matProj);
 	}
 

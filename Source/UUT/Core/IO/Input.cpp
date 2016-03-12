@@ -25,7 +25,7 @@ namespace uut
 
 	const IntVector2& Input::GetMousePos()
 	{
-		return g_this? g_this->_mousePos : IntVector2::ZERO;
+		return g_this? g_this->_mousePos : IntVector2::Zero;
 	}
 
 	bool Input::IsKey(int key)

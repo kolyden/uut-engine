@@ -4,10 +4,12 @@
 
 namespace uut
 {
-	const Vector2 Vector2::ZERO(0);
-	const Vector2 Vector2::ONE(1);
-	const Vector2 Vector2::AXIS_X(1, 0);
-	const Vector2 Vector2::AXIS_Y(0, 1);
+	const Vector2 Vector2::Zero(0);
+	const Vector2 Vector2::One(1);
+	const Vector2 Vector2::Left(-1, 0);
+	const Vector2 Vector2::Right(1, 0);
+	const Vector2 Vector2::Up(0, 1);
+	const Vector2 Vector2::Down(0, -1);
 
 	Vector2::Vector2()
 	{
@@ -134,7 +136,7 @@ namespace uut
 				y / norm);
 		}
 
-		return ZERO;
+		return Zero;
 	}
 
 	Vector2 Vector2::Add(const Vector2& v1, const Vector2& v2)

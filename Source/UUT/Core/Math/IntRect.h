@@ -8,19 +8,6 @@ namespace uut
 	class IntRect
 	{
 	public:
-		static const IntRect EMPTY;
-
-		union
-		{
-			int data[4];
-			struct
-			{
-				int x, y;
-				int width;
-				int height;
-			};
-		};
-
 		IntRect();
 		IntRect(const IntVector2& pos, const IntVector2& size);
 		IntRect(int x, int y, int width, int height);
@@ -40,5 +27,18 @@ namespace uut
 		bool operator != (const IntRect& rect) const;
 
 		static IntRect FromLBRT(int left, int bottom, int right, int top);
+
+		static const IntRect Zero;
+
+		union
+		{
+			int data[4];
+			struct
+			{
+				int x, y;
+				int width;
+				int height;
+			};
+		};
 	};
 }

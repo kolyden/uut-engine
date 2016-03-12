@@ -19,8 +19,8 @@ namespace uut
 	{
 		static const IntVector2 delta[4] =
 		{
-			+IntVector2::AXIS_Y, +IntVector2::AXIS_X,
-			-IntVector2::AXIS_Y, -IntVector2::AXIS_X,
+			+IntVector2::Up, +IntVector2::Right,
+			-IntVector2::Up, -IntVector2::Right,
 		};
 
 		SetPosition(GetPosition() + delta[static_cast<int>(dir)]);
@@ -51,10 +51,10 @@ namespace uut
 
 		graphics->SetMaterial(Graphics::MT_TRANSPARENT);
 		graphics->DrawQuad(
-			Vertex(v0 + offset, Vector2::AXIS_Y),
-			Vertex(v1 + offset, Vector2::ZERO),
-			Vertex(v2 + offset, Vector2::AXIS_X),
-			Vertex(v3 + offset, Vector2::ONE),
+			Vertex(v0 + offset, Vector2::Up),
+			Vertex(v1 + offset, Vector2::Zero),
+			Vertex(v2 + offset, Vector2::Right),
+			Vertex(v3 + offset, Vector2::One),
 			_texture);
 	}
 }

@@ -4,11 +4,14 @@
 
 namespace uut
 {
-	const Vector3 Vector3::ZERO(0, 0, 0);
-	const Vector3 Vector3::ONE(1, 1, 1);
-	const Vector3 Vector3::AXIS_X(1, 0, 0);
-	const Vector3 Vector3::AXIS_Y(0, 1, 0);
-	const Vector3 Vector3::AXIS_Z(0, 0, 1);
+	const Vector3 Vector3::Zero(0, 0, 0);
+	const Vector3 Vector3::One(1, 1, 1);
+	const Vector3 Vector3::Left(-1, 0, 0);
+	const Vector3 Vector3::Right(1, 0, 0);
+	const Vector3 Vector3::Up(0, 1, 0);
+	const Vector3 Vector3::Down(0, -1, 0);
+	const Vector3 Vector3::Forward(0, 0, 1);
+	const Vector3 Vector3::Back(0, 0, -1);
 
 	Vector3::Vector3()
 	{
@@ -141,7 +144,7 @@ namespace uut
 				z / norm);
 		}
 
-		return ZERO;
+		return Zero;
 	}
 
 	Vector3 Vector3::Add(const Vector3& v1, const Vector3& v2)

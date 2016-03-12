@@ -47,6 +47,7 @@ namespace uut
 		bool Decompose(Quaternion& rotation, Vector3& translation, Vector3& scale);
 		float Determinant() const;
 		Matrix4 Transpose() const;
+		Matrix4 Inverse(float* determinant = nullptr) const;
 
 		Vector3 VectorTransform(const Vector3& vec) const;
 
@@ -75,8 +76,8 @@ namespace uut
 
 		static Matrix4 Transformation(const Vector3& translation, const Quaternion& rotation, const Vector3& scale);
 
-		static const Matrix4 ZERO;
-		static const Matrix4 IDENTITY;
+		static const Matrix4 Zero;
+		static const Matrix4 Identity;
 
 		union
 		{

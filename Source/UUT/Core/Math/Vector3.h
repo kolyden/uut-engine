@@ -50,11 +50,14 @@ namespace uut
 
 		static Vector3 Scale(const Vector3& vec, float s);
 
-		static const Vector3 ZERO;
-		static const Vector3 ONE;
-		static const Vector3 AXIS_X;
-		static const Vector3 AXIS_Y;
-		static const Vector3 AXIS_Z;
+		static const Vector3 Zero;
+		static const Vector3 One;
+		static const Vector3 Left;
+		static const Vector3 Right;
+		static const Vector3 Up;
+		static const Vector3 Down;
+		static const Vector3 Forward;
+		static const Vector3 Back;
 
 		union
 		{

@@ -56,8 +56,8 @@ namespace uut
 
 		static Quaternion Slerp(const Quaternion& q1, const Quaternion& q2, float t);
 
-		static const Quaternion ZERO;
-		static const Quaternion IDENTITY;
+		static const Quaternion Zero;
+		static const Quaternion Identity;
 
 		union
 		{

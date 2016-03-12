@@ -1,9 +1,11 @@
 #pragma once
 #include <Core/Object.h>
 #include <Core/Math/Matrix4.h>
+#include <Core/Math/Ray3.h>
 
 namespace uut
 {
+	class IntVector2;
 	class Renderer;
 
 	class CameraBase : public Object
@@ -12,6 +14,8 @@ namespace uut
 		CameraBase();
 
 		void Setup(Renderer* renderer);
+
+		Ray3 CastRay(const IntVector2& screenPos, const IntVector2& screenSize) const;
 
 	protected:
 		Matrix4 _matView;

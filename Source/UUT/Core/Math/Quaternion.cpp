@@ -5,8 +5,8 @@
 
 namespace uut
 {
-	const Quaternion Quaternion::ZERO(0, 0, 0, 0);
-	const Quaternion Quaternion::IDENTITY(0, 0, 0, 1);
+	const Quaternion Quaternion::Zero(0, 0, 0, 0);
+	const Quaternion Quaternion::Identity(0, 0, 0, 1);
 
 	Quaternion::Quaternion()
 	{
@@ -242,7 +242,7 @@ namespace uut
 				(u.m[0][1] - u.m[1][0]) / s);
 		}
 
-		return ZERO;
+		return Zero;
 	}
 
 	Quaternion Quaternion::RotationYawPitchRoll(const Radian& yaw, const Radian& pitch, const Radian& roll)

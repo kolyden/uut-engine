@@ -4,9 +4,9 @@ namespace uut
 {
 	FreeCamera::FreeCamera()
 		: _position(0, 0, 0)
-		, _right(Vector3::AXIS_X)
-		, _up(Vector3::AXIS_Y)
-		, _look(Vector3::AXIS_Z)
+		, _right(Vector3::Right)
+		, _up(Vector3::Up)
+		, _look(Vector3::Forward)
 	{
 	}
 
@@ -23,9 +23,9 @@ namespace uut
 
 	void FreeCamera::UpdateView()
 	{
-		_right = Vector3::AXIS_X;
-		_up = Vector3::AXIS_Y;
-		_look = Vector3::AXIS_Z;
+		_right = Vector3::Right;
+		_up = Vector3::Up;
+		_look = Vector3::Forward;
 
 		const auto matYaw = Matrix4::RotationAxis(_up, _yaw);
 		_look = matYaw.VectorTransform(_look);
@@ -39,7 +39,7 @@ namespace uut
 		_right = matRoll.VectorTransform(_right);
 		_up = matRoll.VectorTransform(_up);
 
-		_matView = Matrix4::IDENTITY;
+		_matView = Matrix4::Identity;
 		_matView._11 = _right.x; _matView._12 = _up.x; _matView._13 = _look.x;
 		_matView._21 = _right.y; _matView._22 = _up.y; _matView._23 = _look.y;
 		_matView._31 = _right.z; _matView._32 = _up.z; _matView._33 = _look.z;
