@@ -25,9 +25,16 @@ namespace uut
 			PM_3D,
 		};
 
+		enum MaterialType
+		{
+			MT_OPAQUE,
+			MT_TRANSPARENT,
+		};
+
 		explicit Graphics(Renderer* renderer);
 
 		void SetProjection(ProjectionMode mode);
+		void SetMaterial(MaterialType type);
 
 		void DrawPoint(const Vector3& point, const Color32& color = Color32::WHITE);
 		void DrawLine(const Vector3& p0, const Vector3& p1, const Color32& color = Color32::WHITE);
@@ -58,6 +65,7 @@ namespace uut
 		Matrix4 _matProj;
 
 		ProjectionMode _currentPM, _nextPM;
+		MaterialType _currentMT, _nextMT;
 
 		void TestBatch(Topology topology, Texture2D* tex, int vrtCount);
 		void DrawAll();

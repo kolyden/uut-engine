@@ -13,12 +13,18 @@ namespace uut
 		static const IntVector2& GetMousePos();
 
 		static bool IsKey(int key);
+		static bool IsKeyDown(int key);
+		static bool IsKeyUp(int key);
 
 		void UpdateState();
 
 	protected:
+		static const int KEYS_COUNT = 512;
+
 		IntVector2 _mousePos;
-		const uint8_t* _kbState;
+		uint8_t _prevKbState[KEYS_COUNT];
+		uint8_t _kbState[KEYS_COUNT];
+
 		int _kbMod;
 		bool _mouseButton[3];
 	};

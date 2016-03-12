@@ -38,6 +38,7 @@ namespace uut
 
 		bool operator == (const IntVector2& vec) const { return x == vec.x && y == vec.y; }
 		bool operator != (const IntVector2& vec) const { return x != vec.x || y != vec.y; }
+		bool operator < (const IntVector2& vec) const { return x < vec.x && y < vec.y; }
 
 		static const IntVector2 ZERO;
 		static const IntVector2 ONE;

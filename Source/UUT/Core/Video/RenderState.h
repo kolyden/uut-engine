@@ -63,7 +63,14 @@ namespace uut
 		TextureArgument alphaArg1;
 		TextureArgument alphaArg2;
 
+		static const RenderTextureStageState Disabled;
+		static const RenderTextureStageState Opaque;
+		static const RenderTextureStageState Transparent;
+
 		RenderTextureStageState();
+		RenderTextureStageState(
+			TextureOperation colop, TextureArgument colarg1, TextureArgument colarg2,
+			TextureOperation alpop, TextureArgument alparg1, TextureArgument alparg2);
 	};
 
 	enum class TextureFilter // D3DTEXTUREFILTERTYPE

@@ -210,6 +210,9 @@
     <ClCompile Include="..\Source\UUT\Core\Video\Loaders\Texture2DLoader.cpp">
       <Filter>Sources\Video\Loaders</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Video\Sprite.cpp">
+      <Filter>Sources\Video</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\UUT\Core\Object.h">
@@ -415,6 +418,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Video\Loaders\Texture2DLoader.h">
       <Filter>Sources\Video\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Video\Sprite.h">
+      <Filter>Sources\Video</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

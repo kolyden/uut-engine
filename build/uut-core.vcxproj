@@ -70,6 +70,7 @@
     <ClCompile Include="..\Source\UUT\Core\Video\Loaders\Texture2DLoader.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Renderer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\RenderState.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Video\Sprite.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Texture.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Texture2D.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\Vertex.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="..\Source\UUT\Core\Video\Loaders\Texture2DLoader.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Renderer.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\RenderState.h" />
+    <ClInclude Include="..\Source\UUT\Core\Video\Sprite.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Texture.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Texture2D.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\Topology.h" />

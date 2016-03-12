@@ -28,6 +28,7 @@ namespace uut
 	{
 		int drawCall;
 		int verticesCount;
+		int fps;
 	};
 
 	class Renderer : public Object

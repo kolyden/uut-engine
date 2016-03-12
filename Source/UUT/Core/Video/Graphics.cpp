@@ -15,6 +15,8 @@ namespace uut
 		, _vdxIndex(0)
 		, _currentPM(PM_NONE)
 		, _nextPM(PM_NONE)
+		, _currentMT(MT_OPAQUE)
+		, _nextMT(MT_OPAQUE)
 	{
 		_vbuf = _renderer->CreateVertexBuffer(Vertex::SIZE*_vbufCount);
 		_vdec = _renderer->CreateVertexDeclaration(Vertex::DECLARE);
@@ -29,6 +31,11 @@ namespace uut
 	void Graphics::SetProjection(ProjectionMode mode)
 	{
 		_nextPM = mode;
+	}
+
+	void Graphics::SetMaterial(MaterialType type)
+	{
+		_nextMT = type;
 	}
 
 	void Graphics::DrawPoint(const Vector3& point, const Color32& color /* = Color32::WHITE */)
@@ -250,6 +257,23 @@ namespace uut
 	{
 		_vbuf->Unlock();
 
+		if (_currentMT != _nextMT)
+		{
+			_currentMT = _nextMT;
+			switch (_currentMT)
+			{
+			case MT_OPAQUE:
+				_renderState.alphaBlend = false;
+				_renderState.textureStage[0] = RenderTextureStageState::Opaque;
+				break;
+
+			case MT_TRANSPARENT:
+				_renderState.alphaBlend = true;
+				_renderState.textureStage[0] = RenderTextureStageState::Transparent;
+				break;
+			}
+		}
+
 		_renderer->SetState(_renderState);
 		if (_currentPM != _nextPM)
 		{
@@ -267,7 +291,6 @@ namespace uut
 				break;
 			}
 		}
-
 		if (_currentPM != PM_NONE)
 			_renderer->SetTransform(RT_PROJECTION, _matProj);
 

@@ -2,6 +2,17 @@
 
 namespace uut
 {
+
+	const RenderTextureStageState RenderTextureStageState::Disabled;
+
+	const RenderTextureStageState RenderTextureStageState::Opaque(
+		TextureOperation::Modulate, TextureArgument::Texture, TextureArgument::Current,
+		TextureOperation::SelectArg1, TextureArgument::Texture, TextureArgument::Current);
+
+	const RenderTextureStageState RenderTextureStageState::Transparent(
+		TextureOperation::Modulate, TextureArgument::Texture, TextureArgument::Diffuse,
+		TextureOperation::Modulate, TextureArgument::Texture, TextureArgument::Diffuse);
+
 	RenderTextureStageState::RenderTextureStageState()
 		: colorOp(TextureOperation::Disable)
 		, colorArg1(TextureArgument::Texture)
@@ -10,6 +21,18 @@ namespace uut
 		, alphaArg1(TextureArgument::Texture)
 		, alphaArg2(TextureArgument::Current)
 	{		
+	}
+
+	RenderTextureStageState::RenderTextureStageState(
+		TextureOperation colop, TextureArgument colarg1, TextureArgument colarg2,
+		TextureOperation alpop, TextureArgument alparg1, TextureArgument alparg2)
+		: colorOp(colop)
+		, colorArg1(colarg1)
+		, colorArg2(colarg2)
+		, alphaOp(alpop)
+		, alphaArg1(alparg1)
+		, alphaArg2(alparg2)
+	{
 	}
 
 	RenderSamplerState::RenderSamplerState()
@@ -46,7 +69,6 @@ namespace uut
 		, destBlendAlpha(BLEND_ZERO)
 		, blendOpAlpha(BLENDOP_ADD)
 	{
-		textureStage[0].colorOp = TextureOperation::Modulate;
-		textureStage[0].alphaOp = TextureOperation::SelectArg1;
+		textureStage[0] = RenderTextureStageState::Opaque;
 	}
 }
