@@ -23,6 +23,9 @@ namespace uut
 
 		void Clear();
 
+		LevelCell& GetCell(const IntVector2& pos) { return GetCell(pos.x, pos.y); }
+		const LevelCell& GetCell(const IntVector2& pos) const { return GetCell(pos.x, pos.y); }
+
 		LevelCell& GetCell(int x, int y) { return _cells[GetIndex(x, y)]; }
 		const LevelCell& GetCell(int x, int y) const { return _cells[GetIndex(x, y)]; }
 
@@ -41,7 +44,6 @@ namespace uut
 		void ForeachCell(List<LevelCell>::ConstIterate func) const;
 
 		static void DrawFloor(Graphics* graphics, const FloorTile& tile, const Vector3& center);
-		static void DrawSolidWall(Graphics* graphics, const WallTile& tile, const Vector3& center, Direction dir);
 		static void DrawWall(Graphics* graphics, const WallTile& tile, const Vector3& center, Direction dir);
 	};
 }

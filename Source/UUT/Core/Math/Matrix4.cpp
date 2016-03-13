@@ -386,6 +386,11 @@ namespace uut
 			0, 0, (zf*zn) / (zn - zf), 0);
 	}
 
+	Matrix4 Matrix4::PerspectiveFov(const Radian& fovy, float width, float height, float znear, float zfar)
+	{
+		return PerspectiveFov(fovy, width / height, znear, zfar);
+	}
+
 	Matrix4 Matrix4::Perspective(float w, float h, float zn, float zf)
 	{
 		return Matrix4(

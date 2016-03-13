@@ -1,6 +1,5 @@
 #include "main.h"
 #include <Core/Math/Math.h>
-#include <Core/Math/Vector2.h>
 #include <Core/Math/Vector3.h>
 #include <Core/IO/File.h>
 #include <Core/Video/Loaders/Texture2DLoader.h>
@@ -9,6 +8,8 @@
 #include "Level.h"
 #include "LevelChunk.h"
 #include <Core/Math/Random.h>
+#include <Core/GUI/ImGuiModule.h>
+#include "Tools.h"
 
 namespace uut
 {
@@ -25,7 +26,9 @@ namespace uut
 		_window->SetTitle("Sample 02");
 
 		_graphics = new Graphics(_renderer);
-		_graphics->SetProjection(Graphics::PM_3D);
+		_graphics->SetProjection(Graphics::PM_NONE);
+
+		_gui = new ImGuiModule(_renderer, _input);
 
 		_camera = new FreeCamera();
 		_camera->SetPosition(Vector3(10, 8, -20));
@@ -40,6 +43,7 @@ namespace uut
 		tileset->AddWallTile(wall0);
 
 		_level = new Level(tileset);
+		_tools = new Tools(tileset);
 
 		_player = new Entity();
 		_player->SetTexture(entity0);
@@ -51,21 +55,16 @@ namespace uut
 			for (int x = 0; x < LevelChunk::COUNT; x++)
 			{
 				auto& cell = chunk->GetCell(x, y);
-				cell.SetNormalFloor(0);
+				cell.SetFloor(0);
 			}
 		}
 
-		for (int i = 0; i < 10; i++)
-		{
-			const int x = Random::Range(0, LevelChunk::COUNT);
-			const int y = Random::Range(0, LevelChunk::COUNT);
-// 			const Direction dir = static_cast<Direction>(Random::Range(0, 4));
-
-			auto& cell = chunk->GetCell(x, y);
-			cell.SetSolid(0, 0);
-		}
-
 		_timer.Start();
+		_matProj = Matrix4::PerspectiveFov(
+			Math::PI/4,
+			_renderer->GetScreenSize().x,
+			_renderer->GetScreenSize().y,
+			1.0f, 1000.0f);
 	}
 
 	static bool show_test_window = false;
@@ -75,12 +74,8 @@ namespace uut
 		_timer.Update();
 
 		float moveSpeed = 50.0f;
-		Radian rotateSpeed = Math::PI / 2;
 		if (_input->IsKey(SDL_SCANCODE_SPACE))
-		{
 			moveSpeed *= 4;
-			rotateSpeed *= 2;
-		}
 
 		if (_input->IsKey(SDL_SCANCODE_A))
 			_camera->MoveRight(-moveSpeed * _timer.GetDeltaTime());
@@ -130,22 +125,43 @@ namespace uut
 		else _dragStart = false;
 
 		_level->Update(_timer.GetDeltaTime());
+		_camera->Setup(_renderer);
+		_renderer->SetTransform(RT_PROJECTION, _matProj);
 
-		if (_input->IsMouseButton(0))
+		_gui->NewFrame();
+		_tools->Update();
+
+		if (!ImGui::IsMouseHoveringAnyWindow())
 		{
 			const auto ray = _camera->CastRay(_input->GetMousePos(), _renderer);
-			Vector3 vec;
-			if (_ground.IntersectLine(ray.origin, ray.GetPoint(1000), vec))
+			float dist;
+			if (_ground.Intersect(ray, dist))
 			{
+				const Vector3 vec = ray.GetPoint(dist);
 				_cellIndex.x = Math::FloorToInt(vec.x / LevelCell::SIZE);
 				_cellIndex.y = Math::FloorToInt(vec.z / LevelCell::SIZE);
 			}
-		}
 
+			if (_input->IsMouseButton(0))
+			{
+				IntVector2 pos;
+				auto chunk = _level->GetChunkAt(_cellIndex, &pos);
+				if (chunk)
+				{
+					auto& cell = chunk->GetCell(pos);
+					switch (_tools->GetType())
+					{
+					case ToolType::Clear: cell.Clear(); break;
+					case ToolType::Floor: cell.SetFloor(0); break;
+					case ToolType::Wall: cell.SeWall(_tools->GetDirection(), 0); break;
+					}
+				}
+			}
+		}
+		
 		///////////////////////////////////////////////////////////////
 		if (_renderer->BeginScene())
 		{
-			_camera->Setup(_renderer);
 			_renderer->Clear(Color32(114, 144, 154));
 
 			_graphics->DrawLine(Vector3::Zero, Vector3::Right * 1000, Color32::Red);
@@ -162,6 +178,9 @@ namespace uut
 			_level->Draw(_graphics);
 
 			_graphics->Flush();
+
+			_gui->SetupCamera();
+			_gui->Draw();
 
 			_renderer->EndScene();
 		}

@@ -26,6 +26,7 @@ namespace uut
 		LevelChunk* GetChunk(const IntVector2& index);
 
 		LevelChunk* FindChunkAt(const IntVector2& worldPos, IntVector2* localPos) const;
+		LevelChunk* GetChunkAt(const IntVector2& worldPos, IntVector2* localPos);
 
 	protected:
 		SharedPtr<Tileset> _tileset;

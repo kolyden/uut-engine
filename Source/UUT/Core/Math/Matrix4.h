@@ -57,6 +57,7 @@ namespace uut
 		static Matrix4 Ortho(float width, float height, float znear, float zfar);
 		static Matrix4 OrthoOffCenter(float left, float right, float bottom, float top, float znear, float zfar);
 		static Matrix4 PerspectiveFov(const Radian& fovy, float aspect, float znear, float zfar);
+		static Matrix4 PerspectiveFov(const Radian& fovy, float width, float height, float znear, float zfar);
 		static Matrix4 Perspective(float width, float height, float znear, float zfar);
 
 		static Matrix4 Reflect(const Plane& plane);

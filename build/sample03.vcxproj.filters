@@ -24,6 +24,9 @@
     <ClCompile Include="..\Source\Samples\03\Entity.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Samples\03\Tools.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Samples\03\main.h">
@@ -42,6 +45,9 @@
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Samples\03\Entity.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Samples\03\Tools.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>

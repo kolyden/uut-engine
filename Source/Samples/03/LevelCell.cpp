@@ -5,9 +5,19 @@ namespace uut
 	const float LevelCell::SIZE = 5.0f;
 	const float LevelCell::HALF_SIZE = SIZE / 2;
 
+	LevelCell::LevelCell()
+		: empty(true)
+		, floor(0)
+	{
+		wall[0] = EMPTY_TILE;
+		wall[1] = EMPTY_TILE;
+		wall[2] = EMPTY_TILE;
+		wall[3] = EMPTY_TILE;
+	}
+
 	void LevelCell::Clear()
 	{
-		type = CellType::Empty;
+		empty = true;
 		floor = EMPTY_TILE;
 		wall[0] = EMPTY_TILE;
 		wall[1] = EMPTY_TILE;
@@ -15,13 +25,15 @@ namespace uut
 		wall[3] = EMPTY_TILE;
 	}
 
-	void LevelCell::SetSolid(TileIndex roof, TileIndex side)
+	void LevelCell::SetFloor(TileIndex tile)
 	{
-		type = CellType::Solid;
-		floor = roof;
-		wall[0] = side;
-		wall[1] = side;
-		wall[2] = side;
-		wall[3] = side;
+		empty = false;
+		floor = tile;
+	}
+
+	void LevelCell::SeWall(Direction dir, TileIndex tile)
+	{
+		empty = false;
+		wall[static_cast<int>(dir)] = tile;
 	}
 }

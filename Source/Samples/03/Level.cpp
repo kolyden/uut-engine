@@ -62,13 +62,30 @@ namespace uut
 	LevelChunk* Level::FindChunkAt(const IntVector2& worldPos, IntVector2* localPos) const
 	{
 		const IntVector2 index(
-			Math::Div(worldPos.x, LevelChunk::COUNT).quot,
-			Math::Div(worldPos.y, LevelChunk::COUNT).quot);
+			Math::FloorToInt(static_cast<float>(worldPos.x) / LevelChunk::COUNT),
+			Math::FloorToInt(static_cast<float>(worldPos.y) / LevelChunk::COUNT));
 
 		auto chunk = FindChunk(index);
 		if (!chunk)
 			return nullptr;
 
+		if (localPos != nullptr)
+		{
+			*localPos = IntVector2(
+				worldPos.x - index.x*LevelChunk::COUNT,
+				worldPos.y - index.y*LevelChunk::COUNT);
+		}
+
+		return chunk;
+	}
+
+	LevelChunk* Level::GetChunkAt(const IntVector2& worldPos, IntVector2* localPos)
+	{
+		const IntVector2 index(
+			Math::FloorToInt(static_cast<float>(worldPos.x) / LevelChunk::COUNT),
+			Math::FloorToInt(static_cast<float>(worldPos.y) / LevelChunk::COUNT));
+
+		auto chunk = GetChunk(index);
 		if (localPos != nullptr)
 		{
 			*localPos = IntVector2(

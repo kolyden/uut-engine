@@ -10,9 +10,11 @@
 
 namespace uut
 {
+	class ImGuiModule;
 	class Entity;
 	class Level;
 	class ResourceLoader;
+	class Tools;
 
 	class SampleApp : public Application
 	{
@@ -22,10 +24,13 @@ namespace uut
 	protected:
 		SharedPtr<FreeCamera> _camera;
 		SharedPtr<Graphics> _graphics;
+		SharedPtr<ImGuiModule> _gui;
 		SharedPtr<Level> _level;
 		SharedPtr<Entity> _player;
+		SharedPtr<Tools> _tools;
 		Plane _ground;
 		IntVector2 _cellIndex;
+		Matrix4 _matProj;
 
 		Timer _timer;
 		bool _dragStart;
