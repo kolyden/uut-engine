@@ -1,6 +1,7 @@
 #include "Vector3.h"
 #include "Vector2.h"
 #include <algorithm>
+#include "Math.h"
 
 namespace uut
 {
@@ -206,5 +207,10 @@ namespace uut
 			s*vec.x,
 			s*vec.y,
 			s*vec.z);
+	}
+
+	float Vector3::Distance(const Vector3& p0, const Vector3& p1)
+	{
+		return Math::Abs((p1 - p0).Length());
 	}
 }

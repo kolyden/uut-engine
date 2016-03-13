@@ -1,4 +1,7 @@
 #include "FreeCamera.h"
+#include <Core/Math/Vector2.h>
+#include <Core/Video/Renderer.h>
+#include "Viewport.h"
 
 namespace uut
 {
@@ -21,6 +24,31 @@ namespace uut
 		return _position;
 	}
 
+	Ray3 FreeCamera::CastRay(const Vector2& screenPos, Renderer* renderer) const
+	{
+		if (renderer == nullptr)
+			return Ray3::Zero;
+
+		auto& viewport = renderer->GetViewport();
+		auto& matProj = renderer->GetTransform(RT_PROJECTION);
+
+		const Vector3 v(
+			(( 2.0f * screenPos.x) / viewport.width  - 1.0f) / matProj._11,
+			((-2.0f * screenPos.y) / viewport.height + 1.0f) / matProj._22,
+			1.0f);
+
+		const auto m = _matView.Inverse();
+		Vector3 rayDir(
+			v.x*m._11 + v.y*m._21 + v.z*m._31,
+			v.x*m._12 + v.y*m._22 + v.z*m._32,
+			v.x*m._13 + v.y*m._23 + v.z*m._33);
+		rayDir.Normalize();
+		Vector3 rayOrigin(m._41, m._42, m._43);
+
+		return Ray3(rayOrigin, rayDir);
+	}
+
+	///////////////////////////////////////////////////////////////////////////
 	void FreeCamera::UpdateView()
 	{
 		_right = Vector3::Right;

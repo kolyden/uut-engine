@@ -25,7 +25,7 @@ namespace uut
 		SharedPtr<Level> _level;
 		SharedPtr<Entity> _player;
 		Plane _ground;
-		Vector3 _groundHit;
+		IntVector2 _cellIndex;
 
 		Timer _timer;
 		bool _dragStart;

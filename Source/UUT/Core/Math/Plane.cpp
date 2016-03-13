@@ -98,15 +98,4 @@ namespace uut
 		out = v1 - temp * direction;
 		return true;
 	}
-
-	bool Plane::Intersect(const Ray3& ray, float& dist) const
-	{
-		const Vector3 normal(a, b, c);
-		const float dot = Vector3::Dot(normal, ray.direction);
-		if (!dot)
-			return false;
-
-		dist = d + Vector3::Dot(normal, ray.origin) / dot;
-		return true;
-	}
 }

@@ -50,6 +50,8 @@ namespace uut
 
 		static Vector3 Scale(const Vector3& vec, float s);
 
+		static float Distance(const Vector3& p0, const Vector3& p1);
+
 		static const Vector3 Zero;
 		static const Vector3 One;
 		static const Vector3 Left;

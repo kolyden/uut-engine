@@ -15,7 +15,7 @@ namespace uut
 
 		void Setup(Renderer* renderer);
 
-		Ray3 CastRay(const IntVector2& screenPos, const IntVector2& screenSize) const;
+		virtual Ray3 CastRay(const Vector2& screenPos, Renderer* renderer) const = 0;
 
 	protected:
 		Matrix4 _matView;

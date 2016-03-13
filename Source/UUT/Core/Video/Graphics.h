@@ -38,6 +38,7 @@ namespace uut
 
 		void DrawPoint(const Vector3& point, const Color32& color = Color32::White);
 		void DrawLine(const Vector3& p0, const Vector3& p1, const Color32& color = Color32::White);
+		void DrawPolyLine(const List<Vector3>& points, const Color32& color = Color32::White);
 
 		void DrawSolidTriangle(const Vector3& p0, const Vector3& p1, const Vector3& p2, const Color32& color = Color32::White);
 		void DrawTrinagle(const Vertex& v0, const Vertex& v1, const Vertex& v2, Texture2D* texture = nullptr);
@@ -46,6 +47,7 @@ namespace uut
 		void DrawQuad(const Rect& rect, float z = 0.0f, Texture2D* texture = nullptr, const Color32& color = Color32::White);
 
 		void DrawSolidCube(const Vector3& center, float side, const Color32& color = Color32::White);
+		void DrawWireCube(const Vector3& center, float side, const Color32& color = Color32::White);
 		void DrawCube(const Vector3& center, float side, const Color32& color = Color32::White, Texture2D* texture = nullptr);
 
 		void Flush();

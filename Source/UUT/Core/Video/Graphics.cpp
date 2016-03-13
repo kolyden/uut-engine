@@ -60,6 +60,26 @@ namespace uut
 		_vdxIndex++;
 	}
 
+	void Graphics::DrawPolyLine(const List<Vector3>& points, const Color32& color)
+	{
+		if (points.Count() < 2)
+			return;
+
+		TestBatch(Topology::LineList, nullptr, (points.Count() - 1) * 2);
+
+		const uint32_t col = color.ToInt();
+		for (int i = 0; i < points.Count() - 1; i++)
+		{
+			_vertices[_vdxIndex].pos = points[i];
+			_vertices[_vdxIndex].color = col;
+			_vdxIndex++;
+
+			_vertices[_vdxIndex].pos = points[i + 1];
+			_vertices[_vdxIndex].color = col;
+			_vdxIndex++;
+		}
+	}
+
 	void Graphics::DrawSolidTriangle(const Vector3& p0, const Vector3& p1, const Vector3& p2, const Color32& color /*= Color32::WHITE*/)
 	{
 		TestBatch(Topology::TrinagleList, nullptr, 3);
@@ -169,6 +189,30 @@ namespace uut
 			Vertex(v5, color, Vector2::Right),
 			Vertex(v6, color, Vector2::One),
 			Vertex(v2, color, Vector2::Up));
+	}
+
+	void Graphics::DrawWireCube(const Vector3& center, float side, const Color32& color /*= Color32::White*/)
+	{
+		const float hsize = side / 2;
+
+		const Vector3 v0(center.x - hsize, center.y + hsize, center.z - hsize);
+		const Vector3 v1(center.x + hsize, center.y + hsize, center.z - hsize);
+		const Vector3 v2(center.x + hsize, center.y - hsize, center.z - hsize);
+		const Vector3 v3(center.x - hsize, center.y - hsize, center.z - hsize);
+
+		const Vector3 v4(center.x - hsize, center.y + hsize, center.z + hsize);
+		const Vector3 v5(center.x + hsize, center.y + hsize, center.z + hsize);
+		const Vector3 v6(center.x + hsize, center.y - hsize, center.z + hsize);
+		const Vector3 v7(center.x - hsize, center.y - hsize, center.z + hsize);
+
+		DrawPolyLine({ v0, v1, v2, v3, v0 }, color);
+		DrawPolyLine({ v4, v5, v6, v7, v4 }, color);
+
+		DrawPolyLine({ v0, v4, v7, v3, v0 }, color);
+		DrawPolyLine({ v1, v5, v6, v2, v1 }, color);
+
+		DrawPolyLine({ v0, v4, v5, v1, v0 }, color);
+		DrawPolyLine({ v3, v7, v6, v2, v3 }, color);
 	}
 
 	void Graphics::DrawCube(const Vector3& center, float side, const Color32& color, Texture2D* texture)

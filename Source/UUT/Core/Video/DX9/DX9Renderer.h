@@ -2,6 +2,7 @@
 #include "Core/Video/Renderer.h"
 #include "DX9Defs.h"
 #include <Core/Video/RenderState.h>
+#include <Core/Video/Viewport.h>
 
 namespace uut
 {
@@ -16,7 +17,11 @@ namespace uut
 
 		virtual const RendererStatistics& GetStatistics() const override;
 
+		virtual void SetViewport(const Viewport& viewport) override;
+		virtual const Viewport& GetViewport() const override;
+
 		virtual bool SetTransform(RenderTransform type, const Matrix4& mat) override;
+		virtual const Matrix4& GetTransform(RenderTransform type) const override;
 
 		virtual bool BeginScene() override;
 		virtual void EndScene() override;
@@ -44,6 +49,10 @@ namespace uut
 		LPDIRECT3DDEVICE9 _d3ddev;
 		RenderState _state;
 		RendererStatistics _statistics;
+		Viewport _viewport;
+		Matrix4 _matView;
+		Matrix4 _matWorld;
+		Matrix4 _matProj;
 
 		DX9Renderer();
 

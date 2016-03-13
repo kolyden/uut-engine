@@ -1,5 +1,6 @@
 #include "main.h"
 #include <Core/Math/Math.h>
+#include <Core/Math/Vector2.h>
 #include <Core/Math/Vector3.h>
 #include <Core/IO/File.h>
 #include <Core/Video/Loaders/Texture2DLoader.h>
@@ -12,7 +13,7 @@
 namespace uut
 {
 	SampleApp::SampleApp()
-		: _groundHit(Vector3::Zero)
+		: _cellIndex(0, 0)
 		, _dragStart(false)
 	{
 		_windowSize = IntVector2(1024, 768);
@@ -132,10 +133,13 @@ namespace uut
 
 		if (_input->IsMouseButton(0))
 		{
-			auto ray = _camera->CastRay(_input->GetMousePos(), _renderer->GetScreenSize());
-			float dist;
-			if (_ground.Intersect(ray, dist))
-				_groundHit = ray.GetPoint(dist);
+			const auto ray = _camera->CastRay(_input->GetMousePos(), _renderer);
+			Vector3 vec;
+			if (_ground.IntersectLine(ray.origin, ray.GetPoint(1000), vec))
+			{
+				_cellIndex.x = Math::FloorToInt(vec.x / LevelCell::SIZE);
+				_cellIndex.y = Math::FloorToInt(vec.z / LevelCell::SIZE);
+			}
 		}
 
 		///////////////////////////////////////////////////////////////
@@ -148,7 +152,12 @@ namespace uut
 			_graphics->DrawLine(Vector3::Zero, Vector3::Up * 1000, Color32::Green);
 			_graphics->DrawLine(Vector3::Zero, Vector3::Forward * 1000, Color32::Blue);
 
-			_graphics->DrawLine(_groundHit, _groundHit + Vector3::Up * 20, Color32(255, 0, 255));
+			_graphics->DrawWireCube(
+				Vector3(
+					LevelCell::SIZE * _cellIndex.x + LevelCell::HALF_SIZE, LevelCell::HALF_SIZE,
+					LevelCell::SIZE * _cellIndex.y + LevelCell::HALF_SIZE),
+				LevelCell::SIZE);
+			//_graphics->DrawLine(_groundHit, _groundHit + Vector3::Up * 20, Color32(255, 0, 255));
 
 			_level->Draw(_graphics);
 

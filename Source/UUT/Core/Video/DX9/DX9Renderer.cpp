@@ -45,20 +45,15 @@ namespace uut
 // 		_d3ddev->SetRenderState(D3DRS_CLIPPING, TRUE);
 // 		_d3ddev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
 
-		D3DXMATRIX matWorld;
-		D3DXMatrixIdentity(&matWorld);
-		_d3ddev->SetTransform(D3DTS_WORLD, &matWorld);
-
-		D3DXMATRIX matView;
-		D3DXMatrixIdentity(&matView);
-		_d3ddev->SetTransform(D3DTS_VIEW, &matView);
-
-		D3DXMATRIX matProjection;     // the projection transform matrix
-		D3DXMatrixPerspectiveLH(&matProjection,
+		_matWorld = Matrix4::Identity;
+		_matView = Matrix4::Identity;
+		_matProj = Matrix4::Perspective(
 			static_cast<float>(_screenSize.x),
 			static_cast<float>(_screenSize.y),
 			0.001f, 1000.0f);
-		_d3ddev->SetTransform(D3DTS_PROJECTION, &matProjection);
+		_d3ddev->SetTransform(D3DTS_WORLD, (D3DMATRIX*)&_matWorld);
+		_d3ddev->SetTransform(D3DTS_VIEW, (D3DMATRIX*)&_matView);
+		_d3ddev->SetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&_matProj);
 	}
 
 	template<typename T>
@@ -217,10 +212,45 @@ namespace uut
 		return _statistics;
 	}
 
+	void DX9Renderer::SetViewport(const Viewport& viewport)
+	{
+		_viewport = viewport;
+		D3DVIEWPORT9 vp
+		{
+			_viewport.x, _viewport.y,
+			_viewport.width, _viewport.height,
+			_viewport.minZ, _viewport.maxZ 
+		};
+		_d3ddev->SetViewport(&vp);
+	}
+
+	const Viewport& DX9Renderer::GetViewport() const
+	{
+		return _viewport;
+	}
+
 	bool DX9Renderer::SetTransform(RenderTransform type, const Matrix4& mat)
 	{
 		HRESULT ret = _d3ddev->SetTransform(Convert(type), (D3DMATRIX*)&mat);
+		switch (type)
+		{
+		case RT_VIEW: _matView = mat; break;
+		case RT_WORLD: _matWorld = mat; break;
+		case RT_PROJECTION: _matProj = mat; break;
+		}
 		return TestReturnCode(ret);
+	}
+
+	const Matrix4& DX9Renderer::GetTransform(RenderTransform type) const
+	{
+		switch (type)
+		{
+		case RT_VIEW: return _matView;
+		case RT_WORLD: return _matWorld;
+		case RT_PROJECTION: return _matProj;
+		}
+
+		return Matrix4::Identity;
 	}
 
 	bool DX9Renderer::BeginScene()
@@ -444,6 +474,15 @@ namespace uut
 			Debug::LogError("Can't create D3D9 Device");
 			return SharedPtr<DX9Renderer>::EMPTY;
 		}
+
+		D3DVIEWPORT9 vp;
+		renderer->_d3ddev->GetViewport(&vp);
+		renderer->_viewport.x = vp.X;
+		renderer->_viewport.y = vp.Y;
+		renderer->_viewport.width = vp.Width;
+		renderer->_viewport.height = vp.Height;
+		renderer->_viewport.minZ = vp.MinZ;
+		renderer->_viewport.maxZ = vp.MaxZ;
 
 		return renderer;
 	}

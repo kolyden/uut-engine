@@ -11,6 +11,7 @@
 
 namespace uut
 {
+	class Viewport;
 	struct RenderState;
 	class Window;
 	class Texture2D;
@@ -46,7 +47,11 @@ namespace uut
 
 		virtual const RendererStatistics& GetStatistics() const = 0;
 
+		virtual void SetViewport(const Viewport& viewport) = 0;
+		virtual const Viewport& GetViewport() const = 0;
+
 		virtual bool SetTransform(RenderTransform type, const Matrix4& mat) = 0;
+		virtual const Matrix4& GetTransform(RenderTransform type) const = 0;
 
 		virtual bool BeginScene() = 0;
 		virtual void EndScene() = 0;
