@@ -14,7 +14,7 @@ namespace uut
 	class Entity;
 	class Level;
 	class ResourceLoader;
-	class Tools;
+	class Minimap;
 
 	class SampleApp : public Application
 	{
@@ -27,7 +27,7 @@ namespace uut
 		SharedPtr<ImGuiModule> _gui;
 		SharedPtr<Level> _level;
 		SharedPtr<Entity> _player;
-		SharedPtr<Tools> _tools;
+		SharedPtr<Minimap> _minimap;
 		Plane _ground;
 		IntVector2 _cellIndex;
 		Matrix4 _matProj;

@@ -9,7 +9,7 @@
 #include "LevelChunk.h"
 #include <Core/Math/Random.h>
 #include <Core/GUI/ImGuiModule.h>
-#include "Tools.h"
+#include "Minimap.h"
 
 namespace uut
 {
@@ -36,14 +36,16 @@ namespace uut
 		auto loader = new Texture2DLoader(_renderer);
 		auto entity0 = DynamicCast<Texture2D>(loader->Load(File::OpenRead("angel.png")));
 		auto wall0 = DynamicCast<Texture2D>(loader->Load(File::OpenRead("brick_dark0.png")));
+		auto wall1 = DynamicCast<Texture2D>(loader->Load(File::OpenRead("door.png")));
 		auto floor0 = DynamicCast<Texture2D>(loader->Load(File::OpenRead("crystal_floor0.png")));
 
 		auto tileset = new Tileset();
 		tileset->AddFloorTile(floor0);
 		tileset->AddWallTile(wall0);
+		tileset->AddWallTile(wall1, true);
 
 		_level = new Level(tileset);
-		_tools = new Tools(tileset);
+		_minimap = new Minimap(_level);
 
 		_player = new Entity();
 		_player->SetTexture(entity0);
@@ -99,7 +101,7 @@ namespace uut
 		if (_input->IsKeyDown(SDL_SCANCODE_DOWN))
 			_player->Move(Direction::South);
 
-		if (_input->IsMouseButton(1))
+		if (!ImGui::IsMouseHoveringAnyWindow() && _input->IsMouseButton(1))
 		{
 			if (_dragStart)
 			{
@@ -129,7 +131,7 @@ namespace uut
 		_renderer->SetTransform(RT_PROJECTION, _matProj);
 
 		_gui->NewFrame();
-		_tools->Update();
+		_minimap->Update();
 
 		if (!ImGui::IsMouseHoveringAnyWindow())
 		{
@@ -149,11 +151,11 @@ namespace uut
 				if (chunk)
 				{
 					auto& cell = chunk->GetCell(pos);
-					switch (_tools->GetType())
+					switch (_minimap->GetToolType())
 					{
 					case ToolType::Clear: cell.Clear(); break;
 					case ToolType::Floor: cell.SetFloor(0); break;
-					case ToolType::Wall: cell.SeWall(_tools->GetDirection(), 0); break;
+					case ToolType::Wall: cell.SeWall(_minimap->GetDirection(), 0); break;
 					}
 				}
 			}

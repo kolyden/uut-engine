@@ -13,7 +13,9 @@ namespace uut
 	class Level : public Object
 	{
 	public:
-		Level(Tileset* tileset);
+		typedef Dictionary<IntVector2, SharedPtr<LevelChunk>> ChunkMap;
+
+		explicit Level(Tileset* tileset);
 
 		Tileset* GetTileset() const { return _tileset; }
 
@@ -27,6 +29,8 @@ namespace uut
 
 		LevelChunk* FindChunkAt(const IntVector2& worldPos, IntVector2* localPos) const;
 		LevelChunk* GetChunkAt(const IntVector2& worldPos, IntVector2* localPos);
+
+		const ChunkMap& GetChunkMap() const { return _chunks; }
 
 	protected:
 		SharedPtr<Tileset> _tileset;

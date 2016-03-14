@@ -19,12 +19,14 @@ namespace uut
 		return _floorTiles.Count() - 1;
 	}
 
-	int Tileset::AddWallTile(Texture2D* texture)
+	int Tileset::AddWallTile(Texture2D* texture, bool alpha)
 	{
 		if (texture == nullptr)
 			return -1;
 
 		_wallTiles.Add(WallTile(texture));
+		if (alpha)
+			_wallTiles[_wallTiles.Count() - 1].alpha = alpha;
 		return _wallTiles.Count() - 1;
 	}
 }

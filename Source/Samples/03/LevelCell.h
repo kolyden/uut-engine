@@ -29,6 +29,9 @@ namespace uut
 		void SetFloor(TileIndex tile);
 		void SeWall(Direction dir, TileIndex tile);
 
+		void ClearFloor() { floor = EMPTY_TILE; }
+		void ClearWall(Direction dir) { wall[static_cast<int>(dir)] = EMPTY_TILE; }
+
 		int GetWall(Direction dir) const { return wall[static_cast<int>(dir)]; }
 
 		bool IsEmpty() const { return empty; }

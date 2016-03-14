@@ -216,6 +216,9 @@
     <ClCompile Include="..\Source\UUT\Core\Video\Viewport.cpp">
       <Filter>Sources\Video</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Math\IntVector3.cpp">
+      <Filter>Sources\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\UUT\Core\Object.h">
@@ -427,6 +430,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Video\Viewport.h">
       <Filter>Sources\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Math\IntVector3.h">
+      <Filter>Sources\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -151,8 +151,8 @@
     <ClCompile Include="..\Source\Samples\03\LevelCell.cpp" />
     <ClCompile Include="..\Source\Samples\03\LevelChunk.cpp" />
     <ClCompile Include="..\Source\Samples\03\main.cpp" />
+    <ClCompile Include="..\Source\Samples\03\Minimap.cpp" />
     <ClCompile Include="..\Source\Samples\03\Tileset.cpp" />
-    <ClCompile Include="..\Source\Samples\03\Tools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Samples\03\Entity.h" />
@@ -160,8 +160,8 @@
     <ClInclude Include="..\Source\Samples\03\LevelCell.h" />
     <ClInclude Include="..\Source\Samples\03\LevelChunk.h" />
     <ClInclude Include="..\Source\Samples\03\main.h" />
+    <ClInclude Include="..\Source\Samples\03\Minimap.h" />
     <ClInclude Include="..\Source\Samples\03\Tileset.h" />
-    <ClInclude Include="..\Source\Samples\03\Tools.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="uut-core.vcxproj">

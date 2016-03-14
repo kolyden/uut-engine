@@ -6,6 +6,8 @@
 
 namespace uut
 {
+	class Color32;
+	class Texture2D;
 	struct WallTile;
 	struct FloorTile;
 	class Level;
@@ -43,7 +45,7 @@ namespace uut
 		void ForeachCell(List<LevelCell>::Iterate func);
 		void ForeachCell(List<LevelCell>::ConstIterate func) const;
 
-		static void DrawFloor(Graphics* graphics, const FloorTile& tile, const Vector3& center);
-		static void DrawWall(Graphics* graphics, const WallTile& tile, const Vector3& center, Direction dir);
+		static void DrawFloor(Graphics* graphics, const Vector3& center, Texture2D* texture, const Color32& color);
+		static void DrawWall(Graphics* graphics, const Vector3& center, Direction dir, Texture2D* texture, const Color32& color);
 	};
 }

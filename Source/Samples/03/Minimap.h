@@ -4,7 +4,9 @@
 
 namespace uut
 {
+	class Level;
 	class Tileset;
+	class Texture2D;
 
 	enum class ToolType
 	{
@@ -13,19 +15,22 @@ namespace uut
 		Wall,
 	};
 
-	class Tools : public Object
+	class Minimap : public Object
 	{
 	public:
-		Tools(Tileset* tilest);
+		explicit Minimap(Level* level);
 
 		void Update();
 
-		ToolType GetType() const { return _type; }
+		ToolType GetToolType() const { return _toolType; }
 		Direction GetDirection() const { return _direction; }
 
 	protected:
+		SharedPtr<Level> _level;
 		SharedPtr<Tileset> _tileset;
-		ToolType _type;
+		int _wallTile;
+
+		ToolType _toolType;
 		Direction _direction;
 	};
 }

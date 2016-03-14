@@ -33,22 +33,27 @@ namespace uut
 		for (int i = 0; i < TOTAL_COUNT; i++)
 		{
 			const LevelCell& cell = _cells[i];
-			if (cell.IsEmpty())
-				continue;
-
 			const auto ret = Math::Div(i, COUNT);
 			const int x = ret.rem;
 			const int y = ret.quot;
 			const Vector3 center(
 				LevelCell::SIZE*x + LevelCell::HALF_SIZE + _position.x, _position.y,
 				LevelCell::SIZE*y + LevelCell::HALF_SIZE + _position.z);
+
+			if (cell.IsEmpty())
+			{
+				graphics->SetMaterial(Graphics::MT_OPAQUE);
+				DrawFloor(graphics, center + Vector3(0, LevelCell::SIZE, 0), nullptr, Color32::Black);
+				continue;
+			}
+
 			static const Direction order[4] = { Direction::North, Direction::East, Direction::South, Direction::West };
 			if (!cell.IsFloorEmpty())
 			{
 				auto& tile = tileset->GetFloor(cell.floor);
-				DrawFloor(graphics, tile, center);
+				graphics->SetMaterial(Graphics::MT_OPAQUE);
+				DrawFloor(graphics, center, tile.texture, Color32::White);
 			}
-
 
 			for (int j = 0; j < 4; j++)
 			{
@@ -57,7 +62,8 @@ namespace uut
 					continue;
 
 				auto& tile = tileset->GetWall(cell.GetWall(dir));
-				DrawWall(graphics, tile, center, dir);
+				graphics->SetMaterial(tile.alpha ? Graphics::MT_TRANSPARENT : Graphics::MT_OPAQUE);
+				DrawWall(graphics, center, dir, tile.texture, Color32::White);
 			}
 		}
 	}
@@ -81,18 +87,17 @@ namespace uut
 			func(_cells[i]);
 	}
 
-	void LevelChunk::DrawFloor(Graphics* graphics, const FloorTile& tile, const Vector3& center)
+	void LevelChunk::DrawFloor(Graphics* graphics, const Vector3& center, Texture2D* texture, const Color32& color)
 	{
-		graphics->SetMaterial(Graphics::MT_OPAQUE);
 		graphics->DrawQuad(
-			Vertex(center + Vector3(-LevelCell::HALF_SIZE, 0, -LevelCell::HALF_SIZE), Vector2::Up),
-			Vertex(center + Vector3(-LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE), Vector2::Zero),
-			Vertex(center + Vector3(+LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE), Vector2::Right),
-			Vertex(center + Vector3(+LevelCell::HALF_SIZE, 0, -LevelCell::HALF_SIZE), Vector2::One),
-			tile.texture);
+			Vertex(center + Vector3(-LevelCell::HALF_SIZE, 0, -LevelCell::HALF_SIZE), color, Vector2::Up),
+			Vertex(center + Vector3(-LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE), color, Vector2::Zero),
+			Vertex(center + Vector3(+LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE), color, Vector2::Right),
+			Vertex(center + Vector3(+LevelCell::HALF_SIZE, 0, -LevelCell::HALF_SIZE), color, Vector2::One),
+			texture);
 	}
 
-	void LevelChunk::DrawWall(Graphics* graphics, const WallTile& tile, const Vector3& center, Direction dir)
+	void LevelChunk::DrawWall(Graphics* graphics, const Vector3& center, Direction dir, Texture2D* texture, const Color32& color)
 	{
 		static const Matrix4 rotMat[4] =
 		{
@@ -108,12 +113,11 @@ namespace uut
 		static const Vector3 v3(-LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE);
 
 		const int i = static_cast<int>(dir);
-		graphics->SetMaterial(Graphics::MT_OPAQUE);
 		graphics->DrawQuad(
-			Vertex(center + rotMat[i].VectorTransform(v0), Vector2::Zero),
-			Vertex(center + rotMat[i].VectorTransform(v1), Vector2::Right),
-			Vertex(center + rotMat[i].VectorTransform(v2), Vector2::One),
-			Vertex(center + rotMat[i].VectorTransform(v3), Vector2::Up),
-			tile.texture);
+			Vertex(center + rotMat[i].VectorTransform(v0), color, Vector2::Zero),
+			Vertex(center + rotMat[i].VectorTransform(v1), color, Vector2::Right),
+			Vertex(center + rotMat[i].VectorTransform(v2), color, Vector2::One),
+			Vertex(center + rotMat[i].VectorTransform(v3), color, Vector2::Up),
+			texture);
 	}
 }

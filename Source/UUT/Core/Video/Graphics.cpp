@@ -24,8 +24,8 @@ namespace uut
 		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
 
 		_renderState.zwriteEnable = true;
-		_renderState.sampler[0].minFilter = TextureFilter::Linear;
-		_renderState.sampler[0].magFilter = TextureFilter::Linear;
+// 		_renderState.sampler[0].minFilter = TextureFilter::Linear;
+// 		_renderState.sampler[0].magFilter = TextureFilter::Linear;
 	}
 
 	void Graphics::SetProjection(ProjectionMode mode)

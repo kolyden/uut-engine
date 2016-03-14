@@ -24,7 +24,7 @@
     <ClCompile Include="..\Source\Samples\03\Entity.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Samples\03\Tools.cpp">
+    <ClCompile Include="..\Source\Samples\03\Minimap.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClInclude Include="..\Source\Samples\03\Entity.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Samples\03\Tools.h">
+    <ClInclude Include="..\Source\Samples\03\Minimap.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>

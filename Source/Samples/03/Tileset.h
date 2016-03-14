@@ -6,7 +6,10 @@ namespace uut
 {
 	struct Tile
 	{
+		bool alpha;
 		SharedPtr<Texture2D> texture;
+
+		Tile() : alpha(false) {}
 	};
 
 	struct FloorTile : Tile
@@ -27,7 +30,7 @@ namespace uut
 		void Update(float deltaTime);
 
 		int AddFloorTile(Texture2D* texture);
-		int AddWallTile(Texture2D* texture);
+		int AddWallTile(Texture2D* texture, bool alpha = false);
 
 		const FloorTile& GetFloor(int index) const { return _floorTiles[index]; }
 		const WallTile& GetWall(int index) const { return _wallTiles[index]; }
