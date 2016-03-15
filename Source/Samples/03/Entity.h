@@ -1,6 +1,7 @@
 #pragma once
 #include <Core/Object.h>
 #include <Core/Math/IntVector2.h>
+#include <Core/Math/Vector3.h>
 
 namespace uut
 {
@@ -24,8 +25,15 @@ namespace uut
 		void Update(float deltaTime);
 		void Draw(Graphics* graphics) const;
 
+		static Vector3 CalcPosition(const IntVector2& index);
+
 	protected:
 		IntVector2 _position;
 		SharedPtr<Texture2D> _texture;
+		Vector3 _levelPosition;
+		float _time;
+		bool _moving;
+		Vector3 _movingStart;
+		Vector3 _movingEnd;
 	};
 }

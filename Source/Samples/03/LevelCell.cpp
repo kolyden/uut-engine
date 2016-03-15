@@ -2,7 +2,7 @@
 
 namespace uut
 {
-	const float LevelCell::SIZE = 5.0f;
+	const float LevelCell::SIZE = 3.0f;
 	const float LevelCell::HALF_SIZE = SIZE / 2;
 
 	LevelCell::LevelCell()

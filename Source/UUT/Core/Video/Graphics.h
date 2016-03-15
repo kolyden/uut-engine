@@ -71,5 +71,7 @@ namespace uut
 
 		void TestBatch(Topology topology, Texture2D* tex, int vrtCount);
 		void DrawAll();
+		void UpdateProjection();
+		void UpdateMaterial();
 	};
 }

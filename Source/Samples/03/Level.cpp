@@ -3,6 +3,7 @@
 #include <Core/Math/Math.h>
 #include "Tileset.h"
 #include "Entity.h"
+#include <Core/Video/Graphics.h>
 
 namespace uut
 {
@@ -40,6 +41,7 @@ namespace uut
 
 		for (int i = 0; i < _entities.Count(); i++)
 			_entities[i]->Draw(graphics);
+		graphics->Flush();
 	}
 
 	LevelChunk* Level::FindChunk(const IntVector2& index) const

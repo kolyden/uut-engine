@@ -23,9 +23,11 @@ namespace uut
 
 		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
 
-		_renderState.zwriteEnable = true;
 // 		_renderState.sampler[0].minFilter = TextureFilter::Linear;
 // 		_renderState.sampler[0].magFilter = TextureFilter::Linear;
+
+		UpdateMaterial();
+		UpdateProjection();
 	}
 
 	void Graphics::SetProjection(ProjectionMode mode)
@@ -287,7 +289,9 @@ namespace uut
 	void Graphics::TestBatch(Topology topology, Texture2D* tex, int vrtCount)
 	{
 		if (_topology == topology && _texture == tex &&
-			_vdxIndex + vrtCount < _vbufCount)
+			_vdxIndex + vrtCount < _vbufCount &&
+			_currentMT == _nextMT &&
+			_currentPM == _nextPM)
 			return;
 
 		if (_vdxIndex > 0)
@@ -295,46 +299,25 @@ namespace uut
 
 		_topology = topology;
 		_texture = tex;
+
+		if (_currentMT != _nextMT)
+		{
+			_currentMT = _nextMT;
+			UpdateMaterial();
+		}
+
+		if (_currentPM != _nextPM)
+		{
+			_currentPM = _nextPM;
+			UpdateProjection();
+		}
 	}
 
 	void Graphics::DrawAll()
 	{
 		_vbuf->Unlock();
 
-		if (_currentMT != _nextMT)
-		{
-			_currentMT = _nextMT;
-			switch (_currentMT)
-			{
-			case MT_OPAQUE:
-				_renderState.alphaBlend = false;
-				_renderState.textureStage[0] = RenderTextureStageState::Opaque;
-				break;
-
-			case MT_TRANSPARENT:
-				_renderState.alphaBlend = true;
-				_renderState.textureStage[0] = RenderTextureStageState::Transparent;
-				break;
-			}
-		}
-
 		_renderer->SetState(_renderState);
-		if (_currentPM != _nextPM)
-		{
-			_currentPM = _nextPM;
-			const Vector2 size = _renderer->GetScreenSize();
-
-			switch (_currentPM)
-			{
-			case PM_2D:
-				_matProj = Matrix4::OrthoOffCenter(0, size.x, 0, size.y, 0.01f, 100.0f);
-				break;
-
-			case PM_3D:
-				_matProj = Matrix4::PerspectiveFov(Math::PI / 4, size.x / size.y, 1.0f, 1000.0f);
-				break;
-			}
-		}
 		if (_currentPM != PM_NONE)
 			_renderer->SetTransform(RT_PROJECTION, _matProj);
 
@@ -359,5 +342,38 @@ namespace uut
 		_vdxIndex = 0;
 
 		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
+	}
+
+	void Graphics::UpdateProjection()
+	{
+		const Vector2 size = _renderer->GetScreenSize();
+		switch (_currentPM)
+		{
+		case PM_2D:
+			_matProj = Matrix4::OrthoOffCenter(0, size.x, 0, size.y, 0.01f, 100.0f);
+			break;
+
+		case PM_3D:
+			_matProj = Matrix4::PerspectiveFov(Math::PI / 4, size.x / size.y, 1.0f, 1000.0f);
+			break;
+		}
+	}
+
+	void Graphics::UpdateMaterial()
+	{
+		switch (_currentMT)
+		{
+		case MT_OPAQUE:
+			_renderState.alphaBlend = false;
+			_renderState.zwriteEnable = true;
+			_renderState.textureStage[0] = RenderTextureStageState::Opaque;
+			break;
+
+		case MT_TRANSPARENT:
+			_renderState.alphaBlend = true;
+			_renderState.zwriteEnable = false;
+			_renderState.textureStage[0] = RenderTextureStageState::Transparent;
+			break;
+		}
 	}
 }

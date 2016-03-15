@@ -92,13 +92,13 @@ namespace uut
 		if (_input->IsKey(SDL_SCANCODE_E))
 			_camera->MoveUp(+moveSpeed * _timer.GetDeltaTime());
 
-		if (_input->IsKeyDown(SDL_SCANCODE_LEFT))
+		if (_input->IsKey(SDL_SCANCODE_LEFT))
 			_player->Move(Direction::West);
-		if (_input->IsKeyDown(SDL_SCANCODE_RIGHT))
+		if (_input->IsKey(SDL_SCANCODE_RIGHT))
 			_player->Move(Direction::East);
-		if (_input->IsKeyDown(SDL_SCANCODE_UP))
+		if (_input->IsKey(SDL_SCANCODE_UP))
 			_player->Move(Direction::North);
-		if (_input->IsKeyDown(SDL_SCANCODE_DOWN))
+		if (_input->IsKey(SDL_SCANCODE_DOWN))
 			_player->Move(Direction::South);
 
 		if (!ImGui::IsMouseHoveringAnyWindow() && _input->IsMouseButton(1))

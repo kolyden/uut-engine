@@ -48,26 +48,25 @@ namespace uut
 
 	RenderState::RenderState()
 		: zbuffer(ZBufferMode::ZBuffer)
-		, fillMode(FillMode::Solid)
-		, shadeMode(ShadeMode::Gourand)
 		, zwriteEnable(false)
-		, alphaTest(false)
-		, srcBlend(BLEND_SRCALPHA)
-		, destBlend(BLEND_INVSRCALPHA)
-		, cullMode(CullMode::ConterClockwise)
 		, zfunc(CompareFunc::LessEqual)
-		, alphaFunc(CompareFunc::Always)
 
 		, alphaBlend(false)
-		, fogEnabled(false)
-		, fogColor(Color32::Clear)
-		, lightning(false)
+		, alphaTest(false)
+		, alphaFunc(CompareFunc::Always)
+
+		, srcBlend(BLEND_SRCALPHA)
+		, destBlend(BLEND_INVSRCALPHA)
 		, blendOp(BLENDOP_ADD)
-		, scissorTest(false)
-		
 		, srcBlendAlpha(BLEND_ONE)
 		, destBlendAlpha(BLEND_ZERO)
 		, blendOpAlpha(BLENDOP_ADD)
+
+		, lightning(false)
+		, fillMode(FillMode::Solid)
+		, shadeMode(ShadeMode::Gourand)
+		, cullMode(CullMode::ConterClockwise)
+		, scissorTest(false)
 	{
 		textureStage[0] = RenderTextureStageState::Opaque;
 	}

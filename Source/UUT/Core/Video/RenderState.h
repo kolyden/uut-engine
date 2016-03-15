@@ -175,31 +175,32 @@ namespace uut
 			BLEND_INVBLENDFACTOR,
 		};
 
+		// Z Buffer
 		ZBufferMode zbuffer;
-		FillMode fillMode;
-		ShadeMode shadeMode;
 		bool zwriteEnable;
+		CompareFunc zfunc;
+
+		// Alpha
+		bool alphaBlend;
 		bool alphaTest;
+		CompareFunc alphaFunc;
+
+		// Blending
 		Blend srcBlend;
 		Blend destBlend;
-		CullMode cullMode;
-		CompareFunc zfunc;
-		CompareFunc alphaFunc;
-		bool alphaBlend;
-		bool fogEnabled;
-		Color32 fogColor;
-		//fog
-		//stencil
-		bool lightning;
-		Color32 ambientColor;
-
 		BlendOp blendOp;
-		bool scissorTest;
 		Blend srcBlendAlpha;
 		Blend destBlendAlpha;
 		BlendOp blendOpAlpha;
 
-// 		IntRect scissorRect;
+		// Lightning
+		bool lightning;
+		Color32 ambientColor;
+
+		FillMode fillMode;
+		ShadeMode shadeMode;
+		CullMode cullMode;
+		bool scissorTest;
 
 		static const int TEXTURE_STAGE_COUNT = 8;
 		static const int SAMPLER_COUNT = 4;

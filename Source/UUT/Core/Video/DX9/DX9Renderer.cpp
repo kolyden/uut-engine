@@ -127,12 +127,6 @@ namespace uut
 		if (CheckState(_state, state, &RenderState::alphaBlend, force))
 			_d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, _state.alphaBlend);
 
-		if (CheckState(_state, state, &RenderState::fogEnabled, force))
-			_d3ddev->SetRenderState(D3DRS_FOGENABLE, _state.fogEnabled);
-
-		if (CheckState(_state, state, &RenderState::fogColor, force))
-			_d3ddev->SetRenderState(D3DRS_FOGCOLOR, _state.fogColor.ToInt());
-
 		if (CheckState(_state, state, &RenderState::lightning, force))
 			_d3ddev->SetRenderState(D3DRS_LIGHTING, _state.lightning);
 
