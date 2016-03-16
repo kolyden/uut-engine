@@ -18,7 +18,7 @@ namespace uut
 
 	void Minimap::Update()
 	{
-		ImGui::SetNextWindowPos(ImVec2(0, 0));
+		ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);
 		ImGui::SetNextWindowSize(ImVec2(300, 500), ImGuiSetCond_FirstUseEver);
 		if (!ImGui::Begin("Minimap"))
 		{

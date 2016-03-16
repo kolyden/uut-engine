@@ -133,6 +133,7 @@ namespace uut
 		_gui->NewFrame();
 		_minimap->Update();
 		{
+			ImGui::SetNextWindowPos(ImVec2(800, 0), ImGuiSetCond_FirstUseEver);
 			ImGui::SetNextWindowSize(ImVec2(100, 50), ImGuiSetCond_FirstUseEver);
 			ImGui::Begin("Statistics");
 			ImGui::Text("FPS: %d", GetFPS());
