@@ -64,8 +64,8 @@ namespace uut
 		_timer.Start();
 		_matProj = Matrix4::PerspectiveFov(
 			Math::PI/4,
-			_renderer->GetScreenSize().x,
-			_renderer->GetScreenSize().y,
+			static_cast<float>(_renderer->GetScreenSize().x),
+			static_cast<float>(_renderer->GetScreenSize().y),
 			1.0f, 1000.0f);
 	}
 
@@ -132,6 +132,12 @@ namespace uut
 
 		_gui->NewFrame();
 		_minimap->Update();
+		{
+			ImGui::SetNextWindowSize(ImVec2(100, 50), ImGuiSetCond_FirstUseEver);
+			ImGui::Begin("Statistics");
+			ImGui::Text("FPS: %d", GetFPS());
+			ImGui::End();
+		}
 
 		if (!ImGui::IsMouseHoveringAnyWindow())
 		{

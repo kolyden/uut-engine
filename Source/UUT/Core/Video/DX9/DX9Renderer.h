@@ -68,6 +68,7 @@ namespace uut
 		static D3DSHADEMODE Convert(ShadeMode mode);
 		static D3DCULL Convert(CullMode mode);
 		static D3DCMPFUNC Convert(CompareFunc func);
+		static D3DFOGMODE Convert(FogMode mode);
 
 		static D3DTEXTUREOP Convert(TextureOperation op);
 		static DWORD Convert(TextureArgument arg);

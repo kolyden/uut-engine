@@ -64,6 +64,16 @@ namespace uut
 		, destBlendAlpha(BLEND_ZERO)
 
 		, lightning(false)
+		, ambientColor(Color32::White)
+
+		, fogEnabled(false)
+		, fogColor(Color32::White)
+		, fogMode(FogMode::None)
+		, fogDensity(1)
+		, fogStart(0)
+		, fogEnd(1)
+		, fogRangeEnabled(false)
+
 		, fillMode(FillMode::Solid)
 		, shadeMode(ShadeMode::Gourand)
 		, cullMode(CullMode::ConterClockwise)

@@ -115,6 +115,21 @@ namespace uut
 		if (CheckState(_state, state, &RenderState::ambientColor, force))
 			_d3ddev->SetRenderState(D3DRS_AMBIENT, _state.ambientColor.ToInt());
 
+		if (CheckState(_state, state, &RenderState::fogEnabled, force))
+			_d3ddev->SetRenderState(D3DRS_FOGENABLE, _state.fogEnabled);
+		if (CheckState(_state, state, &RenderState::fogColor, force))
+			_d3ddev->SetRenderState(D3DRS_FOGCOLOR, _state.fogColor.ToInt());
+		if (CheckState(_state, state, &RenderState::fogMode, force))
+			_d3ddev->SetRenderState(D3DRS_FOGTABLEMODE, Convert(_state.fogMode));
+		if (CheckState(_state, state, &RenderState::fogDensity, force))
+			_d3ddev->SetRenderState(D3DRS_FOGDENSITY, *((DWORD*)(&_state.fogDensity)));
+		if (CheckState(_state, state, &RenderState::fogStart, force))
+			_d3ddev->SetRenderState(D3DRS_FOGSTART, *((DWORD*)(&_state.fogStart)));
+		if (CheckState(_state, state, &RenderState::fogEnd, force))
+			_d3ddev->SetRenderState(D3DRS_FOGEND, *((DWORD*)(&_state.fogEnd)));
+		if (CheckState(_state, state, &RenderState::fogRangeEnabled, force))
+			_d3ddev->SetRenderState(D3DRS_RANGEFOGENABLE, _state.fogRangeEnabled);
+
 		if (CheckState(_state, state, &RenderState::fillMode, force))
 			_d3ddev->SetRenderState(D3DRS_FILLMODE, Convert(_state.fillMode));
 		if (CheckState(_state, state, &RenderState::shadeMode, force))
@@ -144,7 +159,6 @@ namespace uut
 			if (CheckState(_state.textureStage[i], state.textureStage[i], &RenderTextureStageState::alphaArg2, force))
 				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAARG2, Convert(_state.textureStage[i].alphaArg2));
 		}
-
 
 		for (int i = 0; i < RenderState::SAMPLER_COUNT; i++)
 		{
@@ -588,6 +602,19 @@ namespace uut
 		}
 
 		return D3DCMP_LESSEQUAL;
+	}
+
+	D3DFOGMODE DX9Renderer::Convert(FogMode mode)
+	{
+		switch (mode)
+		{
+		case FogMode::None: return D3DFOG_NONE;
+		case FogMode::Exp: return D3DFOG_EXP;
+		case FogMode::Exp2: return D3DFOG_EXP2;
+		case FogMode::Linear: return D3DFOG_LINEAR;
+		}
+
+		return D3DFOG_NONE;
 	}
 
 	D3DTEXTUREOP DX9Renderer::Convert(TextureOperation op)

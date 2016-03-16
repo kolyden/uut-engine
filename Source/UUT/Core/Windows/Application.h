@@ -14,6 +14,8 @@ namespace uut
 
 		void Run();
 
+		int GetFPS() const { return _applicationFPS; }
+
 	protected:
 		SharedPtr<Engine> _engine;
 		SharedPtr<Window> _window;
@@ -23,5 +25,8 @@ namespace uut
 
 		virtual void OnInit() {}
 		virtual void OnFrame() {}
+
+	private:
+		int _applicationFPS;
 	};
 }

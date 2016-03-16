@@ -145,6 +145,14 @@ namespace uut
 		Always,
 	};
 
+	enum class FogMode
+	{
+		None,
+		Exp,
+		Exp2,
+		Linear,
+	};
+
 	struct RenderState
 	{
 		enum BlendOp // D3DBLENDOP
@@ -175,6 +183,8 @@ namespace uut
 			BLEND_INVBLENDFACTOR,
 		};
 
+		RenderState();
+
 		// Z Buffer
 		ZBufferMode zbuffer;
 		bool zwriteEnable;
@@ -198,6 +208,15 @@ namespace uut
 		bool lightning;
 		Color32 ambientColor;
 
+		// Fog
+		bool fogEnabled;
+		Color32 fogColor;
+		FogMode fogMode;
+		float fogDensity;
+		float fogStart;
+		float fogEnd;
+		bool fogRangeEnabled;
+
 		FillMode fillMode;
 		ShadeMode shadeMode;
 		CullMode cullMode;
@@ -209,7 +228,5 @@ namespace uut
 		// Texture
 		RenderTextureStageState textureStage[TEXTURE_STAGE_COUNT];
 		RenderSamplerState sampler[SAMPLER_COUNT];
-
-		RenderState();
 	};
 }
