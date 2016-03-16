@@ -53,14 +53,15 @@ namespace uut
 
 		, alphaBlend(false)
 		, alphaTest(false)
+		, alphaRef(0)
 		, alphaFunc(CompareFunc::Always)
 
+		, blendOp(BLENDOP_ADD)
 		, srcBlend(BLEND_SRCALPHA)
 		, destBlend(BLEND_INVSRCALPHA)
-		, blendOp(BLENDOP_ADD)
+		, blendOpAlpha(BLENDOP_ADD)
 		, srcBlendAlpha(BLEND_ONE)
 		, destBlendAlpha(BLEND_ZERO)
-		, blendOpAlpha(BLENDOP_ADD)
 
 		, lightning(false)
 		, fillMode(FillMode::Solid)

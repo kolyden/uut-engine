@@ -183,15 +183,16 @@ namespace uut
 		// Alpha
 		bool alphaBlend;
 		bool alphaTest;
+		uint8_t alphaRef;
 		CompareFunc alphaFunc;
 
 		// Blending
+		BlendOp blendOp;
 		Blend srcBlend;
 		Blend destBlend;
-		BlendOp blendOp;
+		BlendOp blendOpAlpha;
 		Blend srcBlendAlpha;
 		Blend destBlendAlpha;
-		BlendOp blendOpAlpha;
 
 		// Lightning
 		bool lightning;

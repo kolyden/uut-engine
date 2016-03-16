@@ -31,8 +31,6 @@ namespace uut
 		auto tileset = _level->GetTileset();
 		static const Direction order[4] = { Direction::North, Direction::East, Direction::South, Direction::West };
 
-		// OPAQUE
-		graphics->SetMaterial(Graphics::MT_OPAQUE);
 		for (int i = 0; i < TOTAL_COUNT; i++)
 		{
 			const LevelCell& cell = _cells[i];
@@ -45,6 +43,7 @@ namespace uut
 
 			if (cell.IsEmpty())
 			{
+				graphics->SetMaterial(Graphics::MT_OPAQUE);
 				DrawFloor(graphics, center + Vector3(0, LevelCell::SIZE, 0), nullptr, Color32::Black);
 				continue;
 			}
@@ -52,8 +51,8 @@ namespace uut
 			if (!cell.IsFloorEmpty())
 			{
 				auto& tile = tileset->GetFloor(cell.floor);
-				if (!tile.alpha)
-					DrawFloor(graphics, center, tile.texture, Color32::White);
+				graphics->SetMaterial(Graphics::MT_OPAQUE);
+				DrawFloor(graphics, center, tile.texture, Color32::White);
 			}
 
 			for (int j = 0; j < 4; j++)
@@ -63,39 +62,8 @@ namespace uut
 					continue;
 
 				auto& tile = tileset->GetWall(cell.GetWall(dir));
-				if (!tile.alpha)
-					DrawWall(graphics, center, dir, tile.texture, Color32::White);
-			}
-		}
-
-		// TRANSPARENT
-		graphics->SetMaterial(Graphics::MT_TRANSPARENT);
-		for (int i = 0; i < TOTAL_COUNT; i++)
-		{
-			const LevelCell& cell = _cells[i];
-			const auto ret = Math::Div(i, COUNT);
-			const int x = ret.rem;
-			const int y = ret.quot;
-			const Vector3 center(
-				LevelCell::SIZE*x + LevelCell::HALF_SIZE + _position.x, _position.y,
-				LevelCell::SIZE*y + LevelCell::HALF_SIZE + _position.z);
-
-			if (!cell.IsFloorEmpty())
-			{
-				auto& tile = tileset->GetFloor(cell.floor);
-				if (tile.alpha)
-					DrawFloor(graphics, center, tile.texture, Color32::White);
-			}
-
-			for (int j = 0; j < 4; j++)
-			{
-				const Direction dir = order[j];
-				if (cell.IsWallEmpty(dir))
-					continue;
-
-				auto& tile = tileset->GetWall(cell.GetWall(dir));
-				if (tile.alpha)
-					DrawWall(graphics, center, dir, tile.texture, Color32::White);
+				graphics->SetMaterial(tile.alpha ? Graphics::MT_TRANSPARENT : Graphics::MT_OPAQUE);
+				DrawWall(graphics, center, dir, tile.texture, Color32::White);
 			}
 		}
 	}

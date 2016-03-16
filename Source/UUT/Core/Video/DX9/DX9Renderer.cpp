@@ -32,19 +32,6 @@ namespace uut
 	{
 		SetState(_state, true);
 
-// 		_d3ddev->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
-// 		_d3ddev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-// 		_d3ddev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_ALWAYS);
-
-// 		_d3ddev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-// 		_d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-// 		_d3ddev->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
-// 		_d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-// 		_d3ddev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
-// 		_d3ddev->SetRenderState(D3DRS_CLIPPING, TRUE);
-// 		_d3ddev->SetRenderState(D3DRS_CLIPPING, TRUE);
-// 		_d3ddev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
-
 		_matWorld = Matrix4::Identity;
 		_matView = Matrix4::Identity;
 		_matProj = Matrix4::Perspective(
@@ -96,57 +83,46 @@ namespace uut
 	{
 		if (CheckState(_state, state, &RenderState::zbuffer, force))
 			_d3ddev->SetRenderState(D3DRS_ZENABLE, Convert(_state.zbuffer));
-
-		if (CheckState(_state, state, &RenderState::fillMode, force))
-			_d3ddev->SetRenderState(D3DRS_FILLMODE, Convert(_state.fillMode));
-
-		if (CheckState(_state, state, &RenderState::shadeMode, force))
-			_d3ddev->SetRenderState(D3DRS_SHADEMODE, Convert(_state.shadeMode));
-
 		if (CheckState(_state, state, &RenderState::zwriteEnable, force))
 			_d3ddev->SetRenderState(D3DRS_ZWRITEENABLE, _state.zwriteEnable);
-
-		if (CheckState(_state, state, &RenderState::alphaTest, force))
-			_d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, _state.alphaTest);
-
-		if (CheckState(_state, state, &RenderState::srcBlend, force))
-			_d3ddev->SetRenderState(D3DRS_SRCBLEND, Convert(_state.srcBlend));
-
-		if (CheckState(_state, state, &RenderState::destBlend, force))
-			_d3ddev->SetRenderState(D3DRS_DESTBLEND, Convert(_state.destBlend));
-
-		if (CheckState(_state, state, &RenderState::cullMode, force))
-			_d3ddev->SetRenderState(D3DRS_CULLMODE, Convert(_state.cullMode));
-
 		if (CheckState(_state, state, &RenderState::zfunc, force))
 			_d3ddev->SetRenderState(D3DRS_ZFUNC, Convert(_state.zfunc));
 
+		if (CheckState(_state, state, &RenderState::alphaBlend, force))
+			_d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, _state.alphaBlend);
+		if (CheckState(_state, state, &RenderState::alphaTest, force))
+			_d3ddev->SetRenderState(D3DRS_ALPHATESTENABLE, _state.alphaTest);
+		if (CheckState(_state, state, &RenderState::alphaRef, force))
+			_d3ddev->SetRenderState(D3DRS_ALPHAREF, _state.alphaRef);
 		if (CheckState(_state, state, &RenderState::alphaFunc, force))
 			_d3ddev->SetRenderState(D3DRS_ALPHAFUNC, Convert(_state.alphaFunc));
 
-		if (CheckState(_state, state, &RenderState::alphaBlend, force))
-			_d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, _state.alphaBlend);
-
-		if (CheckState(_state, state, &RenderState::lightning, force))
-			_d3ddev->SetRenderState(D3DRS_LIGHTING, _state.lightning);
-
-		if (CheckState(_state, state, &RenderState::ambientColor, force))
-			_d3ddev->SetRenderState(D3DRS_AMBIENT, _state.ambientColor.ToInt());
-
 		if (CheckState(_state, state, &RenderState::blendOp, force))
 			_d3ddev->SetRenderState(D3DRS_BLENDOP, Convert(_state.blendOp));
-
-		if (CheckState(_state, state, &RenderState::scissorTest, force))
-			_d3ddev->SetRenderState(D3DRS_SCISSORTESTENABLE, _state.scissorTest);
-
+		if (CheckState(_state, state, &RenderState::srcBlend, force))
+			_d3ddev->SetRenderState(D3DRS_SRCBLEND, Convert(_state.srcBlend));
+		if (CheckState(_state, state, &RenderState::destBlend, force))
+			_d3ddev->SetRenderState(D3DRS_DESTBLEND, Convert(_state.destBlend));
+		if (CheckState(_state, state, &RenderState::blendOpAlpha, force))
+			_d3ddev->SetRenderState(D3DRS_BLENDOPALPHA, Convert(_state.blendOpAlpha));
 		if (CheckState(_state, state, &RenderState::srcBlendAlpha, force))
 			_d3ddev->SetRenderState(D3DRS_SRCBLENDALPHA, Convert(_state.srcBlendAlpha));
-
 		if (CheckState(_state, state, &RenderState::destBlendAlpha, force))
 			_d3ddev->SetRenderState(D3DRS_DESTBLENDALPHA, Convert(_state.destBlendAlpha));
 
-		if (CheckState(_state, state, &RenderState::blendOpAlpha, force))
-			_d3ddev->SetRenderState(D3DRS_BLENDOPALPHA, Convert(_state.blendOpAlpha));
+		if (CheckState(_state, state, &RenderState::lightning, force))
+			_d3ddev->SetRenderState(D3DRS_LIGHTING, _state.lightning);
+		if (CheckState(_state, state, &RenderState::ambientColor, force))
+			_d3ddev->SetRenderState(D3DRS_AMBIENT, _state.ambientColor.ToInt());
+
+		if (CheckState(_state, state, &RenderState::fillMode, force))
+			_d3ddev->SetRenderState(D3DRS_FILLMODE, Convert(_state.fillMode));
+		if (CheckState(_state, state, &RenderState::shadeMode, force))
+			_d3ddev->SetRenderState(D3DRS_SHADEMODE, Convert(_state.shadeMode));
+		if (CheckState(_state, state, &RenderState::cullMode, force))
+			_d3ddev->SetRenderState(D3DRS_CULLMODE, Convert(_state.cullMode));
+		if (CheckState(_state, state, &RenderState::scissorTest, force))
+			_d3ddev->SetRenderState(D3DRS_SCISSORTESTENABLE, _state.scissorTest);
 
 		for (int i = 0; i < RenderState::TEXTURE_STAGE_COUNT; i++)
 		{

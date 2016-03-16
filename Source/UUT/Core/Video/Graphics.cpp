@@ -23,6 +23,9 @@ namespace uut
 
 		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
 
+		_renderState.zwriteEnable = true;
+		_renderState.alphaRef = 1;
+		_renderState.alphaFunc = CompareFunc::GreaterEqual;
 // 		_renderState.sampler[0].minFilter = TextureFilter::Linear;
 // 		_renderState.sampler[0].magFilter = TextureFilter::Linear;
 
@@ -365,13 +368,13 @@ namespace uut
 		{
 		case MT_OPAQUE:
 			_renderState.alphaBlend = false;
-			_renderState.zwriteEnable = true;
+			_renderState.alphaTest = false;
 			_renderState.textureStage[0] = RenderTextureStageState::Opaque;
 			break;
 
 		case MT_TRANSPARENT:
 			_renderState.alphaBlend = true;
-			_renderState.zwriteEnable = false;
+			_renderState.alphaTest = true;
 			_renderState.textureStage[0] = RenderTextureStageState::Transparent;
 			break;
 		}
