@@ -73,6 +73,7 @@ namespace uut
 			static const ImU32 colClear = ImGui::ColorConvertFloat4ToU32(ImVec4(0.4, 0.4, 0.4, 1));
 			static const ImU32 colFloor = ImGui::ColorConvertFloat4ToU32(ImVec4(0.6, 0.6, 0.6, 1));
 			static const ImU32 colWall = ImGui::ColorConvertFloat4ToU32(ImVec4(0, 0, 0, 1));
+			static const ImU32 colOutline = ImGui::ColorConvertFloat4ToU32(ImVec4(0.8, 0.8, 0.8, 1));
 			static const float wallSide = 3.0f;
 
 			auto chunk = _level->GetChunk(IntVector2::Zero);
@@ -92,12 +93,16 @@ namespace uut
 						if (cell.IsEmpty())
 						{
 							draw_list->AddRectFilled(a, b, colClear);
+							draw_list->AddRectFilled(ImVec2(a.x-1, a.y-1), ImVec2(a.x+1, a.y+1), colOutline);
+// 							draw_list->AddRect(a, b, colOutline);
 							continue;
 						}
 
 						if (!cell.IsFloorEmpty())
 							draw_list->AddRectFilled(a, b, colFloor);
 						else draw_list->AddRectFilled(a, b, colClear);
+
+// 						draw_list->AddRect(a, b, colOutline);
 
 						if (!cell.IsWallEmpty(Direction::North))
 							draw_list->AddRectFilled(a, ImVec2(b.x, a.y + wallSide), colWall);
@@ -110,6 +115,8 @@ namespace uut
 
 						if (!cell.IsWallEmpty(Direction::West))
 							draw_list->AddRectFilled(a, ImVec2(a.x + wallSide, b.y), colWall);
+
+						draw_list->AddRectFilled(ImVec2(a.x - 1, a.y - 1), ImVec2(a.x + 1, a.y + 1), colOutline);
 					}
 				}
 			}
