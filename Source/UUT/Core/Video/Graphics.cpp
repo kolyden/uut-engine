@@ -73,13 +73,13 @@ namespace uut
 		TestBatch(Topology::LineList, nullptr, (points.Count() - 1) * 2);
 
 		const uint32_t col = color.ToInt();
-		for (int i = 0; i < points.Count() - 1; i++)
+		for (uint i = 1; i < points.Count(); i++)
 		{
-			_vertices[_vdxIndex].pos = points[i];
+			_vertices[_vdxIndex].pos = points[i - 1];
 			_vertices[_vdxIndex].color = col;
 			_vdxIndex++;
 
-			_vertices[_vdxIndex].pos = points[i + 1];
+			_vertices[_vdxIndex].pos = points[i];
 			_vertices[_vdxIndex].color = col;
 			_vdxIndex++;
 		}

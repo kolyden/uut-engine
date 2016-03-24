@@ -1,4 +1,5 @@
 #pragma once
+#include "Core/Platform.h"
 #include "IComparer.h"
 #include <functional>
 #include <algorithm>
@@ -23,8 +24,8 @@ namespace uut
 		List() {}
 		List(const List<T>& other) : _data(other._data) {}
 		List(List<T>&& other) { _data = std::move(other._data); }
-		explicit List(const T& data, int count = 1) : _data(data, count) {}
-		List(const T* data, unsigned int count) : _data(data, data + count) {}
+		explicit List(const T& data, uint count = 1) : _data(data, count) {}
+		List(const T* data, uint count) : _data(data, data + count) {}
 		List(std::initializer_list<T> items) : _data(items) {}
 
 		List<T>& operator=(const List<T>& other)
@@ -43,17 +44,17 @@ namespace uut
 		List<T>& operator << (const T& data) { Add(data); return *this; }
 		List<T>& operator << (const List<T>& arr) { Append(arr); return *this; }
 
-		T& operator[] (int index) { return _data[index]; }
-		const T& operator[] (int index) const { return _data[index]; }
+		T& operator[] (uint index) { return _data[index]; }
+		const T& operator[] (uint index) const { return _data[index]; }
 
 		List<T> operator + (const List<T>& list) const { List<T> ret(*this); ret += list; return ret; }
 		List<T>& operator += (const List<T>& list) { Append(list); return *this; }
 
-		void SetSize(int count) { _data.resize(count); }
-		void SetSize(int count, const T& item) { _data.resize(count, item); }
-		void SetReserve(int reserve) { _data.reserve(reserve); }
+		void SetSize(uint count) { _data.resize(count); }
+		void SetSize(uint count, const T& item) { _data.resize(count, item); }
+		void SetReserve(uint reserve) { _data.reserve(reserve); }
 
-		int Count() const { return static_cast<int>(_data.size()); }
+        uint Count() const { return static_cast<int>(_data.size()); }
 		bool IsEmpty() const { return _data.empty(); }
 
 		void Clear() { _data.clear(); }
@@ -63,7 +64,7 @@ namespace uut
 			_data.push_back(item);
 		}
 
-		void Add(int count, const T& item)
+		void Add(uint count, const T& item)
 		{
 			_data.resize(_data.size() + count, item);
 		}
@@ -74,18 +75,17 @@ namespace uut
 
 		bool Remove(const T& item)
 		{
-			auto it = std::find(Begin(), End(), item);
-			if (it == End())
+            int index = IndexOf(item);
+            if (index < 0)
 				return false;
 
-			Remove(it);
+			RemoveAt(index);
 			return true;
 		}
 
-
-		int RemoveAll(Predicate predicate)
+        uint RemoveAll(Predicate predicate)
 		{
-			int i = 0, total = 0;
+			uint i = 0, total = 0;
 			while (i < Count())
 			{
 				if (predicate(_data[i]))
@@ -98,25 +98,25 @@ namespace uut
 			return total;
 		}
 
-		virtual void RemoveAt(int index)
+		virtual void RemoveAt(uint index)
 		{
 			_data.erase(_data.begin() + index);
 		}
 
-		void RemoveRange(int start, int count)
+		void RemoveRange(uint start, uint count)
 		{
-			const int total = Count();
+			const uint total = Count();
 			if (start < 0 || start >= total)
 				return;
 
-			const int last = std::min(total, start + count);
-			for (int i = start; i < last; i++)
+			const uint last = std::min(total, start + count);
+			for (uint i = start; i < last; i++)
 				RemoveAt(start);
 		}
 
 		int CalcCount(Predicate predicate) const
 		{
-			int count = 0;
+            uint count = 0;
 			for (auto& it : _data)
 			{
 				if (predicate(it))
@@ -139,7 +139,7 @@ namespace uut
 			});
 		}
 
-		void Sort(int index, Comparison comparison)
+		void Sort(uint index, Comparison comparison)
 		{
 			std::sort(_data.begin() + index, _data.end(),
 				[&comparison](const T& a, const T& b) -> bool
@@ -148,7 +148,7 @@ namespace uut
 			});
 		}
 
-		void Sort(int index, int count, Comparison comparison)
+		void Sort(uint index, uint count, Comparison comparison)
 		{
 			std::sort(_data.begin() + index, _data.begin() + index + count,
 				[&comparison](const T& a, const T& b) -> bool
@@ -196,23 +196,20 @@ namespace uut
 			return list;
 		}
 
-		const T& GetRepeat(int index) const
+		const T& GetRepeat(uint index) const
 		{
-			const int count = Count();
-			UUT_ASSERT(count > 0);
-			index %= count;
-			if (index < 0)
-				index += count;
-			return _data[index];
+			const uint count = Count();
+            UUT_ASSERT(count > 0);
+            return _data[index % count];
 		}
 
 		T* GetData() { return _data.data(); }
 		const T* GetData() const { return _data.data(); }
 
 		void Swap(List<T>& list) { std::swap(_data, list._data); }
-		void Swap(int index1, int index2) { std::swap(_data[index1], _data[index2]); }
+		void Swap(uint index1, uint index2) { std::swap(_data[index1], _data[index2]); }
 
-		List<T> GetRange(int index, int count) const
+		List<T> GetRange(uint index, uint count) const
 		{
 			if (count <= 0)
 				return EMPTY;
@@ -222,7 +219,7 @@ namespace uut
 
 			List<T> ret;
 			ret.SetReserve(count);
-			for (int i = 0; i < count; i++)
+			for (uint i = 0; i < count; i++)
 				ret << _data[index + i];
 
 			return ret;
@@ -241,8 +238,8 @@ namespace uut
 
 		const T& Find(const T& defval, Predicate predicate) const
 		{
-			const int count = Count();
-			for (int i = 0; i < count; i++)
+			const uint count = Count();
+			for (uint i = 0; i < count; i++)
 			{
 				if (predicate(_data[i]))
 					return _data[i];
@@ -254,8 +251,8 @@ namespace uut
 		List<T> FindAll(Predicate predicate) const
 		{
 			List<T> list;
-			const int count = Count();
-			for (int i = 0; i < count; i++)
+			const uint count = Count();
+			for (uint i = 0; i < count; i++)
 			{
 				if (predicate(_data[i]))
 					list << _data[i];
@@ -268,20 +265,20 @@ namespace uut
 			return FindIndex(0, Count(), predicate);
 		}
 
-		int FindIndex(int start, Predicate predicate) const
+		int FindIndex(uint start, Predicate predicate) const
 		{
 			const int count = Count();
 			return FindIndex(start, count - start, predicate);
 		}
 
-		int FindIndex(int start, int count, Predicate predicate) const
+		int FindIndex(uint start, uint count, Predicate predicate) const
 		{
-			const int total = Count();
+			const uint total = Count();
 			if (start < 0 || start >= total)
 				return -1;
 
-			const int last = std::min(start + count, total);
-			for (int i = start; i < last; i++)
+			const uint last = std::min(start + count, total);
+			for (uint i = start; i < last; i++)
 			{
 				if (predicate(_data[i]))
 					return i;
@@ -295,20 +292,20 @@ namespace uut
 			return IndexOf(item, 0, Count());
 		}
 
-		int IndexOf(const T& item, int start) const
+		int IndexOf(const T& item, uint start) const
 		{
-			const int count = Count();
+			const uint count = Count();
 			return IndexOf(item, start, count - start);
 		}
 
-		int IndexOf(const T& item, int start, int count) const
+		int IndexOf(const T& item, uint start, uint count) const
 		{
-			const int total = Count();
+			const uint total = Count();
 			if (start < 0 || start >= total)
 				return -1;
 
-			const int last = std::min(start + count, total);
-			for (int i = start; i < last; i++)
+			const uint last = std::min(start + count, total);
+			for (uint i = start; i < last; i++)
 			{
 				if (_data[i] == item)
 					return i;
@@ -317,7 +314,7 @@ namespace uut
 			return -1;
 		}
 
-		void Insert(int index, const T& item)
+		void Insert(uint index, const T& item)
 		{
 			_data.insert(index, item);
 		}

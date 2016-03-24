@@ -235,7 +235,7 @@ namespace uut
 			return Path::EMPTY;
 
 		Path ret = components[0];
-		for (int i = 1; i < components.Count(); i++)
+		for (uint i = 1; i < components.Count(); i++)
 			ret = Combine(ret, components[i]);
 
 		return ret;

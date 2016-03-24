@@ -10,9 +10,6 @@
     <Filter Include="Sources\Windows">
       <UniqueIdentifier>{24ef05b7-48d7-484f-b05d-097e98ca88eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Math">
-      <UniqueIdentifier>{17085e56-69f0-40d4-96f5-daf548940985}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Video">
       <UniqueIdentifier>{c894baef-d956-4476-a4cd-2b56effd8073}</UniqueIdentifier>
     </Filter>
@@ -34,6 +31,9 @@
     <Filter Include="Sources\Video\Loaders">
       <UniqueIdentifier>{648405ac-6d52-4d18-b445-3f085f0e906c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Resources\Math">
+      <UniqueIdentifier>{17085e56-69f0-40d4-96f5-daf548940985}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\UUT\Core\Object.cpp">
@@ -52,10 +52,10 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Vector2.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\IntVector2.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Video\Image.cpp">
       <Filter>Sources\Video</Filter>
@@ -82,7 +82,7 @@
       <Filter>Sources\Video</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Math.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Debug.cpp">
       <Filter>Sources</Filter>
@@ -100,10 +100,10 @@
       <Filter>Sources\Video\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\IntRect.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Rect.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Video\IndexBuffer.cpp">
       <Filter>Sources\Video</Filter>
@@ -127,10 +127,10 @@
       <Filter>Sources\GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Matrix4.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Vector3.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Video\Effects\Plasma.cpp">
       <Filter>Sources\Video\Effects</Filter>
@@ -145,31 +145,31 @@
       <Filter>Sources\Video</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Random.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Quaternion.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Plane.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Ray3.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Video\BufferObject.cpp">
       <Filter>Sources\Video</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Degree.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Radian.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Vector4.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Video\CameraBase.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Video\FreeCamera.cpp">
       <Filter>Sources\Video</Filter>
@@ -217,7 +217,7 @@
       <Filter>Sources\Video</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\IntVector3.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -249,10 +249,10 @@
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Vector2.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\IntVector2.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Video\Image.h">
       <Filter>Sources\Video</Filter>
@@ -282,7 +282,7 @@
       <Filter>Sources\Video</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Math.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Debug.h">
       <Filter>Sources</Filter>
@@ -303,10 +303,10 @@
       <Filter>Sources\Video\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\IntRect.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Rect.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Video\IndexBuffer.h">
       <Filter>Sources\Video</Filter>
@@ -330,10 +330,10 @@
       <Filter>Sources\GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Matrix4.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Vector3.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Video\Effects\Plasma.h">
       <Filter>Sources\Video\Effects</Filter>
@@ -354,31 +354,31 @@
       <Filter>Sources\Video</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Random.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Quaternion.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Plane.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Ray3.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Video\BufferObject.h">
       <Filter>Sources\Video</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Degree.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Radian.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Vector4.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Video\CameraBase.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Video\FreeCamera.h">
       <Filter>Sources\Video</Filter>
@@ -432,7 +432,10 @@
       <Filter>Sources\Video</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\IntVector3.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Sources\Resources\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Platform.h">
+      <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

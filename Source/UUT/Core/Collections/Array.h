@@ -1,4 +1,5 @@
 #pragma once
+#include "Core/Platform.h"
 #include "Core/Debug.h"
 
 namespace uut
@@ -17,13 +18,13 @@ namespace uut
 
 		virtual ~Array() { delete[] _data; }
 
-		T& operator[] (int index) { return _data[index]; }
-		const T& operator[] (int index) const { return _data[index]; }
+		T& operator[] (uint index) { return _data[index]; }
+		const T& operator[] (uint index) const { return _data[index]; }
 
-		int Count() const { return _count; }
+		uint Count() const { return _count; }
 
 	protected:
 		T* _data;
-		int _count;
+        uint _count;
 	};
 }

@@ -39,7 +39,7 @@ namespace uut
 		for (auto& it : _chunks)
 			it.second->Draw(graphics);
 
-		for (int i = 0; i < _entities.Count(); i++)
+		for (uint i = 0; i < _entities.Count(); i++)
 			_entities[i]->Draw(graphics);
 		graphics->Flush();
 	}

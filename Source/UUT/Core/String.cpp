@@ -316,7 +316,7 @@ namespace uut
 			return list[0];
 
 		String text = list[0];
-		for (int i = 1; i < list.Count(); i++)
+		for (uint i = 1; i < list.Count(); i++)
 		{
 			text += str;
 			text += list[i];

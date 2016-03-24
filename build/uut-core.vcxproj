@@ -117,6 +117,7 @@
     <ClInclude Include="..\Source\UUT\Core\Math\Vector3.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Vector4.h" />
     <ClInclude Include="..\Source\UUT\Core\Object.h" />
+    <ClInclude Include="..\Source\UUT\Core\Platform.h" />
     <ClInclude Include="..\Source\UUT\Core\Ptr.h" />
     <ClInclude Include="..\Source\UUT\Core\RefCounted.h" />
     <ClInclude Include="..\Source\UUT\Core\Resources\Resource.h" />

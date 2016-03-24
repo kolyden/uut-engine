@@ -70,10 +70,10 @@ namespace uut
 		const int tileSize = 16;
 
 		{
-			static const ImU32 colClear = ImGui::ColorConvertFloat4ToU32(ImVec4(0.4, 0.4, 0.4, 1));
-			static const ImU32 colFloor = ImGui::ColorConvertFloat4ToU32(ImVec4(0.6, 0.6, 0.6, 1));
+			static const ImU32 colClear = ImGui::ColorConvertFloat4ToU32(ImVec4(0.4f, 0.4f, 0.4f, 1));
+			static const ImU32 colFloor = ImGui::ColorConvertFloat4ToU32(ImVec4(0.6f, 0.6f, 0.6f, 1));
 			static const ImU32 colWall = ImGui::ColorConvertFloat4ToU32(ImVec4(0, 0, 0, 1));
-			static const ImU32 colOutline = ImGui::ColorConvertFloat4ToU32(ImVec4(0.8, 0.8, 0.8, 1));
+			static const ImU32 colOutline = ImGui::ColorConvertFloat4ToU32(ImVec4(0.8f, 0.8f, 0.8f, 1));
 			static const float wallSide = 3.0f;
 
 			auto chunk = _level->GetChunk(IntVector2::Zero);
