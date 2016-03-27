@@ -82,10 +82,10 @@ namespace uut
 		_renderState.zbuffer = ZBufferMode::Disable;
 		_renderState.zwriteEnable = false;
 		_renderState.alphaBlend = true;
-		_renderState.blendOp = RenderState::BLENDOP_ADD;
+		_renderState.blendOp = BlendOperation::Add;
 		_renderState.alphaTest = false;
-		_renderState.srcBlend = RenderState::BLEND_SRCALPHA;
-		_renderState.destBlend = RenderState::BLEND_INVSRCALPHA;
+		_renderState.srcBlend = BlendFactor::SrcAlpha;
+		_renderState.destBlend = BlendFactor::InvSrcAlpha;
 		_renderState.scissorTest = true;
 
 		_renderState.textureStage[0].alphaOp = TextureOperation::Modulate;

@@ -75,7 +75,7 @@ namespace uut
 		static D3DTEXTUREFILTERTYPE Convert(TextureFilter filter);
 		static D3DTEXTUREADDRESS Convert(TextureAddress address);
 
-		static D3DBLENDOP Convert(RenderState::BlendOp op);
-		static D3DBLEND Convert(RenderState::Blend blend);
+		static D3DBLENDOP Convert(BlendOperation op);
+		static D3DBLEND Convert(BlendFactor blend);
 	};
 }

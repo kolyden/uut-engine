@@ -5,6 +5,7 @@
 #include "Tileset.h"
 #include <Core/Math/Vector2.h>
 #include <Core/Video/Vertex.h>
+#include <Core/Collections/BitArray.h>
 
 namespace uut
 {
@@ -17,6 +18,18 @@ namespace uut
 			LevelCell::SIZE * (index.y * COUNT));
 
 		Clear();
+	}
+
+	LevelChunk::~LevelChunk()
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			if (!_neighbor[i])
+				continue;
+
+			const auto dir = static_cast<Direction>((i + 2) % 4);
+			SetNeighbor(dir, _neighbor[i]);
+		}
 	}
 
 	void LevelChunk::Update(float deltaTime)
@@ -74,7 +87,51 @@ namespace uut
 			_cells[i].Clear();
 	}
 
+	LevelCell& LevelChunk::GetCell(int x, int y)
+	{
+		return _cells[GetIndex(x, y)];
+	}
+
+	const LevelCell& LevelChunk::GetCell(int x, int y) const
+	{
+		return _cells[GetIndex(x, y)];
+	}
+
+	IntVector2 LevelChunk::GetGlobalPos(const IntVector2& localPos) const
+	{
+		return IntVector2(
+			localPos.x + _index.x * COUNT,
+			localPos.y + _index.y * COUNT);
+	}
+
 	///////////////////////////////////////////////////////////////////////////
+	void LevelChunk::UpdateBitmask()
+	{
+		using bit = BitArray<uint8_t>;
+
+		for (int y = 0; y < COUNT; y++)
+		{
+			for (int x = 0; x < COUNT; x++)
+			{
+				uint8_t flag = 0;
+				const LevelCell& cell = GetCell(x, y);
+				if (!cell.IsWallEmpty(Direction::North))
+					bit::Set<1>(flag);
+
+				if (!cell.IsWallEmpty(Direction::West))
+					bit::Set<2>(flag);
+
+				if (!cell.IsWallEmpty(Direction::East))
+					bit::Set<4>(flag);
+
+				if (!cell.IsWallEmpty(Direction::South))
+					bit::Set<8>(flag);
+
+				_bitmask[GetIndex(x, y)] = flag;
+			}
+		}
+	}
+
 	void LevelChunk::ForeachCell(List<LevelCell>::Iterate func)
 	{
 		for (int i = 0; i < TOTAL_COUNT; i++)
@@ -85,6 +142,14 @@ namespace uut
 	{
 		for (int i = 0; i < TOTAL_COUNT; i++)
 			func(_cells[i]);
+	}
+
+	void LevelChunk::SetNeighbor(Direction dir, LevelChunk* chunk)
+	{
+		const int index = static_cast<int>(dir);
+		_neighbor[index] = chunk;
+		if (chunk != nullptr)
+			chunk->_neighbor[(index + 4) % 2] = this;
 	}
 
 	void LevelChunk::DrawFloor(Graphics* graphics, const Vector3& center, Texture2D* texture, const Color32& color)

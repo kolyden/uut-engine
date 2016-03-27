@@ -58,6 +58,12 @@ namespace uut
 
 		chunk = new LevelChunk(this, index);
 		_chunks[index] = chunk;
+
+		chunk->SetNeighbor(Direction::North, FindChunk(index.x, index.y + 1));
+		chunk->SetNeighbor(Direction::East, FindChunk(index.x + 1, index.y));
+		chunk->SetNeighbor(Direction::South, FindChunk(index.x, index.y - 1));
+		chunk->SetNeighbor(Direction::West, FindChunk(index.x - 1, index.y));
+
 		return chunk;
 	}
 

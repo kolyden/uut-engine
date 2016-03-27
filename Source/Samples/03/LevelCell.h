@@ -11,6 +11,36 @@ namespace uut
 		West,
 	};
 
+	enum class TileBlocked : uint8_t
+	{
+		Empty = 0,
+
+		WallN = 1,
+		WallW = 2,
+		WallE = 4,
+		WallS = 8,
+
+		WallNW = WallN | WallW,
+		WallNE = WallN | WallE,
+		WallSW = WallS | WallW,
+		WallSE = WallS | WallE,
+
+		WallWE = WallW | WallE,
+		WallNS = WallN | WallS,
+
+		WallNWE = WallN | WallW | WallE,
+		WallNWS = WallN | WallW | WallS,
+		WallNES = WallN | WallE | WallS,
+		WallWES = WallW | WallE | WallS,
+
+		Blocked = WallN | WallW | WallE | WallS,
+	};
+
+	struct CellBlocked
+	{
+		uint8_t blocked : 4;
+	};
+
 	struct LevelCell
 	{
 		typedef uint8_t TileIndex;
@@ -38,5 +68,7 @@ namespace uut
 
 		bool IsFloorEmpty() const { return floor == EMPTY_TILE; }
 		bool IsWallEmpty(Direction dir) const { return wall[static_cast<int>(dir)] == EMPTY_TILE; }
+
+		bool IsBlocked(Direction dir) const;
 	};
 }

@@ -33,7 +33,7 @@ namespace uut
 		_camera = new FreeCamera();
 		_camera->SetPosition(Vector3(10, 8, -20));
 
-		auto loader = new Texture2DLoader(_renderer);
+		auto loader = SharedPtr<Texture2DLoader>::Make(_renderer);
 		auto entity0 = DynamicCast<Texture2D>(loader->Load(File::OpenRead("angel.png")));
 		auto wall0 = DynamicCast<Texture2D>(loader->Load(File::OpenRead("brick_dark0.png")));
 		auto wall1 = DynamicCast<Texture2D>(loader->Load(File::OpenRead("door.png")));
@@ -56,7 +56,7 @@ namespace uut
 		{
 			for (int x = 0; x < LevelChunk::COUNT; x++)
 			{
-				auto& cell = chunk->GetCell(x, y);
+				auto cell = chunk->GetCell(x, y);
 				cell.SetFloor(0);
 			}
 		}

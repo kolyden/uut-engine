@@ -153,36 +153,36 @@ namespace uut
 		Linear,
 	};
 
+	enum class BlendOperation // D3DBLENDOP
+	{
+		Add,
+		Sub,
+		RevSub,
+		Min,
+		Max,
+	};
+
+	enum class BlendFactor // D3DBLEND
+	{
+		Zero,
+		One,
+		SrcColor,
+		InvSrcColor,
+		SrcAlpha,
+		InvSrcAlpha,
+		DestColor,
+		InvDestColor,
+		DestAlpha,
+		InvDestAlpha,
+		SrcAlphaSat,
+		BothSrcAlpha,
+		InvBothSrcAlpha,
+		Factor,
+		InvFactor,
+	};
+
 	struct RenderState
 	{
-		enum BlendOp // D3DBLENDOP
-		{
-			BLENDOP_ADD,
-			BLENDOP_SUB,
-			BLENDOP_REVSUB,
-			BLENDOP_MIN,
-			BLENDOP_MAX,
-		};
-
-		enum Blend // D3DBLEND
-		{
-			BLEND_ZERO,
-			BLEND_ONE,
-			BLEND_SRCCOLOR,
-			BLEND_INVSRCCOLOR,
-			BLEND_SRCALPHA,
-			BLEND_INVSRCALPHA,
-			BLEND_DESTCOLOR,
-			BLEND_INVDESTCOLOR,
-			BLEND_DESTALPHA,
-			BLEND_INVDESTALPHA,
-			BLEND_SRCALPHASAT,
-			BLEND_BOTHSRCALPHA,
-			BLEND_INVBOTHSRCALPHA,
-			BLEND_BLENDFACTOR,
-			BLEND_INVBLENDFACTOR,
-		};
-
 		RenderState();
 
 		// Z Buffer
@@ -197,12 +197,12 @@ namespace uut
 		CompareFunc alphaFunc;
 
 		// Blending
-		BlendOp blendOp;
-		Blend srcBlend;
-		Blend destBlend;
-		BlendOp blendOpAlpha;
-		Blend srcBlendAlpha;
-		Blend destBlendAlpha;
+		BlendOperation blendOp;
+		BlendFactor srcBlend;
+		BlendFactor destBlend;
+		BlendOperation blendOpAlpha;
+		BlendFactor srcBlendAlpha;
+		BlendFactor destBlendAlpha;
 
 		// Lightning
 		bool lightning;

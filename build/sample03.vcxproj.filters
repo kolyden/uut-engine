@@ -27,6 +27,9 @@
     <ClCompile Include="..\Source\Samples\03\Minimap.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Samples\03\Tile.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Samples\03\main.h">
@@ -48,6 +51,9 @@
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Samples\03\Minimap.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Samples\03\Tile.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>

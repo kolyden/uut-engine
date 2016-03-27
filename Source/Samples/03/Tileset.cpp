@@ -1,4 +1,5 @@
 #include "Tileset.h"
+#include "Tile.h"
 
 namespace uut
 {

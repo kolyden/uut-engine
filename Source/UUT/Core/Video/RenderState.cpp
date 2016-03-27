@@ -56,12 +56,12 @@ namespace uut
 		, alphaRef(0)
 		, alphaFunc(CompareFunc::Always)
 
-		, blendOp(BLENDOP_ADD)
-		, srcBlend(BLEND_SRCALPHA)
-		, destBlend(BLEND_INVSRCALPHA)
-		, blendOpAlpha(BLENDOP_ADD)
-		, srcBlendAlpha(BLEND_ONE)
-		, destBlendAlpha(BLEND_ZERO)
+		, blendOp(BlendOperation::Add)
+		, srcBlend(BlendFactor::SrcAlpha)
+		, destBlend(BlendFactor::InvSrcAlpha)
+		, blendOpAlpha(BlendOperation::Add)
+		, srcBlendAlpha(BlendFactor::One)
+		, destBlendAlpha(BlendFactor::One)
 
 		, lightning(false)
 		, ambientColor(Color32::White)

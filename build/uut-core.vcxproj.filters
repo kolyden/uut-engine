@@ -437,5 +437,8 @@
     <ClInclude Include="..\Source\UUT\Core\Platform.h">
       <Filter>Sources</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Collections\BitArray.h">
+      <Filter>Sources\Collections</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

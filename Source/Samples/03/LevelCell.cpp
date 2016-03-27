@@ -36,4 +36,9 @@ namespace uut
 		empty = false;
 		wall[static_cast<int>(dir)] = tile;
 	}
+
+	bool LevelCell::IsBlocked(Direction dir) const
+	{
+		return !IsWallEmpty(dir);
+	}
 }

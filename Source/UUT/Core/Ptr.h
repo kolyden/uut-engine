@@ -147,6 +147,9 @@ namespace uut
 		/// Return hash value for HashSet & HashMap.
 		unsigned ToHash() const { return ((unsigned)(size_t)ptr_) / sizeof(T); }
 
+		template<typename... Args>
+		static SharedPtr<T> Make(Args... args) { return SharedPtr<T>(new T(args...)); }
+
 		static const SharedPtr<T> EMPTY;
     
 	private:

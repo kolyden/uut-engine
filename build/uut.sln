@@ -10,6 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThirdParty", "ThirdParty", "{0EB84411-7708-4456-8595-DC7BB0B053F3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UUT", "UUT", "{2AEA55C3-6C7E-4AA0-B6DF-4839281E8624}"
+	ProjectSection(SolutionItems) = preProject
+		..\Source\UUT\Core\Collections\BitArray.h = ..\Source\UUT\Core\Collections\BitArray.h
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{F46496AD-8AB1-4873-BCF2-0B65C0972034}"
 EndProject

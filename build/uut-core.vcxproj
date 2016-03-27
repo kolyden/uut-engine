@@ -84,6 +84,7 @@
   <ItemGroup>
     <ClInclude Include="..\Source\UUT\Core\Assert.h" />
     <ClInclude Include="..\Source\UUT\Core\Collections\Array.h" />
+    <ClInclude Include="..\Source\UUT\Core\Collections\BitArray.h" />
     <ClInclude Include="..\Source\UUT\Core\Collections\Dictionary.h" />
     <ClInclude Include="..\Source\UUT\Core\Collections\IComparer.h" />
     <ClInclude Include="..\Source\UUT\Core\Collections\List.h" />

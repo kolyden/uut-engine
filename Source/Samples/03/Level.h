@@ -24,9 +24,13 @@ namespace uut
 		void Update(float deltaTime);
 		void Draw(Graphics* graphics) const;
 
+		LevelChunk* FindChunk(int x, int y) const { return FindChunk(IntVector2(x, y)); }
+		LevelChunk* GetChunk(int x, int y) { return GetChunk(IntVector2(x, y)); }
 		LevelChunk* FindChunk(const IntVector2& index) const;
 		LevelChunk* GetChunk(const IntVector2& index);
 
+		LevelChunk* FindChunkAt(int x, int y, IntVector2* localPos) const { return FindChunkAt(IntVector2(x, y), localPos); }
+		LevelChunk* GetChunkAt(int x, int y, IntVector2* localPos) { return GetChunkAt(IntVector2(x, y), localPos); }
 		LevelChunk* FindChunkAt(const IntVector2& worldPos, IntVector2* localPos) const;
 		LevelChunk* GetChunkAt(const IntVector2& worldPos, IntVector2* localPos);
 

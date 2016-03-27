@@ -696,39 +696,39 @@ namespace uut
 		return D3DTADDRESS_WRAP;
 	}
 
-	D3DBLENDOP DX9Renderer::Convert(RenderState::BlendOp op)
+	D3DBLENDOP DX9Renderer::Convert(BlendOperation op)
 	{
 		switch (op)
 		{
-		case RenderState::BLENDOP_ADD: return D3DBLENDOP_ADD;
-		case RenderState::BLENDOP_SUB: return D3DBLENDOP_SUBTRACT;
-		case RenderState::BLENDOP_REVSUB: return D3DBLENDOP_REVSUBTRACT;
-		case RenderState::BLENDOP_MIN: return D3DBLENDOP_MIN;
-		case RenderState::BLENDOP_MAX: return D3DBLENDOP_MAX;
+		case BlendOperation::Add: return D3DBLENDOP_ADD;
+		case BlendOperation::Sub: return D3DBLENDOP_SUBTRACT;
+		case BlendOperation::RevSub: return D3DBLENDOP_REVSUBTRACT;
+		case BlendOperation::Min: return D3DBLENDOP_MIN;
+		case BlendOperation::Max: return D3DBLENDOP_MAX;
 		}
 
 		return D3DBLENDOP_ADD;
 	}
 
-	D3DBLEND DX9Renderer::Convert(RenderState::Blend blend)
+	D3DBLEND DX9Renderer::Convert(BlendFactor blend)
 	{
 		switch (blend)
 		{
-		case RenderState::BLEND_ZERO: return D3DBLEND_ZERO;
-		case RenderState::BLEND_ONE: return D3DBLEND_ONE;
-		case RenderState::BLEND_SRCCOLOR: return D3DBLEND_SRCCOLOR;
-		case RenderState::BLEND_INVSRCCOLOR: return D3DBLEND_INVSRCCOLOR;
-		case RenderState::BLEND_SRCALPHA: return D3DBLEND_SRCALPHA;
-		case RenderState::BLEND_INVSRCALPHA: return D3DBLEND_INVSRCALPHA;
-		case RenderState::BLEND_DESTCOLOR: return D3DBLEND_DESTCOLOR;
-		case RenderState::BLEND_INVDESTCOLOR: return D3DBLEND_INVDESTCOLOR;
-		case RenderState::BLEND_DESTALPHA: return D3DBLEND_DESTALPHA;
-		case RenderState::BLEND_INVDESTALPHA: return D3DBLEND_INVDESTALPHA;
-		case RenderState::BLEND_SRCALPHASAT: return D3DBLEND_SRCALPHASAT;
-		case RenderState::BLEND_BOTHSRCALPHA: return D3DBLEND_BOTHSRCALPHA;
-		case RenderState::BLEND_INVBOTHSRCALPHA: return D3DBLEND_BOTHINVSRCALPHA;
-		case RenderState::BLEND_BLENDFACTOR: return D3DBLEND_BLENDFACTOR;
-		case RenderState::BLEND_INVBLENDFACTOR: return D3DBLEND_INVBLENDFACTOR;
+		case BlendFactor::Zero: return D3DBLEND_ZERO;
+		case BlendFactor::One: return D3DBLEND_ONE;
+		case BlendFactor::SrcColor: return D3DBLEND_SRCCOLOR;
+		case BlendFactor::InvSrcColor: return D3DBLEND_INVSRCCOLOR;
+		case BlendFactor::SrcAlpha: return D3DBLEND_SRCALPHA;
+		case BlendFactor::InvSrcAlpha: return D3DBLEND_INVSRCALPHA;
+		case BlendFactor::DestColor: return D3DBLEND_DESTCOLOR;
+		case BlendFactor::InvDestColor: return D3DBLEND_INVDESTCOLOR;
+		case BlendFactor::DestAlpha: return D3DBLEND_DESTALPHA;
+		case BlendFactor::InvDestAlpha: return D3DBLEND_INVDESTALPHA;
+		case BlendFactor::SrcAlphaSat: return D3DBLEND_SRCALPHASAT;
+		case BlendFactor::BothSrcAlpha: return D3DBLEND_BOTHSRCALPHA;
+		case BlendFactor::InvBothSrcAlpha: return D3DBLEND_BOTHINVSRCALPHA;
+		case BlendFactor::Factor: return D3DBLEND_BLENDFACTOR;
+		case BlendFactor::InvFactor: return D3DBLEND_INVBLENDFACTOR;
 		}
 
 		return D3DBLEND_ZERO;
