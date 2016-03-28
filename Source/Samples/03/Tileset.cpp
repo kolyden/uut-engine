@@ -9,6 +9,11 @@ namespace uut
 
 	void Tileset::Update(float deltaTime)
 	{
+		for (auto& it : _floorTiles)
+			it->Update(deltaTime);
+
+		for (auto& it : _wallTiles)
+			it->Update(deltaTime);
 	}
 
 	int Tileset::AddFloorTile(Texture2D* texture)
@@ -16,7 +21,7 @@ namespace uut
 		if (texture == nullptr)
 			return -1;
 
-		_floorTiles.Add(FloorTile(texture));
+		_floorTiles.Add(SharedPtr<FloorTile>(new SimpleFloorTile(texture)));
 		return _floorTiles.Count() - 1;
 	}
 
@@ -25,9 +30,13 @@ namespace uut
 		if (texture == nullptr)
 			return -1;
 
-		_wallTiles.Add(WallTile(texture));
-		if (alpha)
-			_wallTiles[_wallTiles.Count() - 1].alpha = alpha;
+		_wallTiles.Add(SharedPtr<WallTile>(new SimpleWallTile(texture, alpha)));
 		return _wallTiles.Count() - 1;
 	}
+
+	FloorTile* Tileset::GetFloor(int index) const
+	{ return _floorTiles[index]; }
+
+	WallTile* Tileset::GetWall(int index) const
+	{ return _wallTiles[index]; }
 }

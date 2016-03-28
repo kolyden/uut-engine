@@ -8,8 +8,6 @@ namespace uut
 {
 	class Color32;
 	class Texture2D;
-	struct WallTile;
-	struct FloorTile;
 	class Level;
 	class Graphics;
 
@@ -34,6 +32,7 @@ namespace uut
 
 		const uint8_t* GetBitmask() const { return _bitmask; }
 
+		const Vector3& GetPosition() const { return _position; }
 		IntVector2 GetGlobalPos(const IntVector2& localPos) const;
 
 		static unsigned GetIndex(int x, int y) { return y * COUNT + x; }
@@ -56,7 +55,7 @@ namespace uut
 		void SetNeighbor(Direction dir, LevelChunk* chunk);
 
 		static void DrawFloor(Graphics* graphics, const Vector3& center, Texture2D* texture, const Color32& color);
-		static void DrawWall(Graphics* graphics, const Vector3& center, Direction dir, Texture2D* texture, const Color32& color);
+// 		static void DrawWall(Graphics* graphics, const Vector3& center, Direction dir, Texture2D* texture, const Color32& color);
 
 		friend class Level;
 	};

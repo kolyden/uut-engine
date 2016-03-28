@@ -2,10 +2,12 @@
 #include "Level.h"
 #include <Core/Math/Math.h>
 #include <Core/Video/Graphics.h>
-#include "Tileset.h"
+#include <Core/Video/Texture2D.h>
 #include <Core/Math/Vector2.h>
 #include <Core/Video/Vertex.h>
 #include <Core/Collections/BitArray.h>
+#include "Tileset.h"
+#include "Tile.h"
 
 namespace uut
 {
@@ -63,9 +65,8 @@ namespace uut
 
 			if (!cell.IsFloorEmpty())
 			{
-				auto& tile = tileset->GetFloor(cell.floor);
-				graphics->SetMaterial(Graphics::MT_OPAQUE);
-				DrawFloor(graphics, center, tile.texture, Color32::White);
+				auto tile = tileset->GetFloor(cell.floor);
+				tile->DrawFloor(graphics, center, Color32::White);
 			}
 
 			for (int j = 0; j < 4; j++)
@@ -74,9 +75,8 @@ namespace uut
 				if (cell.IsWallEmpty(dir))
 					continue;
 
-				auto& tile = tileset->GetWall(cell.GetWall(dir));
-				graphics->SetMaterial(tile.alpha ? Graphics::MT_TRANSPARENT : Graphics::MT_OPAQUE);
-				DrawWall(graphics, center, dir, tile.texture, Color32::White);
+				auto tile = tileset->GetWall(cell.GetWall(dir));
+				tile->DrawWall(graphics, center, dir, Color32::White);
 			}
 		}
 	}
@@ -162,27 +162,27 @@ namespace uut
 			texture);
 	}
 
-	void LevelChunk::DrawWall(Graphics* graphics, const Vector3& center, Direction dir, Texture2D* texture, const Color32& color)
-	{
-		static const Matrix4 rotMat[4] =
-		{
-			Matrix4::Identity,
-			Matrix4::RotationY(Degree(90)),
-			Matrix4::RotationY(Degree(180)),
-			Matrix4::RotationY(Degree(270)),
-		};
-
-		static const Vector3 v0(-LevelCell::HALF_SIZE, LevelCell::SIZE, +LevelCell::HALF_SIZE);
-		static const Vector3 v1(+LevelCell::HALF_SIZE, LevelCell::SIZE, +LevelCell::HALF_SIZE);
-		static const Vector3 v2(+LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE);
-		static const Vector3 v3(-LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE);
-
-		const int i = static_cast<int>(dir);
-		graphics->DrawQuad(
-			Vertex(center + rotMat[i].VectorTransform(v0), color, Vector2::Zero),
-			Vertex(center + rotMat[i].VectorTransform(v1), color, Vector2::Right),
-			Vertex(center + rotMat[i].VectorTransform(v2), color, Vector2::One),
-			Vertex(center + rotMat[i].VectorTransform(v3), color, Vector2::Up),
-			texture);
-	}
+// 	void LevelChunk::DrawWall(Graphics* graphics, const Vector3& center, Direction dir, Texture2D* texture, const Color32& color)
+// 	{
+// 		static const Matrix4 rotMat[4] =
+// 		{
+// 			Matrix4::Identity,
+// 			Matrix4::RotationY(Degree(90)),
+// 			Matrix4::RotationY(Degree(180)),
+// 			Matrix4::RotationY(Degree(270)),
+// 		};
+// 
+// 		static const Vector3 v0(-LevelCell::HALF_SIZE, LevelCell::SIZE, +LevelCell::HALF_SIZE);
+// 		static const Vector3 v1(+LevelCell::HALF_SIZE, LevelCell::SIZE, +LevelCell::HALF_SIZE);
+// 		static const Vector3 v2(+LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE);
+// 		static const Vector3 v3(-LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE);
+// 
+// 		const int i = static_cast<int>(dir);
+// 		graphics->DrawQuad(
+// 			Vertex(center + rotMat[i].VectorTransform(v0), color, Vector2::Zero),
+// 			Vertex(center + rotMat[i].VectorTransform(v1), color, Vector2::Right),
+// 			Vertex(center + rotMat[i].VectorTransform(v2), color, Vector2::One),
+// 			Vertex(center + rotMat[i].VectorTransform(v3), color, Vector2::Up),
+// 			texture);
+// 	}
 }

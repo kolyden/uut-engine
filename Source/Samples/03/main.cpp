@@ -56,7 +56,7 @@ namespace uut
 		{
 			for (int x = 0; x < LevelChunk::COUNT; x++)
 			{
-				auto cell = chunk->GetCell(x, y);
+				auto& cell = chunk->GetCell(x, y);
 				cell.SetFloor(0);
 			}
 		}
@@ -162,7 +162,7 @@ namespace uut
 					{
 					case ToolType::Clear: cell.Clear(); break;
 					case ToolType::Floor: cell.SetFloor(0); break;
-					case ToolType::Wall: cell.SeWall(_minimap->GetDirection(), 0); break;
+					case ToolType::Wall: cell.SetWall(_minimap->GetDirection(), 0); break;
 					}
 				}
 			}

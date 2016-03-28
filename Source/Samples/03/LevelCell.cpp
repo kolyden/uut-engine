@@ -31,7 +31,7 @@ namespace uut
 		floor = tile;
 	}
 
-	void LevelCell::SeWall(Direction dir, TileIndex tile)
+	void LevelCell::SetWall(Direction dir, TileIndex tile)
 	{
 		empty = false;
 		wall[static_cast<int>(dir)] = tile;

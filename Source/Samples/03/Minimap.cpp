@@ -45,9 +45,9 @@ namespace uut
 			ImGui::Separator();
 			for (int i = 0; i < _tileset->GetFloorCount(); i++)
 			{
-				auto& tile = _tileset->GetFloor(i);
+				auto tile = _tileset->GetFloor(i);
 				if (i > 0) ImGui::SameLine();
-				if (ImGui::ImageButton(tile.texture.Get(), ImVec2(32, 32)))
+				if (ImGui::ImageButton(tile->GetTexture(), ImVec2(32, 32)))
 					_wallTile = i;
 			}
 		}
@@ -56,9 +56,9 @@ namespace uut
 			ImGui::Separator();
 			for (int i = 0; i < _tileset->GetWallcount(); i++)
 			{
-				auto& tile = _tileset->GetWall(i);
+				auto tile = _tileset->GetWall(i);
 				if (i > 0) ImGui::SameLine();
-				if (ImGui::ImageButton(tile.texture.Get(), ImVec2(32, 32)))
+				if (ImGui::ImageButton(tile->GetTexture(), ImVec2(32, 32)))
 					_wallTile = i;
 			}
 		}
@@ -152,7 +152,7 @@ namespace uut
 
 				case ToolType::Wall:
 					if (ImGui::IsMouseDown(0))
-						cell.SeWall(_direction, _wallTile);
+						cell.SetWall(_direction, _wallTile);
 					else cell.ClearWall(_direction);
 					break;
 				}
