@@ -13,8 +13,10 @@ namespace uut
 	{
 	}
 
-	void SimpleFloorTile::DrawFloor(Graphics* graphics, const Vector3& center, const Color32& color) const
+	void SimpleFloorTile::DrawFloor(Graphics* graphics, const Vector3& center) const
 	{
+		static const Color32 color = Color32::White;
+
 		graphics->SetMaterial(Graphics::MT_OPAQUE);
 		graphics->DrawQuad(
 			Vertex(center + Vector3(-LevelCell::HALF_SIZE, 0, -LevelCell::HALF_SIZE), color, Vector2::Up),
@@ -31,8 +33,9 @@ namespace uut
 	{
 	}
 
-	void SimpleWallTile::DrawWall(Graphics* graphics, const Vector3& center, Direction dir, const Color32& color) const
+	void SimpleWallTile::DrawWall(Graphics* graphics, const Vector3& center, uint8_t bitmask, Direction dir) const
 	{
+		static const Color32 color = Color32::White;
 		static const Matrix4 rotMat[4] =
 		{
 			Matrix4::Identity,
@@ -41,10 +44,14 @@ namespace uut
 			Matrix4::RotationY(Degree(270)),
 		};
 
-		static const Vector3 v0(-LevelCell::HALF_SIZE, LevelCell::SIZE, +LevelCell::HALF_SIZE);
-		static const Vector3 v1(+LevelCell::HALF_SIZE, LevelCell::SIZE, +LevelCell::HALF_SIZE);
-		static const Vector3 v2(+LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE);
-		static const Vector3 v3(-LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE);
+		static const float thickness = 0.2f;
+		static const Vector3 v0(-LevelCell::HALF_SIZE, LevelCell::SIZE, +LevelCell::HALF_SIZE - thickness);
+		static const Vector3 v1(+LevelCell::HALF_SIZE, LevelCell::SIZE, +LevelCell::HALF_SIZE - thickness);
+		static const Vector3 v2(+LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE - thickness);
+		static const Vector3 v3(-LevelCell::HALF_SIZE, 0, +LevelCell::HALF_SIZE - thickness);
+
+		static const Vector3 v4(-LevelCell::HALF_SIZE, LevelCell::SIZE, +LevelCell::HALF_SIZE);
+		static const Vector3 v5(+LevelCell::HALF_SIZE, LevelCell::SIZE, +LevelCell::HALF_SIZE);
 
 		const int i = static_cast<int>(dir);
 		graphics->SetMaterial(_transparent ? Graphics::MT_TRANSPARENT : Graphics::MT_OPAQUE);
@@ -54,5 +61,13 @@ namespace uut
 			Vertex(center + rotMat[i].VectorTransform(v2), color, Vector2::One),
 			Vertex(center + rotMat[i].VectorTransform(v3), color, Vector2::Up),
 			_texture);
+
+		graphics->SetMaterial(Graphics::MT_OPAQUE);
+		graphics->DrawQuad(
+			Vertex(center + rotMat[i].VectorTransform(v4), Color32::Black),
+			Vertex(center + rotMat[i].VectorTransform(v5), Color32::Black),
+			Vertex(center + rotMat[i].VectorTransform(v1), Color32::Black),
+			Vertex(center + rotMat[i].VectorTransform(v0), Color32::Black),
+			nullptr);
 	}
 }

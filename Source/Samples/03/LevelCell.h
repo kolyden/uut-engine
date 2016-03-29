@@ -45,15 +45,8 @@ namespace uut
 	{
 		typedef uint8_t TileIndex;
 
-		static const TileIndex EMPTY_TILE = 255;
-		static const float SIZE;
-		static const float HALF_SIZE;
-
-		bool empty;
-		TileIndex floor;
-		TileIndex wall[4];
-
 		LevelCell();
+
 		void Clear();
 
 		void SetFloor(TileIndex tile);
@@ -71,5 +64,13 @@ namespace uut
 		bool IsWallEmpty(Direction dir) const { return wall[static_cast<int>(dir)] == EMPTY_TILE; }
 
 		bool IsBlocked(Direction dir) const;
+
+		bool empty;
+		TileIndex floor;
+		TileIndex wall[4];
+
+		static const TileIndex EMPTY_TILE = 255;
+		static const float SIZE;
+		static const float HALF_SIZE;
 	};
 }

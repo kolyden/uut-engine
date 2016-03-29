@@ -36,6 +36,7 @@ namespace uut
 
 	void LevelChunk::Update(float deltaTime)
 	{
+		UpdateBitmask();
 	}
 
 	void LevelChunk::Draw(Graphics* graphics) const
@@ -66,17 +67,17 @@ namespace uut
 			if (!cell.IsFloorEmpty())
 			{
 				auto tile = tileset->GetFloor(cell.floor);
-				tile->DrawFloor(graphics, center, Color32::White);
+				tile->DrawFloor(graphics, center);
 			}
 
-			for (int j = 0; j < 4; j++)
+			for (unsigned j = 0; j < 4; j++)
 			{
-				const Direction dir = order[j];
+				const Direction dir = static_cast<Direction>(j);
 				if (cell.IsWallEmpty(dir))
 					continue;
 
 				auto tile = tileset->GetWall(cell.GetWall(dir));
-				tile->DrawWall(graphics, center, dir, Color32::White);
+				tile->DrawWall(graphics, center, _wallmask[i], dir);
 			}
 		}
 	}
@@ -127,7 +128,7 @@ namespace uut
 				if (!cell.IsWallEmpty(Direction::South))
 					bit::Set<8>(flag);
 
-				_bitmask[GetIndex(x, y)] = flag;
+				_wallmask[GetIndex(x, y)] = flag;
 			}
 		}
 	}

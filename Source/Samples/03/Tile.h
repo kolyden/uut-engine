@@ -20,13 +20,13 @@ namespace uut
 	class FloorTile : public BaseTile
 	{
 	public:
-		virtual void DrawFloor(Graphics* graphics, const Vector3& center, const Color32& color) const = 0;
+		virtual void DrawFloor(Graphics* graphics, const Vector3& center) const = 0;
 	};
 
 	class WallTile : public BaseTile
 	{
 	public:
-		virtual void DrawWall(Graphics* graphics, const Vector3& center, Direction dir, const Color32& color) const = 0;
+		virtual void DrawWall(Graphics* graphics, const Vector3& center, uint8_t bitmask, Direction dir) const = 0;
 	};
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ namespace uut
 		explicit SimpleFloorTile(Texture2D* texture);
 
 		virtual Texture2D* GetTexture() const override { return _texture; }
-		virtual void DrawFloor(Graphics* graphics, const Vector3& center, const Color32& color) const override;
+		virtual void DrawFloor(Graphics* graphics, const Vector3& center) const override;
 
 	protected:
 		SharedPtr<Texture2D> _texture;
@@ -49,7 +49,7 @@ namespace uut
 
 		virtual Texture2D* GetTexture() const override { return _texture; }
 		virtual bool IsTransparent() const override { return _transparent; }
-		virtual void DrawWall(Graphics* graphics, const Vector3& center, Direction dir, const Color32& color) const override;
+		virtual void DrawWall(Graphics* graphics, const Vector3& center, uint8_t bitmask, Direction dir) const override;
 
 	protected:
 		SharedPtr<Texture2D> _texture;

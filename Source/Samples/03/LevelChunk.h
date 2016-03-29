@@ -30,7 +30,7 @@ namespace uut
 		LevelCell& GetCell(int x, int y);
 		const LevelCell& GetCell(int x, int y) const;
 
-		const uint8_t* GetBitmask() const { return _bitmask; }
+		const uint8_t* GetBitmask() const { return _wallmask; }
 
 		const Vector3& GetPosition() const { return _position; }
 		IntVector2 GetGlobalPos(const IntVector2& localPos) const;
@@ -45,7 +45,7 @@ namespace uut
 		WeakPtr<LevelChunk> _neighbor[4];
 		IntVector2 _index;
 		LevelCell _cells[TOTAL_COUNT];
-		uint8_t _bitmask[TOTAL_COUNT];
+		uint8_t _wallmask[TOTAL_COUNT];
 		Vector3 _position;
 
 		void UpdateBitmask();
