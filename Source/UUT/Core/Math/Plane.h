@@ -28,7 +28,7 @@ namespace uut
 		bool IntersectLine(const Vector3& v1, const Vector3& v2, Vector3& out) const;
 		bool Intersect(const Ray3& ray, float& dist) const;
 
-		static const Plane Zero;
+		static const Plane Zero; // (0, 0, 0, 0)
 
 		union
 		{

@@ -28,7 +28,7 @@ namespace uut
 
 		static Rect FromLBRT(float left, float bottom, float right, float top);
 
-		static const Rect Zero;
+		static const Rect Zero; // (0, 0, 0, 0)
 
 		union
 		{

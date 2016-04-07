@@ -1,13 +1,13 @@
 #include "Minimap.h"
-#include <IMGUI/imgui.h>
-#include "Level.h"
-#include "LevelChunk.h"
 #include <Core/Math/Math.h>
+#include <IMGUI/imgui.h>
+#include "EditorLevel.h"
+#include "EditorLevelChunk.h"
 #include "Tileset.h"
 
 namespace uut
 {
-	Minimap::Minimap(Level* level)
+	Minimap::Minimap(EditorLevel* level)
 		: _level(level)
 		, _wallTile(0)
 		, _toolType(ToolType::Clear)
@@ -27,9 +27,10 @@ namespace uut
 		}
 
 		int tool = static_cast<int>(_toolType);
-		ImGui::RadioButton("Clear", &tool, 0); ImGui::SameLine();
-		ImGui::RadioButton("Floor", &tool, 1); ImGui::SameLine();
-		ImGui::RadioButton("Wall", &tool, 2);
+		ImGui::RadioButton("Clear", &tool, static_cast<int>(ToolType::Clear)); ImGui::SameLine();
+		ImGui::RadioButton("Floor", &tool, static_cast<int>(ToolType::Floor)); ImGui::SameLine();
+		ImGui::RadioButton("Solid", &tool, static_cast<int>(ToolType::Solid)); ImGui::SameLine();
+		ImGui::RadioButton("Wall", &tool, static_cast<int>(ToolType::Wall));
 		_toolType = static_cast<ToolType>(tool);
 
 		int dir = static_cast<int>(_direction);
@@ -74,6 +75,7 @@ namespace uut
 			static const ImU32 colFloor = ImGui::ColorConvertFloat4ToU32(ImVec4(0.6f, 0.6f, 0.6f, 1));
 			static const ImU32 colWall = ImGui::ColorConvertFloat4ToU32(ImVec4(0, 0, 0, 1));
 			static const ImU32 colOutline = ImGui::ColorConvertFloat4ToU32(ImVec4(0.8f, 0.8f, 0.8f, 1));
+			static const ImU32 colEntity = ImGui::ColorConvertFloat4ToU32(ImVec4(1, 1, 1, 1));
 			static const float wallSide = 3.0f;
 
 			auto chunk = _level->GetChunk(IntVector2::Zero);
@@ -85,38 +87,57 @@ namespace uut
 					for (int x = 0; x < LevelChunk::COUNT; x++)
 					{
 						auto& cell = chunk->GetCell(x, LevelChunk::COUNT - y - 1);
+
 						const ImVec2 a(
 							canvas_pos.x + x * tileSize,
 							canvas_pos.y + y * tileSize);
 						const ImVec2 b(a.x + tileSize, a.y + tileSize);
 
-						if (cell.IsEmpty())
+						switch (cell.type)
 						{
+						case CellType::Solid:
 							draw_list->AddRectFilled(a, b, colClear);
 							draw_list->AddRectFilled(ImVec2(a.x-1, a.y-1), ImVec2(a.x+1, a.y+1), colOutline);
-// 							draw_list->AddRect(a, b, colOutline);
-							continue;
+							break;
+
+						case CellType::Walls:
+							if (!cell.IsFloorEmpty())
+								draw_list->AddRectFilled(a, b, colFloor);
+
+							if (!cell.IsWallEmpty(Direction::North))
+								draw_list->AddRectFilled(a, ImVec2(b.x, a.y + wallSide), colWall);
+
+							if (!cell.IsWallEmpty(Direction::South))
+								draw_list->AddRectFilled(ImVec2(a.x, b.y - wallSide), b, colWall);
+
+							if (!cell.IsWallEmpty(Direction::East))
+								draw_list->AddRectFilled(ImVec2(b.x - wallSide, a.y), b, colWall);
+
+							if (!cell.IsWallEmpty(Direction::West))
+								draw_list->AddRectFilled(a, ImVec2(a.x + wallSide, b.y), colWall);
+							break;
 						}
 
-						if (!cell.IsFloorEmpty())
-							draw_list->AddRectFilled(a, b, colFloor);
-						else draw_list->AddRectFilled(a, b, colClear);
+						auto ent = _level->GetEntityAt(chunk->GetGlobalPos(x, LevelChunk::COUNT - y - 1));
+						if (ent != nullptr)
+							draw_list->AddCircle(
+								ImVec2(a.x + tileSize / 2, a.y + tileSize / 2),
+								(tileSize / 2)*0.8f, colEntity);
+					}
+				}
 
-// 						draw_list->AddRect(a, b, colOutline);
+				for (int y = 0; y <= LevelChunk::COUNT; y++)
+				{
+					for (int x = 0; x <= LevelChunk::COUNT; x++)
+					{
+						const ImVec2 a(
+							canvas_pos.x + x * tileSize,
+							canvas_pos.y + y * tileSize);
 
-						if (!cell.IsWallEmpty(Direction::North))
-							draw_list->AddRectFilled(a, ImVec2(b.x, a.y + wallSide), colWall);
-
-						if (!cell.IsWallEmpty(Direction::South))
-							draw_list->AddRectFilled(ImVec2(a.x, b.y - wallSide), b, colWall);
-
-						if (!cell.IsWallEmpty(Direction::East))
-							draw_list->AddRectFilled(ImVec2(b.x - wallSide, a.y), b, colWall);
-
-						if (!cell.IsWallEmpty(Direction::West))
-							draw_list->AddRectFilled(a, ImVec2(a.x + wallSide, b.y), colWall);
-
-						draw_list->AddRectFilled(ImVec2(a.x - 1, a.y - 1), ImVec2(a.x + 1, a.y + 1), colOutline);
+						draw_list->AddRectFilled(
+							ImVec2(a.x - 1, a.y - 1),
+							ImVec2(a.x + 1, a.y + 1),
+							colOutline);
 					}
 				}
 			}
@@ -134,7 +155,7 @@ namespace uut
 				LevelChunk::COUNT - Math::FloorToInt(mouse_pos_in_canvas.y / tileSize) - 1);
 			
 			IntVector2 pos;
-			auto chunk = _level->FindChunkAt(index, &pos);
+			auto chunk = dynamic_cast<EditorLevelChunk*>(_level->FindChunkAt(index, &pos));
 			if (chunk != nullptr)
 			{
 				auto& cell = chunk->GetCell(pos);
@@ -148,6 +169,11 @@ namespace uut
 					if (ImGui::IsMouseDown(0))
 						cell.SetFloor(0);
 					else cell.ClearFloor();
+					break;
+
+				case ToolType::Solid:
+					if (ImGui::IsMouseDown(0))
+						cell.SetSolid(0);
 					break;
 
 				case ToolType::Wall:

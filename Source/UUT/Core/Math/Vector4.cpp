@@ -2,17 +2,11 @@
 
 namespace uut
 {
+	const Vector4 Vector4::Zero(0, 0, 0, 0);
+	const Vector4 Vector4::One(1, 1, 1, 1);
+
 	Vector4::Vector4()
 	{
-	}
-
-	Vector4::Vector4(const float* pf)
-	{
-		if (!pf) return;
-		x = pf[0];
-		y = pf[1];
-		z = pf[2];
-		w = pf[3];
 	}
 
 	Vector4& Vector4::operator+=(const Vector4& v)

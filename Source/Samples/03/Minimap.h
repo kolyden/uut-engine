@@ -4,13 +4,14 @@
 
 namespace uut
 {
-	class Level;
+	class EditorLevel;
 	class Tileset;
 	class Texture2D;
 
 	enum class ToolType
 	{
 		Clear,
+		Solid,
 		Floor,
 		Wall,
 	};
@@ -18,7 +19,7 @@ namespace uut
 	class Minimap : public Object
 	{
 	public:
-		explicit Minimap(Level* level);
+		explicit Minimap(EditorLevel* level);
 
 		void Update();
 
@@ -26,7 +27,7 @@ namespace uut
 		Direction GetDirection() const { return _direction; }
 
 	protected:
-		SharedPtr<Level> _level;
+		SharedPtr<EditorLevel> _level;
 		SharedPtr<Tileset> _tileset;
 		int _wallTile;
 

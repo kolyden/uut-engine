@@ -52,14 +52,14 @@ namespace uut
 
 		static float Distance(const Vector3& p0, const Vector3& p1);
 
-		static const Vector3 Zero;
-		static const Vector3 One;
-		static const Vector3 Left;
-		static const Vector3 Right;
-		static const Vector3 Up;
-		static const Vector3 Down;
-		static const Vector3 Forward;
-		static const Vector3 Back;
+		static const Vector3 Zero;   // ( 0,  0,  0)
+		static const Vector3 One;    // ( 1,  1,  1)
+		static const Vector3 Left;   // (-1,  0,  0)
+		static const Vector3 Right;  // ( 1,  0,  0)
+		static const Vector3 Up;     // ( 0,  1,  0)
+		static const Vector3 Down;   // ( 0, -1,  0)
+		static const Vector3 Forward;// ( 0,  0,  1)
+		static const Vector3 Back;   // ( 0,  0, -1)
 
 		union
 		{

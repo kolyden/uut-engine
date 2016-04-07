@@ -11,6 +11,13 @@ namespace uut
 		West,
 	};
 
+	enum class CellType : uint8_t
+	{
+		Empty,
+		Solid,
+		Walls,
+	};
+
 	enum class TileBlocked : uint8_t
 	{
 		Empty = 0,
@@ -41,36 +48,42 @@ namespace uut
 		uint8_t blocked : 4;
 	};
 
+	typedef uint8_t TileIndex;
+
 	struct LevelCell
 	{
-		typedef uint8_t TileIndex;
-
 		LevelCell();
 
 		void Clear();
 
 		void SetFloor(TileIndex tile);
+		void SetSolid(TileIndex tile);
 		void SetWall(Direction dir, TileIndex tile);
 
-		void ClearFloor() { floor = EMPTY_TILE; }
-		void ClearWall(Direction dir) { wall[static_cast<int>(dir)] = EMPTY_TILE; }
+		void ClearFloor() { floor = EmptyTile; }
+		void ClearWall(Direction dir) { wall[static_cast<int>(dir)] = EmptyTile; }
 
 		int GetFloor() const { return floor; }
 		int GetWall(Direction dir) const { return wall[static_cast<int>(dir)]; }
 
-		bool IsEmpty() const { return empty; }
+		bool IsEmpty() const { return type == CellType::Empty; }
+		bool IsSolid() const { return type == CellType::Solid; }
+		bool IsWalls() const { return type == CellType::Walls; }
 
-		bool IsFloorEmpty() const { return floor == EMPTY_TILE; }
-		bool IsWallEmpty(Direction dir) const { return wall[static_cast<int>(dir)] == EMPTY_TILE; }
+		bool IsFloorEmpty() const { return floor == EmptyTile; }
+		bool IsWallEmpty(Direction dir) const { return wall[static_cast<int>(dir)] == EmptyTile; }
 
+		bool IsBlocked() const;
 		bool IsBlocked(Direction dir) const;
 
-		bool empty;
+		static const TileIndex EmptyTile = 255;
+		static const float Size;
+		static const float HalfSize;
+		static const float WallSize;
+		static const LevelCell Empty;
+
+		CellType type;
 		TileIndex floor;
 		TileIndex wall[4];
-
-		static const TileIndex EMPTY_TILE = 255;
-		static const float SIZE;
-		static const float HALF_SIZE;
 	};
 }

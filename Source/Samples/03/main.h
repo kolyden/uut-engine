@@ -12,7 +12,7 @@ namespace uut
 {
 	class ImGuiModule;
 	class Entity;
-	class Level;
+	class EditorLevel;
 	class ResourceLoader;
 	class Minimap;
 
@@ -25,7 +25,7 @@ namespace uut
 		SharedPtr<FreeCamera> _camera;
 		SharedPtr<Graphics> _graphics;
 		SharedPtr<ImGuiModule> _gui;
-		SharedPtr<Level> _level;
+		SharedPtr<EditorLevel> _level;
 		SharedPtr<Entity> _player;
 		SharedPtr<Minimap> _minimap;
 		Plane _ground;

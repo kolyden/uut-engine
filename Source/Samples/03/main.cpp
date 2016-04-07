@@ -2,14 +2,14 @@
 #include <Core/Math/Math.h>
 #include <Core/Math/Vector3.h>
 #include <Core/IO/File.h>
-#include <Core/Video/Loaders/Texture2DLoader.h>
 #include <Core/IO/FileStream.h>
-#include "Tileset.h"
-#include "Level.h"
-#include "LevelChunk.h"
-#include <Core/Math/Random.h>
+#include <Core/Video/Loaders/Texture2DLoader.h>
 #include <Core/GUI/ImGuiModule.h>
+#include "Tileset.h"
+#include "EditorLevel.h"
+#include "EditorLevelChunk.h"
 #include "Minimap.h"
+#include "Entity.h"
 
 namespace uut
 {
@@ -44,7 +44,7 @@ namespace uut
 		tileset->AddWallTile(wall0);
 		tileset->AddWallTile(wall1, true);
 
-		_level = new Level(tileset);
+		_level = new EditorLevel(tileset);
 		_minimap = new Minimap(_level);
 
 		_player = new Entity();
@@ -147,8 +147,8 @@ namespace uut
 			if (_ground.Intersect(ray, dist))
 			{
 				const Vector3 vec = ray.GetPoint(dist);
-				_cellIndex.x = Math::FloorToInt(vec.x / LevelCell::SIZE);
-				_cellIndex.y = Math::FloorToInt(vec.z / LevelCell::SIZE);
+				_cellIndex.x = Math::FloorToInt(vec.x / LevelCell::Size);
+				_cellIndex.y = Math::FloorToInt(vec.z / LevelCell::Size);
 			}
 
 			if (_input->IsMouseButton(0))
@@ -179,9 +179,9 @@ namespace uut
 
 			_graphics->DrawWireCube(
 				Vector3(
-					LevelCell::SIZE * _cellIndex.x + LevelCell::HALF_SIZE, LevelCell::HALF_SIZE,
-					LevelCell::SIZE * _cellIndex.y + LevelCell::HALF_SIZE),
-				LevelCell::SIZE);
+					LevelCell::Size * _cellIndex.x + LevelCell::HalfSize, LevelCell::HalfSize,
+					LevelCell::Size * _cellIndex.y + LevelCell::HalfSize),
+				LevelCell::Size);
 			//_graphics->DrawLine(_groundHit, _groundHit + Vector3::Up * 20, Color32(255, 0, 255));
 
 			_level->Draw(_graphics);

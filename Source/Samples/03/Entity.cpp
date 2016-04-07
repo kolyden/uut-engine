@@ -1,8 +1,10 @@
 #include "Entity.h"
 #include <Core/Video/Graphics.h>
 #include <Core/Video/Vertex.h>
-#include "LevelCell.h"
 #include <Core/Video/Texture2D.h>
+#include "Level.h"
+#include "LevelChunk.h"
+#include "LevelCell.h"
 
 namespace uut
 {
@@ -24,10 +26,10 @@ namespace uut
 		_levelPosition = CalcPosition(_position);
 	}
 
-	void Entity::Move(Direction dir)
+	bool Entity::Move(Direction dir)
 	{
-		if (_moving)
-			return;
+		if (_moving || !_level)
+			return false;
 
 		static const IntVector2 delta[4] =
 		{
@@ -35,12 +37,30 @@ namespace uut
 			-IntVector2::Up, -IntVector2::Right,
 		};
 
+		IntVector2 cellPos;
+		auto chunk = _level->FindChunkAt(_position, &cellPos);
+		if (chunk == nullptr)
+			return false;
+
+		auto& cell = chunk->GetCell(cellPos);
+		if (cell.IsBlocked(dir))
+			return false;
+
+		const IntVector2 newPos = _position + delta[static_cast<int>(dir)];
+		chunk = _level->FindChunkAt(newPos, &cellPos);
+		if (chunk == nullptr)
+			return false;
+
+		if (chunk->GetCell(cellPos).IsBlocked())
+			return false;
+
 		_moving = true;
 		_time = 0;
-		_position += delta[static_cast<int>(dir)];
+		_position = newPos;
 
 		_movingStart = _levelPosition;
 		_movingEnd = CalcPosition(_position);
+		return true;
 	}
 
 	void Entity::SetTexture(Texture2D* texture)
@@ -73,7 +93,7 @@ namespace uut
 		if (_texture == nullptr || graphics == nullptr)
 			return;
 
-		static const float size = LevelCell::SIZE * 0.6f;
+		static const float size = LevelCell::Size * 0.6f;
 		static const float hsize = size / 2;
 
 		static const Vector3 v0(-hsize, 0, 0);
@@ -93,7 +113,7 @@ namespace uut
 	Vector3 Entity::CalcPosition(const IntVector2& index)
 	{
 		return Vector3(
-			LevelCell::SIZE * index.x + LevelCell::HALF_SIZE, 0,
-			LevelCell::SIZE * index.y + LevelCell::HALF_SIZE);
+			LevelCell::Size * index.x + LevelCell::HalfSize, 0,
+			LevelCell::Size * index.y + LevelCell::HalfSize);
 	}
 }

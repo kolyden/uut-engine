@@ -6,7 +6,6 @@ namespace uut
 	{
 	public:
 		Vector4();
-		explicit Vector4(const float* pf);
 		Vector4(float x, float y, float z, float w);
 
 		operator float* () { return m; }
@@ -24,6 +23,9 @@ namespace uut
 		Vector4 operator-(const Vector4& v) const;
 		Vector4 operator*(float s) const;
 		Vector4 operator/(float s) const;
+
+		static const Vector4 Zero;
+		static const Vector4 One;
 
 		union
 		{

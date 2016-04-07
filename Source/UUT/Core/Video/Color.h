@@ -46,12 +46,12 @@ namespace uut
 		static Color Modulate(const Color& c1, const Color& c2, float s);
 		static Color Subtract(const Color& c1, const Color& c2);
 
-		static const Color Clear;
-		static const Color White;
-		static const Color Black;
-		static const Color Green;
-		static const Color Red;
-		static const Color Blue;
+		static const Color Clear; // (0, 0, 0, 0)
+		static const Color White; // (1, 1, 1, 1)
+		static const Color Black; // (0, 0, 0, 1)
+		static const Color Red;   // (1, 0, 0, 1)
+		static const Color Green; // (0, 1, 0, 1)
+		static const Color Blue;  // (0, 0, 1, 1)
 
 		union
 		{

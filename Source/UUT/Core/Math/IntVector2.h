@@ -40,12 +40,12 @@ namespace uut
 		bool operator != (const IntVector2& vec) const { return x != vec.x || y != vec.y; }
 		bool operator < (const IntVector2& vec) const { return (x < vec.x) || ((x == vec.x) && (y < vec.y));; }
 
-		static const IntVector2 Zero;
-		static const IntVector2 One;
-		static const IntVector2 Left;
-		static const IntVector2 Right;
-		static const IntVector2 Up;
-		static const IntVector2 Down;
+		static const IntVector2 Zero; // ( 0,  0)
+		static const IntVector2 One;  // ( 1,  1)
+		static const IntVector2 Left; // (-1,  0)
+		static const IntVector2 Right;// ( 1,  0)
+		static const IntVector2 Up;   // ( 0,  1)
+		static const IntVector2 Down; // ( 0, -1)
 
 		union
 		{

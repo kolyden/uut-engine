@@ -1,9 +1,8 @@
 #pragma once
+#include "Radian.h"
 
 namespace uut
 {
-	class Radian;
-
 	class Degree
 	{
 	public:

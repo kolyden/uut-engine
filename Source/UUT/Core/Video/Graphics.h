@@ -50,6 +50,9 @@ namespace uut
 		void DrawWireCube(const Vector3& center, float side, const Color32& color = Color32::White);
 		void DrawCube(const Vector3& center, float side, const Color32& color = Color32::White, Texture2D* texture = nullptr);
 
+		void DrawPrimitive(Topology topology, const List<Vertex>& vertexes, Texture2D* texture = nullptr);
+		void DrawIndexedPrimitive(Topology topology, const List<Vertex>& vertexes, const List<uint16_t>& indexes, Texture2D* texture = nullptr);
+
 		void Flush();
 
 	protected:

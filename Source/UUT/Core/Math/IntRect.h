@@ -28,7 +28,7 @@ namespace uut
 
 		static IntRect FromLBRT(int left, int bottom, int right, int top);
 
-		static const IntRect Zero;
+		static const IntRect Zero; // (0, 0, 0, 0)
 
 		union
 		{

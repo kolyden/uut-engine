@@ -26,12 +26,12 @@ namespace uut
 		static Color32 FromRGBA(uint32_t argb);
 		static Color32 FromABGR(uint32_t abgr);
 
-		static const Color32 Clear;
-		static const Color32 White;
-		static const Color32 Black;
-		static const Color32 Green;
-		static const Color32 Red;
-		static const Color32 Blue;
+		static const Color32 Clear; // (  0,   0,   0, 255)
+		static const Color32 White; // (255, 255, 255, 255)
+		static const Color32 Black; // (  0,   0,   0, 255)
+		static const Color32 Red;   // (255,   0,   0, 255)
+		static const Color32 Green; // (  0, 255,   0, 255)
+		static const Color32 Blue;  // (  0,   0, 255, 255)
 
 		union
 		{

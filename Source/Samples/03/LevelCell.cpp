@@ -2,39 +2,52 @@
 
 namespace uut
 {
-	const float LevelCell::SIZE = 3.0f;
-	const float LevelCell::HALF_SIZE = SIZE / 2;
+	const float LevelCell::Size = 3.0f;
+	const float LevelCell::HalfSize = Size / 2;
+	const float LevelCell::WallSize = 0.2f;
+	const LevelCell LevelCell::Empty;
 
 	LevelCell::LevelCell()
-		: empty(true)
+		: type(CellType::Empty)
 		, floor(0)
 	{
-		wall[0] = EMPTY_TILE;
-		wall[1] = EMPTY_TILE;
-		wall[2] = EMPTY_TILE;
-		wall[3] = EMPTY_TILE;
+		wall[0] = EmptyTile;
+		wall[1] = EmptyTile;
+		wall[2] = EmptyTile;
+		wall[3] = EmptyTile;
 	}
 
 	void LevelCell::Clear()
 	{
-		empty = true;
-		floor = EMPTY_TILE;
-		wall[0] = EMPTY_TILE;
-		wall[1] = EMPTY_TILE;
-		wall[2] = EMPTY_TILE;
-		wall[3] = EMPTY_TILE;
+		type = CellType::Empty;
+		floor = EmptyTile;
+		wall[0] = EmptyTile;
+		wall[1] = EmptyTile;
+		wall[2] = EmptyTile;
+		wall[3] = EmptyTile;
 	}
 
 	void LevelCell::SetFloor(TileIndex tile)
 	{
-		empty = false;
+		type = CellType::Walls;
+		floor = tile;
+	}
+
+	void LevelCell::SetSolid(TileIndex tile)
+	{
+		type = CellType::Solid;
 		floor = tile;
 	}
 
 	void LevelCell::SetWall(Direction dir, TileIndex tile)
 	{
-		empty = false;
+		type = CellType::Walls;
 		wall[static_cast<int>(dir)] = tile;
+	}
+
+	bool LevelCell::IsBlocked() const
+	{
+		return type != CellType::Walls;
 	}
 
 	bool LevelCell::IsBlocked(Direction dir) const

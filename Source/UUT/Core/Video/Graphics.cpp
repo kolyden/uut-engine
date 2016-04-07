@@ -210,14 +210,30 @@ namespace uut
 		const Vector3 v6(center.x + hsize, center.y - hsize, center.z + hsize);
 		const Vector3 v7(center.x - hsize, center.y - hsize, center.z + hsize);
 
-		DrawPolyLine({ v0, v1, v2, v3, v0 }, color);
-		DrawPolyLine({ v4, v5, v6, v7, v4 }, color);
+		DrawIndexedPrimitive(Topology::LineList,
+			{
+				Vertex(v0, color), Vertex(v1, color),
+				Vertex(v2, color), Vertex(v3, color),
+				Vertex(v4, color), Vertex(v5, color),
+				Vertex(v6, color), Vertex(v7, color)
+			},
+			{
+				0, 1, 1, 2, 2, 3, 3, 0,
+				4, 5, 5, 6, 6, 7, 7, 4,
+				0, 4, 4, 7, 7, 3, 3, 0,
+				1, 5, 5, 6, 6, 2, 2, 1,
+				0, 4, 4, 5, 5, 1, 1, 0,
+				3, 7, 7, 6, 6, 2, 2, 3,
+			});
 
-		DrawPolyLine({ v0, v4, v7, v3, v0 }, color);
-		DrawPolyLine({ v1, v5, v6, v2, v1 }, color);
-
-		DrawPolyLine({ v0, v4, v5, v1, v0 }, color);
-		DrawPolyLine({ v3, v7, v6, v2, v3 }, color);
+// 		DrawPolyLine({ v0, v1, v2, v3, v0 }, color);
+// 		DrawPolyLine({ v4, v5, v6, v7, v4 }, color);
+// 
+// 		DrawPolyLine({ v0, v4, v7, v3, v0 }, color);
+// 		DrawPolyLine({ v1, v5, v6, v2, v1 }, color);
+// 
+// 		DrawPolyLine({ v0, v4, v5, v1, v0 }, color);
+// 		DrawPolyLine({ v3, v7, v6, v2, v3 }, color);
 	}
 
 	void Graphics::DrawCube(const Vector3& center, float side, const Color32& color, Texture2D* texture)
@@ -283,6 +299,31 @@ namespace uut
 			texture);
 	}
 
+	void Graphics::DrawPrimitive(Topology topology, const List<Vertex>& vertexes, Texture2D* texture /* = nullptr */)
+	{
+		const uint count = vertexes.Count();
+		if (count == 0)
+			return;
+
+		TestBatch(topology, texture, count);
+
+		for (uint i = 0; i < count; i++)
+			_vertices[_vdxIndex++] = vertexes[i];
+	}
+
+	void Graphics::DrawIndexedPrimitive(Topology topology, const List<Vertex>& vertexes,
+		const List<uint16_t>& indexes, Texture2D* texture /* = nullptr */)
+	{
+		const uint count = indexes.Count();
+		if (count == 0)
+			return;
+
+		TestBatch(topology, texture, count);
+
+		for (uint i = 0; i < count; i++)
+			_vertices[_vdxIndex++] = vertexes[indexes[i]];
+	}
+
 	void Graphics::Flush()
 	{
 		DrawAll();
@@ -333,12 +374,16 @@ namespace uut
 		case Topology::PointList:
 			_renderer->DrawPrimitive(_topology, _vdxIndex);
 			break;
+
 		case Topology::LineList:
 			_renderer->DrawPrimitive(_topology, _vdxIndex / 2);
 			break;
 
 		case Topology::TrinagleList:
 			_renderer->DrawPrimitive(_topology, _vdxIndex / 3);
+			break;
+
+		default:
 			break;
 		}
 
