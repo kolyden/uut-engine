@@ -55,6 +55,8 @@ namespace uut
 
 		void Flush();
 
+		Renderer* GetRenderer() const;
+
 	protected:
 		SharedPtr<Renderer> _renderer;
 		SharedPtr<VertexBuffer> _vbuf;

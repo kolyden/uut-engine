@@ -12,6 +12,9 @@ namespace uut
 		virtual void Draw(Graphics* graphics) const override;
 		virtual LevelChunk* GetNeighbor(Direction dir) const override;
 
+		void SetSolid(const IntVector2& index, int walltile);
+		void SetWall(const IntVector2& index, int walltile);
+
 		void Clear();
 
 		const uint8_t* GetBitmask() const { return _wallmask; }

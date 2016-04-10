@@ -20,7 +20,7 @@ namespace uut
 		Level::Update(deltaTime);
 	}
 
-	void EditorLevel::Draw(Graphics* graphics) const
+	void EditorLevel::Draw(Graphics* graphics, FreeCamera* camera) const
 	{
 		if (graphics == nullptr)
 			return;
@@ -29,7 +29,7 @@ namespace uut
 			it.second->Draw(graphics);
 
 		for (uint i = 0; i < _entities.Count(); i++)
-			_entities[i]->Draw(graphics);
+			_entities[i]->Draw(graphics, camera);
 		graphics->Flush();
 	}
 

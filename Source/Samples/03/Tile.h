@@ -27,6 +27,7 @@ namespace uut
 	{
 	public:
 		virtual void DrawWall(Graphics* graphics, const Vector3& center, uint8_t bitmask, Direction dir) const = 0;
+		virtual bool IsBlocked() const { return true; }
 	};
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -50,6 +51,7 @@ namespace uut
 		virtual Texture2D* GetTexture() const override { return _texture; }
 		virtual bool IsTransparent() const override { return _transparent; }
 		virtual void DrawWall(Graphics* graphics, const Vector3& center, uint8_t bitmask, Direction dir) const override;
+		virtual bool IsBlocked() const override { return !_transparent; }
 
 	protected:
 		SharedPtr<Texture2D> _texture;

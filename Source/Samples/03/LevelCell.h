@@ -3,6 +3,8 @@
 
 namespace uut
 {
+	class Tileset;
+
 	enum class Direction
 	{
 		North,
@@ -71,10 +73,11 @@ namespace uut
 		bool IsWalls() const { return type == CellType::Walls; }
 
 		bool IsFloorEmpty() const { return floor == EmptyTile; }
-		bool IsWallEmpty(Direction dir) const { return wall[static_cast<int>(dir)] == EmptyTile; }
+
+		bool IsWallEmpty(Direction dir) const;
 
 		bool IsBlocked() const;
-		bool IsBlocked(Direction dir) const;
+		bool IsBlocked(Direction dir, Tileset* tileset) const;
 
 		static const TileIndex EmptyTile = 255;
 		static const float Size;

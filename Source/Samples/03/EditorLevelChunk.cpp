@@ -81,6 +81,51 @@ namespace uut
 		return _neighbor[static_cast<int>(dir)];
 	}
 
+	void EditorLevelChunk::SetSolid(const IntVector2& index, int walltile)
+	{
+		if (index.x < 0 || index.x >= COUNT ||
+			index.y < 0 || index.y >= COUNT)
+			return;
+
+		const unsigned rawIndex = GetIndex(index.x, index.y);
+		_cells[rawIndex].SetSolid(walltile);
+		if (index.x > 0 && !_cells[rawIndex - 1].IsSolid())
+			_cells[rawIndex - 1].SetWall(Direction::East, walltile);
+		if (index.x < COUNT - 1 && !_cells[rawIndex + 1].IsSolid())
+			_cells[rawIndex + 1].SetWall(Direction::West, walltile);
+		if (index.y > 0 && !_cells[rawIndex - COUNT].IsSolid())
+			_cells[rawIndex - COUNT].SetWall(Direction::North, walltile);
+		if (index.y < COUNT - 1 && !_cells[rawIndex + COUNT].IsSolid())
+			_cells[rawIndex + COUNT].SetWall(Direction::South, walltile);
+	}
+
+	void EditorLevelChunk::SetWall(const IntVector2& index, int walltile)
+	{
+		if (index.x < 0 || index.x >= COUNT ||
+			index.y < 0 || index.y >= COUNT)
+			return;
+
+		const unsigned rawIndex = GetIndex(index.x, index.y);
+		LevelCell& cell = _cells[rawIndex];
+		cell.SetFloor(walltile);
+
+		if (index.x > 0 && _cells[rawIndex - 1].IsBlocked())
+			cell.SetWall(Direction::West, walltile);
+		else cell.SetWall(Direction::West, LevelCell::EmptyTile);
+
+		if (index.x < COUNT - 1 && _cells[rawIndex + 1].IsBlocked())
+			cell.SetWall(Direction::East, walltile);
+		else cell.SetWall(Direction::East, LevelCell::EmptyTile);
+
+		if (index.y > 0 && _cells[rawIndex - COUNT].IsBlocked())
+			cell.SetWall(Direction::South, walltile);
+		else cell.SetWall(Direction::South, LevelCell::EmptyTile);
+
+		if (index.y < COUNT - 1 && _cells[rawIndex + COUNT].IsBlocked())
+			cell.SetWall(Direction::North, walltile);
+		else cell.SetWall(Direction::North, LevelCell::EmptyTile);
+	}
+
 	void EditorLevelChunk::Clear()
 	{
 		for (int i = 0; i < TOTAL_COUNT; i++)

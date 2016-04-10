@@ -5,6 +5,20 @@
 
 namespace uut
 {
+	enum class TileType : uint8_t
+	{
+		Floor,
+		Wall,
+		Door,
+		Window,
+	};
+
+	struct TileInfo
+	{
+		TileType type;
+		bool blocked;
+	};
+
 	class Tileset : public Object
 	{
 	public:

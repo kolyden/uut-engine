@@ -12,7 +12,7 @@ namespace uut
 		explicit EditorLevel(Tileset* tileset);
 
 		virtual void Update(float deltaTime) override;
-		virtual void Draw(Graphics* graphics) const override;
+		virtual void Draw(Graphics* graphics, FreeCamera* camera) const override;
 
 		virtual LevelChunk* FindChunk(const IntVector2& index) const override;
 		virtual LevelChunk* FindChunkAt(const IntVector2& worldPos, IntVector2* localPos) const override;

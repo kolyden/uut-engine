@@ -24,7 +24,7 @@ namespace uut
 		Entity* GetEntityAt(const IntVector2& index) const;
 
 		virtual void Update(float deltaTime);
-		virtual void Draw(Graphics* graphics) const = 0;
+		virtual void Draw(Graphics* graphics, FreeCamera* camera) const = 0;
 
 		virtual LevelChunk* FindChunk(const IntVector2& index) const = 0;
 		virtual LevelChunk* FindChunkAt(const IntVector2& worldPos, IntVector2* localPos) const = 0;

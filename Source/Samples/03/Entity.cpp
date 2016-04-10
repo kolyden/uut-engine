@@ -2,6 +2,7 @@
 #include <Core/Video/Graphics.h>
 #include <Core/Video/Vertex.h>
 #include <Core/Video/Texture2D.h>
+#include <Core/Video/FreeCamera.h>
 #include "Level.h"
 #include "LevelChunk.h"
 #include "LevelCell.h"
@@ -43,7 +44,7 @@ namespace uut
 			return false;
 
 		auto& cell = chunk->GetCell(cellPos);
-		if (cell.IsBlocked(dir))
+		if (cell.IsBlocked(dir, _level->GetTileset()))
 			return false;
 
 		const IntVector2 newPos = _position + delta[static_cast<int>(dir)];
@@ -88,7 +89,7 @@ namespace uut
 		}
 	}
 
-	void Entity::Draw(Graphics* graphics) const
+	void Entity::Draw(Graphics* graphics, FreeCamera* camera) const
 	{
 		if (_texture == nullptr || graphics == nullptr)
 			return;
@@ -96,17 +97,29 @@ namespace uut
 		static const float size = LevelCell::Size * 0.6f;
 		static const float hsize = size / 2;
 
-		static const Vector3 v0(-hsize, 0, 0);
-		static const Vector3 v1(-hsize, size, 0);
-		static const Vector3 v2(+hsize, size, 0);
-		static const Vector3 v3(+hsize, 0, 0);
+// 		static const Vector3 v0(-hsize, 0, 0);
+// 		static const Vector3 v1(-hsize, size, 0);
+// 		static const Vector3 v2(+hsize, size, 0);
+// 		static const Vector3 v3(+hsize, 0, 0);
 
 		graphics->SetMaterial(Graphics::MT_TRANSPARENT);
+
+// 		graphics->DrawQuad(
+// 			Vertex(_levelPosition + v0, Vector2::Up),
+// 			Vertex(_levelPosition + v1, Vector2::Zero),
+// 			Vertex(_levelPosition + v2, Vector2::Right),
+// 			Vertex(_levelPosition + v3, Vector2::One),
+// 			_texture);
+
+		const auto center = _levelPosition + Vector3(0, LevelCell::HalfSize, 0);
+		const auto right = camera->GetRight() / 2;
+		const auto up = camera->GetUp() / 2;
+
 		graphics->DrawQuad(
-			Vertex(_levelPosition + v0, Vector2::Up),
-			Vertex(_levelPosition + v1, Vector2::Zero),
-			Vertex(_levelPosition + v2, Vector2::Right),
-			Vertex(_levelPosition + v3, Vector2::One),
+			Vertex(center + size* up - size* right, Vector2::Zero),
+			Vertex(center + size* up + size* right, Vector2::Right),
+			Vertex(center - size* up + size* right, Vector2::One),
+			Vertex(center - size* up - size* right, Vector2::Up),
 			_texture);
 	}
 

@@ -1,4 +1,5 @@
 #include "LevelCell.h"
+#include "Tileset.h"
 
 namespace uut
 {
@@ -45,13 +46,29 @@ namespace uut
 		wall[static_cast<int>(dir)] = tile;
 	}
 
+	bool LevelCell::IsWallEmpty(Direction dir) const
+	{
+		return wall[static_cast<int>(dir)] == EmptyTile;
+	}
+
 	bool LevelCell::IsBlocked() const
 	{
 		return type != CellType::Walls;
 	}
 
-	bool LevelCell::IsBlocked(Direction dir) const
+	bool LevelCell::IsBlocked(Direction dir, Tileset* tileset) const
 	{
-		return !IsWallEmpty(dir);
+		if (type != CellType::Walls)
+			return true;
+
+		if (tileset == nullptr)
+			return !IsWallEmpty(dir);
+
+		auto index = wall[static_cast<int>(dir)];
+		if (index == EmptyTile)
+			return false;
+
+		auto tile = tileset->GetWall(index);
+		return tile->IsBlocked();
 	}
 }

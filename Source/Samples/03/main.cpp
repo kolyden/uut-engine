@@ -134,9 +134,10 @@ namespace uut
 		_minimap->Update();
 		{
 			ImGui::SetNextWindowPos(ImVec2(800, 0), ImGuiSetCond_FirstUseEver);
-			ImGui::SetNextWindowSize(ImVec2(100, 50), ImGuiSetCond_FirstUseEver);
+			ImGui::SetNextWindowSize(ImVec2(100, 80), ImGuiSetCond_FirstUseEver);
 			ImGui::Begin("Statistics");
 			ImGui::Text("FPS: %d", GetFPS());
+			ImGui::Text("DIPC: %d", _renderer->GetStatistics().drawCall);
 			ImGui::End();
 		}
 
@@ -184,7 +185,7 @@ namespace uut
 				LevelCell::Size);
 			//_graphics->DrawLine(_groundHit, _groundHit + Vector3::Up * 20, Color32(255, 0, 255));
 
-			_level->Draw(_graphics);
+			_level->Draw(_graphics, _camera);
 
 			_graphics->Flush();
 

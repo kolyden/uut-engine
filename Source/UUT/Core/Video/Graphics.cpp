@@ -329,6 +329,11 @@ namespace uut
 		DrawAll();
 	}
 
+	Renderer* Graphics::GetRenderer() const
+	{
+		return _renderer;
+	}
+
 	///////////////////////////////////////////////////////////////////////////
 	void Graphics::TestBatch(Topology topology, Texture2D* tex, int vrtCount)
 	{

@@ -5,6 +5,7 @@
 
 namespace uut
 {
+	class FreeCamera;
 	enum class Direction;
 	class Graphics;
 	class Texture2D;
@@ -24,7 +25,7 @@ namespace uut
 		Texture2D* GetTexture() const { return _texture; }
 
 		void Update(float deltaTime);
-		void Draw(Graphics* graphics) const;
+		void Draw(Graphics* graphics, FreeCamera* camera) const;
 
 		Level* GetLevel() const { return _level; }
 

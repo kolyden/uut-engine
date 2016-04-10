@@ -16,6 +16,21 @@ namespace uut
 		_tileset = _level->GetTileset();
 	}
 
+	template<typename T>
+	static void EnumGroup(T& value, const List<String>& names, const List<T>& values)
+	{
+		int index = static_cast<int>(value);
+		const uint count = values.Count();
+		for (uint i = 0; i < count; i++)
+		{
+			ImGui::RadioButton(names[i], &index, static_cast<int>(values[i]));
+			if (i < count - 1)
+				ImGui::SameLine();
+		}
+
+		value = static_cast<T>(index);
+	}
+
 	void Minimap::Update()
 	{
 		ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_FirstUseEver);
@@ -26,20 +41,12 @@ namespace uut
 			return;
 		}
 
-		int tool = static_cast<int>(_toolType);
-		ImGui::RadioButton("Clear", &tool, static_cast<int>(ToolType::Clear)); ImGui::SameLine();
-		ImGui::RadioButton("Floor", &tool, static_cast<int>(ToolType::Floor)); ImGui::SameLine();
-		ImGui::RadioButton("Solid", &tool, static_cast<int>(ToolType::Solid)); ImGui::SameLine();
-		ImGui::RadioButton("Wall", &tool, static_cast<int>(ToolType::Wall));
-		_toolType = static_cast<ToolType>(tool);
+		EnumGroup(_toolType, { "Clear", "Floor", "Solid", "Wall" },
+			{ ToolType::Clear, ToolType::Floor, ToolType::Solid, ToolType::Wall });
 
-		int dir = static_cast<int>(_direction);
 		ImGui::Text("Direction:"); ImGui::SameLine();
-		ImGui::RadioButton("N", &dir, (int)Direction::North); ImGui::SameLine();
-		ImGui::RadioButton("E", &dir, (int)Direction::East); ImGui::SameLine();
-		ImGui::RadioButton("S", &dir, (int)Direction::South); ImGui::SameLine();
-		ImGui::RadioButton("W", &dir, (int)Direction::West);
-		_direction = static_cast<Direction>(dir);
+		EnumGroup(_direction, { "N", "E", "S", "W" },
+			{ Direction::North, Direction::East, Direction::South, Direction::West });
 
 		if (_toolType == ToolType::Floor)
 		{
@@ -173,7 +180,9 @@ namespace uut
 
 				case ToolType::Solid:
 					if (ImGui::IsMouseDown(0))
-						cell.SetSolid(0);
+						chunk->SetSolid(pos, 0);
+					else chunk->SetWall(pos, 0);
+//						cell.SetSolid(0);
 					break;
 
 				case ToolType::Wall:
