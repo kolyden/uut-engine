@@ -6,7 +6,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\Samples\03\main.cpp">
+    <ClCompile Include="..\Source\Samples\03\EditorLevel.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Samples\03\EditorLevelChunk.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Samples\03\Entity.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Samples\03\Level.cpp">
@@ -18,10 +24,7 @@
     <ClCompile Include="..\Source\Samples\03\LevelChunk.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Samples\03\Tileset.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Samples\03\Entity.cpp">
+    <ClCompile Include="..\Source\Samples\03\main.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Samples\03\Minimap.cpp">
@@ -30,9 +33,21 @@
     <ClCompile Include="..\Source\Samples\03\Tile.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Samples\03\Tileset.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Samples\03\DefaultTileset.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Source\Samples\03\main.h">
+    <ClInclude Include="..\Source\Samples\03\EditorLevel.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Samples\03\EditorLevelChunk.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Samples\03\Entity.h">
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Samples\03\Level.h">
@@ -44,16 +59,19 @@
     <ClInclude Include="..\Source\Samples\03\LevelChunk.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Samples\03\Tileset.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Samples\03\Entity.h">
+    <ClInclude Include="..\Source\Samples\03\main.h">
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Samples\03\Minimap.h">
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Samples\03\Tile.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Samples\03\Tileset.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Samples\03\DefaultTileset.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>
