@@ -1,14 +1,21 @@
-#include "CameraBase.h"
+#include "Camera.h"
 #include "Renderer.h"
 
 namespace uut
 {
-	CameraBase::CameraBase()
+	UUT_OBJECT_IMPLEMENT(Camera)
+	{}
+
+	Camera::Camera()
 		: _viewUpdate(true)
 	{
 	}
 
-	void CameraBase::Setup(Renderer* renderer)
+	Camera::~Camera()
+	{		
+	}
+
+	void Camera::Setup(Renderer* renderer)
 	{
 		if (renderer == nullptr)
 			return;

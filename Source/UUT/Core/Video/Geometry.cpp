@@ -2,6 +2,13 @@
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(Geometry)
+	{}
+
+	Geometry::~Geometry()
+	{
+	}
+
 	Geometry::Geometry()
 		: _changed(false)
 	{
@@ -57,7 +64,7 @@ namespace uut
 		return _vertices;
 	}
 
-	void Geometry::SetUV(const List<Vector3>& uv)
+	void Geometry::SetUV(const List<Vector2>& uv)
 	{
 		if (_uv.IsEmpty() && uv.IsEmpty())
 			return;
@@ -66,7 +73,7 @@ namespace uut
 		_changed = true;
 	}
 
-	const List<Vector3>& Geometry::GetUV() const
+	const List<Vector2>& Geometry::GetUV() const
 	{
 		return _uv;
 	}

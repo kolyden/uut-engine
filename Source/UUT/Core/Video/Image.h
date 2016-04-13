@@ -1,12 +1,12 @@
 #pragma once
-#include "Core/Object.h"
-#include "Core/Math/IntVector2.h"
-#include "SDL2/SDL.h"
+#include <Core/Object.h>
+#include <Core/Math/IntVector2.h>
 
 namespace uut
 {
 	class Image : public Object
 	{
+		UUT_OBJECT(Image, Object)
 	public:
 		Image();
 		virtual ~Image();

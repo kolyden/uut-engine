@@ -1,16 +1,17 @@
 #pragma once
-#include "Core/Object.h"
-#include "Core/Video/Color.h"
-#include "Core/Video/Texture2D.h"
-#include "Core/Video/Color32.h"
-#include "Core/Math/IntRect.h"
-#include "Core/Math/Matrix4.h"
-#include "VertexDeclaration.h"
-#include "Topology.h"
 #include <Core/Collections/List.h>
+#include <Core/Module.h>
+#include <Core/Math/IntVector2.h>
+#include <Core/Math/Matrix4.h>
+#include <Core/Math/IntRect.h>
+#include "Texture2D.h"
+#include "Color32.h"
+#include "Topology.h"
+#include "Vertex.h"
 
 namespace uut
 {
+	class VertexDeclaration;
 	class Viewport;
 	struct RenderState;
 	class Window;
@@ -32,8 +33,9 @@ namespace uut
 		int fps;
 	};
 
-	class Renderer : public Object
+	class Renderer : public Module
 	{
+		UUT_MODULE(Renderer, Module)
 	public:
 		Renderer();
 		virtual ~Renderer();

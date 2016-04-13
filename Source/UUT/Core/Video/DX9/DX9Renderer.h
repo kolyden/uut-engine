@@ -1,14 +1,16 @@
 #pragma once
-#include "Core/Video/Renderer.h"
-#include "DX9Defs.h"
+#include <Core/Video/Renderer.h>
 #include <Core/Video/RenderState.h>
 #include <Core/Video/Viewport.h>
+#include "DX9Defs.h"
 
 namespace uut
 {
 	class DX9Renderer : public Renderer
 	{
+		UUT_MODULE(DX9Renderer, Renderer)
 	public:
+		DX9Renderer();
 		virtual ~DX9Renderer();
 
 		virtual void ResetStates() override;
@@ -53,8 +55,6 @@ namespace uut
 		Matrix4 _matView;
 		Matrix4 _matWorld;
 		Matrix4 _matProj;
-
-		DX9Renderer();
 
 		static bool TestReturnCode(HRESULT ret);
 

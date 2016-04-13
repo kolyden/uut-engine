@@ -1,6 +1,5 @@
 #pragma once
 #include "Color32.h"
-#include "Core/Math/IntRect.h"
 
 namespace uut
 {

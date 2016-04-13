@@ -3,10 +3,17 @@
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(TextReader)
+	{}
+
 	TextReader::TextReader(Stream* source)
 	{
 		if (source != nullptr && source->CanRead())
 			_source = source;
+	}
+
+	TextReader::~TextReader()
+	{		
 	}
 
 	unsigned TextReader::Read(char* buffer, unsigned count) const

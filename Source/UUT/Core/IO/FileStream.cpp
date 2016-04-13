@@ -2,8 +2,12 @@
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(FileStream)
+	{}
+
 	FileStream::FileStream()
 		: _handle(nullptr)
+		, _fileMode(FileMode::OpenRead)
 	{
 	}
 

@@ -1,7 +1,6 @@
 #pragma once
-#include "Core/Object.h"
-#include "Core/Math/IntVector2.h"
-#include "SDL2/SDL.h"
+#include <Core/Object.h>
+#include <Core/Math/IntVector2.h>
 
 namespace uut
 {
@@ -9,6 +8,7 @@ namespace uut
 
 	class Window : public Object
 	{
+		UUT_OBJECT(Window, Object)
 	public:
 		Window();
 		virtual ~Window();

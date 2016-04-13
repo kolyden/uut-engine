@@ -3,6 +3,9 @@
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(MemoryStream)
+	{}
+
 	MemoryStream::MemoryStream()
 		: _data(nullptr)
 		, _owner(false)

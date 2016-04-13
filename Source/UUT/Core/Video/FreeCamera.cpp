@@ -5,12 +5,19 @@
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(FreeCamera)
+	{}
+
 	FreeCamera::FreeCamera()
 		: _position(0, 0, 0)
 		, _right(Vector3::Right)
 		, _up(Vector3::Up)
 		, _look(Vector3::Forward)
 	{
+	}
+
+	FreeCamera::~FreeCamera()
+	{		
 	}
 
 	void FreeCamera::SetPosition(const Vector3& position)

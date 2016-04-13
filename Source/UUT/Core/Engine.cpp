@@ -2,6 +2,9 @@
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(Engine)
+	{}
+
 	Engine::Engine()
 		: _inited(false)
 		, _quited(false)

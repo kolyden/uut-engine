@@ -11,6 +11,11 @@ namespace uut
 	const Color32 Color32::Red(255, 0, 0);
 	const Color32 Color32::Green(0, 255, 0);
 	const Color32 Color32::Blue(0, 0, 255);
+	const Color32 Color32::Yellow(255, 255, 0, 255);
+	const Color32 Color32::Magenta(255, 0, 255, 255);
+	const Color32 Color32::Cyan(0, 255, 255, 255);
+	const Color32 Color32::Gray(128, 128, 128, 255);
+	const Color32 Color32::Silver(192, 192, 192, 255);
 
 	Color32::Color32()
 		: a(255), r(255), g(255), b(255)
@@ -20,16 +25,6 @@ namespace uut
 	Color32::Color32(int _r, int _g, int _b, int _a /*= 255*/)
 		: a(_a), r(_r), g(_g), b(_b)
 	{
-	}
-
-	Color32::Color32(const Color32& color)
-		: a(color.a), r(color.r), g(color.g), b(color.b)
-	{
-	}
-
-	Color32::Color32(Color32&& color)
-	{
-		std::swap_ranges(data, data + 4, color.data);
 	}
 
 	Color32::Color32(const Color& color)
@@ -46,21 +41,6 @@ namespace uut
 		, g((argb >> 8) & 0xFF)
 		, b(argb & 0xFF)
 	{
-	}
-
-	Color32& Color32::operator=(const Color32& color)
-	{
-		r = color.r;
-		g = color.g;
-		b = color.b;
-		a = color.a;
-		return *this;
-	}
-
-	Color32& Color32::operator=(Color32&& color)
-	{
-		std::swap_ranges(data, data + 4, color.data);
-		return *this;
 	}
 
 	bool Color32::operator==(const Color32& color) const

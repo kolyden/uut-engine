@@ -1,11 +1,10 @@
 #pragma once
-#include "Core/Object.h"
-#include "Core/Timer.h"
-#include "IMGUI/imgui.h"
-#include "Core/Math/Vector2.h"
-#include "Core/Video/Color.h"
+#include <Core/Module.h>
+#include <Core/Timer.h>
 #include <Core/Math/Matrix4.h>
 #include <Core/Video/RenderState.h>
+
+struct ImDrawData;
 
 namespace uut
 {
@@ -16,8 +15,9 @@ namespace uut
 	class IndexBuffer;
 	class Texture2D;
 
-	class ImGuiModule : public Object
+	class ImGuiModule : public Module
 	{
+		UUT_MODULE(ImGuiModule, Module)
 	public:
 		explicit ImGuiModule(Renderer* renderer, Input* input);
 
@@ -25,6 +25,10 @@ namespace uut
 
 		void SetupCamera();
 		void Draw() const;
+
+		bool Button(const String& title);
+		void Label(const String& text);
+		float FloatSlider(float value, float minValue, float maxValue);
 
 	protected:
 		Timer _timer;

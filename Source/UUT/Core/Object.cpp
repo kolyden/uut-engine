@@ -2,6 +2,9 @@
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(Object)
+	{}
+
 	bool Object::Equals(const Object* obj) const
 	{
 		return obj == this;
@@ -9,6 +12,6 @@ namespace uut
 
 	String Object::ToString()
 	{
-		return "Object";
+		return GetType()->GetName().GetData();
 	}
 }

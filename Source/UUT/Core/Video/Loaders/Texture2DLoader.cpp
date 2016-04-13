@@ -3,6 +3,7 @@
 #include "STB/stb_image.h"
 #include <Core/IO/Stream.h>
 #include <Core/Video/Renderer.h>
+#include <Core/Video/Texture2D.h>
 
 namespace uut
 {
@@ -28,15 +29,22 @@ namespace uut
 	}
 
 	///////////////////////////////////////////////////////////////////////////
+	UUT_OBJECT_IMPLEMENT(Texture2DLoader)
+	{}
+
 	Texture2DLoader::Texture2DLoader(Renderer* renderer)
 		: _renderer(renderer)
 	{
 	}
 
+	Texture2DLoader::~Texture2DLoader()
+	{		
+	}
+
 	SharedPtr<Resource> Texture2DLoader::Load(Stream* stream)
 	{
 		if (stream == nullptr)
-			return SharedPtr<Resource>::EMPTY;
+			return SharedPtr<Resource>::Empty;
 
 		stbi_io_callbacks callbacks{ &ReadStream, &SeekStream, &IsEOFStream };
 
@@ -44,16 +52,16 @@ namespace uut
 		int comp;
 		auto source = stbi_load_from_callbacks(&callbacks, stream, &size.x, &size.y, &comp, STBI_rgb_alpha);
 		if (source == nullptr)
-			return SharedPtr<Resource>::EMPTY;
+			return SharedPtr<Resource>::Empty;
 
 		auto tex = _renderer->CreateTexture(size);
 		if (!tex)
-			return SharedPtr<Resource>::EMPTY;
+			return SharedPtr<Resource>::Empty;
 
 		int pitch;
 		auto dest = static_cast<stbi_uc*>(tex->Lock(&pitch));
 		if (!dest)
-			return SharedPtr<Resource>::EMPTY;
+			return SharedPtr<Resource>::Empty;
 
 		for (int y = 0; y < size.y; y++)
 		{

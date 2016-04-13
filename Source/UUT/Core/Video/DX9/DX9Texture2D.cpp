@@ -2,6 +2,9 @@
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(DX9Texture2D)
+	{}
+
 	DX9Texture2D::DX9Texture2D()
 		: _data(nullptr)
 	{

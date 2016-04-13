@@ -60,6 +60,7 @@ namespace uut
 		int Count() const { return static_cast<int>(_data.size()); }
 
 		operator const char*() const { return _data.c_str(); }
+		const char* GetData() const { return _data.c_str(); }
 
 		bool operator == (const char* str) const { return Equals(str); }
 		bool operator != (const char* str) const { return !Equals(str); }
@@ -79,6 +80,7 @@ namespace uut
 		String operator + (const String& str) const;
 
 		static String Join(const List<String>& list, const String& str);
+		static String Format(const char* format, ...);
 
 		Iterator Begin() { return _data.begin(); }
 		Iterator End() { return _data.begin(); }

@@ -2,6 +2,9 @@
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(Image)
+	{}
+
 	Image::Image()
 		: _data(nullptr)
 	{

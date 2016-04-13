@@ -5,8 +5,10 @@ namespace uut
 {
 	class Texture2D : public Texture
 	{
+		UUT_OBJECT(Texture2D, Texture);
 	public:
-		virtual ~Texture2D() {}
+		Texture2D();
+		virtual ~Texture2D();
 
 		virtual void* Lock(int* pitch = nullptr) = 0;
 		virtual void Unlock() = 0;

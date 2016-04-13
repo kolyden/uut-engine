@@ -1,17 +1,20 @@
 #pragma once
-#include "Core/Object.h"
+#include <Core/Object.h>
 #include <Core/Collections/List.h>
 #include <Core/Math/Vector3.h>
+#include <Core/Math/Vector2.h>
 #include <Core/Video/Color.h>
 #include <Core/Video/Color32.h>
 
 namespace uut
 {
-	// hardware vertex and index buffer
+	// hardware? vertex and index buffer
 	class Geometry : public Object
 	{
+		UUT_OBJECT(Geometry, Object)
 	public:
 		Geometry();
+		virtual ~Geometry();
 
 // 		void Fill(const List<Vertex>& verts, const List<uint32_t>& indexes);
 // 		void Apply();
@@ -20,8 +23,8 @@ namespace uut
 		void SetVertices(const List<Vector3>& vertices);
 		const List<Vector3>& GetVertices() const;
 
-		void SetUV(const List<Vector3>& uv);
-		const List<Vector3>& GetUV() const;
+		void SetUV(const List<Vector2>& uv);
+		const List<Vector2>& GetUV() const;
 
 		void SetColors(const List<Color>& colors);
 		List<Color> GetColors() const;
@@ -35,7 +38,7 @@ namespace uut
 // 		void SetVertexes(const List<Vertex>& vertexes);
 
 		List<Vector3>& GetVertices() { return _vertices; }
-		List<Vector3>& GetUV() { return _uv; }
+		List<Vector2>& GetUV() { return _uv; }
 		List<Color32>& GetColors32() { return _colors; }
 		List<uint32_t>& GetIndexes() { return _indexes; }
 
@@ -48,7 +51,7 @@ namespace uut
 
 	protected:
 		List<Vector3> _vertices;
-		List<Vector3> _uv;
+		List<Vector2> _uv;
 		List<Color32> _colors;
 		List<uint32_t> _indexes;
 		bool _changed;

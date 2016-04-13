@@ -2,6 +2,9 @@
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(DX9VertexDeclaration)
+	{}
+
 	DX9VertexDeclaration::DX9VertexDeclaration()
 		: _data(nullptr)
 	{

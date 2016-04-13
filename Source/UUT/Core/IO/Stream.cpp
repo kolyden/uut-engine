@@ -2,6 +2,15 @@
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(Stream)
+	{}
+
+	Stream::Stream()
+	{}
+
+	Stream::~Stream()
+	{}
+
 	bool Stream::Seek(SeekMethod method, int offset)
 	{
 		if (!CanSeek())

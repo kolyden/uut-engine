@@ -7,6 +7,7 @@ namespace uut
 	class IEquatable
 	{
 	public:
+		virtual ~IEquatable() = default;
 		virtual bool Equals(const Object* obj) const = 0;
 	};
 
@@ -14,7 +15,7 @@ namespace uut
 	class Equatable : public IEquatable
 	{
 	public:
-		virtual bool Equals(const T* obj) const = 0;
 		virtual bool Equals(const Object* obj) const = 0;
+		virtual bool Equals(const T* obj) const = 0;
 	};
 }

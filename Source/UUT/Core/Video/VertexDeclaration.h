@@ -30,15 +30,17 @@ namespace uut
 		UsageType usage;
 		uint8_t usageIndex;
 
-		VertexElement() {}
-		VertexElement(DeclareType _type, UsageType _usage, uint16_t _offset = 0)
-			: stream(0), offset(_offset), type(_type), usage(_usage), usageIndex(0)
-		{}
+		VertexElement();
+		VertexElement(DeclareType _type, UsageType _usage, uint16_t _offset = 0);
 	};
 
 	class VertexDeclaration : public Object
 	{
+		UUT_OBJECT(VertexDeclaration, Object)
 	public:
+		VertexDeclaration();
+		virtual ~VertexDeclaration();
+
 		virtual uintptr_t GetInternalHandle() const = 0;
 
 		const List<VertexElement>& GetElements() const { return _elements; }

@@ -8,10 +8,12 @@ namespace uut
 	class IntVector2;
 	class Renderer;
 
-	class CameraBase : public Object
+	class Camera : public Object
 	{
+		UUT_OBJECT(Camera, Object)
 	public:
-		CameraBase();
+		Camera();
+		virtual ~Camera();
 
 		void Setup(Renderer* renderer);
 

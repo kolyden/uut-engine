@@ -1,5 +1,5 @@
 #pragma once
-#include "Core/Object.h"
+#include <Core/Object.h>
 
 namespace uut
 {
@@ -12,7 +12,11 @@ namespace uut
 
 	class Stream : public Object
 	{
+		UUT_OBJECT(Stream, Object)
 	public:
+		Stream();
+		virtual ~Stream();
+
 		virtual bool CanRead() const = 0;
 		virtual bool CanWrite() const = 0;
 		virtual bool CanSeek() const = 0;

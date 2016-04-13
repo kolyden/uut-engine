@@ -5,6 +5,7 @@ namespace uut
 {
 	class MemoryStream : public Stream
 	{
+		UUT_OBJECT(MemoryStream, Stream)
 	public:
 		MemoryStream();
 		virtual ~MemoryStream();

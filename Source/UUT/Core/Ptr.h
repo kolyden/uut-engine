@@ -150,7 +150,7 @@ namespace uut
 		template<typename... Args>
 		static SharedPtr<T> Make(Args... args) { return SharedPtr<T>(new T(args...)); }
 
-		static const SharedPtr<T> EMPTY;
+		static const SharedPtr<T> Empty;
     
 	private:
 		/// Prevent direct assignment from a shared pointer of another type.
@@ -177,7 +177,7 @@ namespace uut
 		T* ptr_;
 	};
 
-	template <class T> const SharedPtr<T> uut::SharedPtr<T>::EMPTY;
+	template <class T> const SharedPtr<T> uut::SharedPtr<T>::Empty;
 
 	/// Perform a static cast from one shared pointer type to another.
 	template <class T, class U> SharedPtr<T> StaticCast(const SharedPtr<U>& ptr)

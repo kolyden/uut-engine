@@ -1,9 +1,14 @@
 #include "Window.h"
-#include "Core/Video/Image.h"
 #include <Core/Debug.h>
+#include <Core/Video/Image.h>
+#include "SDL2/SDL.h"
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(Window)
+	{
+	}
+
 	Window::Window()
 		: _size(320, 200)
 		, _data(nullptr)

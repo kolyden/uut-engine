@@ -1,12 +1,13 @@
 #pragma once
-#include <Core/Object.h>
+#include <Core/Module.h>
 
 namespace uut
 {
-	class ResourceCache : public Object
+	class ResourceCache : public Module
 	{
+		UUT_MODULE(ResourceCache, Module)
 	public:
-
-	protected:
+		ResourceCache();
+		virtual ~ResourceCache();
 	};
 }

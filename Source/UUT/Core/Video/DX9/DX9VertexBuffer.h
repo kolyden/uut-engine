@@ -1,11 +1,12 @@
 #pragma once
+#include <Core/Video/VertexBuffer.h>
 #include "DX9Defs.h"
-#include "Core/Video/VertexBuffer.h"
 
 namespace uut
 {
 	class DX9VertexBuffer : public VertexBuffer
 	{
+		UUT_OBJECT(DX9VertexBuffer, VertexBuffer)
 	public:
 		DX9VertexBuffer();
 		virtual ~DX9VertexBuffer();

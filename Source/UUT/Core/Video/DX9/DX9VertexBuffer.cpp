@@ -2,6 +2,9 @@
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(DX9VertexBuffer)
+	{}
+
 	DX9VertexBuffer::DX9VertexBuffer()
 		: _data(nullptr)
 	{

@@ -1,13 +1,14 @@
 #pragma once
-#include "Core/Object.h"
+#include <Core/Object.h>
 
 namespace uut
 {
 	class BufferObject : public Object
 	{
+		UUT_OBJECT(BufferObject, Object)
 	public:
 		BufferObject();
-		virtual ~BufferObject() {}
+		virtual ~BufferObject();
 
 		uint32_t GetSize() const { return _size; }
 

@@ -1,12 +1,13 @@
 #pragma once
 #include "Core/IEquatable.h"
 #include "Core/String.h"
-#include "Core/Ptr.h"
+#include "Type.h"
 
 namespace uut
 {
 	class Object : public IEquatable, public RefCounted
 	{
+		UUT_OBJECT(Object, Object)
 	public:
 		virtual ~Object() {}
 

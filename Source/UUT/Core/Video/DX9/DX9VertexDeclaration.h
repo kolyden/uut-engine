@@ -1,11 +1,12 @@
 #pragma once
+#include <Core/Video/VertexDeclaration.h>
 #include "DX9Defs.h"
-#include "Core/Video/VertexDeclaration.h"
 
 namespace uut
 {
 	class DX9VertexDeclaration : public VertexDeclaration
 	{
+		UUT_OBJECT(DX9VertexDeclaration, VertexDeclaration)
 	public:
 		DX9VertexDeclaration();
 		virtual ~DX9VertexDeclaration();

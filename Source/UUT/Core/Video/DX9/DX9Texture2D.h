@@ -1,11 +1,12 @@
 #pragma once
+#include <Core/Video/Texture2D.h>
 #include "DX9Defs.h"
-#include "Core/Video/Texture2D.h"
 
 namespace uut
 {
 	class DX9Texture2D : public Texture2D
 	{
+		UUT_OBJECT(DX9Texture2D, Texture2D)
 	public:
 		DX9Texture2D();
 		virtual ~DX9Texture2D();

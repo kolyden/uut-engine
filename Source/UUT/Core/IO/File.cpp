@@ -19,7 +19,7 @@ namespace uut
 		if (stream->Open(path, mode))
 			return stream;
 
-		return SharedPtr<FileStream>::EMPTY;
+		return SharedPtr<FileStream>::Empty;
 	}
 
 	SharedPtr<FileStream> File::OpenRead(const Path& path)
@@ -36,11 +36,11 @@ namespace uut
 // 	{
 // 		auto stream = OpenRead(path);
 // 		if (!stream)
-// 			return SharedPtr<BinaryData>::EMPTY;
+// 			return SharedPtr<BinaryData>::Empty;
 // 
 // 		const unsigned size = stream->GetLength();
 // 		if (size == 0)
-// 			return SharedPtr<BinaryData>::EMPTY;
+// 			return SharedPtr<BinaryData>::Empty;
 // 
 // 		auto data = SharedPtr<BinaryData>::Make();
 // 		data->Alloc(size);

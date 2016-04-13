@@ -3,6 +3,9 @@
 
 namespace uut
 {
+	UUT_MODULE_IMPLEMENT(Renderer)
+	{}
+
 	Renderer::Renderer()
 		: _screenSize(0)
 	{

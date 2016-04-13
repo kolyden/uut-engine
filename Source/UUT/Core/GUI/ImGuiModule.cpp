@@ -1,14 +1,18 @@
 #include "ImGuiModule.h"
 #include "SDL2/SDL.h"
-#include "Core/IO/Input.h"
-#include "Core/Video/Renderer.h"
-#include "Core/Video/VertexBuffer.h"
-#include "Core/Video/VertexDeclaration.h"
-#include "Core/Video/IndexBuffer.h"
-#include "Core/Video/Texture2D.h"
+#include <Core/IO/Input.h>
+#include <Core/Video/Renderer.h>
+#include <Core/Video/Texture.h>
+#include <Core/Video/Vertex.h>
+#include <Core/Video/VertexBuffer.h>
+#include <Core/Video/IndexBuffer.h>
+#include <IMGUI/imgui.h>
 
 namespace uut
 {
+	UUT_MODULE_IMPLEMENT(ImGuiModule)
+	{}
+
 	struct UIVertex
 	{
 		float x, y, z;
@@ -125,6 +129,25 @@ namespace uut
 	void ImGuiModule::Draw() const
 	{
 		ImGui::Render();
+	}
+
+	bool ImGuiModule::Button(const String& title)
+	{
+		return ImGui::Button(title);
+	}
+
+	void ImGuiModule::Label(const String& text)
+	{
+		ImGui::Text(text);
+	}
+
+	float ImGuiModule::FloatSlider(float value, float minValue, float maxValue)
+	{
+		float f = value;
+		if (ImGui::SliderFloat("", &f, minValue, maxValue))
+			return f;
+
+		return value;
 	}
 
 	///////////////////////////////////////////////////////////////////////////

@@ -7,8 +7,10 @@ namespace uut
 
 	class TextReader : public Object
 	{
+		UUT_OBJECT(TextReader, Object)
 	public:
-		TextReader(Stream* source);
+		explicit TextReader(Stream* source);
+		virtual ~TextReader();
 
 // 		wchar_t Read();
 		unsigned Read(char* buffer, unsigned count) const;

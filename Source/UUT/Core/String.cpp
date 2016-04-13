@@ -325,6 +325,19 @@ namespace uut
 		return text;
 	}
 
+	String String::Format(const char* format, ...)
+	{
+		const int buf_size = 512;
+		char buf[buf_size];
+
+		va_list args;
+		va_start(args, format);
+		vsprintf_s(buf, buf_size, format, args);
+		va_end(args);
+
+		return buf;
+	}
+
 	int String::CompareChar(char a, char b, StringComparison comparisonType)
 	{
 		switch (comparisonType)
@@ -334,7 +347,6 @@ namespace uut
 			if (tolower(a) > tolower(b)) return +1;
 			if (tolower(a) < tolower(b)) return -1;
 			return 0;
-			break;
 		}
 
 		return 0;

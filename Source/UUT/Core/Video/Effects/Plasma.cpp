@@ -1,9 +1,12 @@
 #include "Plasma.h"
-#include "Core/Math/Math.h"
-#include "Core/Video/Texture2D.h"
+#include <Core/Math/Math.h>
+#include <Core/Video/Texture2D.h>
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(Plasma)
+	{}
+
 	Plasma::Plasma(const IntVector2& size)
 		: _size(size)
 		, _lookupCount(_size.Area())

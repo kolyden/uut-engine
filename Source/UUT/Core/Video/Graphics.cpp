@@ -1,12 +1,16 @@
 #include "Graphics.h"
+#include <Core/Math/Rect.h>
+#include <Core/Math/Math.h>
 #include "Renderer.h"
 #include "Vertex.h"
 #include "VertexBuffer.h"
-#include <Core/Math/Rect.h>
-#include <Core/Math/Math.h>
+#include "Geometry.h"
 
 namespace uut
 {
+	UUT_MODULE_IMPLEMENT(Graphics)
+	{}
+
 	Graphics::Graphics(Renderer* renderer)
 		: _renderer(renderer)
 		, _vbufCount(5000)
@@ -31,6 +35,10 @@ namespace uut
 
 		UpdateMaterial();
 		UpdateProjection();
+	}
+
+	Graphics::~Graphics()
+	{	
 	}
 
 	void Graphics::SetProjection(ProjectionMode mode)
@@ -297,6 +305,30 @@ namespace uut
 			Vertex(v6, color, Vector2::One),
 			Vertex(v2, color, Vector2::Up),
 			texture);
+	}
+
+	void Graphics::DrawGeometry(const Matrix4& transform, Geometry* geometry, Texture2D* texture)
+	{
+		if (geometry == nullptr)
+			return;
+
+		auto& vertices = geometry->GetVertices();
+		auto& uvs = geometry->GetUV();
+		auto& colors = geometry->GetColors32();
+		auto& indexes = geometry->GetIndexes();
+		const uint count = indexes.Count();
+
+		TestBatch(Topology::TrinagleList, texture, count);
+
+		for (uint i = 0; i < count; i++)
+		{
+			const uint offset = _vdxIndex + i;
+			const uint32_t index = indexes[i];
+
+			_vertices[offset].pos = transform.VectorTransform(vertices[index]);
+			_vertices[offset].tex = uvs[index];
+			_vertices[offset].color = colors[index].ToInt();
+		}
 	}
 
 	void Graphics::DrawPrimitive(Topology topology, const List<Vertex>& vertexes, Texture2D* texture /* = nullptr */)

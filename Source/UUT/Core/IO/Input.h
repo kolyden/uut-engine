@@ -1,13 +1,15 @@
 #pragma once
-#include "Core/Object.h"
-#include "Core/Math/IntVector2.h"
+#include <Core/Module.h>
+#include <Core/Math/IntVector2.h>
 
 namespace uut
 {
-	class Input : public Object
+	class Input : public Module
 	{
+		UUT_MODULE(Input, Module)
 	public:
 		Input();
+		virtual ~Input();
 
 		static bool IsMouseButton(int button);
 		static const IntVector2& GetMousePos();

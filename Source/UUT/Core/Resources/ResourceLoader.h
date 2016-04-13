@@ -8,7 +8,11 @@ namespace uut
 
 	class ResourceLoader : public Object
 	{
+		UUT_OBJECT(ResourceLoader, Object)
 	public:
+		ResourceLoader();
+		virtual ~ResourceLoader();
+
 		virtual SharedPtr<Resource> Load(Stream* stream) = 0;
 	};
 }

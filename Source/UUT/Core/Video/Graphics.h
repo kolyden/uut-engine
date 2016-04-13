@@ -1,12 +1,13 @@
 #pragma once
-#include "Core/Object.h"
+#include <Core/Math/Matrix4.h>
 #include "Topology.h"
 #include "Color32.h"
 #include "RenderState.h"
-#include <Core/Math/Matrix4.h>
+#include <Core/Module.h>
 
 namespace uut
 {
+	class Geometry;
 	class Rect;
 	class Vector3;
 	struct Vertex;
@@ -15,8 +16,9 @@ namespace uut
 	class VertexBuffer;
 	class VertexDeclaration;
 
-	class Graphics : public Object
+	class Graphics : public Module
 	{
+		UUT_MODULE(Graphics, Module)
 	public:
 		enum ProjectionMode
 		{
@@ -32,6 +34,7 @@ namespace uut
 		};
 
 		explicit Graphics(Renderer* renderer);
+		virtual ~Graphics();
 
 		void SetProjection(ProjectionMode mode);
 		void SetMaterial(MaterialType type);
@@ -49,6 +52,8 @@ namespace uut
 		void DrawSolidCube(const Vector3& center, float side, const Color32& color = Color32::White);
 		void DrawWireCube(const Vector3& center, float side, const Color32& color = Color32::White);
 		void DrawCube(const Vector3& center, float side, const Color32& color = Color32::White, Texture2D* texture = nullptr);
+
+		void DrawGeometry(const Matrix4& transform, Geometry* geometry, Texture2D* texture = nullptr);
 
 		void DrawPrimitive(Topology topology, const List<Vertex>& vertexes, Texture2D* texture = nullptr);
 		void DrawIndexedPrimitive(Topology topology, const List<Vertex>& vertexes, const List<uint16_t>& indexes, Texture2D* texture = nullptr);

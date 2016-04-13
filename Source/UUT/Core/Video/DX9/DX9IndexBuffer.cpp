@@ -2,6 +2,9 @@
 
 namespace uut
 {
+	UUT_OBJECT_IMPLEMENT(DX9IndexBuffer)
+	{}
+
 	DX9IndexBuffer::DX9IndexBuffer()
 		: _data(nullptr)
 	{

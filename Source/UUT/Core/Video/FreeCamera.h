@@ -1,5 +1,5 @@
 #pragma once
-#include "CameraBase.h"
+#include "Camera.h"
 #include <Core/Math/Vector3.h>
 #include <Core/Math/Radian.h>
 
@@ -7,10 +7,12 @@ namespace uut
 {
 	class Renderer;
 
-	class FreeCamera : public CameraBase
+	class FreeCamera : public Camera
 	{
+		UUT_OBJECT(FreeCamera, Camera)
 	public:
 		FreeCamera();
+		virtual ~FreeCamera();
 
 		void SetPosition(const Vector3& position);
 		const Vector3& GetPosition() const;

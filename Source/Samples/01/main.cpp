@@ -31,17 +31,17 @@ namespace uut
 		///////////////////////////////////////////////////////////////
 		{
 			static float f = 0.0f;
-			ImGui::Text("Hello, world!");
-			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-			if (ImGui::Button("Test Window")) show_test_window ^= 1;
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			_gui->Label("Hello, world!");
+			f = _gui->FloatSlider(f, 0, 1);
+			if (_gui->Button("Test Window"))
+				show_test_window ^= 1;
 		}
 
-		if (show_test_window)
-		{
-			ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
-			ImGui::ShowTestWindow(&show_test_window);
-		}
+// 		if (show_test_window)
+// 		{
+// 			ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
+// 			ImGui::ShowTestWindow(&show_test_window);
+// 		}
 
 		///////////////////////////////////////////////////////////////
 		_renderer->Clear(Color32(114, 144, 154));

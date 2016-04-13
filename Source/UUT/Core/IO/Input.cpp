@@ -3,6 +3,9 @@
 
 namespace uut
 {
+	UUT_MODULE_IMPLEMENT(Input)
+	{}
+
 	static Input* g_this = nullptr;
 
 	Input::Input()
@@ -16,6 +19,10 @@ namespace uut
 
 		memset(_prevKbState, 0, KEYS_COUNT);
 		memset(_kbState, 0, KEYS_COUNT);
+	}
+
+	Input::~Input()
+	{		
 	}
 	
 	bool Input::IsMouseButton(int button)
