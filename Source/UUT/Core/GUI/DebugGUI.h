@@ -15,11 +15,11 @@ namespace uut
 	class IndexBuffer;
 	class Texture2D;
 
-	class ImGuiModule : public Module
+	class DebugGUI : public Module
 	{
-		UUT_MODULE(ImGuiModule, Module)
+		UUT_MODULE(DebugGUI, Module)
 	public:
-		explicit ImGuiModule(Renderer* renderer, Input* input);
+		explicit DebugGUI(Renderer* renderer, Input* input);
 
 		void NewFrame();
 

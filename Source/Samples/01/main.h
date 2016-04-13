@@ -1,7 +1,7 @@
 #pragma once
 #include "Core/Windows/Application.h"
 #include "Core/Timer.h"
-#include "Core/GUI/ImGuiModule.h"
+#include "Core/GUI/DebugGUI.h"
 #include "Core/Video/Effects/Plasma.h"
 #include <Core/Video/Graphics.h>
 
@@ -19,7 +19,7 @@ namespace uut
 		static const int texSize = 402;
 
 		SharedPtr<Texture2D> _texture;
-		SharedPtr<ImGuiModule> _gui;
+		SharedPtr<DebugGUI> _gui;
 		SharedPtr<Plasma> _plasma;
 		SharedPtr<Graphics> _graphics;
 

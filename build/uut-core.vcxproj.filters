@@ -123,9 +123,6 @@
     <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9VertexDeclaration.cpp">
       <Filter>Sources\Video\DX9</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\GUI\ImGuiModule.cpp">
-      <Filter>Sources\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Matrix4.cpp">
       <Filter>Sources\Math</Filter>
     </ClCompile>
@@ -237,6 +234,12 @@
     <ClCompile Include="..\Source\UUT\Core\Platform.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\GUI\DebugGUI.cpp">
+      <Filter>Sources\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Time.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\UUT\Core\Object.h">
@@ -343,9 +346,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9VertexDeclaration.h">
       <Filter>Sources\Video\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\GUI\ImGuiModule.h">
-      <Filter>Sources\GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Matrix4.h">
       <Filter>Sources\Math</Filter>
@@ -474,6 +474,12 @@
       <Filter>Sources\Collections</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Plugin.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\GUI\DebugGUI.h">
+      <Filter>Sources\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Time.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>

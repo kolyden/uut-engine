@@ -1,5 +1,4 @@
-#include "ImGuiModule.h"
-#include "SDL2/SDL.h"
+#include "DebugGUI.h"
 #include <Core/IO/Input.h>
 #include <Core/Video/Renderer.h>
 #include <Core/Video/Texture.h>
@@ -7,10 +6,11 @@
 #include <Core/Video/VertexBuffer.h>
 #include <Core/Video/IndexBuffer.h>
 #include <IMGUI/imgui.h>
+#include <SDL2/SDL.h>
 
 namespace uut
 {
-	UUT_MODULE_IMPLEMENT(ImGuiModule)
+	UUT_MODULE_IMPLEMENT(DebugGUI)
 	{}
 
 	struct UIVertex
@@ -26,7 +26,7 @@ namespace uut
 		VertexElement(VertexElement::DT_FLOAT2, VertexElement::UT_TEXCOORD, offsetof(UIVertex, tx)),
 	};
 
-	ImGuiModule::ImGuiModule(Renderer* renderer, Input* input)
+	DebugGUI::DebugGUI(Renderer* renderer, Input* input)
 		: _renderer(renderer)
 		, _input(input)
 		, _vbSize(0)
@@ -99,7 +99,7 @@ namespace uut
 		_renderState.sampler[0].magFilter = TextureFilter::Linear;
 	}
 
-	void ImGuiModule::NewFrame()
+	void DebugGUI::NewFrame()
 	{
 		_timer.Update();
 		Vector2 size = _renderer->GetScreenSize();
@@ -119,29 +119,29 @@ namespace uut
 		ImGui::NewFrame();
 	}
 
-	void ImGuiModule::SetupCamera()
+	void DebugGUI::SetupCamera()
 	{
 		_renderer->SetTransform(RT_VIEW, Matrix4::Identity);
 		_renderer->SetTransform(RT_WORLD, Matrix4::Identity);
 		_renderer->SetTransform(RT_PROJECTION, _matProj);
 	}
 
-	void ImGuiModule::Draw() const
+	void DebugGUI::Draw() const
 	{
 		ImGui::Render();
 	}
 
-	bool ImGuiModule::Button(const String& title)
+	bool DebugGUI::Button(const String& title)
 	{
 		return ImGui::Button(title);
 	}
 
-	void ImGuiModule::Label(const String& text)
+	void DebugGUI::Label(const String& text)
 	{
 		ImGui::Text(text);
 	}
 
-	float ImGuiModule::FloatSlider(float value, float minValue, float maxValue)
+	float DebugGUI::FloatSlider(float value, float minValue, float maxValue)
 	{
 		float f = value;
 		if (ImGui::SliderFloat("", &f, minValue, maxValue))
@@ -151,7 +151,7 @@ namespace uut
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	void ImGuiModule::RenderDrawLists(ImDrawData* draw_data)
+	void DebugGUI::RenderDrawLists(ImDrawData* draw_data)
 	{
 		if (!_vb || _vbSize < draw_data->TotalVtxCount)
 		{
@@ -230,9 +230,9 @@ namespace uut
 		_renderer->SetTexture(0, nullptr);
 	}
 
-	void ImGuiModule::StaticRenderDrawLists(ImDrawData* draw_data)
+	void DebugGUI::StaticRenderDrawLists(ImDrawData* draw_data)
 	{
-		auto module = static_cast<ImGuiModule*>(ImGui::GetIO().UserData);
+		auto module = static_cast<DebugGUI*>(ImGui::GetIO().UserData);
 		module->RenderDrawLists(draw_data);
 	}
 }

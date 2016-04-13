@@ -14,7 +14,7 @@ namespace uut
 		_texture = _renderer->CreateTexture(IntVector2(texSize), TextureAccess::Streaming);
 		_plasma = new Plasma(_texture->GetSize());
 
-		_gui = new ImGuiModule(_renderer, _input);
+		_gui = new DebugGUI(_renderer, _input);
 		_graphics = new Graphics(_renderer);
 		_graphics->SetProjection(Graphics::PM_2D);
 

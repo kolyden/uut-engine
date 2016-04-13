@@ -22,7 +22,7 @@
     <ClCompile Include="..\Source\UUT\Core\Context.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Debug.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Engine.cpp" />
-    <ClCompile Include="..\Source\UUT\Core\GUI\ImGuiModule.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\GUI\DebugGUI.cpp" />
     <ClCompile Include="..\Source\UUT\Core\HashString.cpp" />
     <ClCompile Include="..\Source\UUT\Core\IO\Directory.cpp" />
     <ClCompile Include="..\Source\UUT\Core\IO\File.cpp" />
@@ -57,6 +57,7 @@
     <ClCompile Include="..\Source\UUT\Core\Resources\ResourceCache.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Resources\ResourceLoader.cpp" />
     <ClCompile Include="..\Source\UUT\Core\String.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Time.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Timer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Type.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Video\FreeCamera.cpp" />
@@ -98,7 +99,7 @@
     <ClInclude Include="..\Source\UUT\Core\Context.h" />
     <ClInclude Include="..\Source\UUT\Core\Debug.h" />
     <ClInclude Include="..\Source\UUT\Core\Engine.h" />
-    <ClInclude Include="..\Source\UUT\Core\GUI\ImGuiModule.h" />
+    <ClInclude Include="..\Source\UUT\Core\GUI\DebugGUI.h" />
     <ClInclude Include="..\Source\UUT\Core\HashString.h" />
     <ClInclude Include="..\Source\UUT\Core\IEquatable.h" />
     <ClInclude Include="..\Source\UUT\Core\IO\Directory.h" />
@@ -136,6 +137,7 @@
     <ClInclude Include="..\Source\UUT\Core\Resources\ResourceCache.h" />
     <ClInclude Include="..\Source\UUT\Core\Resources\ResourceLoader.h" />
     <ClInclude Include="..\Source\UUT\Core\String.h" />
+    <ClInclude Include="..\Source\UUT\Core\Time.h" />
     <ClInclude Include="..\Source\UUT\Core\Timer.h" />
     <ClInclude Include="..\Source\UUT\Core\Type.h" />
     <ClInclude Include="..\Source\UUT\Core\Video\FreeCamera.h" />
