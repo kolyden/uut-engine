@@ -32,6 +32,12 @@ namespace uut
 		REGFUNC _regfunc;
 	};
 
+	template<class C>
+	static const Type* typeof()
+	{
+		return &C::GetTypeInternal();
+	}
+
 #define UUT_OBJECT(typeName, parentType) \
 	public: \
 	typedef typeName ClassName; \
@@ -39,7 +45,8 @@ namespace uut
 	virtual const Type* GetType() const; \
 	private: \
 	static void _RegisterInternal(); \
-	static Type& GetTypeInternal();
+	static Type& GetTypeInternal(); \
+	template<class C> friend const Type* typeof();
 
 #define UUT_OBJECT_IMPLEMENT(type) \
 	Type& type::GetTypeInternal() \

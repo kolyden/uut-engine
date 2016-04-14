@@ -1,5 +1,6 @@
 #pragma once
 #include "Ptr.h"
+#include "Type.h"
 
 namespace uut
 {
@@ -22,6 +23,6 @@ namespace uut
 	{
 	public:
 		virtual SharedPtr<Object> Create() override { return SharedPtr<C>::Make(); }
-		virtual const Type* GetType() const override { return C::GetType(); }
+		virtual const Type* GetType() const override { return typeof<C>(); }
 	};
 }

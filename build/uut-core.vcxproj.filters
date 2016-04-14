@@ -240,6 +240,15 @@
     <ClCompile Include="..\Source\UUT\Core\Time.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Attribute.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\AttributeUsage.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Enum.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\UUT\Core\Object.h">
@@ -480,6 +489,15 @@
       <Filter>Sources\GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Time.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Attribute.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\AttributeUsage.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Enum.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>
