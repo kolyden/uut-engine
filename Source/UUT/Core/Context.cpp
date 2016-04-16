@@ -1,5 +1,5 @@
 #include "Context.h"
-#include "Type.h"
+#include <Core/Reflection/Type.h>
 #include "Debug.h"
 #include "Plugin.h"
 #include "Module.h"
@@ -7,7 +7,7 @@
 namespace uut
 {
 	bool Context::_inited = false;
-	Context::PluginSet Context::_plugins;
+	Context::PluginList Context::_plugins;
 	Dictionary<HashString, const Type*> Context::_types;
 	Dictionary<const Type*, Context::DerivedSet> Context::_derived;
 	Context::ModuleDict Context::_modules;
@@ -42,13 +42,17 @@ namespace uut
 		if (plugin == nullptr)
 			return;
 
-		if (_plugins.Contains(SharedPtr<Plugin>(plugin)))
+		SharedPtr<Plugin> store(plugin);
+		for (auto& it : _plugins)
 		{
+			if (it->GetPluginName() != plugin->GetPluginName())
+				continue;
+
 			Debug::LogError("Same plugin '%s' already added", plugin->GetPluginName().GetData());
 			return;
 		}
 
-		_plugins.Add(SharedPtr<Plugin>(plugin));
+		_plugins.Add(store);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -156,4 +160,10 @@ namespace uut
 		for (auto& it : _modules)
 			it.second->OnInit();
 	}
+
+	void Context::Done()
+	{
+
+	}
+
 }

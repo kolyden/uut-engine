@@ -1,5 +1,5 @@
 #pragma once
-#include <Core/Video/VertexBuffer.h>
+#include <Video/VertexBuffer.h>
 #include "DX9Defs.h"
 
 namespace uut

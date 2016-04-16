@@ -1,4 +1,5 @@
 #include "Timer.h"
+#include <SDL2/SDL.h>
 
 namespace uut
 {
@@ -23,5 +24,4 @@ namespace uut
 		_elapsedTime += _deltaTime;
 		_prevTime = curTime;
 	}
-
 }

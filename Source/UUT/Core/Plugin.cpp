@@ -32,17 +32,17 @@ namespace uut
 
 	String PluginVersion::ToString() const
 	{
-		return String::Format("%d.%d", major, minor);
+		return String::Format("%u.%u", major, minor);
 	}
 
 	///////////////////////////////////////////////////////////////////
-	Plugin::Plugin(const String& name, const PluginVersion& version)
+	Plugin::Plugin(const HashString& name, const PluginVersion& version)
 		: _pluginName(name)
 		, _pluginVersion(version)
 	{
 	}
 
-	const String& Plugin::GetPluginName() const
+	const HashString& Plugin::GetPluginName() const
 	{
 		return _pluginName;
 	}
@@ -54,6 +54,6 @@ namespace uut
 
 	String Plugin::ToString() const
 	{
-		return _pluginName + " " + _pluginVersion.ToString();
+		return String::Format("%s %s", _pluginName.GetData(), _pluginVersion.ToString().GetData());
 	}
 }

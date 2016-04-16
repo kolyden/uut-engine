@@ -1,6 +1,9 @@
 #include "main.h"
 #include <Core/Math/Math.h>
 #include <Core/Math/Rect.h>
+#include <IMGUI/imgui.h>
+#include <Core/Context.h>
+#include <Core/Plugin.h>
 
 namespace uut
 {
@@ -29,19 +32,42 @@ namespace uut
 		_gui->NewFrame();
 
 		///////////////////////////////////////////////////////////////
+		ImGui::SetNextWindowSize(ImVec2(250, 350), ImGuiSetCond_FirstUseEver);
+		if (ImGui::Begin("Context"))
 		{
-			static float f = 0.0f;
-			_gui->Label("Hello, world!");
-			f = _gui->FloatSlider(f, 0, 1);
-			if (_gui->Button("Test Window"))
-				show_test_window ^= 1;
-		}
+			ImGui::Checkbox("Show Test Window", &show_test_window);
 
-// 		if (show_test_window)
-// 		{
-// 			ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
-// 			ImGui::ShowTestWindow(&show_test_window);
-// 		}
+			ImGui::Separator();
+			if (ImGui::CollapsingHeader("Plugins"))
+			{
+				ImGui::ListBoxHeader("##plugins");
+				auto plugins = Context::GetPlugins();
+				for (auto& it : plugins)
+				{
+					ImGui::Selectable(it->ToString());
+				}
+				ImGui::ListBoxFooter();
+			}
+
+			ImGui::Separator();
+			if (ImGui::CollapsingHeader("Types"))
+			{
+				ImGui::ListBoxHeader("##types");
+				for (auto& it : Context::GetTypes())
+				{
+					auto type = it.second;
+					ImGui::Selectable(type->ToString());
+				}
+				ImGui::ListBoxFooter();
+			}
+		}
+		ImGui::End();
+
+		if (show_test_window)
+		{
+			ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
+			ImGui::ShowTestWindow(&show_test_window);
+		}
 
 		///////////////////////////////////////////////////////////////
 		_renderer->Clear(Color32(114, 144, 154));

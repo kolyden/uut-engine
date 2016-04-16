@@ -1,6 +1,6 @@
 #include "FreeCamera.h"
 #include <Core/Math/Vector2.h>
-#include <Core/Video/Renderer.h>
+#include <Video/Renderer.h>
 #include "Viewport.h"
 
 namespace uut

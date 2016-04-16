@@ -1,6 +1,7 @@
 #pragma once
 #include "RefCounted.h"
 #include "String.h"
+#include "HashString.h"
 
 namespace uut
 {
@@ -24,9 +25,9 @@ namespace uut
 	class Plugin : public RefCounted
 	{
 	public:
-		Plugin(const String& name, const PluginVersion& version);
+		Plugin(const HashString& name, const PluginVersion& version);
 
-		const String& GetPluginName() const;
+		const HashString& GetPluginName() const;
 		const PluginVersion& GetPluginVersion() const;
 
 		String ToString() const;
@@ -38,7 +39,10 @@ namespace uut
 		friend class Context;
 
 	private:
-		String _pluginName;
+		HashString _pluginName;
 		PluginVersion _pluginVersion;
 	};
+
+#define UUT_REGISTER_OBJECT(type) Context::RegisterType(typeof<type>())
+#define UUT_REGISTER_MODULE(type) UUT_REGISTER_OBJECT(type)
 }

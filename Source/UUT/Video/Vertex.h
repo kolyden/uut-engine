@@ -1,8 +1,8 @@
 #pragma once
-#include "Core/Math/Vector2.h"
-#include "Core/Math/Vector3.h"
-#include "Core/Video/Color32.h"
 #include <Core/Collections/List.h>
+#include <Core/Math/Vector3.h>
+#include <Core/Math/Vector2.h>
+#include <Video/Color32.h>
 #include "VertexDeclaration.h"
 
 namespace uut

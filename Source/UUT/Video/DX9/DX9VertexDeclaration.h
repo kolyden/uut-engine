@@ -1,5 +1,5 @@
 #pragma once
-#include <Core/Video/VertexDeclaration.h>
+#include <Video/VertexDeclaration.h>
 #include "DX9Defs.h"
 
 namespace uut

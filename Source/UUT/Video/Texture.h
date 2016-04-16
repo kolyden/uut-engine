@@ -1,6 +1,6 @@
 #pragma once
-#include <Core/Resources/Resource.h>
 #include <Core/Math/IntVector2.h>
+#include <Resources/Resource.h>
 
 namespace uut
 {

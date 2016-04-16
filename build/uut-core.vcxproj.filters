@@ -1,504 +1,525 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Sources">
+    <Filter Include="Core">
       <UniqueIdentifier>{ccb4975f-757f-4cce-949a-e876b2735280}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Collections">
+    <Filter Include="Core\Collections">
       <UniqueIdentifier>{e38afce0-cdab-4405-bfc9-c91d70a0f9ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Windows">
+    <Filter Include="Core\Windows">
       <UniqueIdentifier>{24ef05b7-48d7-484f-b05d-097e98ca88eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Video">
-      <UniqueIdentifier>{c894baef-d956-4476-a4cd-2b56effd8073}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Video\DX9">
-      <UniqueIdentifier>{f2edf4c2-44e8-4ca2-93fc-4c3dfdcf556d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\IO">
+    <Filter Include="Core\IO">
       <UniqueIdentifier>{501cd357-7662-4db0-a5e7-cabf1b365b18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\GUI">
+    <Filter Include="Core\GUI">
       <UniqueIdentifier>{8522d3a2-660c-46d2-a695-f087e33646dc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Video\Effects">
-      <UniqueIdentifier>{e831d501-35e8-4d45-9ce5-ac244eeae6c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Resources">
-      <UniqueIdentifier>{d02556fe-cbe7-45b8-8d3b-cf3769e2a1cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Video\Loaders">
-      <UniqueIdentifier>{648405ac-6d52-4d18-b445-3f085f0e906c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Math">
+    <Filter Include="Core\Math">
       <UniqueIdentifier>{17085e56-69f0-40d4-96f5-daf548940985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Reflection">
+      <UniqueIdentifier>{267ea074-1456-4759-a857-e2558ec0d069}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Video">
+      <UniqueIdentifier>{eb0601fc-5cf7-4dcb-a1f5-5e4bea5607cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Video\Loaders">
+      <UniqueIdentifier>{2d7b0878-9645-4be1-8c66-d07ee7f62e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Video\Effects">
+      <UniqueIdentifier>{78480b9b-6677-48ff-be94-c32aecf71785}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Video\DX9">
+      <UniqueIdentifier>{6973d5c1-ff71-4604-b1b8-49219a14e216}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{b6fc0f15-a59c-4786-85ff-5c86607e2851}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\UUT\Core\Object.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\String.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Windows\Application.cpp">
-      <Filter>Sources\Windows</Filter>
+      <Filter>Core\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Windows\Window.cpp">
-      <Filter>Sources\Windows</Filter>
+      <Filter>Core\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\HashString.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Vector2.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\IntVector2.cpp">
-      <Filter>Sources\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Image.cpp">
-      <Filter>Sources\Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Renderer.cpp">
-      <Filter>Sources\Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Texture.cpp">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\RefCounted.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Color32.cpp">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Timer.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Engine.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Color.cpp">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Math.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Debug.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\IO\Input.cpp">
-      <Filter>Sources\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Texture2D.cpp">
-      <Filter>Sources\Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9Renderer.cpp">
-      <Filter>Sources\Video\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9Texture2D.cpp">
-      <Filter>Sources\Video\DX9</Filter>
+      <Filter>Core\IO</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\IntRect.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Rect.cpp">
-      <Filter>Sources\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\IndexBuffer.cpp">
-      <Filter>Sources\Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\VertexBuffer.cpp">
-      <Filter>Sources\Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9IndexBuffer.cpp">
-      <Filter>Sources\Video\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9VertexBuffer.cpp">
-      <Filter>Sources\Video\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\VertexDeclaration.cpp">
-      <Filter>Sources\Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\DX9\DX9VertexDeclaration.cpp">
-      <Filter>Sources\Video\DX9</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Matrix4.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Vector3.cpp">
-      <Filter>Sources\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Effects\Plasma.cpp">
-      <Filter>Sources\Video\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Graphics.cpp">
-      <Filter>Sources\Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Vertex.cpp">
-      <Filter>Sources\Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Geometry.cpp">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Random.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Quaternion.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Plane.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Ray3.cpp">
-      <Filter>Sources\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\BufferObject.cpp">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Degree.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Radian.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Vector4.cpp">
-      <Filter>Sources\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\FreeCamera.cpp">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\IO\File.cpp">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\IO\FileStream.cpp">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\IO\MemoryStream.cpp">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\IO\Path.cpp">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\IO\Stream.cpp">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\IO\Directory.cpp">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\IO\TextReader.cpp">
-      <Filter>Sources\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\RenderState.cpp">
-      <Filter>Sources\Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Resources\Resource.cpp">
-      <Filter>Sources\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Resources\ResourceLoader.cpp">
-      <Filter>Sources\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Resources\ResourceCache.cpp">
-      <Filter>Sources\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Loaders\Texture2DLoader.cpp">
-      <Filter>Sources\Video\Loaders</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Sprite.cpp">
-      <Filter>Sources\Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Viewport.cpp">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core\IO</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\IntVector3.cpp">
-      <Filter>Sources\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Type.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\ObjectFactory.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Context.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Module.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Video\Camera.cpp">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Plugin.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Platform.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\GUI\DebugGUI.cpp">
-      <Filter>Sources\GUI</Filter>
+      <Filter>Core\GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Time.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Attribute.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\AttributeUsage.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Enum.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\CorePlugin.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Reflection\Type.cpp">
+      <Filter>Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\BufferObject.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Camera.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Color.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Color32.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\FreeCamera.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Geometry.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Graphics.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Image.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\IndexBuffer.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Renderer.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\RenderState.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Sprite.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Texture.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Texture2D.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Vertex.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\VertexBuffer.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\VertexDeclaration.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\VideoPlugin.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Viewport.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Loaders\Texture2DLoader.cpp">
+      <Filter>Video\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\Effects\Plasma.cpp">
+      <Filter>Video\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\DX9\DX9IndexBuffer.cpp">
+      <Filter>Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\DX9\DX9Plugin.cpp">
+      <Filter>Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\DX9\DX9Renderer.cpp">
+      <Filter>Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\DX9\DX9Texture2D.cpp">
+      <Filter>Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\DX9\DX9VertexBuffer.cpp">
+      <Filter>Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Video\DX9\DX9VertexDeclaration.cpp">
+      <Filter>Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Resources\Resource.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Resources\ResourceCache.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Resources\ResourceLoader.cpp">
+      <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\UUT\Core\Object.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Collections\Array.h">
-      <Filter>Sources\Collections</Filter>
+      <Filter>Core\Collections</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Collections\Dictionary.h">
-      <Filter>Sources\Collections</Filter>
+      <Filter>Core\Collections</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Collections\List.h">
-      <Filter>Sources\Collections</Filter>
+      <Filter>Core\Collections</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\String.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Windows\Application.h">
-      <Filter>Sources\Windows</Filter>
+      <Filter>Core\Windows</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Windows\Window.h">
-      <Filter>Sources\Windows</Filter>
+      <Filter>Core\Windows</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\HashString.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\IEquatable.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Vector2.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\IntVector2.h">
-      <Filter>Sources\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Image.h">
-      <Filter>Sources\Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Renderer.h">
-      <Filter>Sources\Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Texture.h">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Ptr.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\RefCounted.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Color32.h">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Timer.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Engine.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Color.h">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Math.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Debug.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\IO\Input.h">
-      <Filter>Sources\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Texture2D.h">
-      <Filter>Sources\Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9Defs.h">
-      <Filter>Sources\Video\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9Renderer.h">
-      <Filter>Sources\Video\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9Texture2D.h">
-      <Filter>Sources\Video\DX9</Filter>
+      <Filter>Core\IO</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\IntRect.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Rect.h">
-      <Filter>Sources\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\IndexBuffer.h">
-      <Filter>Sources\Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\VertexBuffer.h">
-      <Filter>Sources\Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9IndexBuffer.h">
-      <Filter>Sources\Video\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9VertexBuffer.h">
-      <Filter>Sources\Video\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\VertexDeclaration.h">
-      <Filter>Sources\Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\DX9\DX9VertexDeclaration.h">
-      <Filter>Sources\Video\DX9</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Matrix4.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Vector3.h">
-      <Filter>Sources\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Effects\Plasma.h">
-      <Filter>Sources\Video\Effects</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Collections\IComparer.h">
-      <Filter>Sources\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Graphics.h">
-      <Filter>Sources\Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Vertex.h">
-      <Filter>Sources\Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Geometry.h">
-      <Filter>Sources\Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Topology.h">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core\Collections</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Random.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Quaternion.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Plane.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Ray3.h">
-      <Filter>Sources\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\BufferObject.h">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Degree.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Radian.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Vector4.h">
-      <Filter>Sources\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\FreeCamera.h">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\IO\File.h">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\IO\FileMode.h">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\IO\FileStream.h">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\IO\MemoryStream.h">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\IO\Path.h">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\IO\Stream.h">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\IO\Directory.h">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\IO\TextReader.h">
-      <Filter>Sources\IO</Filter>
+      <Filter>Core\IO</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Assert.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\RenderState.h">
-      <Filter>Sources\Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Resources\Resource.h">
-      <Filter>Sources\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Resources\ResourceLoader.h">
-      <Filter>Sources\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Resources\ResourceCache.h">
-      <Filter>Sources\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Loaders\Texture2DLoader.h">
-      <Filter>Sources\Video\Loaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Sprite.h">
-      <Filter>Sources\Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Viewport.h">
-      <Filter>Sources\Video</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\IntVector3.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Platform.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Collections\BitArray.h">
-      <Filter>Sources\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Type.h">
-      <Filter>Sources</Filter>
+      <Filter>Core\Collections</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\ObjectFactory.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Context.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Module.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Video\Camera.h">
-      <Filter>Sources\Math</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Collections\HashSet.h">
-      <Filter>Sources\Collections</Filter>
+      <Filter>Core\Collections</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Plugin.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\GUI\DebugGUI.h">
-      <Filter>Sources\GUI</Filter>
+      <Filter>Core\GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Time.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Attribute.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\AttributeUsage.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Enum.h">
-      <Filter>Sources</Filter>
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\CorePlugin.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Reflection\Type.h">
+      <Filter>Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\BufferObject.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Camera.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Color.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Color32.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\FreeCamera.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Geometry.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Graphics.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Image.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\IndexBuffer.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Renderer.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\RenderState.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Sprite.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Texture.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Texture2D.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Topology.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Vertex.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\VertexBuffer.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\VertexDeclaration.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\VideoPlugin.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Viewport.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Loaders\Texture2DLoader.h">
+      <Filter>Video\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\Effects\Plasma.h">
+      <Filter>Video\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\DX9\DX9Defs.h">
+      <Filter>Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\DX9\DX9IndexBuffer.h">
+      <Filter>Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\DX9\DX9Plugin.h">
+      <Filter>Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\DX9\DX9Renderer.h">
+      <Filter>Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\DX9\DX9Texture2D.h">
+      <Filter>Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\DX9\DX9VertexBuffer.h">
+      <Filter>Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Video\DX9\DX9VertexDeclaration.h">
+      <Filter>Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Resources\Resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Resources\ResourceCache.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Resources\ResourceLoader.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

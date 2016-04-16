@@ -1,5 +1,5 @@
 #pragma once
-#include <Core/Video/Texture2D.h>
+#include <Video/Texture2D.h>
 #include "DX9Defs.h"
 
 namespace uut

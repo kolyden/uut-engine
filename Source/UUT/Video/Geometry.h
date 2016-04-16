@@ -3,8 +3,8 @@
 #include <Core/Collections/List.h>
 #include <Core/Math/Vector3.h>
 #include <Core/Math/Vector2.h>
-#include <Core/Video/Color.h>
-#include <Core/Video/Color32.h>
+#include <Video/Color.h>
+#include <Video/Color32.h>
 
 namespace uut
 {

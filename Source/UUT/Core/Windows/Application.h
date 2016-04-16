@@ -1,7 +1,7 @@
 #pragma once
 #include <Core/Engine.h>
 #include "Core/Windows/Window.h"
-#include <Core/Video/Renderer.h>
+#include <Video/Renderer.h>
 #include <Core/IO/Input.h>
 
 namespace uut

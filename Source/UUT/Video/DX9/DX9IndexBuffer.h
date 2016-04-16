@@ -1,6 +1,6 @@
 #pragma once
 #include "DX9Defs.h"
-#include <Core/Video/IndexBuffer.h>
+#include <Video/IndexBuffer.h>
 
 namespace uut
 {

@@ -1,6 +1,6 @@
 #include "Window.h"
 #include <Core/Debug.h>
-#include <Core/Video/Image.h>
+#include <Video/Image.h>
 #include "SDL2/SDL.h"
 
 namespace uut

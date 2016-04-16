@@ -54,6 +54,9 @@ namespace uut
 
 		static const Vector3 Zero;   // ( 0,  0,  0)
 		static const Vector3 One;    // ( 1,  1,  1)
+		static const Vector3 AxisX;  // ( 1,  0,  0)
+		static const Vector3 AxisY;  // ( 0,  1,  0)
+		static const Vector3 AxisZ;  // ( 0,  0,  1)
 		static const Vector3 Left;   // (-1,  0,  0)
 		static const Vector3 Right;  // ( 1,  0,  0)
 		static const Vector3 Up;     // ( 0,  1,  0)

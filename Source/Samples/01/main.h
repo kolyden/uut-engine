@@ -1,9 +1,8 @@
 #pragma once
-#include "Core/Windows/Application.h"
-#include "Core/Timer.h"
-#include "Core/GUI/DebugGUI.h"
-#include "Core/Video/Effects/Plasma.h"
-#include <Core/Video/Graphics.h>
+#include <Core/Windows/Application.h>
+#include <Core/GUI/DebugGUI.h>
+#include <Video/Graphics.h>
+#include <Video/Effects/Plasma.h>
 
 #pragma comment(lib, "SDL2/SDL2.lib")
 #pragma comment(lib, "SDL2/SDL2main.lib")

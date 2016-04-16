@@ -1,4 +1,9 @@
 #include "Engine.h"
+#include "Time.h"
+#include "Context.h"
+#include "CorePlugin.h"
+#include "Video/VideoPlugin.h"
+#include "Video/DX9/DX9Plugin.h"
 
 namespace uut
 {
@@ -7,16 +12,16 @@ namespace uut
 
 	Engine::Engine()
 		: _inited(false)
-		, _quited(false)
+		, _exiting(false)
 	{
 	}
 
 	Engine::~Engine()
 	{
-		Done();
+		DoExit();
 	}
 
-	bool Engine::Init()
+	bool Engine::Initialize()
 	{
 		if (_inited)
 			return true;
@@ -25,19 +30,17 @@ namespace uut
 			return false;
 
 		_inited = true;
+		Context::AddPlugin(new CorePlugin());
+		Context::AddPlugin(new VideoPlugin());
+		Context::AddPlugin(new DX9Plugin());
+
+		Context::Init();
+
+		Time::Initialize();
 		return true;
 	}
 
-	void Engine::Done()
-	{
-		if (!_inited)
-			return;
-
-		SDL_Quit();
-		_inited = false;
-	}
-
-	bool Engine::Run()
+	void Engine::RunFrame()
 	{
 		SDL_Event evt;
 		while (SDL_PollEvent(&evt))
@@ -45,11 +48,26 @@ namespace uut
 			switch (evt.type)
 			{
 			case SDL_QUIT:
-				_quited = true;
+				_exiting = true;
 				break;
 			}
 		}
 
-		return !_quited;
+		Time::BeginFrame();
+	}
+
+	void Engine::Exit()
+	{
+		_exiting = true;
+	}
+
+	//////////////////////////////////////////////////////////////////////////////
+	void Engine::DoExit()
+	{
+		if (!_inited)
+			return;
+
+		_inited = false;
+		SDL_Quit();
 	}
 }

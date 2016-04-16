@@ -1,7 +1,8 @@
 #pragma once
-#include "Core/IEquatable.h"
-#include "Core/String.h"
-#include "Type.h"
+#include <Core/IEquatable.h>
+#include <Core/String.h>
+#include <Core/Reflection/Type.h>
+#include "RefCounted.h"
 
 namespace uut
 {

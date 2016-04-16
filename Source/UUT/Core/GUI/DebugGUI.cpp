@@ -1,10 +1,10 @@
 #include "DebugGUI.h"
 #include <Core/IO/Input.h>
-#include <Core/Video/Renderer.h>
-#include <Core/Video/Texture.h>
-#include <Core/Video/Vertex.h>
-#include <Core/Video/VertexBuffer.h>
-#include <Core/Video/IndexBuffer.h>
+#include <Video/Renderer.h>
+#include <Video/Texture.h>
+#include <Video/Vertex.h>
+#include <Video/VertexBuffer.h>
+#include <Video/IndexBuffer.h>
 #include <IMGUI/imgui.h>
 #include <SDL2/SDL.h>
 

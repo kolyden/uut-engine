@@ -1,5 +1,5 @@
 #pragma once
-#include <Core/Resources/ResourceLoader.h>
+#include <Resources/ResourceLoader.h>
 
 namespace uut
 {

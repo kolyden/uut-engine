@@ -1,7 +1,7 @@
 #pragma once
 #include <Core/Object.h>
 #include <Core/Math/IntVector2.h>
-#include <Core/Video/Color32.h>
+#include <Video/Color32.h>
 
 namespace uut
 {

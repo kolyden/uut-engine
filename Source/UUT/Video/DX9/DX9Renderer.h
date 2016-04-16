@@ -1,7 +1,7 @@
 #pragma once
-#include <Core/Video/Renderer.h>
-#include <Core/Video/RenderState.h>
-#include <Core/Video/Viewport.h>
+#include <Video/Renderer.h>
+#include <Video/RenderState.h>
+#include <Video/Viewport.h>
 #include "DX9Defs.h"
 
 namespace uut

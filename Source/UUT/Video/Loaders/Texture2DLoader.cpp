@@ -2,8 +2,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "STB/stb_image.h"
 #include <Core/IO/Stream.h>
-#include <Core/Video/Renderer.h>
-#include <Core/Video/Texture2D.h>
+#include <Video/Renderer.h>
+#include <Video/Texture2D.h>
 
 namespace uut
 {

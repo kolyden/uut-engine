@@ -1,6 +1,6 @@
 #include "Application.h"
-#include "Core/Video/DX9/DX9Renderer.h"
 #include <Core/Timer.h>
+#include <Video/DX9/DX9Renderer.h>
 
 namespace uut
 {
@@ -17,7 +17,7 @@ namespace uut
 	void Application::Run()
 	{
 		_engine = new Engine();
-		_engine->Init();
+		_engine->Initialize();
 
 		_window = new Window();
 		_window->SetTitle("Sample 01");
@@ -40,9 +40,11 @@ namespace uut
 		int frameCount = 0;
 
 		timer.Start();
-		while (_engine->Run())
+		while (!_engine->IsExiting())
 		{
+			_engine->RunFrame();
 			_input->UpdateState();
+
 			OnFrame();
 			_renderer->Present();
 

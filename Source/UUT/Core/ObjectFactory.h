@@ -1,6 +1,5 @@
 #pragma once
-#include "Ptr.h"
-#include "Type.h"
+#include <Core/Ptr.h>
 
 namespace uut
 {

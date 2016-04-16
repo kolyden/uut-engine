@@ -1,11 +1,10 @@
 #include "Type.h"
-#include "Object.h"
-#include "ObjectFactory.h"
-#include "Context.h"
+#include <Core/Context.h>
+#include <Core/Object.h>
+#include <Core/ObjectFactory.h>
 
 namespace uut
 {
-	
 	Type::Type(const HashString& name, const Type* base, REGFUNC regfunc)
 		: _name(name)
 		, _base(nullptr)
@@ -20,6 +19,11 @@ namespace uut
 	const HashString& Type::GetName() const
 	{
 		return _name;
+	}
+
+	String Type::ToString() const
+	{
+		return GetName().GetData();
 	}
 
 	const Type* Type::GetBase() const

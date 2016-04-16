@@ -1,6 +1,7 @@
 #pragma once
-#include "HashString.h"
-#include "Ptr.h"
+#include <Core/HashString.h>
+#include <Core/String.h>
+#include <Core/Ptr.h>
 
 namespace uut
 {
@@ -16,6 +17,7 @@ namespace uut
 		virtual ~Type();
 
 		const HashString& GetName() const;
+		String ToString() const;
 
 		const Type* GetBase() const;
 		ObjectFactory* GetFactory() const;
@@ -37,6 +39,8 @@ namespace uut
 	{
 		return &C::GetTypeInternal();
 	}
+
+#define UUT_TYPE(type) typeof<type>()
 
 #define UUT_OBJECT(typeName, parentType) \
 	public: \

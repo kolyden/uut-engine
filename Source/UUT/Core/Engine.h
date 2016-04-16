@@ -1,6 +1,5 @@
 #pragma once
 #include "Object.h"
-#include "SDL2/SDL.h"
 
 namespace uut
 {
@@ -11,13 +10,18 @@ namespace uut
 		Engine();
 		virtual ~Engine();
 
-		bool Init();
-		void Done();
+		bool Initialize();
+		void RunFrame();
 
-		bool Run();
+		void Exit();
+
+		bool IsInitialized() const { return _inited; }
+		bool IsExiting() const { return _exiting; }
 
 	protected:
 		bool _inited;
-		bool _quited;
+		bool _exiting;
+
+		void DoExit();
 	};
 }

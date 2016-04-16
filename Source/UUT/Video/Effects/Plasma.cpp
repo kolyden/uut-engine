@@ -1,6 +1,6 @@
 #include "Plasma.h"
 #include <Core/Math/Math.h>
-#include <Core/Video/Texture2D.h>
+#include <Video/Texture2D.h>
 
 namespace uut
 {
