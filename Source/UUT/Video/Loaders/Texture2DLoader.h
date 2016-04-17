@@ -13,6 +13,7 @@ namespace uut
 		virtual ~Texture2DLoader();
 
 		SharedPtr<Resource> Load(Stream* stream) override;
+		const Type* GetResourceType() const override;
 
 	protected:
 		SharedPtr<Renderer> _renderer;

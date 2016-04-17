@@ -1,8 +1,8 @@
 #pragma once
 #include <Core/Engine.h>
-#include "Core/Windows/Window.h"
-#include <Video/Renderer.h>
+#include <Core/Windows/Window.h>
 #include <Core/IO/Input.h>
+#include <Video/Renderer.h>
 
 namespace uut
 {

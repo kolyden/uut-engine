@@ -1,7 +1,7 @@
 #pragma once
-#include "Camera.h"
 #include <Core/Math/Vector3.h>
 #include <Core/Math/Radian.h>
+#include <Video/Camera.h>
 
 namespace uut
 {

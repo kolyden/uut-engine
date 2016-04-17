@@ -1,8 +1,8 @@
 #pragma once
-#include "HashString.h"
+#include <Core/HashString.h>
 #include <Core/Collections/Dictionary.h>
 #include <Core/Collections/HashSet.h>
-#include "Ptr.h"
+#include <Core/Ptr.h>
 
 namespace uut
 {

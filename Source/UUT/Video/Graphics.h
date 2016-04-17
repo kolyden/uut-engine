@@ -1,9 +1,9 @@
 #pragma once
 #include <Core/Math/Matrix4.h>
+#include <Core/Module.h>
 #include "Topology.h"
 #include "Color32.h"
 #include "RenderState.h"
-#include <Core/Module.h>
 
 namespace uut
 {

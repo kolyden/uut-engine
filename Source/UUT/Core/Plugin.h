@@ -11,9 +11,7 @@ namespace uut
 		PluginVersion(uint16_t _major, uint16_t _minor);
 
 		bool operator ==(const PluginVersion& version) const;
-
 		bool operator != (const PluginVersion& version) const;
-
 		bool operator <(const PluginVersion& version) const;
 
 		String ToString() const;

@@ -1,5 +1,5 @@
 #pragma once
-#include "BufferObject.h"
+#include <Video/BufferObject.h>
 
 namespace uut
 {

@@ -1,6 +1,6 @@
 #pragma once
-#include "Object.h"
-#include "Collections/Dictionary.h"
+#include <Core/Object.h>
+#include <Core/Collections/Dictionary.h>
 
 namespace uut
 {
