@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "Collections/List.h"
+#include <Core/Collections/List.h>
 
 namespace uut
 {
@@ -58,6 +58,7 @@ namespace uut
 		bool Equals(const String& str, StringComparison comparisonType) const;
 
 		int Count() const { return static_cast<int>(_data.size()); }
+		bool IsEmpty() const { return _data.empty(); }
 
 		operator const char*() const { return _data.c_str(); }
 		const char* GetData() const { return _data.c_str(); }
@@ -88,7 +89,7 @@ namespace uut
 		CIterator Begin() const { return _data.begin(); }
 		CIterator End() const { return _data.begin(); }
 
-		static const String EMPTY;
+		static const String Empty;
 
 	protected:
 		std::string _data;

@@ -3,7 +3,7 @@
 
 namespace uut
 {
-	const String String::EMPTY;
+	const String String::Empty;
 
 	String::String()
 	{
@@ -310,7 +310,7 @@ namespace uut
 	String String::Join(const List<String>& list, const String& str)
 	{
 		if (list.IsEmpty())
-			return EMPTY;
+			return Empty;
 
 		if (list.Count() == 1)
 			return list[0];

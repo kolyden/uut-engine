@@ -71,10 +71,10 @@ namespace uut
 	{
 		const int count = _components.Count();
 		if (count == 0)
-			return String::EMPTY;
+			return String::Empty;
 
 		const int pos = _components[count - 1].LastIndexOf(".");
-		if (pos < 0) return String::EMPTY;
+		if (pos < 0) return String::Empty;
 
 		return _components[count - 1].Substring(pos + 1);
 	}
@@ -103,13 +103,13 @@ namespace uut
 	const String& Path::GetFileName() const
 	{
 		const int count = _components.Count();
-		return count > 0 ? _components[count - 1] : String::EMPTY;
+		return count > 0 ? _components[count - 1] : String::Empty;
 	}
 
 	String Path::GetFileNameWithoutExtension() const
 	{
 		if (IsEmpty())
-			return String::EMPTY;
+			return String::Empty;
 
 		auto name = _components[_components.Count() - 1];
 		const int pos = name.LastIndexOf(".");

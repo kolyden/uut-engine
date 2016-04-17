@@ -2,13 +2,16 @@
 #include <Core/Context.h>
 #include <Core/Object.h>
 #include <Core/ObjectFactory.h>
+#include "MemberInfo.h"
+#include "FiledInfo.h"
 
 namespace uut
 {
-	Type::Type(const HashString& name, const Type* base, REGFUNC regfunc)
+	Type::Type(TypeInfo info, const HashString& name, const Type* base, REGFUNC regfunc)
 		: _name(name)
 		, _base(nullptr)
 		, _regfunc(regfunc)
+		, _info(info)
 	{
 		if (base != nullptr && base != this)
 			_base = base;
@@ -26,7 +29,44 @@ namespace uut
 		return GetName().GetData();
 	}
 
-	const Type* Type::GetBase() const
+	bool Type::IsClass() const
+	{
+		return _info == TypeInfo::Class;
+	}
+
+	bool Type::IsMethod() const
+	{
+		return _info == TypeInfo::Method;
+	}
+
+	bool Type::IsEnum() const
+	{
+		return _info == TypeInfo::Enum;
+	}
+
+	const List<const MemberInfo*>& Type::GetMembers() const
+	{
+		return _members;
+	}
+
+	List<const FieldInfo*> Type::GetFields() const
+	{
+		List<const FieldInfo*> list;
+		for (uint i = 0; i < _members.Count(); i++)
+		{
+			if (_members[i]->GetMemberType() == MemberType::Field)
+				list << static_cast<const FieldInfo*>(_members[i]);
+		}
+
+		return list;
+	}
+
+	TypeInfo Type::GetInfo() const
+	{
+		return _info;
+	}
+
+	const Type* Type::GetBaseType() const
 	{
 		return _base;
 	}

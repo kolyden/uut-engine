@@ -61,12 +61,12 @@ namespace uut
 		if (type == nullptr || _types.Contains(type->GetName()))
 			return;
 
-		auto base = type->GetBase();
+		auto base = type->GetBaseType();
 		RegisterType(base);
 
 		_types.Add(type->GetName(), type);
 
-		for (; base != nullptr; base = base->GetBase())
+		for (; base != nullptr; base = base->GetBaseType())
 			_derived[base].Add(type);
 	}
 

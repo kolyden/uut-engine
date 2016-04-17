@@ -9,7 +9,7 @@ namespace uut
 	static String g_asterisk = "*";
 
 	static void FindEnumerate(const String& path, const String& searchMask, bool recursive,
-		std::function<bool(const String& relPath, const WIN32_FIND_DATAA&)> func, const String& pathAdd = String::EMPTY)
+		std::function<bool(const String& relPath, const WIN32_FIND_DATAA&)> func, const String& pathAdd = String::Empty)
 	{
 		WIN32_FIND_DATAA findData;
 		HANDLE hFind = ::FindFirstFileA(path + "/" + searchMask, &findData);

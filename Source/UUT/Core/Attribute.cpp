@@ -27,7 +27,7 @@ namespace uut
 		if (type == nullptr)
 			return nullptr;
 
-		for (; type != nullptr; type = inherit ? type->GetBase() : nullptr)
+		for (; type != nullptr; type = inherit ? type->GetBaseType() : nullptr)
 		{
 			auto it = _attributes.Find(type);
 			if (it == _attributes.End())
@@ -49,7 +49,7 @@ namespace uut
 		if (type == nullptr)
 			return;
 
-		for (; type != nullptr; type = inherit ? type->GetBase() : nullptr)
+		for (; type != nullptr; type = inherit ? type->GetBaseType() : nullptr)
 		{
 			auto it = _attributes.Find(type);
 			if (it == _attributes.End())
@@ -90,7 +90,7 @@ namespace uut
 
 	AttributeUsage* Attribute::GetAttributeUsage(const Type* type)
 	{
-		for (; type != nullptr; type = type->GetBase())
+		for (; type != nullptr; type = type->GetBaseType())
 		{
 			auto it = _attributeUsages.Find(type);
 			if (it != _attributeUsages.End())

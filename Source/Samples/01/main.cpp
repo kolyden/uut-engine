@@ -4,6 +4,8 @@
 #include <IMGUI/imgui.h>
 #include <Core/Context.h>
 #include <Core/Plugin.h>
+#include <Core/Reflection/FiledInfo.h>
+#include <Core/Variant.h>
 
 namespace uut
 {
@@ -22,6 +24,19 @@ namespace uut
 		_graphics->SetProjection(Graphics::PM_2D);
 
 		_timer.Start();
+
+		Variant var;
+
+		auto type = typeof<TestFlag>();
+		if (type->IsEnum())
+		{
+			auto& name = type->GetName();
+			auto fields = type->GetFields();
+			for (auto& it : fields)
+			{
+				
+			}
+		}
 	}
 
 	static bool show_test_window = false;
