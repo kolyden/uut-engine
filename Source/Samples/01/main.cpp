@@ -25,7 +25,10 @@ namespace uut
 
 		_timer.Start();
 
-		Variant var;
+		Variant var1(42);
+		Variant var2("Hello World!");
+		Variant var3(_renderer);
+		Variant var4(12.45f);
 
 		auto type = typeof<TestFlag>();
 		if (type->IsEnum())
@@ -67,13 +70,34 @@ namespace uut
 			ImGui::Separator();
 			if (ImGui::CollapsingHeader("Types"))
 			{
+				static const Type* current = nullptr;
+
+				ImGui::PushItemWidth(150);
 				ImGui::ListBoxHeader("##types");
 				for (auto& it : Context::GetTypes())
 				{
 					auto type = it.second;
-					ImGui::Selectable(type->ToString());
+					if (ImGui::Selectable(type->ToString(), type == current))
+						current = type;
 				}
 				ImGui::ListBoxFooter();
+				if (current != nullptr)
+				{
+					ImGui::SameLine();
+					ImGui::BeginGroup();
+
+					ImGui::Text(current->GetName().GetData());
+					auto base_type = current->GetBaseType();
+					if (base_type != nullptr)
+					{
+						ImGui::SameLine();
+						if (ImGui::Selectable(String::Format("(%s)", base_type->GetName().GetData())))
+							current = base_type;
+					}
+					ImGui::Separator();
+
+					ImGui::EndGroup();
+				}
 			}
 		}
 		ImGui::End();

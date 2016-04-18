@@ -1,7 +1,7 @@
 #pragma once
-#include "Platform.h"
-#include "String.h"
-#include "Ptr.h"
+#include <Core/Collections/List.h>
+#include <Core/Ptr.h>
+#include <Core/String.h>
 
 namespace uut
 {
@@ -11,9 +11,12 @@ namespace uut
 	{
 		Empty,
 		Boolean,
-		Numeric,
+		Integer,
+		Real,
+		Pointer,
 		String,
 		List,
+		Struct,
 		Object,
 	};
 
@@ -21,21 +24,28 @@ namespace uut
 	{
 	public:
 		Variant();
+		Variant(const Variant& other);
+		explicit Variant(bool value);
+		explicit Variant(int value);
+		explicit Variant(float value);
+		explicit Variant(const String& value);
+		explicit Variant(const List<Variant>& value);
+		explicit Variant(Object* object);
 		~Variant();
 
 		void Clear();
+
+		Variant& operator=(const Variant& other);
 
 		VariantType GetVariantType() const { return _type; }
 
 	protected:
 		VariantType _type;
-		union UnionType
+		union
 		{
 			bool _bool;
-			int64_t _numeric;
+			int64_t _int;
 			double _real;
-			int _numericArr[4];
-			float _realArr[4];
 			String _str;
 			List<Variant> _list;
 			SharedPtr<Object> _shared;
