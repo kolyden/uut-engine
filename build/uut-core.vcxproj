@@ -68,6 +68,7 @@
     <ClCompile Include="..\Source\UUT\Core\Time.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Timer.cpp" />
     <ClCompile Include="..\Source\UUT\Core\TimeSpan .cpp" />
+    <ClCompile Include="..\Source\UUT\Core\ValueType.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Variant.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Windows\Application.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Windows\Window.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="..\Source\UUT\Core\Math\Vector3.h" />
     <ClInclude Include="..\Source\UUT\Core\Math\Vector4.h" />
     <ClInclude Include="..\Source\UUT\Core\Module.h" />
+    <ClInclude Include="..\Source\UUT\Core\Numeric.h" />
     <ClInclude Include="..\Source\UUT\Core\Object.h" />
     <ClInclude Include="..\Source\UUT\Core\ObjectFactory.h" />
     <ClInclude Include="..\Source\UUT\Core\Platform.h" />
@@ -162,6 +164,7 @@
     <ClInclude Include="..\Source\UUT\Core\Time.h" />
     <ClInclude Include="..\Source\UUT\Core\Timer.h" />
     <ClInclude Include="..\Source\UUT\Core\TimeSpan .h" />
+    <ClInclude Include="..\Source\UUT\Core\ValueType.h" />
     <ClInclude Include="..\Source\UUT\Core\Variant.h" />
     <ClInclude Include="..\Source\UUT\Core\Windows\Application.h" />
     <ClInclude Include="..\Source\UUT\Core\Windows\Window.h" />

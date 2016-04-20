@@ -59,7 +59,7 @@ namespace uut
 	public: \
 	typedef typeName ClassName; \
 	typedef parentType Super; \
-	virtual const uut::Type* GetType() const; \
+	virtual const uut::Type* GetType() const { return &GetTypeInternal(); } \
 	private: \
 	static void _RegisterInternal(); \
 	static uut::Type& GetTypeInternal(); \
@@ -67,7 +67,6 @@ namespace uut
 
 #define UUT_OBJECT_IMPLEMENT(type) \
 	uut::Type& type::GetTypeInternal() \
-	{ static uut::Type t(TypeInfo::Class, #type, nullptr, &type::_RegisterInternal); return t; } \
-	const uut::Type* type::GetType() const { return &GetTypeInternal(); } \
+	{ static uut::Type t(TypeInfo::Class, #type, typeof<Super>(), &type::_RegisterInternal); return t; } \
 	void type::_RegisterInternal()
 }
