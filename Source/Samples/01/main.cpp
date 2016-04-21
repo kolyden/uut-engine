@@ -87,10 +87,15 @@ namespace uut
 					ImGui::BeginGroup();
 
 					ImGui::Text(current->GetName().GetData());
-					auto baseType = current->GetBaseType();
+					auto base_type = current->GetBaseType();
+					if (base_type != nullptr)
+					{
+						ImGui::SameLine();
+						if (ImGui::Selectable(String::Format("(%s)", base_type->GetName().GetData())))
+							current = base_type;
+					}
 					ImGui::Separator();
-					for (; baseType != nullptr; baseType = baseType->GetBaseType())
-						ImGui::Text(baseType->GetName().GetData());
+
 					ImGui::EndGroup();
 				}
 			}

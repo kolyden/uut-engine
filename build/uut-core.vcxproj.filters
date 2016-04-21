@@ -285,9 +285,6 @@
     <ClCompile Include="..\Source\UUT\Core\Reflection\MethodInfo.cpp">
       <Filter>Core\Reflection</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\ValueType.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\UUT\Core\Object.h">
@@ -571,12 +568,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Reflection\MethodInfo.h">
       <Filter>Core\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Numeric.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\ValueType.h">
-      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
