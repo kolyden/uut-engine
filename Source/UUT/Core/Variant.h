@@ -3,7 +3,6 @@
 #include <Core/Reflection/Type.h>
 #include <Core/ValueType.h>
 #include <Core/Object.h>
-#include <Core/String.h>
 
 namespace uut
 {
@@ -33,13 +32,13 @@ namespace uut
 			SetObject(typeof<T>(), value);
 		}
 
-		template<typename T, class = typename std::enable_if<std::is_base_of<Object, T>::value>::type>
+		template<typename T>
 		explicit Variant(SharedPtr<T>& value)
 		{
 			SetObject(typeof<T>(), value);
 		}
 
-		template<typename T, class = typename std::enable_if<std::is_base_of<Object, T>::value>::type>
+		template<typename T>
 		explicit Variant(WeakPtr<T>& value)
 		{
 			SetObject(typeof<T>(), value);
@@ -50,8 +49,8 @@ namespace uut
 		void Clear();
 		bool IsEmpty() const { return _dataType == nullptr; }
 
-		bool GetStruct(const Type* type, ValueType& value) const;
-		template<class C>bool GetStruct(C& value) const { return GetStruct(typeof<C>(), value); }
+		const ValueType* GetStruct(const Type* type) const;
+		template<class C>const C* GetStruct() const { return static_cast<const C*>(GetStruct(typeof<C>())); }
 
 		Object* GetObject(const Type* type) const;
 		template<class C>C* GetObject() const { return static_cast<C*>(GetObject(typeof<C>())); }

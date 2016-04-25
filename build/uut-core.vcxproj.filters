@@ -288,6 +288,9 @@
     <ClCompile Include="..\Source\UUT\Core\Variant.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Boolean.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\UUT\Core\Collections\Array.h">
@@ -579,6 +582,9 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Variant.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Boolean.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>

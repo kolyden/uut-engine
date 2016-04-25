@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\Source\UUT\Core\Attribute.cpp" />
     <ClCompile Include="..\Source\UUT\Core\AttributeUsage.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Boolean.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Context.cpp" />
     <ClCompile Include="..\Source\UUT\Core\CorePlugin.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Debug.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="..\Source\UUT\Core\Assert.h" />
     <ClInclude Include="..\Source\UUT\Core\Attribute.h" />
     <ClInclude Include="..\Source\UUT\Core\AttributeUsage.h" />
+    <ClInclude Include="..\Source\UUT\Core\Boolean.h" />
     <ClInclude Include="..\Source\UUT\Core\Collections\Array.h" />
     <ClInclude Include="..\Source\UUT\Core\Collections\BitArray.h" />
     <ClInclude Include="..\Source\UUT\Core\Collections\Dictionary.h" />

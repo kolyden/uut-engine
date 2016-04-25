@@ -1,5 +1,6 @@
 #include "Variant.h"
 #include "Object.h"
+#include <Core/Boolean.h>
 
 namespace uut
 {
@@ -22,17 +23,15 @@ namespace uut
 		_data.clear();
 	}
 
-	bool Variant::GetStruct(const Type* type, ValueType& value) const
+	const ValueType* Variant::GetStruct(const Type* type) const
 	{
 		if (type == nullptr || _dataType == nullptr)
-			return false;
+			return nullptr;
 
-		if (!_dataType->CanConvert(value.GetType()))
-			return false;
+		if (!_dataType->CanConvert(type))
+			return nullptr;
 
-		auto data = reinterpret_cast<const ValueType*>(_data.data());
-		memcpy(&value, data, _data.size());
-		return true;
+		return reinterpret_cast<const ValueType*>(_data.data());
 	}
 
 	Object* Variant::GetObject(const Type* type) const

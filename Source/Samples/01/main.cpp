@@ -28,8 +28,7 @@ namespace uut
 		Variant var1(Vector2(12.111f, 45.6789f));
 		Variant var2(_texture);
 
-		Vector2 vec;
-		var1.GetStruct(vec);
+		auto vec = var1.GetStruct<Vector2>();
 		auto obj = var2.GetObject<Texture2D>();
 
 		int a = 0;

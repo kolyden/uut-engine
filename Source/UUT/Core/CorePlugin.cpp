@@ -12,6 +12,7 @@
 #include "Attribute.h"
 #include "AttributeUsage.h"
 #include "Numeric.h"
+#include "Boolean.h"
 #include "Engine.h"
 #include "ValueType.h"
 #include "Math/Vector2.h"
@@ -27,6 +28,7 @@ namespace uut
 	{
 		// NUMERIC
 		UUT_REGISTER_OBJECT(ValueType);
+		UUT_REGISTER_OBJECT(Boolean);
 		UUT_REGISTER_NUMERIC(int8_t);
 		UUT_REGISTER_NUMERIC(uint8_t);
 		UUT_REGISTER_NUMERIC(int16_t);
