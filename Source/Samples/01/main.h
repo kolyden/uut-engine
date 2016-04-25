@@ -9,43 +9,6 @@
 
 namespace uut
 {
-	namespace internal
-	{
-		template<typename T>
-		struct EnumImpl
-		{
-		};
-}
-
-	enum class TestFlag
-	{
-		TestA,
-		TestB,
-	};
-	
-	namespace internal
-	{
-		template<>
-		struct EnumImpl<TestFlag>
-		{
-			static void _RegisterInternal()
-			{}
-
-			static Type& GetTypeInternal()
-			{
-				static Type t(TypeInfo::Enum, "TestFlag", nullptr, &_RegisterInternal);
-				return t;
-			}
-		};
-	}
-
-	template<>
-	static const Type* typeof<TestFlag>()
-	{
-		return &internal::EnumImpl<TestFlag>::GetTypeInternal();
-	}
-
-	//////////////////////////////////////////////////////////////////////////////
 	class SampleApp : public Application
 	{
 	public:

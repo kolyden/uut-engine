@@ -4,6 +4,9 @@
 
 namespace uut
 {
+	UUT_STRUCT_IMPLEMENT(Vector2)
+	{}
+
 	const Vector2 Vector2::Zero(0);
 	const Vector2 Vector2::One(1);
 	const Vector2 Vector2::Left(-1, 0);

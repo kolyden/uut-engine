@@ -11,7 +11,10 @@
 #include "Windows/Window.h"
 #include "Attribute.h"
 #include "AttributeUsage.h"
+#include "Numeric.h"
 #include "Engine.h"
+#include "ValueType.h"
+#include "Math/Vector2.h"
 
 namespace uut
 {
@@ -22,12 +25,28 @@ namespace uut
 
 	void CorePlugin::OnRegister()
 	{
+		// NUMERIC
+		UUT_REGISTER_OBJECT(ValueType);
+		UUT_REGISTER_NUMERIC(int8_t);
+		UUT_REGISTER_NUMERIC(uint8_t);
+		UUT_REGISTER_NUMERIC(int16_t);
+		UUT_REGISTER_NUMERIC(uint16_t);
+		UUT_REGISTER_NUMERIC(int32_t);
+		UUT_REGISTER_NUMERIC(uint32_t);
+		UUT_REGISTER_NUMERIC(int64_t);
+		UUT_REGISTER_NUMERIC(uint64_t);
+		UUT_REGISTER_NUMERIC(float);
+		UUT_REGISTER_NUMERIC(double);
+
 		// CORE
 		UUT_REGISTER_OBJECT(Object);
 		UUT_REGISTER_OBJECT(Attribute);
 		UUT_REGISTER_OBJECT(AttributeUsage);
 		UUT_REGISTER_OBJECT(Engine);
 		UUT_REGISTER_OBJECT(Module);
+
+		// Math
+		UUT_REGISTER_OBJECT(Vector2);
 
 		// IO
 		UUT_REGISTER_OBJECT(Stream);

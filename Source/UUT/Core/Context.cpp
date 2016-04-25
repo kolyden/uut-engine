@@ -8,6 +8,7 @@ namespace uut
 {
 	bool Context::_inited = false;
 	Context::PluginList Context::_plugins;
+	Context::TypeInfoDict Context::_typeInfos;
 	Dictionary<HashString, const Type*> Context::_types;
 	Dictionary<const Type*, Context::DerivedSet> Context::_derived;
 	Context::ModuleDict Context::_modules;
@@ -56,18 +57,33 @@ namespace uut
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	void Context::RegisterType(const Type* type)
+	Type* Context::RegisterType(TypeInfo info, const HashString& name, const type_info& typeInfo, const type_info& parentInfo, Type::REGFUNC func)
 	{
-		if (type == nullptr || _types.Contains(type->GetName()))
-			return;
+		if (_typeInfos.Contains(typeInfo))
+			return _typeInfos[typeInfo];
 
-		auto base = type->GetBaseType();
-		RegisterType(base);
+		if (name.IsEmpty())
+			return nullptr;
 
+		const Type* parentType = nullptr;
+		if (parentInfo != typeInfo)
+		{
+			auto it = _typeInfos.Find(parentInfo);
+			if (it == _typeInfos.End())
+			{
+				Debug::LogError("Parent type '%s' not registered", parentInfo.name());
+				return nullptr;
+			}
+			parentType = it->second;
+		}
+
+		auto type = new Type(info, name, parentType, func);
+		_typeInfos[typeInfo] = type;
 		_types.Add(type->GetName(), type);
 
-		for (; base != nullptr; base = base->GetBaseType())
-			_derived[base].Add(type);
+		for (; parentType != nullptr; parentType = parentType->GetBaseType())
+			_derived[parentType].Add(type);
+		return type;
 	}
 
 	const Type* Context::FindType(const HashString& name)

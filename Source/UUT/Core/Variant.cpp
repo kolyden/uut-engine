@@ -5,61 +5,7 @@ namespace uut
 {
 	Variant::Variant()
 		: _type(VariantType::Empty)
-	{
-	}
-
-	Variant::Variant(const Variant& other)
-		: _type(other._type)
-	{
-		switch (other._type)
-		{
-		case VariantType::String:
-			new (&_str) String(other._str);
-			break;
-
-		case VariantType::List:
-			new (&_list) List<Variant>(other._list);
-			break;
-
-		case VariantType::Object:
-			new (&_shared) SharedPtr<Object>(other._shared);
-			break;
-		}
-	}
-
-	Variant::Variant(bool value)
-		: _type(VariantType::Boolean)
-		, _bool(value)
-	{
-	}
-
-	Variant::Variant(int value)
-		: _type(VariantType::Integer)
-		, _int(value)
-	{
-	}
-
-	Variant::Variant(float value)
-		: _type(VariantType::Real)
-		, _real(value)
-	{
-	}
-
-	Variant::Variant(const String& value)
-		: _type(VariantType::String)
-		, _str(value)
-	{
-	}
-
-	Variant::Variant(const List<Variant>& value)
-		: _type(VariantType::List)
-		, _list(value)
-	{
-	}
-
-	Variant::Variant(Object* object)
-		: _type(VariantType::Object)
-		, _shared(object)
+		, _dataType(nullptr)
 	{
 	}
 
@@ -69,47 +15,50 @@ namespace uut
 	}
 
 	void Variant::Clear()
-	{
-		switch (_type)
-		{
-		case VariantType::String:
-			_str.~String();
-			break;
-
-		case VariantType::List:
-			_list.~List<Variant>();
-			break;
-
-		case VariantType::Object:
-			_shared.~SharedPtr<Object>();
-			break;
-		}
+	{		
 		_type = VariantType::Empty;
+		_dataType = nullptr;
+		_shared = nullptr;
+		_data.clear();
 	}
 
-	Variant& Variant::operator=(const Variant& other)
+	bool Variant::GetStruct(const Type* type, ValueType& value) const
 	{
-		if (&other != this)
-		{
-			Clear();
+		if (type == nullptr || _dataType == nullptr)
+			return false;
 
-			_type = other._type;
-			switch (_type)
-			{
-			case VariantType::String:
-				new (&_str) String(other._str);
-				break;
+		if (!_dataType->CanConvert(value.GetType()))
+			return false;
 
-			case VariantType::List:
-				new (&_list) List<Variant>(other._list);
-				break;
+		auto data = reinterpret_cast<const ValueType*>(_data.data());
+		memcpy(&value, data, _data.size());
+		return true;
+	}
 
-			case VariantType::Object:
-				new (&_shared) SharedPtr<Object>(other._shared);
-				break;
-			}
-		}
+	Object* Variant::GetObject(const Type* type) const
+	{
+		if (type == nullptr || IsEmpty())
+			return nullptr;
 
-		return *this;
+		if (!_dataType->CanConvert(type))
+			return nullptr;
+
+		return _shared;
+	}
+
+	////////////////////////////////////////////////////////////////////
+	void Variant::SetStruct(const Type* type, const ValueType& value, uint size)
+	{
+		_type = VariantType::Struct;
+		_dataType = type;
+		_data.resize(size);
+		memcpy(_data.data(), &value, size);
+	}
+
+	void Variant::SetObject(const Type* type, Object* value)
+	{
+		_type = VariantType::Object;
+		_dataType = type;
+		_shared = value;
 	}
 }

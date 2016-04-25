@@ -1,11 +1,13 @@
 #pragma once
+#include <Core/ValueType.h>
 
 namespace uut
 {
 	class IntVector2;
 
-	class Vector2
+	class Vector2 : public ValueType
 	{
+		UUT_STRUCT(Vector2, ValueType)
 	public:
 		Vector2();
 		Vector2(float x, float y);

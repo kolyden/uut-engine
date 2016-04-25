@@ -14,7 +14,7 @@ namespace uut
 	class Type
 	{
 	public:
-		using REGFUNC = void(*)();
+		using REGFUNC = void(*)(Type*);
 
 		Type(TypeInfo info, const HashString& name, const Type* base, REGFUNC regfunc);
 		virtual ~Type();
@@ -50,24 +50,21 @@ namespace uut
 	template<class C>
 	static const Type* typeof()
 	{
-		return &C::GetTypeInternal();
+		return C::__internalType;
 	}
 
-#define UUT_TYPE(type) typeof<type>()
-
-#define UUT_OBJECT(typeName, parentType) \
+#define UUT_TYPE(typeName, parentType) \
 	public: \
 	typedef typeName ClassName; \
 	typedef parentType Super; \
-	virtual const uut::Type* GetType() const; \
+	static const uut::Type* GetType() { return __internalType; } \
+	static void _RegisterInternal(Type* internalType); \
 	private: \
-	static void _RegisterInternal(); \
-	static uut::Type& GetTypeInternal(); \
-	template<class C> friend const uut::Type* typeof();
+	static Type* __internalType; \
+	template<class C> friend const uut::Type* typeof(); \
+	friend class Context;
 
-#define UUT_OBJECT_IMPLEMENT(type) \
-	uut::Type& type::GetTypeInternal() \
-	{ static uut::Type t(TypeInfo::Class, #type, nullptr, &type::_RegisterInternal); return t; } \
-	const uut::Type* type::GetType() const { return &GetTypeInternal(); } \
-	void type::_RegisterInternal()
+#define UUT_TYPE_IMPLEMENT(type) \
+	Type* type::__internalType = nullptr; \
+	void type::_RegisterInternal(Type* internalType)
 }

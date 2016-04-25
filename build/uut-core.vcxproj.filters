@@ -39,20 +39,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\UUT\Core\Object.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\String.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Windows\Application.cpp">
       <Filter>Core\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Windows\Window.cpp">
       <Filter>Core\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\HashString.cpp">
-      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Vector2.cpp">
       <Filter>Core\Math</Filter>
@@ -60,20 +51,8 @@
     <ClCompile Include="..\Source\UUT\Core\Math\IntVector2.cpp">
       <Filter>Core\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\RefCounted.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Timer.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Engine.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Math\Math.cpp">
       <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Debug.cpp">
-      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\IO\Input.cpp">
       <Filter>Core\IO</Filter>
@@ -135,38 +114,8 @@
     <ClCompile Include="..\Source\UUT\Core\Math\IntVector3.cpp">
       <Filter>Core\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\ObjectFactory.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Context.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Module.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Plugin.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Platform.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\GUI\DebugGUI.cpp">
       <Filter>Core\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Time.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Attribute.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\AttributeUsage.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Enum.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\CorePlugin.cpp">
-      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Reflection\Type.cpp">
       <Filter>Core\Reflection</Filter>
@@ -276,20 +225,71 @@
     <ClCompile Include="..\Source\UUT\Core\Reflection\FieldAttribute.cpp">
       <Filter>Core\Reflection</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Variant.cpp">
+    <ClCompile Include="..\Source\UUT\Core\Reflection\MethodInfo.cpp">
+      <Filter>Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Attribute.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\AttributeUsage.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Context.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\CorePlugin.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Debug.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Engine.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Enum.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\HashString.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Module.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Object.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\ObjectFactory.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Platform.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Plugin.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\RefCounted.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\String.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Time.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Timer.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\TimeSpan .cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Reflection\MethodInfo.cpp">
-      <Filter>Core\Reflection</Filter>
+    <ClCompile Include="..\Source\UUT\Core\ValueType.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Variant.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Source\UUT\Core\Object.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Collections\Array.h">
       <Filter>Core\Collections</Filter>
     </ClInclude>
@@ -299,20 +299,11 @@
     <ClInclude Include="..\Source\UUT\Core\Collections\List.h">
       <Filter>Core\Collections</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\String.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Windows\Application.h">
       <Filter>Core\Windows</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Windows\Window.h">
       <Filter>Core\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\HashString.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\IEquatable.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Vector2.h">
       <Filter>Core\Math</Filter>
@@ -320,23 +311,8 @@
     <ClInclude Include="..\Source\UUT\Core\Math\IntVector2.h">
       <Filter>Core\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Ptr.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\RefCounted.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Timer.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Engine.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\Math.h">
       <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Debug.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\IO\Input.h">
       <Filter>Core\IO</Filter>
@@ -401,50 +377,17 @@
     <ClInclude Include="..\Source\UUT\Core\IO\TextReader.h">
       <Filter>Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Assert.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Math\IntVector3.h">
       <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Platform.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Collections\BitArray.h">
       <Filter>Core\Collections</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\ObjectFactory.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Context.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Module.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Collections\HashSet.h">
       <Filter>Core\Collections</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Plugin.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\GUI\DebugGUI.h">
       <Filter>Core\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Time.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Attribute.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\AttributeUsage.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Enum.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\CorePlugin.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Reflection\Type.h">
       <Filter>Core\Reflection</Filter>
@@ -560,14 +503,83 @@
     <ClInclude Include="..\Source\UUT\Core\Reflection\FieldAttribute.h">
       <Filter>Core\Reflection</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Variant.h">
+    <ClInclude Include="..\Source\UUT\Core\Reflection\MethodInfo.h">
+      <Filter>Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Assert.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Attribute.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\AttributeUsage.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Context.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\CorePlugin.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Debug.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Engine.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Enum.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\HashString.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\IEquatable.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Module.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Numeric.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Object.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\ObjectFactory.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Platform.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Plugin.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Ptr.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\RefCounted.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\String.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Time.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Timer.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\TimeSpan .h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Reflection\MethodInfo.h">
-      <Filter>Core\Reflection</Filter>
+    <ClInclude Include="..\Source\UUT\Core\ValueObject.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\ValueType.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Variant.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

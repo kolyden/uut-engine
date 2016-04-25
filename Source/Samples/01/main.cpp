@@ -25,21 +25,15 @@ namespace uut
 
 		_timer.Start();
 
-		Variant var1(42);
-		Variant var2("Hello World!");
-		Variant var3(_renderer);
-		Variant var4(12.45f);
+		Variant var1(Vector2(12.111f, 45.6789f));
+		Variant var2(_texture);
 
-		auto type = typeof<TestFlag>();
-		if (type->IsEnum())
-		{
-			auto& name = type->GetName();
-			auto fields = type->GetFields();
-			for (auto& it : fields)
-			{
-				
-			}
-		}
+		Vector2 vec;
+		var1.GetStruct(vec);
+		auto obj = var2.GetObject<Texture2D>();
+
+		int a = 0;
+		a++;
 	}
 
 	static bool show_test_window = false;
@@ -87,15 +81,10 @@ namespace uut
 					ImGui::BeginGroup();
 
 					ImGui::Text(current->GetName().GetData());
-					auto base_type = current->GetBaseType();
-					if (base_type != nullptr)
-					{
-						ImGui::SameLine();
-						if (ImGui::Selectable(String::Format("(%s)", base_type->GetName().GetData())))
-							current = base_type;
-					}
+					auto baseType = current->GetBaseType();
 					ImGui::Separator();
-
+					for (; baseType != nullptr; baseType = baseType->GetBaseType())
+						ImGui::Text(baseType->GetName().GetData());
 					ImGui::EndGroup();
 				}
 			}
