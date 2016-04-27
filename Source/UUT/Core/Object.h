@@ -1,17 +1,17 @@
 #pragma once
+#include <Core/BaseObject.h>
 #include <Core/IEquatable.h>
 #include <Core/String.h>
-#include <Core/Reflection/Type.h>
-#include "RefCounted.h"
+#include <Core/Ptr.h>
 
 namespace uut
 {
 #define UUT_OBJECT(typeName, parentType) UUT_TYPE(typeName, parentType)
 #define UUT_OBJECT_IMPLEMENT(type) UUT_TYPE_IMPLEMENT(type)
 
-	class Object : public IEquatable, public RefCounted
+	class Object : public BaseObject, public IEquatable, public RefCounted
 	{
-		UUT_OBJECT(Object, Object)
+		UUT_OBJECT(Object, BaseObject)
 	public:
 		virtual ~Object() {}
 

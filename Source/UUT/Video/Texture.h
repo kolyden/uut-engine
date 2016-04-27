@@ -22,7 +22,7 @@ namespace uut
 		int GetWidth() const { return _size.x; }
 		int GetHeight() const { return _size.y; }
 
-		virtual uintptr_t GetNativeHandle() const = 0;
+		virtual intptr_t GetNativeHandle() const = 0;
 
 	protected:
 		IntVector2 _size;

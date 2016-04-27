@@ -17,7 +17,7 @@ namespace uut
 
 		bool UpdateData(const void* buffer, uint32_t size, uint32_t offset = 0);
 
-		virtual uint32_t GetInternalHandle() const = 0;
+		virtual intptr_t GetInternalHandle() const = 0;
 
 	protected:
 		uint32_t _size;

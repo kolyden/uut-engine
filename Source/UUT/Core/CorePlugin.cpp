@@ -26,6 +26,8 @@ namespace uut
 
 	void CorePlugin::OnRegister()
 	{
+		UUT_REGISTER_OBJECT(BaseObject);
+
 		// NUMERIC
 		UUT_REGISTER_OBJECT(ValueType);
 		UUT_REGISTER_OBJECT(Boolean);

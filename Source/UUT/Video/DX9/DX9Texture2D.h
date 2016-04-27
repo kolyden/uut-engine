@@ -14,7 +14,7 @@ namespace uut
 		virtual void* Lock(int* pitch) override;
 		virtual void Unlock() override;
 
-		virtual uintptr_t GetNativeHandle() const override;
+		virtual intptr_t GetNativeHandle() const override;
 
 	protected:
 		LPDIRECT3DTEXTURE9 _data;

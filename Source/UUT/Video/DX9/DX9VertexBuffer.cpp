@@ -30,7 +30,7 @@ namespace uut
 		_data->Unlock();
 	}
 
-	uint32_t DX9VertexBuffer::GetInternalHandle() const
+	intptr_t DX9VertexBuffer::GetInternalHandle() const
 	{
 		return reinterpret_cast<uintptr_t>(_data);
 	}

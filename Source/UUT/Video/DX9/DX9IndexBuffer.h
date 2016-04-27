@@ -14,7 +14,7 @@ namespace uut
 		virtual void* Lock(uint32_t size, uint32_t offset) override;
 		virtual void Unlock() override;
 
-		uint32_t GetInternalHandle() const override;
+		intptr_t GetInternalHandle() const override;
 
 	protected:
 		LPDIRECT3DINDEXBUFFER9 _data;

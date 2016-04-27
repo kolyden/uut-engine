@@ -38,7 +38,7 @@ namespace uut
 			_data->UnlockRect(0);
 	}
 
-	uintptr_t DX9Texture2D::GetNativeHandle() const
+	intptr_t DX9Texture2D::GetNativeHandle() const
 	{
 		return reinterpret_cast<uintptr_t>(_data);
 	}

@@ -11,7 +11,7 @@ namespace uut
 {
 	SampleApp::SampleApp()
 	{
-		_windowSize = IntVector2(texSize * 2);
+		_windowSize = IntVector2(800, 600);
 	}
 
 	void SampleApp::OnInit()

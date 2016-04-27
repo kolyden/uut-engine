@@ -1,5 +1,5 @@
 #pragma once
-#include <Core/Reflection/Type.h>
+#include <Core/BaseObject.h>
 
 namespace uut
 {
@@ -8,9 +8,9 @@ namespace uut
 
 	// base object for "struct object" like Vector2 etc.
 	// No virtual allowed!
-	class ValueType
+	class ValueType : public BaseObject
 	{
-		UUT_STRUCT(ValueType, ValueType)
+		UUT_STRUCT(ValueType, BaseObject)
 	public:
 		ValueType();
 	};
