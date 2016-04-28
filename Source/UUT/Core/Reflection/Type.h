@@ -9,7 +9,7 @@ namespace uut
 	class Object;
 	class ObjectFactory;
 	class MemberInfo;
-	class FieldInfo;
+	class PropertyInfo;
 
 	class Type
 	{
@@ -27,8 +27,9 @@ namespace uut
 		bool IsMethod() const;
 		bool IsEnum() const;
 
+		void AddMember(MemberInfo* member);
 		const List<const MemberInfo*>& GetMembers() const;
-		List<const FieldInfo*> GetFields() const;
+		List<const PropertyInfo*> GetFields() const;
 
 		const Type* GetBaseType() const;
 		ObjectFactory* GetFactory() const;

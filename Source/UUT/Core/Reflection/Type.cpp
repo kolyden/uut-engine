@@ -2,8 +2,7 @@
 #include <Core/Context.h>
 #include <Core/Object.h>
 #include <Core/ObjectFactory.h>
-#include "MemberInfo.h"
-#include "FiledInfo.h"
+#include <Core/Reflection/PropertyInfo.h>
 
 namespace uut
 {
@@ -44,18 +43,23 @@ namespace uut
 		return _info == TypeInfo::Enum;
 	}
 
+	void Type::AddMember(MemberInfo* member)
+	{
+		_members << member;
+	}
+
 	const List<const MemberInfo*>& Type::GetMembers() const
 	{
 		return _members;
 	}
 
-	List<const FieldInfo*> Type::GetFields() const
+	List<const PropertyInfo*> Type::GetFields() const
 	{
-		List<const FieldInfo*> list;
+		List<const PropertyInfo*> list;
 		for (uint i = 0; i < _members.Count(); i++)
 		{
 			if (_members[i]->GetMemberType() == MemberType::Field)
-				list << static_cast<const FieldInfo*>(_members[i]);
+				list << static_cast<const PropertyInfo*>(_members[i]);
 		}
 
 		return list;

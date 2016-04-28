@@ -3,12 +3,33 @@
 #include <Core/Math/Rect.h>
 #include <IMGUI/imgui.h>
 #include <Core/Context.h>
+#include <Core/Reflection/PropertyInfo.h>
 #include <Core/Plugin.h>
-#include <Core/Reflection/FiledInfo.h>
 #include <Core/Variant.h>
+#include <Core/Enum.h>
 
 namespace uut
 {
+	enum class EnumTest
+	{
+		ValueA,
+		ValueB,
+	};
+
+	class EnumTestValue : public EnumValue<EnumTest>
+	{
+		UUT_TYPE(EnumTestValue, EnumValue<EnumTest>)
+	public:
+	};
+
+	UUT_TYPE_IMPLEMENT(EnumTestValue)
+	{
+// 		internalType->AddMember(
+// 			new PropertyInfoImpl<EnumTestValue, EnumTest>("ValueA",
+// 				[](const EnumTestValue* obj) -> EnumTest { return EnumTest::ValueA; }, nullptr));
+	}
+
+	////////////////////////////////////////////////////////////////////////////
 	SampleApp::SampleApp()
 	{
 		_windowSize = IntVector2(800, 600);
@@ -27,9 +48,14 @@ namespace uut
 
 		Variant var1(Vector2(12.111f, 45.6789f));
 		Variant var2(_texture);
+		Variant var3(666);
+		Variant var4(true);
+// 		Variant var5(EnumTest::ValueA);
 
 		auto vec = var1.Get<Vector2>(Vector2::Zero);
 		auto obj = var2.Get<Texture2D>();
+		auto i = var3.Get<int>();
+		auto b = var4.Get<bool>();
 
 		int a = 0;
 		a++;
@@ -65,15 +91,24 @@ namespace uut
 			{
 				static const Type* current = nullptr;
 
+				static ImGuiTextFilter filter;
+
+				filter.Draw();
 				ImGui::PushItemWidth(150);
 				ImGui::ListBoxHeader("##types");
 				for (auto& it : Context::GetTypes())
 				{
 					auto type = it.second;
-					if (ImGui::Selectable(type->ToString(), type == current))
+					const auto typeName = type->ToString();
+					if (!filter.PassFilter(typeName))
+						continue;
+
+					if (ImGui::Selectable(typeName, type == current))
 						current = type;
 				}
 				ImGui::ListBoxFooter();
+				ImGui::PopItemWidth();
+
 				if (current != nullptr)
 				{
 					ImGui::SameLine();
@@ -85,7 +120,7 @@ namespace uut
 					for (; baseType != nullptr; baseType = baseType->GetBaseType())
 						ImGui::Text(baseType->GetName().GetData());
 					ImGui::EndGroup();
-				}
+				}				
 			}
 		}
 		ImGui::End();

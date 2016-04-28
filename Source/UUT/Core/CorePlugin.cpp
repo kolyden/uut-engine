@@ -16,6 +16,7 @@
 #include "Engine.h"
 #include "ValueType.h"
 #include "Math/Vector2.h"
+#include "Debug.h"
 
 namespace uut
 {
@@ -26,11 +27,27 @@ namespace uut
 
 	void CorePlugin::OnRegister()
 	{
+		// BASE
 		UUT_REGISTER_OBJECT(BaseObject);
+		UUT_REGISTER_OBJECT(ValueType);
+
+		// STATIC
+		UUT_REGISTER_OBJECT(StaticObject);
+		UUT_REGISTER_OBJECT(Debug);
 
 		// NUMERIC
-		UUT_REGISTER_OBJECT(ValueType);
-		UUT_REGISTER_OBJECT(Boolean);
+// 		UUT_REGISTER_OBJECT(Int8);
+// 		UUT_REGISTER_OBJECT(UInt8);
+// 		UUT_REGISTER_OBJECT(Int16);
+// 		UUT_REGISTER_OBJECT(UInt16);
+// 		UUT_REGISTER_OBJECT(Int32);
+// 		UUT_REGISTER_OBJECT(UInt32);
+// 		UUT_REGISTER_OBJECT(Int64);
+// 		UUT_REGISTER_OBJECT(UInt64);
+// 		UUT_REGISTER_OBJECT(Float);
+// 		UUT_REGISTER_OBJECT(Double);
+
+		UUT_REGISTER_NUMERIC(bool);
 		UUT_REGISTER_NUMERIC(int8_t);
 		UUT_REGISTER_NUMERIC(uint8_t);
 		UUT_REGISTER_NUMERIC(int16_t);

@@ -1,34 +1,34 @@
-#include "FiledInfo.h"
+#include "PropertyInfo.h"
 
 namespace uut
 {
-	FieldInfo::FieldInfo(const String& name, FieldAttribute attributes)
+	PropertyInfo::PropertyInfo(const String& name, FieldAttribute attributes)
 		: _name(name)
 		, _attributes(attributes)
 	{
 	}
 
-	MemberType FieldInfo::GetMemberType() const
+	MemberType PropertyInfo::GetMemberType() const
 	{
 		return MemberType::Field;
 	}
 
-	bool FieldInfo::IsPublic() const
+	bool PropertyInfo::IsPublic() const
 	{
 		return _attributes == FieldAttribute::Public;
 	}
 
-	bool FieldInfo::IsPrivate() const
+	bool PropertyInfo::IsPrivate() const
 	{
 		return _attributes == FieldAttribute::Private;
 	}
 
-	bool FieldInfo::IsStatic() const
+	bool PropertyInfo::IsStatic() const
 	{
 		return _attributes == FieldAttribute::Static;
 	}
 
-	const String& FieldInfo::GetName() const
+	const String& PropertyInfo::GetName() const
 	{
 		return _name;
 	}

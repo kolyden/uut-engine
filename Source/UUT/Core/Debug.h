@@ -1,5 +1,6 @@
 #pragma once
-#include "Core/String.h"
+#include <Core/StaticObject.h>
+#include <Core/String.h>
 
 namespace uut
 {
@@ -12,8 +13,9 @@ namespace uut
 		Critical,
 	};
 
-	class Debug
+	class Debug : public StaticObject
 	{
+		UUT_TYPE(Debug, StaticObject)
 	public:
 		static void LogMessage(LogType type, const char* message, ...);
 		static void LogMessageV(LogType type, const char* message, va_list args);

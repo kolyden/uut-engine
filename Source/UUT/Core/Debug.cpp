@@ -3,6 +3,9 @@
 
 namespace uut
 {
+	UUT_TYPE_IMPLEMENT(Debug)
+	{}
+
 	void Debug::LogMessage(LogType type, const char* message, ...)
 	{
 		va_list args;

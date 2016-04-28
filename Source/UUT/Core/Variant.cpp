@@ -1,9 +1,10 @@
 #include "Variant.h"
 #include "Object.h"
-#include <Core/Boolean.h>
 
 namespace uut
 {
+	const Variant Variant::Empty;
+
 	Variant::Variant()
 		: _type(VariantType::Empty)
 		, _dataType(nullptr)
