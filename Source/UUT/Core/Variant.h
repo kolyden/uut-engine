@@ -55,6 +55,16 @@ namespace uut
 		Object* GetObject(const Type* type) const;
 		template<class C>C* GetObject() const { return static_cast<C*>(GetObject(typeof<C>())); }
 
+		template<class C, class = typename std::enable_if<std::is_base_of<ValueType, C>::value>::type>
+		C Get(const C& defaultType) const
+		{
+			const C* data = static_cast<const C*>(GetStruct(typeof<C>()));
+			return data != nullptr ? *data : defaultType;
+		}
+
+		template<class C, class = typename std::enable_if<std::is_base_of<Object, C>::value>::type>
+		C* Get() const { return static_cast<C*>(GetObject(typeof<C>())); }
+
 	protected:
 		VariantType _type;
 		const Type* _dataType;
