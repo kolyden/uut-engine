@@ -13,6 +13,7 @@
 #include "AttributeUsage.h"
 #include "Numeric.h"
 #include "Boolean.h"
+#include "Enum.h"
 #include "Engine.h"
 #include "ValueType.h"
 #include "Math/Vector2.h"
@@ -58,6 +59,9 @@ namespace uut
 		UUT_REGISTER_NUMERIC(uint64_t);
 		UUT_REGISTER_NUMERIC(float);
 		UUT_REGISTER_NUMERIC(double);
+
+		// ENUM
+		UUT_REGISTER_OBJECT(EnumValueBase);
 
 		// CORE
 		UUT_REGISTER_OBJECT(Object);

@@ -2,7 +2,6 @@
 #include <Core/HashString.h>
 #include <Core/String.h>
 #include <Core/Ptr.h>
-#include "TypeInfo.h"
 
 namespace uut
 {
@@ -10,6 +9,14 @@ namespace uut
 	class ObjectFactory;
 	class MemberInfo;
 	class PropertyInfo;
+
+	enum class TypeInfo
+	{
+		Class,
+		Struct,
+		Method,
+		Enum,
+	};
 
 	class Type
 	{
@@ -68,4 +75,6 @@ namespace uut
 #define UUT_TYPE_IMPLEMENT(type) \
 	Type* type::__internalType = nullptr; \
 	void type::_RegisterInternal(Type* internalType)
+
+#define UUT_REGISTER_TYPE(info, type, name) Context::RegisterType<type>(info, name, &type::_RegisterInternal)
 }

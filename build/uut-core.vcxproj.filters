@@ -210,9 +210,6 @@
     <ClCompile Include="..\Source\UUT\Resources\ResourceLoader.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Reflection\TypeInfo.cpp">
-      <Filter>Core\Reflection</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Reflection\MemberInfo.cpp">
       <Filter>Core\Reflection</Filter>
     </ClCompile>
@@ -499,9 +496,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Resources\ResourceLoader.h">
       <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Reflection\TypeInfo.h">
-      <Filter>Core\Reflection</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Reflection\MemberInfo.h">
       <Filter>Core\Reflection</Filter>

@@ -26,7 +26,7 @@ namespace uut
 
 	const ValueType* Variant::GetStruct(const Type* type) const
 	{
-		if (type == nullptr || _dataType == nullptr)
+		if (type == nullptr || !IsValueType())
 			return nullptr;
 
 		if (!_dataType->CanConvert(type))
@@ -35,9 +35,14 @@ namespace uut
 		return reinterpret_cast<const ValueType*>(_data.data());
 	}
 
+	Object* Variant::GetObject() const
+	{
+		return IsObject() ? _shared.Get() : nullptr;
+	}
+
 	Object* Variant::GetObject(const Type* type) const
 	{
-		if (type == nullptr || IsEmpty())
+		if (type == nullptr || !IsObject())
 			return nullptr;
 
 		if (!_dataType->CanConvert(type))

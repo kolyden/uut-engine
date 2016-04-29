@@ -14,19 +14,31 @@ namespace uut
 	{
 		ValueA,
 		ValueB,
+		ValueC,
+		ValueD,
+		ValueZ = 42,
 	};
 
-	class EnumTestValue : public EnumValue<EnumTest>
-	{
-		UUT_TYPE(EnumTestValue, EnumValue<EnumTest>)
-	public:
-	};
+	UUT_ENUM(EnumTest);
 
-	UUT_TYPE_IMPLEMENT(EnumTestValue)
+#define UUT_ENUM_VALUE(name, value) \
+	internalType->AddMember( \
+		new PropertyInfoImpl<ClassName, EnumType>(name, \
+			[](const ClassName* obj) -> EnumType { return value; }, nullptr));
+
+	UUT_ENUM_IMPLEMENT(EnumTest)
 	{
-// 		internalType->AddMember(
-// 			new PropertyInfoImpl<EnumTestValue, EnumTest>("ValueA",
-// 				[](const EnumTestValue* obj) -> EnumTest { return EnumTest::ValueA; }, nullptr));
+		internalType->AddMember(
+			new PropertyInfoImpl<ClassName, EnumType>("ValueA",
+				[](const ClassName* obj) -> EnumType {
+			return EnumTest::ValueA;
+		}, nullptr));
+
+// 		UUT_ENUM_VALUE("ValueA", EnumTest::ValueA);
+		UUT_ENUM_VALUE("ValueB", EnumTest::ValueB);
+		UUT_ENUM_VALUE("ValueC", EnumTest::ValueC);
+		UUT_ENUM_VALUE("ValueD", EnumTest::ValueD);
+		UUT_ENUM_VALUE("ValueZ", EnumTest::ValueZ);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -37,6 +49,8 @@ namespace uut
 
 	void SampleApp::OnInit()
 	{
+		UUT_REGISTER_ENUM(EnumTest);
+
 		_texture = _renderer->CreateTexture(IntVector2(texSize), TextureAccess::Streaming);
 		_plasma = new Plasma(_texture->GetSize());
 
@@ -50,12 +64,15 @@ namespace uut
 		Variant var2(_texture);
 		Variant var3(666);
 		Variant var4(true);
-// 		Variant var5(EnumTest::ValueA);
+		Variant var5(EnumTest::ValueZ);
 
 		auto vec = var1.Get<Vector2>(Vector2::Zero);
-		auto obj = var2.Get<Texture2D>();
+		auto obj = var2.Get<Object>();
 		auto i = var3.Get<int>();
 		auto b = var4.Get<bool>();
+		auto flag = var5.Get<EnumTest>();
+		auto val = var5.Get<EnumValue<EnumTest>>(EnumValue<EnumTest>::Empty);
+		auto str = val.ToString();
 
 		int a = 0;
 		a++;
@@ -116,9 +133,15 @@ namespace uut
 
 					ImGui::Text(current->GetName().GetData());
 					auto baseType = current->GetBaseType();
-					ImGui::Separator();
+// 					ImGui::Separator();
 					for (; baseType != nullptr; baseType = baseType->GetBaseType())
 						ImGui::Text(baseType->GetName().GetData());
+
+					ImGui::Separator();
+					for (auto& it : current->GetFields())
+					{
+						ImGui::Text(it->GetName());
+					}
 					ImGui::EndGroup();
 				}				
 			}
@@ -138,7 +161,7 @@ namespace uut
 			_plasma->Apply(_texture,
 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10));
 
-			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
+			_graphics->DrawQuad(Rect(10, 10, texSize, texSize), 15, _texture);
 			_graphics->Flush();
 
 			_gui->SetupCamera();

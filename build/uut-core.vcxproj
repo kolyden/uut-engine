@@ -66,7 +66,6 @@
     <ClCompile Include="..\Source\UUT\Core\Reflection\MemberType.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Reflection\MethodInfo.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Reflection\Type.cpp" />
-    <ClCompile Include="..\Source\UUT\Core\Reflection\TypeInfo.cpp" />
     <ClCompile Include="..\Source\UUT\Core\StaticObject.cpp" />
     <ClCompile Include="..\Source\UUT\Core\String.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Time.cpp" />
@@ -165,7 +164,6 @@
     <ClInclude Include="..\Source\UUT\Core\Reflection\MemberType.h" />
     <ClInclude Include="..\Source\UUT\Core\Reflection\MethodInfo.h" />
     <ClInclude Include="..\Source\UUT\Core\Reflection\Type.h" />
-    <ClInclude Include="..\Source\UUT\Core\Reflection\TypeInfo.h" />
     <ClInclude Include="..\Source\UUT\Core\StaticObject.h" />
     <ClInclude Include="..\Source\UUT\Core\String.h" />
     <ClInclude Include="..\Source\UUT\Core\Time.h" />

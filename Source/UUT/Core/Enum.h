@@ -6,44 +6,53 @@ namespace uut
 {
 	class Type;
 
-	template<typename T>
-	class EnumValue : public ValueType
+	class EnumValueBase : public ValueType
 	{
-		UUT_TYPE(EnumValue, ValueType)
+		UUT_TYPE(EnumValueBase, ValueType)
 	public:
-		EnumValue() : _value(Default) {};
-		explicit EnumValue(T value) : _value(value) {}
+		EnumValueBase();
 
-		String ToString() const
-		{
-			return String::Empty;
-		}
+		int GetData() const { return _value; }
 
-		static String ToString(T value)
-		{
-			return String::Empty;
-		}
+		static const EnumValueBase Empty;
 
-		static bool TryParse(const String& str, T& value)
-		{
-			return false;
-		}
+	protected:
+		int _value;
 
-		bool operator == (T other) const { return _value == other; }
-		bool operator != (T other) const { return _value != other; }
+		String ToString(const Type* type) const;
+	};
+
+	template<typename T>
+	class EnumValue : public EnumValueBase
+	{
+		UUT_TYPE(EnumValue, EnumValueBase)
+	public:
+		typedef T EnumType;
+
+		EnumValue() {};
+		explicit EnumValue(T value) { _value = (int)value; }
+
+		operator T () const { return (T)_value; }
+
+		String ToString() const { return EnumValueBase::ToString(GetType()); }
+
+		bool operator == (T other) const { return (T)_value == other; }
+		bool operator != (T other) const { return (T)_value != other; }
 
 		static const T Default;
 
-	protected:
-		T _value;
+		static const EnumValue<T> Empty;
 	};
 
-	template<typename T> const T EnumValue<T>::Default = 0;
+	template<typename T> const T EnumValue<T>::Default = static_cast<T>(0);
+	template<typename T> const EnumValue<T> EnumValue<T>::Empty(Default);
 
 
 #define UUT_ENUM(type) \
 	template<> static const Type* typeof<type>() \
-	{ return typeof<Numeric<type>>(); }
+	{ return typeof<EnumValue<type>>(); }
 
-#define UUT_ENUM_IMPLEMENT(type)
+#define UUT_ENUM_IMPLEMENT(type) UUT_STRUCT_IMPLEMENT(EnumValue<type>)
+
+#define UUT_REGISTER_ENUM(type) UUT_REGISTER_TYPE(TypeInfo::Enum, EnumValue<type>, #type)
 }

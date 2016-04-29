@@ -83,6 +83,10 @@ namespace uut
 
 		for (; parentType != nullptr; parentType = parentType->GetBaseType())
 			_derived[parentType].Add(type);
+
+		if (func)
+			func(type);
+
 		return type;
 	}
 

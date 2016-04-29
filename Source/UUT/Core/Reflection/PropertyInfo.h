@@ -2,6 +2,7 @@
 #include "MemberInfo.h"
 #include "FieldAttribute.h"
 #include <Core/Variant.h>
+#include <Core/BaseObject.h>
 
 namespace uut
 {
@@ -22,7 +23,7 @@ namespace uut
 		virtual bool CanSet() const = 0;
 
 		virtual bool SetValue(BaseObject& object, const Variant& value) = 0;
-		virtual Variant GetValue(const BaseObject& object) const = 0;
+		virtual Variant GetValue(const BaseObject* object) const = 0;
 
 	protected:
 		String _name;
@@ -38,6 +39,8 @@ namespace uut
 
 		PropertyInfoImpl(const String& name, Getter getter, Setter setter)
 			: PropertyInfo(name, FieldAttribute::Public)
+			, _getter(getter)
+			, _setter(setter)
 		{			
 		}
 
@@ -52,9 +55,9 @@ namespace uut
 			return true;
 		}
 
-		virtual Variant GetValue(const BaseObject& object) const override
+		virtual Variant GetValue(const BaseObject* object) const override
 		{
-			return Variant(_getter(static_cast<const C*>(&object)));
+			return Variant(_getter(static_cast<const C*>(object)));
 		}
 
 	protected:

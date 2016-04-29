@@ -85,5 +85,5 @@ namespace uut
 	UUT_NUMERIC(float);
 	UUT_NUMERIC(double);
 
-#define UUT_REGISTER_NUMERIC(type) UUT_REGISTER_OBJECT(Numeric<type>)
+#define UUT_REGISTER_NUMERIC(type) UUT_REGISTER_TYPE(TypeInfo::Struct, Numeric<type>, #type)
 }

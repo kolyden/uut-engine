@@ -2,7 +2,6 @@
 #include <Core/HashString.h>
 #include <Core/Collections/Dictionary.h>
 #include <Core/Collections/HashSet.h>
-#include <Core/Reflection/TypeInfo.h>
 #include <Core/Reflection/Type.h>
 #include <Core/Ptr.h>
 #include <typeindex>
