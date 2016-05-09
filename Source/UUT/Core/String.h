@@ -1,6 +1,7 @@
 #pragma once
-#include <string>
+#include <Core/ValueType.h>
 #include <Core/Collections/List.h>
+#include <string>
 
 namespace uut
 {
@@ -10,8 +11,9 @@ namespace uut
 		OrdinalIgnoreCase,
 	};
 
-	class String
+	class String : public ValueType
 	{
+		UUT_STRUCT(String, ValueType)
 	public:
 		typedef std::string DataType;
 		typedef DataType::iterator Iterator;
@@ -104,8 +106,25 @@ namespace uut
 	template<class T> String::CIterator begin(const String& str) { return str.Begin(); }
 	template<class T> String::CIterator end(const String& str) { return str.End(); }
 
-// 	template<> constexpr static const String& GetDefault<String>()
-// 	{
-// 		return String::Empty;
-// 	}
+	namespace detail
+	{
+		template<typename T> struct StringConvert {
+			static String ToString(const T& value) { return String(value); }
+		};
+
+		//template<typename T, class = std::enable_if_t<std::is_fundamental<T>::value>> struct StringConvert {
+		//	static String ToString(const T& value) { return String::Empty; }
+		//};
+
+		template<> struct StringConvert<String> {
+			static String ToString(const String& value) { return value; }
+		};
+
+		template<> struct StringConvert<const Type*> {
+			static String ToString(const Type* value) { return value->ToString(); }
+		};
+	}
+
+	template<typename T>
+	static String ToString(T value) { return detail::StringConvert<T>::ToString(value); }
 }

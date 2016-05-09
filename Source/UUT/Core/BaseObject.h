@@ -7,6 +7,6 @@ namespace uut
 	{
 		UUT_TYPE(BaseObject, BaseObject)
 	public:
-		BaseObject();
+		constexpr BaseObject() {}
 	};
 }

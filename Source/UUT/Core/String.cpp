@@ -3,6 +3,9 @@
 
 namespace uut
 {
+	UUT_STRUCT_IMPLEMENT(String)
+	{}
+
 	const String String::Empty;
 
 	String::String()

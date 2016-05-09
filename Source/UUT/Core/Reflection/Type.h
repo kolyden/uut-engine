@@ -1,12 +1,9 @@
 #pragma once
-#include <Core/HashString.h>
-#include <Core/String.h>
-#include <Core/Ptr.h>
+#include <Core/Collections/List.h>
 
 namespace uut
 {
-	class Object;
-	class ObjectFactory;
+	class String;
 	class MemberInfo;
 	class PropertyInfo;
 
@@ -23,10 +20,11 @@ namespace uut
 	public:
 		using REGFUNC = void(*)(Type*);
 
-		Type(TypeInfo info, const HashString& name, const Type* base, REGFUNC regfunc);
+		Type(TypeInfo info, const char* name, const Type* base, REGFUNC regfunc);
 		virtual ~Type();
 
-		const HashString& GetName() const;
+		const char* GetName() const;
+		size_t GetHash() const;
 		String ToString() const;
 
 		TypeInfo GetInfo() const;
@@ -36,19 +34,17 @@ namespace uut
 
 		void AddMember(MemberInfo* member);
 		const List<const MemberInfo*>& GetMembers() const;
+		const MemberInfo* FindMember(const String& name) const;
 		List<const PropertyInfo*> GetFields() const;
 
 		const Type* GetBaseType() const;
-		ObjectFactory* GetFactory() const;
-
-		SharedPtr<Object> Create() const;
 
 		bool IsDerived(const Type* from) const;
 		bool CanConvert(const Type* to) const;
 
 	protected:
-		SharedPtr<ObjectFactory> _factory;
-		HashString _name;
+		std::string _name;
+		const size_t _hash;
 		const Type* _base;
 		REGFUNC _regfunc;
 		TypeInfo _info;
@@ -56,14 +52,17 @@ namespace uut
 	};
 
 	template<class C>
-	static const Type* typeof()
-	{
+	static const Type* typeof() {
 		return C::__internalType;
 	}
 
+	template<>
+	static const Type* typeof<void>() {
+		return nullptr;
+	}
+
 	template<typename T>
-	static constexpr const T& GetDefault()
-	{
+	static constexpr const T& GetDefault() {
 		return T::Default;
 	}
 

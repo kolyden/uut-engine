@@ -1,13 +1,15 @@
 #include "Type.h"
 #include <Core/Context.h>
-#include <Core/Object.h>
-#include <Core/ObjectFactory.h>
+#include <Core/String.h>
 #include <Core/Reflection/PropertyInfo.h>
 
 namespace uut
 {
-	Type::Type(TypeInfo info, const HashString& name, const Type* base, REGFUNC regfunc)
+	static std::hash<std::string> g_hashfn;
+
+	Type::Type(TypeInfo info, const char* name, const Type* base, REGFUNC regfunc)
 		: _name(name)
+		, _hash(g_hashfn(_name))
 		, _base(nullptr)
 		, _regfunc(regfunc)
 		, _info(info)
@@ -16,16 +18,21 @@ namespace uut
 			_base = base;
 	}
 
-	Type::~Type() = default;
+	Type::~Type() {}
 
-	const HashString& Type::GetName() const
+	const char* Type::GetName() const
 	{
-		return _name;
+		return _name.c_str();
+	}
+
+	size_t Type::GetHash() const
+	{
+		return _hash;
 	}
 
 	String Type::ToString() const
 	{
-		return GetName().GetData();
+		return _name;
 	}
 
 	bool Type::IsClass() const
@@ -53,6 +60,20 @@ namespace uut
 		return _members;
 	}
 
+	const MemberInfo* Type::FindMember(const String& name) const
+	{
+		if (name.IsEmpty())
+			return nullptr;
+
+		for (uint i = 0; i < _members.Count(); i++)
+		{
+			if (_members[i]->GetName().Equals(name, StringComparison::OrdinalIgnoreCase))
+				return _members[i];
+		}
+
+		return nullptr;
+	}
+
 	List<const PropertyInfo*> Type::GetFields() const
 	{
 		List<const PropertyInfo*> list;
@@ -73,19 +94,6 @@ namespace uut
 	const Type* Type::GetBaseType() const
 	{
 		return _base;
-	}
-
-	ObjectFactory* Type::GetFactory() const
-	{
-		return _factory;
-	}
-
-	SharedPtr<Object> Type::Create() const
-	{
-		if (!_factory)
-			return SharedPtr<Object>::Empty;
-
-		return _factory->Create();
 	}
 
 	bool Type::IsDerived(const Type* from) const

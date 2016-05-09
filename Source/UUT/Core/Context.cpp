@@ -18,16 +18,16 @@ namespace uut
 		if (type == nullptr)
 			return SharedPtr<Object>::Empty;
 
-		if (type->GetFactory() == nullptr)
-			return type->Create();
-
-		for (auto& it : _types)
-		{
-			if (IsDerived(type, it.second) && it.second->GetFactory() == nullptr)
-				return it.second->Create();
-		}
-
-		Debug::LogError("No factory for '%s' type", type->GetName().GetData());
+// 		if (type->GetFactory() == nullptr)
+// 			return type->Create();
+// 
+// 		for (auto& it : _types)
+// 		{
+// 			if (IsDerived(type, it.second) && it.second->GetFactory() == nullptr)
+// 				return it.second->Create();
+// 		}
+// 
+// 		Debug::LogError("No factory for '%s' type", type->GetName());
 
 		return SharedPtr<Object>::Empty;
 	}
@@ -136,7 +136,7 @@ namespace uut
 		if (_modules.Contains(type->GetName()))
 		{
 			Debug::LogError("Module %s already registered",
-				type->GetName().GetData());
+				type->GetName());
 			return;
 		}
 

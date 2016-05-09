@@ -72,6 +72,8 @@ namespace uut
 		UUT_REGISTER_OBJECT(Engine);
 		UUT_REGISTER_OBJECT(Module);
 
+		UUT_REGISTER_OBJECT(String);
+
 		// Math
 		UUT_REGISTER_OBJECT(Vector2);
 		UUT_REGISTER_OBJECT(Radian);

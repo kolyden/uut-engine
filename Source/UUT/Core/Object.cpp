@@ -12,6 +12,6 @@ namespace uut
 
 	String Object::ToString()
 	{
-		return GetType()->GetName().GetData();
+		return typeof<ClassName>()->GetName();
 	}
 }

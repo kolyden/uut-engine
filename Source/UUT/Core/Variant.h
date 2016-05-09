@@ -24,11 +24,11 @@ namespace uut
 	{
 	public:
 		Variant();
-		explicit Variant(const Type* type);
+		Variant(const Type* type);
 
 		// FUNDAMENTAL
 		template<typename T, std::enable_if_t<std::is_fundamental<T>::value>* = nullptr>
-		explicit Variant(T value)
+		Variant(T value)
 		{
 			SetStruct(typeof<Numeric<T>>(), Numeric<T>(value), sizeof(Numeric<T>));
 			_type = VariantType::Numeric;
@@ -36,7 +36,7 @@ namespace uut
 
 		// ENUM
 		template<typename T, std::enable_if_t<std::is_enum<T>::value>* = nullptr>
-		explicit Variant(T value)
+		Variant(T value)
 		{
 			SetStruct(typeof<EnumValue<T>>(), EnumValue<T>(value), sizeof(EnumValue<T>));
 			_type = VariantType::Enum;
@@ -44,26 +44,26 @@ namespace uut
 
 		// STRUCT
 		template<typename T, std::enable_if_t<std::is_base_of<ValueType, T>::value>* = nullptr>
-		explicit Variant(const T& value)
+		Variant(const T& value)
 		{
 			SetStruct(typeof<T>(), value, sizeof(T));
 		}
 
 		// OBJECT
 		template<typename T, std::enable_if_t < std::is_base_of<Object, T>::value>* = nullptr >
-		explicit Variant(T* value)
+		Variant(T* value)
 		{
 			SetObject(typeof<T>(), value);
 		}
 
 		template<typename T>
-		explicit Variant(SharedPtr<T>& value)
+		Variant(SharedPtr<T>& value)
 		{
 			SetObject(typeof<T>(), value);
 		}
 
 		template<typename T>
-		explicit Variant(WeakPtr<T>& value)
+		Variant(WeakPtr<T>& value)
 		{
 			SetObject(typeof<T>(), value);
 		}
@@ -115,11 +115,52 @@ namespace uut
 		template<class C, std::enable_if_t<std::is_base_of<Object, C>::value>* = nullptr>
 		C* Get() const { return static_cast<C*>(GetObject(typeof<C>())); }
 
-		template<class C, std::enable_if_t<std::is_base_of<Object, C>::value>* = nullptr>
-		SharedPtr<C> GetShared() const
+		// FUNDAMETNAL - NUMERIC
+		template<class C, class = typename std::enable_if<std::is_fundamental<C>::value>::type>
+		bool TryGet(C& value) const
 		{
-			if (!IsObject()) return SharedPtr<C>::Empty;
-			return DynamicCast<C>(_shared);
+			const Numeric<C>* data = GetStruct<Numeric<C>>();
+			if (data == nullptr)
+				return false;
+
+			value = *data;
+			return true;
+		}
+
+		// ENUM
+		template<class C, std::enable_if_t<std::is_enum<C>::value>* = nullptr>
+		bool TryGet(C& value) const
+		{
+			auto data = GetStruct<EnumValue<C>>();
+			if (data == nullptr)
+				return false;
+
+			value = *data;
+			return true;
+		}
+
+		// VALUETYPE - STRUCT
+		template<class C, std::enable_if_t<std::is_base_of<ValueType, C>::value>* = nullptr>
+		bool TryGet(const C& value) const
+		{
+			const C* data = static_cast<const C*>(GetStruct(typeof<C>()));
+			if (data == nullptr)
+				return false;
+
+			value = *data;
+			return true;
+		}
+
+		// OBJECT
+		template<class C, std::enable_if_t<std::is_base_of<Object, C>::value>* = nullptr>
+		bool TryGet(C** value) const
+		{
+			auto obj = static_cast<C*>(GetObject(typeof<C>()));
+			if (obj == nullptr)
+				return false;
+
+			*value = obj;
+			return true;
 		}
 
 		static const Variant Empty;

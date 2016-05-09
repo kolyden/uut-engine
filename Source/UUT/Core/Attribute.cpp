@@ -97,7 +97,7 @@ namespace uut
 				return it->second;
 		}
 
-		Debug::LogError("No AttributeUsage Attribute for %s type", type->GetName().GetData());
+		Debug::LogError("No AttributeUsage Attribute for %s type", type->GetName());
 		return nullptr;
 	}
 }

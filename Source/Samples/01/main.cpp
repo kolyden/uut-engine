@@ -7,6 +7,7 @@
 #include <Core/Plugin.h>
 #include <Core/Variant.h>
 #include <Core/Enum.h>
+#include <Core/Reflection/FunctionInfo.h>
 
 namespace uut
 {
@@ -19,6 +20,49 @@ namespace uut
 		ValueZ = 42,
 	};
 
+	////
+	namespace detail
+	{
+		// FNV-1a constants
+		static constexpr unsigned long long basis = 14695981039346656037ULL;
+		static constexpr unsigned long long prime = 1099511628211ULL;
+
+		// compile-time hash helper function
+		constexpr unsigned long long hash_one(char c, const char* remain, unsigned long long value)
+		{
+			return c == 0 ? value : hash_one(remain[0], remain + 1, (value ^ c) * prime);
+		}
+
+		// compile-time hash
+		constexpr unsigned long long hash(const char* str)
+		{
+			return hash_one(str[0], str + 1, basis);
+		}
+	}
+	////
+	namespace detail
+	{
+		template<typename Arg>
+		String& Write(String& o, Arg&& arg) {
+			return o += ToString<std::remove_reference_t<Arg>>(arg);
+		}
+
+		template<typename Arg, typename ...Args>
+		String& Write(String& o, Arg&& arg, Args&&... args)
+		{
+			o += ToString<std::remove_reference_t<Arg>>(arg);
+			return Write(o, std::forward<Args>(args)...);
+		}
+	}
+
+	template<typename... Args>
+	static String StringFormat(Args... args)
+	{
+		String str;
+		detail::Write(str, args...);
+		return str;
+	}
+
 	////////////////////
 	UUT_ENUM(EnumTest);
 
@@ -27,19 +71,26 @@ namespace uut
 		new PropertyInfoImpl<ClassName, EnumType>(name, \
 			[](const ClassName* obj) -> EnumType { return value; }, nullptr));
 
+	static int Foo(int a, int b)
+	{
+		return a + b;
+	}
+
 	UUT_ENUM_IMPLEMENT(EnumTest)
 	{
-		internalType->AddMember(
-			new PropertyInfoImpl<ClassName, EnumType>("ValueA",
-				[](const ClassName* obj) -> EnumType {
-			return EnumTest::ValueA;
-		}, nullptr));
+		//internalType->AddMember(
+		//	new PropertyInfoImpl<ClassName, EnumType>("ValueA",
+		//		[](const ClassName* obj) -> EnumType {
+		//	return EnumTest::ValueA;
+		//}, nullptr));
 
-// 		UUT_ENUM_VALUE("ValueA", EnumTest::ValueA);
+ 		UUT_ENUM_VALUE("ValueA", EnumTest::ValueA);
 		UUT_ENUM_VALUE("ValueB", EnumTest::ValueB);
 		UUT_ENUM_VALUE("ValueC", EnumTest::ValueC);
 		UUT_ENUM_VALUE("ValueD", EnumTest::ValueD);
 		UUT_ENUM_VALUE("ValueZ", EnumTest::ValueZ);
+
+		internalType->AddMember(new StaticFunctionInfo<int, int, int>("test", &Foo));
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -61,6 +112,8 @@ namespace uut
 
 		_timer.Start();
 
+// 		auto obj = Context::CreateObject<()
+
 		Variant var1(Vector2(12.111f, 45.6789f));
 		Variant var2(_texture);
 		Variant var3(666);
@@ -81,8 +134,18 @@ namespace uut
 		auto flag = var5.Get<EnumTest>();
 // 		auto flagTest = var5.Get<EnumValue<EnumTest>>();
 // 		auto flagTestStr = flagTest.ToString();
-		auto type = var6.GetType();
+		auto type = var5.GetType();
+		auto func = dynamic_cast<const FunctionInfo*>(type->FindMember("test"));
+		if (func != nullptr)
+		{
+			Variant result;
+			func->Call({ 2, 8 }, result);
+			int a = result.Get<int>();
+			a++;
+		}
+
 		auto angle = var7.Get<Degree>();
+		auto str = StringFormat("Object type = ", typeof<EnumTest>(), " and value = ");
 	}
 
 	static bool show_test_window = false;
@@ -138,11 +201,11 @@ namespace uut
 					ImGui::SameLine();
 					ImGui::BeginGroup();
 
-					ImGui::Text(current->GetName().GetData());
+					ImGui::Text(current->GetName());
 					auto baseType = current->GetBaseType();
 // 					ImGui::Separator();
 					for (; baseType != nullptr; baseType = baseType->GetBaseType())
-						ImGui::Text(baseType->GetName().GetData());
+						ImGui::Text(baseType->GetName());
 
 					ImGui::Separator();
 					for (auto& it : current->GetFields())
@@ -168,7 +231,7 @@ namespace uut
 			_plasma->Apply(_texture,
 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10));
 
-			_graphics->DrawQuad(Rect(10, 10, texSize, texSize), 15, _texture);
+			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
 			_graphics->Flush();
 
 			_gui->SetupCamera();

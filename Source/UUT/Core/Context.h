@@ -26,6 +26,7 @@ namespace uut
 		// OBJECT CREATION
 		static SharedPtr<Object> CreateObject(const Type* type);
 		static SharedPtr<Object> CreateObject(const HashString& name);
+		template<class C> static SharedPtr<Object> CreateObject() { return CreateObject(typeof<C>()); }
 
 		// PLUGINS
 		static void AddPlugin(Plugin* plugin);

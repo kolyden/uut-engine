@@ -12,6 +12,6 @@ namespace uut
 	{
 		UUT_STRUCT(ValueType, BaseObject)
 	public:
-		constexpr ValueType();
+		constexpr ValueType() {};
 	};
 }
