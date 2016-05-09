@@ -54,4 +54,8 @@ namespace uut
 	template<class T> typename HashSet<T>::ConstIterator begin(const HashSet<T>& container) { return container.Begin(); }
 	template<class T> typename HashSet<T>::ConstIterator end(const HashSet<T>& container) { return container.End(); }
 
+// 	template<typename T> constexpr static const HashSet<T>& GetDefault<HashSet<T>>()
+// 	{
+// 		return HashSet<T>::Empty;
+// 	}
 }

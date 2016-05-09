@@ -171,4 +171,9 @@ namespace uut
 
 	template<class TKey, class TValue> typename Dictionary<TKey, TValue>::ConstIterator begin(const Dictionary<TKey, TValue>& list) { return list.Begin(); }
 	template<class TKey, class TValue> typename Dictionary<TKey, TValue>::ConstIterator end(const Dictionary<TKey, TValue>& list) { return list.End(); }
+
+// 	template<class TKey, class TValue> constexpr static const Dictionary<TKey, TValue>& GetDefault<Dictionary<TKey, TValue>>()
+// 	{
+// 		return Dictionary<TKey, TValue>::Empty;
+// 	}
 }

@@ -30,27 +30,28 @@ namespace uut
 		typedef T EnumType;
 
 		EnumValue() {};
-		explicit EnumValue(T value) { _value = (int)value; }
+		explicit EnumValue(T value) { _value = static_cast<int>(value); }
 
-		operator T () const { return (T)_value; }
+		operator T () const { return static_cast<T>(_value); }
 
 		String ToString() const { return EnumValueBase::ToString(GetType()); }
 
-		bool operator == (T other) const { return (T)_value == other; }
-		bool operator != (T other) const { return (T)_value != other; }
+		bool operator == (T other) const { return static_cast<T>(_value) == other; }
+		bool operator != (T other) const { return static_cast<T>(_value) != other; }
 
-		static const T Default;
+		constexpr static T DefaultValue = static_cast<T>(0);
 
-		static const EnumValue<T> Empty;
+		static const EnumValue<T> Default;
 	};
 
-	template<typename T> const T EnumValue<T>::Default = static_cast<T>(0);
-	template<typename T> const EnumValue<T> EnumValue<T>::Empty(Default);
+	template<typename T> const EnumValue<T> EnumValue<T>::Default(DefaultValue);
 
 
 #define UUT_ENUM(type) \
 	template<> static const Type* typeof<type>() \
-	{ return typeof<EnumValue<type>>(); }
+	{ return typeof<EnumValue<type>>(); } \
+	template<> constexpr static const type& GetDefault<type>() \
+	{ return EnumValue<type>::DefaultValue; } 
 
 #define UUT_ENUM_IMPLEMENT(type) UUT_STRUCT_IMPLEMENT(EnumValue<type>)
 

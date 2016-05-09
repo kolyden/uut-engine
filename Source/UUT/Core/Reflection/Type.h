@@ -61,6 +61,12 @@ namespace uut
 		return C::__internalType;
 	}
 
+	template<typename T>
+	static constexpr const T& GetDefault()
+	{
+		return T::Default;
+	}
+
 #define UUT_TYPE(typeName, parentType) \
 	public: \
 	typedef typeName ClassName; \

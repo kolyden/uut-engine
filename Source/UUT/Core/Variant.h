@@ -13,6 +13,7 @@ namespace uut
 	enum class VariantType
 	{
 		Empty,
+		Type,
 		Numeric,
 		Enum,
 		Struct,
@@ -23,6 +24,7 @@ namespace uut
 	{
 	public:
 		Variant();
+		explicit Variant(const Type* type);
 
 		// FUNDAMENTAL
 		template<typename T, std::enable_if_t<std::is_fundamental<T>::value>* = nullptr>
@@ -70,6 +72,7 @@ namespace uut
 
 		void Clear();
 		bool IsEmpty() const { return _type == VariantType::Empty; }
+		bool IsType() const { return _type == VariantType::Type; }
 		bool IsNumeric() const { return _type == VariantType::Numeric; }
 		bool IsEnum() const { return _type == VariantType::Enum; }
 		bool IsValueType() const { return _type == VariantType::Struct || IsEnum() || IsNumeric(); }
@@ -88,7 +91,7 @@ namespace uut
 		template<class C, class = typename std::enable_if<std::is_fundamental<C>::value>::type>
 		C Get() const
 		{
-			auto data = GetStruct<Numeric<C>>();
+			const Numeric<C>* data = GetStruct<Numeric<C>>();
 			return data != nullptr ? *data : Numeric<C>::Zero;
 		}
 
@@ -97,12 +100,12 @@ namespace uut
 		C Get() const
 		{
 			auto data = GetStruct<EnumValue<C>>();
-			return data != nullptr ? *data : EnumValue<C>::Default;
+			return data != nullptr ? *data : EnumValue<C>::DefaultValue;
 		}
 
 		// VALUETYPE - STRUCT
 		template<class C, std::enable_if_t<std::is_base_of<ValueType, C>::value>* = nullptr>
-		C Get(const C& defaultType) const
+		C Get(const C& defaultType = GetDefault<C>()) const
 		{
 			const C* data = static_cast<const C*>(GetStruct(typeof<C>()));
 			return data != nullptr ? *data : defaultType;
@@ -130,4 +133,9 @@ namespace uut
 		void SetStruct(const Type* type, const ValueType& value, uint size);
 		void SetObject(const Type* type, Object* value);
 	};
+
+	template<> constexpr static const Variant& GetDefault<Variant>()
+	{
+		return Variant::Empty;
+	}
 }

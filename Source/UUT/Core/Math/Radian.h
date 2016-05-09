@@ -1,13 +1,15 @@
 #pragma once
+#include <Core/ValueType.h>
 
 namespace uut
 {
 	class Degree;
 
-	class Radian
+	class Radian : public ValueType
 	{
+		UUT_STRUCT(Radian, ValueType)
 	public:
-		explicit Radian(float angle = 0.0f) : _angle(angle) {}
+		explicit constexpr Radian(float angle = 0.0f) : _angle(angle) {}
 		Radian(const Degree& angle);
 
 		float GetDegrees() const;
@@ -51,9 +53,13 @@ namespace uut
 		bool operator>= (const Radian& r) const { return _angle >= r._angle; }
 		bool operator>  (const Radian& r) const { return _angle > r._angle; }
 
+		static const Radian Default;
 		static const Radian Zero;
 
 	protected:
 		float _angle;
 	};
+
+	extern Radian operator"" _rad(long double angle);
+	extern Radian operator"" _rad(unsigned long long int angle);
 }

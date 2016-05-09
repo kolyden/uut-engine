@@ -5,6 +5,21 @@
 
 namespace uut
 {
+	Radian operator"" _rad(long double angle)
+	{
+		return Radian(static_cast<float>(angle));
+	}
+
+	Radian operator"" _rad(unsigned long long int angle)
+	{
+		return Radian(static_cast<float>(angle));
+	}
+
+	////
+	UUT_STRUCT_IMPLEMENT(Radian)
+	{}
+
+	const Radian Radian::Default;
 	const Radian Radian::Zero;
 
 	Radian::Radian(const Degree& angle)

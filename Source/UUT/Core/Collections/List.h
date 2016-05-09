@@ -362,4 +362,9 @@ namespace uut
 
 	template<class T> typename List<T>::ConstIterator begin(const List<T>& list) { return list.Begin(); }
 	template<class T> typename List<T>::ConstIterator end(const List<T>& list) { return list.End(); }
+
+// 	template<typename T> constexpr static const List<T>& GetDefault<List<T>>()
+// 	{
+// 		return List<T>::Empty;
+// 	}
 }

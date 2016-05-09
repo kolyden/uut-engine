@@ -19,6 +19,7 @@ namespace uut
 		ValueZ = 42,
 	};
 
+	////////////////////
 	UUT_ENUM(EnumTest);
 
 #define UUT_ENUM_VALUE(name, value) \
@@ -65,17 +66,23 @@ namespace uut
 		Variant var3(666);
 		Variant var4(true);
 		Variant var5(EnumTest::ValueZ);
+		Variant var6(typeof<float>());
+		Variant var7(90_deg);
 
-		auto vec = var1.Get<Vector2>(Vector2::Zero);
+		auto bool_def = GetDefault<float>();
+		auto int_def = GetDefault<int>();
+		auto flag_def = GetDefault<EnumTest>();
+		auto vec2_def = GetDefault<Vector2>();
+
+		auto vec = var1.Get<Vector2>();
 		auto obj = var2.Get<Object>();
 		auto i = var3.Get<int>();
 		auto b = var4.Get<bool>();
 		auto flag = var5.Get<EnumTest>();
-		auto val = var5.Get<EnumValue<EnumTest>>(EnumValue<EnumTest>::Empty);
-		auto str = val.ToString();
-
-		int a = 0;
-		a++;
+// 		auto flagTest = var5.Get<EnumValue<EnumTest>>();
+// 		auto flagTestStr = flagTest.ToString();
+		auto type = var6.GetType();
+		auto angle = var7.Get<Degree>();
 	}
 
 	static bool show_test_window = false;

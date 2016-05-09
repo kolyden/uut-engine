@@ -9,9 +9,9 @@ namespace uut
 	{
 		UUT_STRUCT(Vector2, ValueType)
 	public:
-		Vector2();
-		Vector2(float x, float y);
-		explicit Vector2(float val);
+		constexpr Vector2() : x(0), y(0) {}
+		constexpr Vector2(float fx, float fy) : x(fx), y(fy) {}
+		explicit constexpr Vector2(float val) : x(val), y(val) {}
 		Vector2(const IntVector2& vec);
 
 		operator float* () { return m; }
@@ -53,6 +53,7 @@ namespace uut
 
 		static Vector2 Scale(const Vector2& vec, float s);
 
+		static const Vector2 Default;
 		static const Vector2 Zero;  // ( 0,  0)
 		static const Vector2 One;   // ( 1,  1)
 		static const Vector2 Left;  // (-1,  0)

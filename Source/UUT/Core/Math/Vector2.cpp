@@ -12,26 +12,14 @@ namespace uut
 				[](const Vector2* obj) -> float { return obj->Length(); }, nullptr));
 	}
 
+
+	const Vector2 Vector2::Default(0);
 	const Vector2 Vector2::Zero(0);
 	const Vector2 Vector2::One(1);
 	const Vector2 Vector2::Left(-1, 0);
 	const Vector2 Vector2::Right(1, 0);
 	const Vector2 Vector2::Up(0, 1);
 	const Vector2 Vector2::Down(0, -1);
-
-	Vector2::Vector2()
-	{
-	}
-
-	Vector2::Vector2(float _x, float _y)
-		: x(_x), y(_y)
-	{
-	}
-
-	Vector2::Vector2(float val)
-		: x(val), y(val)
-	{
-	}
 
 	Vector2::Vector2(const IntVector2& vec)
 		: x(static_cast<float>(vec.x))

@@ -17,6 +17,8 @@
 #include "Engine.h"
 #include "ValueType.h"
 #include "Math/Vector2.h"
+#include <Core/Math/Radian.h>
+#include <Core/Math/Degree.h>
 #include "Debug.h"
 
 namespace uut
@@ -72,6 +74,8 @@ namespace uut
 
 		// Math
 		UUT_REGISTER_OBJECT(Vector2);
+		UUT_REGISTER_OBJECT(Radian);
+		UUT_REGISTER_OBJECT(Degree);
 
 		// IO
 		UUT_REGISTER_OBJECT(Stream);

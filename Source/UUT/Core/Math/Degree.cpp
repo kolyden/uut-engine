@@ -5,6 +5,21 @@
 
 namespace uut
 {
+	Degree operator"" _deg(long double angle)
+	{
+		return Degree(static_cast<float>(angle));
+	}
+
+	Degree operator"" _deg(unsigned long long int angle)
+	{
+		return Degree(static_cast<float>(angle));
+	}
+
+	///
+	UUT_STRUCT_IMPLEMENT(Degree)
+	{}
+
+	const Degree Degree::Default;
 	const Degree Degree::Zero;
 
 	Degree::Degree(const Radian& angle)

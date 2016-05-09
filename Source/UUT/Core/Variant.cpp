@@ -11,6 +11,12 @@ namespace uut
 	{
 	}
 
+	Variant::Variant(const Type* type)
+		: _type(VariantType::Type)
+		, _dataType(type)
+	{
+	}
+
 	Variant::~Variant()
 	{
 		Clear();

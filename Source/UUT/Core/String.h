@@ -103,4 +103,9 @@ namespace uut
 
 	template<class T> String::CIterator begin(const String& str) { return str.Begin(); }
 	template<class T> String::CIterator end(const String& str) { return str.End(); }
+
+// 	template<> constexpr static const String& GetDefault<String>()
+// 	{
+// 		return String::Empty;
+// 	}
 }
