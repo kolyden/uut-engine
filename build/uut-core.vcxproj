@@ -64,7 +64,7 @@
     <ClCompile Include="..\Source\UUT\Core\Reflection\PropertyInfo.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Reflection\MemberInfo.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Reflection\MemberType.cpp" />
-    <ClCompile Include="..\Source\UUT\Core\Reflection\FunctionInfo.cpp" />
+    <ClCompile Include="..\Source\UUT\Core\Reflection\MethodInfo.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Reflection\Type.cpp" />
     <ClCompile Include="..\Source\UUT\Core\StaticObject.cpp" />
     <ClCompile Include="..\Source\UUT\Core\String.cpp" />
@@ -159,10 +159,11 @@
     <ClInclude Include="..\Source\UUT\Core\Ptr.h" />
     <ClInclude Include="..\Source\UUT\Core\RefCounted.h" />
     <ClInclude Include="..\Source\UUT\Core\Reflection\FieldAttribute.h" />
+    <ClInclude Include="..\Source\UUT\Core\Reflection\MethodAttributes.h" />
     <ClInclude Include="..\Source\UUT\Core\Reflection\PropertyInfo.h" />
     <ClInclude Include="..\Source\UUT\Core\Reflection\MemberInfo.h" />
     <ClInclude Include="..\Source\UUT\Core\Reflection\MemberType.h" />
-    <ClInclude Include="..\Source\UUT\Core\Reflection\FunctionInfo.h" />
+    <ClInclude Include="..\Source\UUT\Core\Reflection\MethodInfo.h" />
     <ClInclude Include="..\Source\UUT\Core\Reflection\Type.h" />
     <ClInclude Include="..\Source\UUT\Core\StaticObject.h" />
     <ClInclude Include="..\Source\UUT\Core\String.h" />

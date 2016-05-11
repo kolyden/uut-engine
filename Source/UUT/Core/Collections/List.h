@@ -14,7 +14,7 @@ namespace uut
 	public:
 		typedef std::vector<T> DataType;
 		typedef typename DataType::iterator Iterator;
-		typedef typename DataType::const_iterator CIterator;
+		typedef typename DataType::const_iterator ConstIterator;
 
 		typedef std::function<void(T&)> Iterate;
 		typedef std::function<void(const T&)> ConstIterate;
@@ -348,8 +348,8 @@ namespace uut
 
 		Iterator Begin() { return _data.begin(); }
 		Iterator End() { return _data.end(); }
-		CIterator Begin() const { return _data.begin(); }
-		CIterator End() const { return _data.end(); }
+		ConstIterator Begin() const { return _data.begin(); }
+		ConstIterator End() const { return _data.end(); }
 
 	protected:
 		DataType _data;

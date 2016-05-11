@@ -7,7 +7,7 @@
 #include <Core/Plugin.h>
 #include <Core/Variant.h>
 #include <Core/Enum.h>
-#include <Core/Reflection/FunctionInfo.h>
+#include <Core/Reflection/MethodInfo.h>
 
 namespace uut
 {
@@ -135,7 +135,7 @@ namespace uut
 // 		auto flagTest = var5.Get<EnumValue<EnumTest>>();
 // 		auto flagTestStr = flagTest.ToString();
 		auto type = var5.GetType();
-		auto func = dynamic_cast<const FunctionInfo*>(type->FindMember("test"));
+		auto func = dynamic_cast<const MethodInfo*>(type->FindMember("test"));
 		if (func != nullptr)
 		{
 			Variant result;

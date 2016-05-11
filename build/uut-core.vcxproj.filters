@@ -294,7 +294,7 @@
     <ClCompile Include="..\Source\UUT\Core\Reflection\PropertyInfo.cpp">
       <Filter>Core\Reflection</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Reflection\FunctionInfo.cpp">
+    <ClCompile Include="..\Source\UUT\Core\Reflection\MethodInfo.cpp">
       <Filter>Core\Reflection</Filter>
     </ClCompile>
   </ItemGroup>
@@ -593,7 +593,10 @@
     <ClInclude Include="..\Source\UUT\Core\Reflection\PropertyInfo.h">
       <Filter>Core\Reflection</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Reflection\FunctionInfo.h">
+    <ClInclude Include="..\Source\UUT\Core\Reflection\MethodInfo.h">
+      <Filter>Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Reflection\MethodAttributes.h">
       <Filter>Core\Reflection</Filter>
     </ClInclude>
   </ItemGroup>
