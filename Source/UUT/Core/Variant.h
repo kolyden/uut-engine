@@ -3,8 +3,11 @@
 #include <Core/Reflection/Type.h>
 #include <Core/ValueType.h>
 #include <Core/Object.h>
+#include <Core/Boolean.h>
 #include <Core/Numeric.h>
 #include <Core/Enum.h>
+#include <Core/Single.h>
+#include <Core/Double.h>
 
 namespace uut
 {
@@ -14,7 +17,7 @@ namespace uut
 	{
 		Empty,
 		Type,
-		Numeric,
+		Fundamental,
 		Enum,
 		Struct,
 		Object,
@@ -30,8 +33,10 @@ namespace uut
 		template<typename T, std::enable_if_t<std::is_fundamental<T>::value>* = nullptr>
 		Variant(T value)
 		{
-			SetStruct(typeof<Numeric<T>>(), Numeric<T>(value), sizeof(Numeric<T>));
-			_type = VariantType::Numeric;
+			SetStruct(typeof<typename detail::Fundamental<T>::TYPE>(),
+				detail::Fundamental<T>::TYPE(value),
+				sizeof(detail::Fundamental<T>::TYPE));
+			_type = VariantType::Fundamental;
 		}
 
 		// ENUM
@@ -47,6 +52,11 @@ namespace uut
 		Variant(const T& value)
 		{
 			SetStruct(typeof<T>(), value, sizeof(T));
+		}
+
+		Variant(const Type* type, const ValueType& value)
+		{
+			SetStruct(type, value, type->GetSize());
 		}
 
 		// OBJECT
@@ -73,13 +83,13 @@ namespace uut
 		void Clear();
 		bool IsEmpty() const { return _type == VariantType::Empty; }
 		bool IsType() const { return _type == VariantType::Type; }
-		bool IsNumeric() const { return _type == VariantType::Numeric; }
+		bool IsNumeric() const { return _type == VariantType::Fundamental; }
 		bool IsEnum() const { return _type == VariantType::Enum; }
 		bool IsValueType() const { return _type == VariantType::Struct || IsEnum() || IsNumeric(); }
 		bool IsObject() const { return _type == VariantType::Object; }
 
 		const ValueType* GetStruct(const Type* type) const;
-		template<class C>const C* GetStruct() const { return static_cast<const C*>(GetStruct(typeof<C>())); }
+		template<class C>const C* GetStruct() const { return static_cast<const C*>(GetStruct(typeof<C>())); }		
 
 		Object* GetObject() const;
 		Object* GetObject(const Type* type) const;
@@ -89,26 +99,47 @@ namespace uut
 
 		// FUNDAMETNAL - NUMERIC
 		template<class C, class = typename std::enable_if<std::is_fundamental<C>::value>::type>
-		C Get() const
+		C Get(C defaultValue = typename detail::Fundamental<C>::TYPE::DefaultValue) const
 		{
-			const Numeric<C>* data = GetStruct<Numeric<C>>();
-			return data != nullptr ? *data : Numeric<C>::Zero;
+			auto data = GetStruct<typename detail::Fundamental<C>::TYPE>();
+			if (data != nullptr)
+				return *data;
+
+			typename detail::Fundamental<C>::TYPE value;
+			if (TryCastStruct(value))
+				return value;
+			
+			return defaultValue;
 		}
 
 		// ENUM
 		template<class C, std::enable_if_t<std::is_enum<C>::value>* = nullptr>
-		C Get() const
+		C Get(C defaultValue = EnumValue<C>::DefaultValue) const
 		{
 			auto data = GetStruct<EnumValue<C>>();
-			return data != nullptr ? *data : EnumValue<C>::DefaultValue;
+			if (data != nullptr)
+				return *data;
+
+			EnumValue<C> value;
+			if (TryCastStruct(value))
+				return value;
+
+			return defaultValue;
 		}
 
 		// VALUETYPE - STRUCT
 		template<class C, std::enable_if_t<std::is_base_of<ValueType, C>::value>* = nullptr>
-		C Get(const C& defaultType = GetDefault<C>()) const
+		C Get(const C& defaultValue = GetDefault<C>()) const
 		{
 			const C* data = static_cast<const C*>(GetStruct(typeof<C>()));
-			return data != nullptr ? *data : defaultType;
+			if (data != nullptr)
+				return *data;
+
+			C value;
+			if (TryCastStruct(value))
+				return value;
+
+			return defaultValue;
 		}
 
 		// OBJECT
@@ -119,12 +150,21 @@ namespace uut
 		template<class C, class = typename std::enable_if<std::is_fundamental<C>::value>::type>
 		bool TryGet(C& value) const
 		{
-			const Numeric<C>* data = GetStruct<Numeric<C>>();
+			auto data = GetStruct<typename detail::Fundamental<C>::TYPE>();
 			if (data == nullptr)
-				return false;
+			{
+				value = *data;
+				return true;
+			}
 
-			value = *data;
-			return true;
+			typename detail::Fundamental<C>::TYPE numeric;
+			if (TryCastStruct(numeric))
+			{
+				value = numeric;
+				return true;
+			}
+
+			return false;
 		}
 
 		// ENUM
@@ -132,23 +172,34 @@ namespace uut
 		bool TryGet(C& value) const
 		{
 			auto data = GetStruct<EnumValue<C>>();
-			if (data == nullptr)
-				return false;
+			if (data != nullptr)
+			{
+				value = *data;
+				return true;
+			}
 
-			value = *data;
-			return true;
+			EnumValue<C> enumValue;
+			if (TryCastStruct(enumValue))
+			{
+				value = enumValue;
+				return true;
+			}
+
+			return false;
 		}
 
 		// VALUETYPE - STRUCT
 		template<class C, std::enable_if_t<std::is_base_of<ValueType, C>::value>* = nullptr>
-		bool TryGet(const C& value) const
+		bool TryGet(C& value) const
 		{
 			const C* data = static_cast<const C*>(GetStruct(typeof<C>()));
-			if (data == nullptr)
-				return false;
+			if (data != nullptr)
+			{
+				value = *data;
+				return true;
+			}				
 
-			value = *data;
-			return true;
+			return TryCastStruct(typeof<C>(), value);
 		}
 
 		// OBJECT
@@ -171,11 +222,14 @@ namespace uut
 		std::vector<uint8_t> _data;
 		SharedPtr<Object> _shared;
 
+		bool TryCastStruct(const Type* type, ValueType& value) const;
+		template<class C>bool TryCastStruct(C& value) const { return TryCastStruct(typeof<C>(), value); }
+
 		void SetStruct(const Type* type, const ValueType& value, uint size);
 		void SetObject(const Type* type, Object* value);
 	};
 
-	template<> constexpr static const Variant& GetDefault<Variant>()
+	template<> static constexpr const Variant& GetDefault<Variant>()
 	{
 		return Variant::Empty;
 	}

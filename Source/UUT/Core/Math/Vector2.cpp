@@ -2,16 +2,20 @@
 #include "IntVector2.h"
 #include "Math.h"
 #include <Core/Reflection/PropertyInfo.h>
+#include <Core/Reflection/ConstructorInfo.h>
+#include <Core/Reflection/ConverterInfo.h>
 
 namespace uut
 {
 	UUT_STRUCT_IMPLEMENT(Vector2)
 	{
+		UUT_REGISTER_CTOR(IntVector2);
+		UUT_REGISTER_CONVERTER_DEFAULT(IntVector2);
+
 		internalType->AddMember(
 			new PropertyInfoImpl<Vector2, float>("length",
 				[](const Vector2* obj) -> float { return obj->Length(); }, nullptr));
 	}
-
 
 	const Vector2 Vector2::Default(0);
 	const Vector2 Vector2::Zero(0);

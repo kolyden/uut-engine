@@ -14,6 +14,8 @@
 #include "Numeric.h"
 #include "Boolean.h"
 #include "Enum.h"
+#include "Single.h"
+#include "Double.h"
 #include "Engine.h"
 #include "ValueType.h"
 #include "Math/Vector2.h"
@@ -38,29 +40,18 @@ namespace uut
 		UUT_REGISTER_OBJECT(StaticObject);
 		UUT_REGISTER_OBJECT(Debug);
 
-		// NUMERIC
-// 		UUT_REGISTER_OBJECT(Int8);
-// 		UUT_REGISTER_OBJECT(UInt8);
-// 		UUT_REGISTER_OBJECT(Int16);
-// 		UUT_REGISTER_OBJECT(UInt16);
-// 		UUT_REGISTER_OBJECT(Int32);
-// 		UUT_REGISTER_OBJECT(UInt32);
-// 		UUT_REGISTER_OBJECT(Int64);
-// 		UUT_REGISTER_OBJECT(UInt64);
-// 		UUT_REGISTER_OBJECT(Float);
-// 		UUT_REGISTER_OBJECT(Double);
-
-		UUT_REGISTER_NUMERIC(bool);
-		UUT_REGISTER_NUMERIC(int8_t);
-		UUT_REGISTER_NUMERIC(uint8_t);
-		UUT_REGISTER_NUMERIC(int16_t);
-		UUT_REGISTER_NUMERIC(uint16_t);
-		UUT_REGISTER_NUMERIC(int32_t);
-		UUT_REGISTER_NUMERIC(uint32_t);
-		UUT_REGISTER_NUMERIC(int64_t);
-		UUT_REGISTER_NUMERIC(uint64_t);
-		UUT_REGISTER_NUMERIC(float);
-		UUT_REGISTER_NUMERIC(double);
+		// FUNDAMENTAL
+		UUT_REGISTER_OBJECT(Boolean);
+		UUT_REGISTER_OBJECT(Int8);
+		UUT_REGISTER_OBJECT(UInt8);
+		UUT_REGISTER_OBJECT(Int16);
+		UUT_REGISTER_OBJECT(UInt16);
+		UUT_REGISTER_OBJECT(Int32);
+		UUT_REGISTER_OBJECT(UInt32);
+		UUT_REGISTER_OBJECT(Int64);
+		UUT_REGISTER_OBJECT(UInt64);
+		UUT_REGISTER_OBJECT(Single);
+		UUT_REGISTER_OBJECT(Double);
 
 		// ENUM
 		UUT_REGISTER_OBJECT(EnumValueBase);
@@ -76,6 +67,7 @@ namespace uut
 
 		// Math
 		UUT_REGISTER_OBJECT(Vector2);
+		UUT_REGISTER_OBJECT(IntVector2);
 		UUT_REGISTER_OBJECT(Radian);
 		UUT_REGISTER_OBJECT(Degree);
 

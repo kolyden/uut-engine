@@ -2,6 +2,8 @@
 #include "Radian.h"
 #include "Math.h"
 #include <memory>
+#include <Core/Reflection/ConstructorInfo.h>
+#include <Core/Reflection/ConverterInfo.h>
 
 namespace uut
 {
@@ -17,7 +19,11 @@ namespace uut
 
 	///
 	UUT_STRUCT_IMPLEMENT(Degree)
-	{}
+	{
+		UUT_REGISTER_CTOR(float);
+		UUT_REGISTER_CTOR(Radian);
+		UUT_REGISTER_CONVERTER_FUNC(float, GetRadians);
+	}
 
 	const Degree Degree::Default;
 	const Degree Degree::Zero;

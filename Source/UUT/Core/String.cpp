@@ -359,17 +359,15 @@ namespace uut
 	{
 		const int lng_a = a.Count();
 		const int lng_b = b.Count();
-		int ret = Math::Compare(lng_a, lng_b);
-		if (ret != 0)
-			return ret;
+		const int lng = Math::Min(lng_a, lng_b);
 
-		for (int i = 0; i < lng_a; i++)
+		for (int i = 0; i < lng; i++)
 		{
-			ret = CompareChar(a[i], b[i], comparisonType);
+			const int ret = CompareChar(a[i], b[i], comparisonType);
 			if (ret != 0)
 				return ret;
 		}
 
-		return 0;
+		return  Math::Compare(lng_a, lng_b);
 	}
 }

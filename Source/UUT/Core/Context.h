@@ -34,13 +34,13 @@ namespace uut
 		static const PluginList& GetPlugins() { return _plugins; }
 
 		// TYPES
-		static Type* RegisterType(TypeInfo info, const HashString& name, const type_info& typeInfo, const type_info& parentInfo, Type::REGFUNC func);
+		static Type* RegisterType(TypeInfo info, const HashString& name, const type_info& typeInfo, const type_info& parentInfo, Type::REGFUNC func, size_t size);
 		static const Type* FindType(const HashString& name);
 		static const TypeDict& GetTypes() { return _types; }
 
 		template<class C>static Type* RegisterType(TypeInfo info, const HashString& name, Type::REGFUNC func)
 		{
-			C::__internalType = RegisterType(info, name, typeid(C), typeid(C::Super), func);
+			C::__internalType = RegisterType(info, name, typeid(C), typeid(C::Super), func, sizeof(C));
 			return C::__internalType;
 		}
 

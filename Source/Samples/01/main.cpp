@@ -8,6 +8,8 @@
 #include <Core/Variant.h>
 #include <Core/Enum.h>
 #include <Core/Reflection/MethodInfo.h>
+#include <Core/Reflection/ConstructorInfo.h>
+#include <Core/Reflection/ConverterInfo.h>
 
 namespace uut
 {
@@ -66,31 +68,27 @@ namespace uut
 	////////////////////
 	UUT_ENUM(EnumTest);
 
-#define UUT_ENUM_VALUE(name, value) \
+#define UUT_REGISTER_ENUM_VALUE(name) \
 	internalType->AddMember( \
-		new PropertyInfoImpl<ClassName, EnumType>(name, \
-			[](const ClassName* obj) -> EnumType { return value; }, nullptr));
+		new StaticPropertyInfo<ClassName, EnumType>(#name, \
+			[]() -> EnumType { return EnumType::name; }, nullptr));
 
-	static int Foo(int a, int b)
-	{
-		return a + b;
-	}
+#define UUT_REGISTER_ENUM_VALUE_EX(name, value) \
+	internalType->AddMember( \
+		new StaticPropertyInfo<ClassName, EnumType>(name, \
+			[]() -> EnumType { return value; }, nullptr));
+
 
 	UUT_ENUM_IMPLEMENT(EnumTest)
 	{
-		//internalType->AddMember(
-		//	new PropertyInfoImpl<ClassName, EnumType>("ValueA",
-		//		[](const ClassName* obj) -> EnumType {
-		//	return EnumTest::ValueA;
-		//}, nullptr));
+ 		UUT_REGISTER_ENUM_VALUE(ValueA);
+		UUT_REGISTER_ENUM_VALUE(ValueB);
+		UUT_REGISTER_ENUM_VALUE(ValueC);
+		UUT_REGISTER_ENUM_VALUE(ValueD);
+		UUT_REGISTER_ENUM_VALUE(ValueZ);
 
- 		UUT_ENUM_VALUE("ValueA", EnumTest::ValueA);
-		UUT_ENUM_VALUE("ValueB", EnumTest::ValueB);
-		UUT_ENUM_VALUE("ValueC", EnumTest::ValueC);
-		UUT_ENUM_VALUE("ValueD", EnumTest::ValueD);
-		UUT_ENUM_VALUE("ValueZ", EnumTest::ValueZ);
-
-		internalType->AddMember(new StaticFunctionInfo<int, int, int>("test", &Foo));
+		UUT_REGISTER_CTOR(int);
+		UUT_REGISTER_CONVERTER_FUNC(int, GetData);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -116,35 +114,32 @@ namespace uut
 
 		Variant var1(Vector2(12.111f, 45.6789f));
 		Variant var2(_texture);
-		Variant var3(666);
+		Variant var3(666.555f);
 		Variant var4(true);
 		Variant var5(EnumTest::ValueZ);
 		Variant var6(typeof<float>());
-		Variant var7(90_deg);
+		Variant var7(Math::HALF_PI);
 
-		auto bool_def = GetDefault<float>();
-		auto int_def = GetDefault<int>();
-		auto flag_def = GetDefault<EnumTest>();
+		constexpr auto bool_def = GetDefault<bool>();
+		constexpr auto float_def = GetDefault<float>();
+		constexpr auto int_def = GetDefault<int>();
+		constexpr auto enum_def = GetDefault<EnumTest>();
 		auto vec2_def = GetDefault<Vector2>();
 
 		auto vec = var1.Get<Vector2>();
+		auto ivec = var1.Get<IntVector2>();
 		auto obj = var2.Get<Object>();
 		auto i = var3.Get<int>();
 		auto b = var4.Get<bool>();
 		auto flag = var5.Get<EnumTest>();
-// 		auto flagTest = var5.Get<EnumValue<EnumTest>>();
-// 		auto flagTestStr = flagTest.ToString();
+		auto flagInt = var5.Get<int>();
 		auto type = var5.GetType();
-		auto func = dynamic_cast<const MethodInfo*>(type->FindMember("test"));
-		if (func != nullptr)
-		{
-			Variant result;
-			func->Call({ 2, 8 }, result);
-			int a = result.Get<int>();
-			a++;
-		}
+		auto angleDeg = var7.Get<Degree>();
+		auto angle = var7.Get<float>();
 
-		auto angle = var7.Get<Degree>();
+		Radian rad;
+		var7.TryGet(rad);
+
 		auto str = StringFormat("Object type = ", typeof<EnumTest>(), " and value = ");
 	}
 
@@ -156,7 +151,7 @@ namespace uut
 		_gui->NewFrame();
 
 		///////////////////////////////////////////////////////////////
-		ImGui::SetNextWindowSize(ImVec2(250, 350), ImGuiSetCond_FirstUseEver);
+		ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiSetCond_FirstUseEver);
 		if (ImGui::Begin("Context"))
 		{
 			ImGui::Checkbox("Show Test Window", &show_test_window);
@@ -174,18 +169,26 @@ namespace uut
 			}
 
 			ImGui::Separator();
-			if (ImGui::CollapsingHeader("Types"))
+			if (ImGui::CollapsingHeader("Types", nullptr, true, true))
 			{
 				static const Type* current = nullptr;
 
 				static ImGuiTextFilter filter;
 
+				static List<const Type*> typeList;
+				if (typeList.IsEmpty())
+				{
+					typeList = Context::GetTypes().GetValues();
+					typeList.Sort([](const Type* a, const Type* b) -> int {
+						return String::Compare(a->GetName(), b->GetName(), StringComparison::OrdinalIgnoreCase);
+					});
+				}
+
 				filter.Draw();
 				ImGui::PushItemWidth(150);
 				ImGui::ListBoxHeader("##types");
-				for (auto& it : Context::GetTypes())
+				for (auto type : typeList)
 				{
-					auto type = it.second;
 					const auto typeName = type->ToString();
 					if (!filter.PassFilter(typeName))
 						continue;
@@ -208,9 +211,41 @@ namespace uut
 						ImGui::Text(baseType->GetName());
 
 					ImGui::Separator();
-					for (auto& it : current->GetFields())
-					{
-						ImGui::Text(it->GetName());
+					for (auto info : current->GetMembers())
+					{						
+						switch (info->GetMemberType())
+						{
+						case MemberType::Property:
+							{
+								ImGui::Text("prop: %s", info->GetName().GetData());
+								auto prop = static_cast<const PropertyInfo*>(info);
+								if (prop->IsStatic())
+								{
+									auto value = prop->GetValue(nullptr).Get<EnumTest>();
+									ImGui::SameLine();
+									ImGui::Text(" = %d", (int)value);
+								}
+							}
+							break;
+
+						case MemberType::Constructor:
+							ImGui::Text("Constructor");
+							break;
+
+						case MemberType::Method:
+							ImGui::Text("method: %s", info->GetName().GetData());
+							break;
+
+						case MemberType::Converter:
+							{
+								auto converter = (const ConverterInfo*)info;
+								ImGui::Text("Convert to %s", converter->GetResultType()->GetName());
+							}
+							break;
+
+						default:
+							ImGui::Text(info->GetName());
+						}
 					}
 					ImGui::EndGroup();
 				}				
@@ -228,10 +263,9 @@ namespace uut
 		_renderer->Clear(Color32(114, 144, 154));
 		if (_renderer->BeginScene())
 		{
-			_plasma->Apply(_texture,
-				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10));
-
-			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
+// 			_plasma->Apply(_texture,
+// 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10));
+// 			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
 			_graphics->Flush();
 
 			_gui->SetupCamera();

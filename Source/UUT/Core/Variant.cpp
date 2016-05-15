@@ -1,5 +1,8 @@
 #include "Variant.h"
 #include "Object.h"
+#include "Reflection/MemberInfo.h"
+#include "Reflection/ConstructorInfo.h"
+#include "Reflection/ConverterInfo.h"
 
 namespace uut
 {
@@ -39,6 +42,48 @@ namespace uut
 			return nullptr;
 
 		return reinterpret_cast<const ValueType*>(_data.data());
+	}
+
+	bool Variant::TryCastStruct(const Type* type, ValueType& value) const
+	{
+		if (!IsValueType() || type == nullptr)
+			return false;
+
+		auto value_type = reinterpret_cast<const ValueType*>(_data.data());
+		if (_dataType == type)
+		{			
+			value = *value_type;
+			return true;
+		}
+
+		for (auto info : _dataType->GetMembers())
+		{
+			if (info->GetMemberType() != MemberType::Converter)
+				continue;
+
+			auto converter = static_cast<const ConverterInfo*>(info);
+			if (converter->GetResultType() != type)
+				continue;
+
+			if (converter->Convert(*value_type, value))
+				return true;
+		}
+
+		for (auto info : type->GetMembers())
+		{
+			if (info->GetMemberType() != MemberType::Constructor)
+				continue;
+
+			auto ctor = static_cast<const ConstructorInfo*>(info);
+			auto& argTypes = ctor->GetArgsTypes();
+			if (argTypes.Count() != 1 || argTypes[0] != _dataType)
+				continue;
+
+			if (ctor->Call(&value, { Variant(_dataType, *value_type) }))
+				return true;			
+		}
+
+		return false;
 	}
 
 	Object* Variant::GetObject() const

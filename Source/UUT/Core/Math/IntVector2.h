@@ -1,11 +1,13 @@
 #pragma once
+#include <Core/ValueType.h>
 
 namespace uut
 {
 	class Vector2;
 
-	class IntVector2
+	class IntVector2 : public ValueType
 	{
+		UUT_STRUCT(IntVector2, ValueType)
 	public:
 		IntVector2();
 		IntVector2(int ix, int iy);
@@ -40,6 +42,7 @@ namespace uut
 		bool operator != (const IntVector2& vec) const { return x != vec.x || y != vec.y; }
 		bool operator < (const IntVector2& vec) const { return (x < vec.x) || ((x == vec.x) && (y < vec.y));; }
 
+		static const IntVector2 Default;
 		static const IntVector2 Zero; // ( 0,  0)
 		static const IntVector2 One;  // ( 1,  1)
 		static const IntVector2 Left; // (-1,  0)

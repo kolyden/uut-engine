@@ -6,8 +6,9 @@ namespace uut
 	{		
 	}
 
-	const Boolean Boolean::True;
-	const Boolean Boolean::False;
+	const Boolean Boolean::Default;
+	const Boolean Boolean::True(true);
+	const Boolean Boolean::False(false);
 
 	const HashString Boolean::TrueHash("true");
 	const HashString Boolean::FalseHash("false");

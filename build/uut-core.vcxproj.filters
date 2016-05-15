@@ -297,6 +297,24 @@
     <ClCompile Include="..\Source\UUT\Core\Reflection\MethodInfo.cpp">
       <Filter>Core\Reflection</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Reflection\ConstructorInfo.cpp">
+      <Filter>Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Reflection\ConverterInfo.cpp">
+      <Filter>Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Single.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Double.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Char.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\UUT\Core\Fundamental.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\UUT\Core\Collections\Array.h">
@@ -598,6 +616,27 @@
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Reflection\MethodAttributes.h">
       <Filter>Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Reflection\ConstructorInfo.h">
+      <Filter>Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Reflection\FunctionUtils.h">
+      <Filter>Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Reflection\ConverterInfo.h">
+      <Filter>Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Single.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Double.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Char.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\UUT\Core\Fundamental.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

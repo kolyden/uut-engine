@@ -10,7 +10,7 @@ namespace uut
 
 	MemberType PropertyInfo::GetMemberType() const
 	{
-		return MemberType::Field;
+		return MemberType::Property;
 	}
 
 	bool PropertyInfo::IsPublic() const

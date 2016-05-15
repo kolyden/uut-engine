@@ -7,12 +7,13 @@ namespace uut
 {
 	static std::hash<std::string> g_hashfn;
 
-	Type::Type(TypeInfo info, const char* name, const Type* base, REGFUNC regfunc)
+	Type::Type(TypeInfo info, const char* name, const Type* base, REGFUNC regfunc, size_t size)
 		: _name(name)
 		, _hash(g_hashfn(_name))
 		, _base(nullptr)
 		, _regfunc(regfunc)
 		, _info(info)
+		, _size(size)
 	{
 		if (base != nullptr && base != this)
 			_base = base;
@@ -74,12 +75,12 @@ namespace uut
 		return nullptr;
 	}
 
-	List<const PropertyInfo*> Type::GetFields() const
+	List<const PropertyInfo*> Type::GetProperties() const
 	{
 		List<const PropertyInfo*> list;
 		for (uint i = 0; i < _members.Count(); i++)
 		{
-			if (_members[i]->GetMemberType() == MemberType::Field)
+			if (_members[i]->GetMemberType() == MemberType::Property)
 				list << static_cast<const PropertyInfo*>(_members[i]);
 		}
 
@@ -89,6 +90,11 @@ namespace uut
 	TypeInfo Type::GetInfo() const
 	{
 		return _info;
+	}
+
+	size_t Type::GetSize() const
+	{
+		return _size;
 	}
 
 	const Type* Type::GetBaseType() const

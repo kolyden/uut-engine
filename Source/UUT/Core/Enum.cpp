@@ -18,7 +18,7 @@ namespace uut
 
 	String EnumValueBase::ToString(const Type* type) const
 	{
-		for (auto& it : type->GetFields())
+		for (auto& it : type->GetProperties())
 		{
 			auto var = it->GetValue(nullptr).Get<EnumValueBase>(Empty);
 			const int i = var.GetData();

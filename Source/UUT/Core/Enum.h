@@ -30,6 +30,7 @@ namespace uut
 		typedef T EnumType;
 
 		EnumValue() {};
+		explicit EnumValue(int value) { _value = value; };
 		explicit EnumValue(T value) { _value = static_cast<int>(value); }
 
 		operator T () const { return static_cast<T>(_value); }

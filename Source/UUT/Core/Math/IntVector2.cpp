@@ -2,9 +2,18 @@
 #include <algorithm>
 #include "Math.h"
 #include "Vector2.h"
+#include <Core/Reflection/ConstructorInfo.h>
+#include <Core/Reflection/ConverterInfo.h>
 
 namespace uut
 {
+	UUT_STRUCT_IMPLEMENT(IntVector2)
+	{
+		UUT_REGISTER_CTOR(Vector2);
+		UUT_REGISTER_CONVERTER_DEFAULT(Vector2);
+	}
+
+	const IntVector2 IntVector2::Default(0, 0);
 	const IntVector2 IntVector2::Zero(0, 0);
 	const IntVector2 IntVector2::One(1, 1);
 	const IntVector2 IntVector2::Left(-1, 0);

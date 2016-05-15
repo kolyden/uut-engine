@@ -30,6 +30,7 @@ namespace uut
 		FieldAttribute _attributes;
 	};
 
+	////////////////////////////////////////////////////////////////////////////
 	template<class C, typename T>
 	class PropertyInfoImpl : public PropertyInfo
 	{
@@ -58,6 +59,43 @@ namespace uut
 		virtual Variant GetValue(const BaseObject* object) const override
 		{
 			return Variant(_getter(static_cast<const C*>(object)));
+		}
+
+	protected:
+		Getter _getter;
+		Setter _setter;
+	};
+
+	////////////////////////////////////////////////////////////////////////////
+	template<class C, typename T>
+	class StaticPropertyInfo : public PropertyInfo
+	{
+	public:
+		typedef std::function<void(T)> Setter;
+		typedef std::function<T()> Getter;
+
+		StaticPropertyInfo(const String& name, Getter getter, Setter setter)
+			: PropertyInfo(name, FieldAttribute::Public)
+			, _getter(getter)
+			, _setter(setter)
+		{
+			_attributes = FieldAttribute::Static;
+		}
+
+		virtual bool CanSet() const override { return _setter != nullptr; }
+
+		virtual bool SetValue(BaseObject& object, const Variant& value) override
+		{
+			if (!CanSet())
+				return false;
+
+			_setter(value.Get<T>());
+			return true;
+		}
+
+		virtual Variant GetValue(const BaseObject* object) const override
+		{
+			return Variant(_getter());
 		}
 
 	protected:

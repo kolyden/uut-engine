@@ -20,7 +20,7 @@ namespace uut
 	public:
 		using REGFUNC = void(*)(Type*);
 
-		Type(TypeInfo info, const char* name, const Type* base, REGFUNC regfunc);
+		Type(TypeInfo info, const char* name, const Type* base, REGFUNC regfunc, size_t size);
 		virtual ~Type();
 
 		const char* GetName() const;
@@ -28,6 +28,7 @@ namespace uut
 		String ToString() const;
 
 		TypeInfo GetInfo() const;
+		size_t GetSize() const;
 		bool IsClass() const;
 		bool IsMethod() const;
 		bool IsEnum() const;
@@ -35,7 +36,7 @@ namespace uut
 		void AddMember(MemberInfo* member);
 		const List<const MemberInfo*>& GetMembers() const;
 		const MemberInfo* FindMember(const String& name) const;
-		List<const PropertyInfo*> GetFields() const;
+		List<const PropertyInfo*> GetProperties() const;
 
 		const Type* GetBaseType() const;
 
@@ -48,6 +49,7 @@ namespace uut
 		const Type* _base;
 		REGFUNC _regfunc;
 		TypeInfo _info;
+		size_t _size;
 		List<const MemberInfo*> _members;
 	};
 
@@ -82,4 +84,12 @@ namespace uut
 	void type::_RegisterInternal(Type* internalType)
 
 #define UUT_REGISTER_TYPE(info, type, name) Context::RegisterType<type>(info, name, &type::_RegisterInternal)
+
+#define UUT_DEFAULT(type, value) \
+	template<> static constexpr const type& GetDefault<type>() \
+	{ return value; }
+
+#define UUT_VALUE_TYPE(type, value) \
+	template<> static const Type* typeof<type>() \
+	{ return typeof<value>(); }
 }

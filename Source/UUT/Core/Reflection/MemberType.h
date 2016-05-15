@@ -5,9 +5,8 @@ namespace uut
 	enum class MemberType
 	{
 		Constructor,
-		Destructor,
+		Converter,
 // 		Event,
-		Field,
 		Method,
 		Property,
 	};

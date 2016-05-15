@@ -93,11 +93,11 @@ namespace uut
 
 		static const String Empty;
 
-	protected:
-		std::string _data;
-
 		static int CompareChar(char a, char b, StringComparison comparisonType = StringComparison::Ordinal);
 		static int Compare(const String& a, const String& b, StringComparison comparisonType = StringComparison::Ordinal);
+
+	protected:
+		std::string _data;
 	};
 
 	template<class T> String::Iterator begin(String& str) { return str.Begin(); }

@@ -57,7 +57,8 @@ namespace uut
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	Type* Context::RegisterType(TypeInfo info, const HashString& name, const type_info& typeInfo, const type_info& parentInfo, Type::REGFUNC func)
+	Type* Context::RegisterType(TypeInfo info, const HashString& name,
+		const type_info& typeInfo, const type_info& parentInfo, Type::REGFUNC func, size_t size)
 	{
 		if (_typeInfos.Contains(typeInfo))
 			return _typeInfos[typeInfo];
@@ -77,7 +78,7 @@ namespace uut
 			parentType = it->second;
 		}
 
-		auto type = new Type(info, name, parentType, func);
+		auto type = new Type(info, name, parentType, func, size);
 		_typeInfos[typeInfo] = type;
 		_types.Add(type->GetName(), type);
 
