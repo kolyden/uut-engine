@@ -4,6 +4,7 @@
 #include <Core/ValueType.h>
 #include <Core/Object.h>
 #include <Core/Boolean.h>
+#include <Core/Char.h>
 #include <Core/Numeric.h>
 #include <Core/Enum.h>
 #include <Core/Single.h>

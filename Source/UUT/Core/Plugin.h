@@ -41,6 +41,6 @@ namespace uut
 		PluginVersion _pluginVersion;
 	};
 
-#define UUT_REGISTER_OBJECT(type) UUT_REGISTER_TYPE(TypeInfo::Class, type, #type)
+#define UUT_REGISTER_OBJECT(type) UUT_REGISTER_TYPE(type)
 #define UUT_REGISTER_MODULE(type) UUT_REGISTER_OBJECT(type)
 }

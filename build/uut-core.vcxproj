@@ -72,7 +72,6 @@
     <ClCompile Include="..\Source\UUT\Core\Reflection\MethodInfo.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Reflection\Type.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Single.cpp" />
-    <ClCompile Include="..\Source\UUT\Core\StaticObject.cpp" />
     <ClCompile Include="..\Source\UUT\Core\String.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Time.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Timer.cpp" />
@@ -178,12 +177,10 @@
     <ClInclude Include="..\Source\UUT\Core\Reflection\MethodInfo.h" />
     <ClInclude Include="..\Source\UUT\Core\Reflection\Type.h" />
     <ClInclude Include="..\Source\UUT\Core\Single.h" />
-    <ClInclude Include="..\Source\UUT\Core\StaticObject.h" />
     <ClInclude Include="..\Source\UUT\Core\String.h" />
     <ClInclude Include="..\Source\UUT\Core\Time.h" />
     <ClInclude Include="..\Source\UUT\Core\Timer.h" />
     <ClInclude Include="..\Source\UUT\Core\TimeSpan .h" />
-    <ClInclude Include="..\Source\UUT\Core\ValueObject.h" />
     <ClInclude Include="..\Source\UUT\Core\ValueType.h" />
     <ClInclude Include="..\Source\UUT\Core\Variant.h" />
     <ClInclude Include="..\Source\UUT\Core\Windows\Application.h" />

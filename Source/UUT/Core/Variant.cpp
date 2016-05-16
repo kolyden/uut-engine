@@ -26,7 +26,9 @@ namespace uut
 	}
 
 	void Variant::Clear()
-	{		
+	{
+		if (_type == VariantType::Struct)
+			_dataType->PlacementDtor(_data.data());
 		_type = VariantType::Empty;
 		_dataType = nullptr;
 		_shared = nullptr;
@@ -56,32 +58,35 @@ namespace uut
 			return true;
 		}
 
-		for (auto info : _dataType->GetMembers())
-		{
-			if (info->GetMemberType() != MemberType::Converter)
-				continue;
+		if (_dataType->Convert(*value_type, type, value))
+			return true;
 
-			auto converter = static_cast<const ConverterInfo*>(info);
-			if (converter->GetResultType() != type)
-				continue;
+// 		for (auto info : _dataType->GetMembers())
+// 		{
+// 			if (info->GetMemberType() != MemberType::Converter)
+// 				continue;
+// 
+// 			auto converter = static_cast<const ConverterInfo*>(info);
+// 			if (converter->GetResultType() != type)
+// 				continue;
+// 
+// 			if (converter->Convert(*value_type, value))
+// 				return true;
+// 		}
 
-			if (converter->Convert(*value_type, value))
-				return true;
-		}
-
-		for (auto info : type->GetMembers())
-		{
-			if (info->GetMemberType() != MemberType::Constructor)
-				continue;
-
-			auto ctor = static_cast<const ConstructorInfo*>(info);
-			auto& argTypes = ctor->GetArgsTypes();
-			if (argTypes.Count() != 1 || argTypes[0] != _dataType)
-				continue;
-
-			if (ctor->Call(&value, { Variant(_dataType, *value_type) }))
-				return true;			
-		}
+// 		for (auto info : type->GetMembers())
+// 		{
+// 			if (info->GetMemberType() != MemberType::Constructor)
+// 				continue;
+// 
+// 			auto ctor = static_cast<const ConstructorInfo*>(info);
+// 			auto& argTypes = ctor->GetArgsTypes();
+// 			if (argTypes.Count() != 1 || argTypes[0] != _dataType)
+// 				continue;
+// 
+// 			if (ctor->Call(&value, { Variant(_dataType, *value_type) }))
+// 				return true;
+// 		}
 
 		return false;
 	}

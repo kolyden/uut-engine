@@ -17,8 +17,8 @@ namespace uut
 	{
 	public:
 		typedef List<SharedPtr<Plugin>> PluginList;
-		typedef Dictionary<std::type_index, Type*> TypeInfoDict;
-		typedef Dictionary<HashString, const Type*> TypeDict;
+		typedef Dictionary<size_t, Type*> TypeDict;
+		typedef Dictionary<size_t, const Type*> ConstTypeDict;
 		typedef HashSet<const Type*> DerivedSet;
 		typedef Dictionary<const Type*, DerivedSet> DerivedDict;
 		typedef Dictionary<HashString, SharedPtr<Module>> ModuleDict;
@@ -34,21 +34,17 @@ namespace uut
 		static const PluginList& GetPlugins() { return _plugins; }
 
 		// TYPES
-		static Type* RegisterType(TypeInfo info, const HashString& name, const type_info& typeInfo, const type_info& parentInfo, Type::REGFUNC func, size_t size);
+		static bool RegisterType(Type* type);
 		static const Type* FindType(const HashString& name);
-		static const TypeDict& GetTypes() { return _types; }
-
-		template<class C>static Type* RegisterType(TypeInfo info, const HashString& name, Type::REGFUNC func)
-		{
-			C::__internalType = RegisterType(info, name, typeid(C), typeid(C::Super), func, sizeof(C));
-			return C::__internalType;
-		}
+		static const ConstTypeDict& GetTypes() { return _constTypes; }
 
 		static bool IsDerived(const Type* basetype, const Type* derived);
 		static bool IsDerived(const HashString& basetype, const HashString& derived);
 
 		static bool CanConvert(const Type* fromtype, const Type* totype);
 		static bool CanConvert(const HashString& fromtype, const HashString& totype);
+
+		template<class C> static bool RegisterType() { return RegisterType(C::_GetTypeInternal()); }
 
 		// MODULES
 		static void RegisterModule(Module* module);
@@ -58,8 +54,8 @@ namespace uut
 	protected:
 		static bool _inited;
 		static PluginList _plugins;
-		static TypeInfoDict _typeInfos;
 		static TypeDict _types;
+		static ConstTypeDict _constTypes;
 		static DerivedDict _derived;
 		static ModuleDict _modules;
 

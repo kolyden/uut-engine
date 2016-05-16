@@ -22,6 +22,8 @@ namespace uut
 	{
 		UUT_REGISTER_CTOR(float);
 		UUT_REGISTER_CTOR(Radian);
+
+		UUT_REGISTER_CONVERTER_DEFAULT(Radian);
 		UUT_REGISTER_CONVERTER_FUNC(float, GetRadians);
 	}
 

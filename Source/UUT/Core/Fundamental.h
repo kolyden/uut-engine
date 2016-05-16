@@ -3,13 +3,6 @@
 
 namespace uut
 {
-// 	class Fundamental : public ValueType
-// 	{
-// 		UUT_STRUCT(Fundamental, ValueType)
-// 	public:
-// 		constexpr Fundamental() {}
-// 	};
-
 	template<class C>
 	class FundamentalValue
 	{

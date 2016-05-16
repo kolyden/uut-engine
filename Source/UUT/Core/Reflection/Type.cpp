@@ -2,18 +2,16 @@
 #include <Core/Context.h>
 #include <Core/String.h>
 #include <Core/Reflection/PropertyInfo.h>
+#include "ConverterInfo.h"
 
 namespace uut
 {
-	static std::hash<std::string> g_hashfn;
 
-	Type::Type(TypeInfo info, const char* name, const Type* base, REGFUNC regfunc, size_t size)
+	Type::Type(const char* name, const Type* base, REGFUNC regfunc)
 		: _name(name)
-		, _hash(g_hashfn(_name))
+		, _hash(StringToHast(name))
 		, _base(nullptr)
 		, _regfunc(regfunc)
-		, _info(info)
-		, _size(size)
 	{
 		if (base != nullptr && base != this)
 			_base = base;
@@ -36,20 +34,20 @@ namespace uut
 		return _name;
 	}
 
-	bool Type::IsClass() const
-	{
-		return _info == TypeInfo::Class;
-	}
-
-	bool Type::IsMethod() const
-	{
-		return _info == TypeInfo::Method;
-	}
-
-	bool Type::IsEnum() const
-	{
-		return _info == TypeInfo::Enum;
-	}
+// 	bool Type::IsClass() const
+// 	{
+// 		return _info == TypeInfo::Class;
+// 	}
+// 
+// 	bool Type::IsMethod() const
+// 	{
+// 		return _info == TypeInfo::Method;
+// 	}
+// 
+// 	bool Type::IsEnum() const
+// 	{
+// 		return _info == TypeInfo::Enum;
+// 	}
 
 	void Type::AddMember(MemberInfo* member)
 	{
@@ -87,16 +85,6 @@ namespace uut
 		return list;
 	}
 
-	TypeInfo Type::GetInfo() const
-	{
-		return _info;
-	}
-
-	size_t Type::GetSize() const
-	{
-		return _size;
-	}
-
 	const Type* Type::GetBaseType() const
 	{
 		return _base;
@@ -110,5 +98,41 @@ namespace uut
 	bool Type::CanConvert(const Type* to) const
 	{
 		return Context::CanConvert(this, to);
+	}
+
+	bool Type::Convert(const ValueType& source, const Type* resultType, ValueType& result) const
+	{
+		if (resultType == nullptr)
+			return false;
+
+		for (const Type* type = this; type != nullptr; type = type->GetBaseType())
+		{
+			for (auto info : type->_members)
+			{
+				if (info->GetMemberType() != MemberType::Converter)
+					continue;
+
+				auto converter = static_cast<const ConverterInfo*>(info);
+				if (converter->GetResultType() != resultType)
+					continue;
+
+				if (converter->Convert(source, result))
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	size_t Type::StringToHast(const char* str)
+	{
+		static std::hash<std::string> g_hashfn;
+		return g_hashfn(str);
+	}
+
+	void Type::Register()
+	{
+		if (_regfunc != nullptr)
+			_regfunc(this);
 	}
 }

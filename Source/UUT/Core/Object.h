@@ -6,8 +6,14 @@
 
 namespace uut
 {
-#define UUT_OBJECT(typeName, parentType) UUT_TYPE(typeName, parentType)
-#define UUT_OBJECT_IMPLEMENT(type) UUT_TYPE_IMPLEMENT(type)
+#define UUT_OBJECT(typeName, parentType) \
+	UUT_TYPE(typeName, parentType) \
+	public: \
+	virtual const Type* GetType() const { return GetTypeStatic(); } \
+	private:
+
+#define UUT_OBJECT_IMPLEMENT(type) \
+	UUT_TYPE_IMPLEMENT(type)
 
 	class Object : public BaseObject, public IEquatable, public RefCounted
 	{

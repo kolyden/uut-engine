@@ -288,9 +288,6 @@
     <ClCompile Include="..\Source\UUT\Core\Numeric.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\StaticObject.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Reflection\PropertyInfo.cpp">
       <Filter>Core\Reflection</Filter>
     </ClCompile>
@@ -590,9 +587,6 @@
     <ClInclude Include="..\Source\UUT\Core\TimeSpan .h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\ValueObject.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\ValueType.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -603,9 +597,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\BaseObject.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\StaticObject.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Reflection\PropertyInfo.h">

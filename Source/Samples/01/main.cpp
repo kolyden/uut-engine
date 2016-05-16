@@ -13,7 +13,7 @@
 
 namespace uut
 {
-	enum class EnumTest
+	enum class Test
 	{
 		ValueA,
 		ValueB,
@@ -66,7 +66,16 @@ namespace uut
 	}
 
 	////////////////////
-	UUT_ENUM(EnumTest);
+#define UUT_ENUM(type) \
+	class type ## Enum : public EnumValue<type> \
+	{ UUT_STRUCT(type ## Enum, Enum) }; \
+	UUT_FUNDAMENTAL(type, type ## Enum)
+
+#define UUT_ENUM_IMPLEMENT(type) \
+	UUT_STRUCT_IMPLEMENT(type ## Enum)
+
+#define UUT_REGISTER_ENUM(type) \
+	UUT_REGISTER_TYPE(TypeInfo::Enum, EnumValue<type>, #type)
 
 #define UUT_REGISTER_ENUM_VALUE(name) \
 	internalType->AddMember( \
@@ -78,17 +87,15 @@ namespace uut
 		new StaticPropertyInfo<ClassName, EnumType>(name, \
 			[]() -> EnumType { return value; }, nullptr));
 
+	UUT_ENUM(Test)
 
-	UUT_ENUM_IMPLEMENT(EnumTest)
+	UUT_ENUM_IMPLEMENT(Test)
 	{
  		UUT_REGISTER_ENUM_VALUE(ValueA);
 		UUT_REGISTER_ENUM_VALUE(ValueB);
 		UUT_REGISTER_ENUM_VALUE(ValueC);
 		UUT_REGISTER_ENUM_VALUE(ValueD);
 		UUT_REGISTER_ENUM_VALUE(ValueZ);
-
-		UUT_REGISTER_CTOR(int);
-		UUT_REGISTER_CONVERTER_FUNC(int, GetData);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -99,7 +106,7 @@ namespace uut
 
 	void SampleApp::OnInit()
 	{
-		UUT_REGISTER_ENUM(EnumTest);
+		UUT_REGISTER_OBJECT(TestEnum);
 
 		_texture = _renderer->CreateTexture(IntVector2(texSize), TextureAccess::Streaming);
 		_plasma = new Plasma(_texture->GetSize());
@@ -116,31 +123,29 @@ namespace uut
 		Variant var2(_texture);
 		Variant var3(666.555f);
 		Variant var4(true);
-		Variant var5(EnumTest::ValueZ);
+		Variant var5(Test::ValueZ);
 		Variant var6(typeof<float>());
 		Variant var7(Math::HALF_PI);
+		Variant var8(L'ß');
 
 		constexpr auto bool_def = GetDefault<bool>();
 		constexpr auto float_def = GetDefault<float>();
 		constexpr auto int_def = GetDefault<int>();
-		constexpr auto enum_def = GetDefault<EnumTest>();
+		constexpr auto enum_def = GetDefault<Test>();
 		auto vec2_def = GetDefault<Vector2>();
 
 		auto vec = var1.Get<Vector2>();
-		auto ivec = var1.Get<IntVector2>();
-		auto obj = var2.Get<Object>();
-		auto i = var3.Get<int>();
-		auto b = var4.Get<bool>();
-		auto flag = var5.Get<EnumTest>();
-		auto flagInt = var5.Get<int>();
-		auto type = var5.GetType();
-		auto angleDeg = var7.Get<Degree>();
+		auto ivec = var1.Get<IntVector2>(); UUT_ASSERT(ivec == Vector2(12, 46));
+		auto obj = var2.Get<Object>(); UUT_ASSERT(obj == _texture);
+		auto i = var3.Get<int>(); UUT_ASSERT(i == 666);
+		auto b = var4.Get<bool>(); UUT_ASSERT(b == true);
+		auto flag = var5.Get<Test>(); UUT_ASSERT(flag == Test::ValueZ);
+		auto flagInt = var5.Get<int>(); UUT_ASSERT(flagInt == 42);
+		auto angleDeg = var7.Get<Degree>(); UUT_ASSERT(angleDeg.GetDegrees() == 90);
 		auto angle = var7.Get<float>();
+		auto c = var8.Get<wchar_t>(); UUT_ASSERT(c != 'ß');
 
-		Radian rad;
-		var7.TryGet(rad);
-
-		auto str = StringFormat("Object type = ", typeof<EnumTest>(), " and value = ");
+		auto str = StringFormat("Object type = ", typeof<Test>(), " and value = ");
 	}
 
 	static bool show_test_window = false;
@@ -195,6 +200,8 @@ namespace uut
 
 					if (ImGui::Selectable(typeName, type == current))
 						current = type;
+					ImGui::SameLine();
+					ImGui::Text("(%d)", type->GetSize());
 				}
 				ImGui::ListBoxFooter();
 				ImGui::PopItemWidth();
@@ -221,7 +228,7 @@ namespace uut
 								auto prop = static_cast<const PropertyInfo*>(info);
 								if (prop->IsStatic())
 								{
-									auto value = prop->GetValue(nullptr).Get<EnumTest>();
+									auto value = prop->GetValue(nullptr).Get<Test>();
 									ImGui::SameLine();
 									ImGui::Text(" = %d", (int)value);
 								}

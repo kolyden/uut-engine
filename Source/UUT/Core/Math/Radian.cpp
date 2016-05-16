@@ -22,6 +22,8 @@ namespace uut
 	{
 		UUT_REGISTER_CTOR(float);
 		UUT_REGISTER_CTOR(Degree);
+
+		UUT_REGISTER_CONVERTER_DEFAULT(Degree);
 		UUT_REGISTER_CONVERTER_FUNC(float, GetRadians);
 	}
 

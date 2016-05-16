@@ -8,9 +8,9 @@ namespace uut
 {
 	bool Context::_inited = false;
 	Context::PluginList Context::_plugins;
-	Context::TypeInfoDict Context::_typeInfos;
-	Dictionary<HashString, const Type*> Context::_types;
-	Dictionary<const Type*, Context::DerivedSet> Context::_derived;
+	Context::TypeDict Context::_types;
+	Context::ConstTypeDict Context::_constTypes;
+	Context::DerivedDict Context::_derived;
 	Context::ModuleDict Context::_modules;
 
 	SharedPtr<Object> Context::CreateObject(const Type* type)
@@ -57,43 +57,32 @@ namespace uut
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	Type* Context::RegisterType(TypeInfo info, const HashString& name,
-		const type_info& typeInfo, const type_info& parentInfo, Type::REGFUNC func, size_t size)
+	bool Context::RegisterType(Type* type)
 	{
-		if (_typeInfos.Contains(typeInfo))
-			return _typeInfos[typeInfo];
+		if (type == nullptr)
+			return false;
 
-		if (name.IsEmpty())
-			return nullptr;
+		if (_types.Contains(type->GetHash()))
+			return true;
 
-		const Type* parentType = nullptr;
-		if (parentInfo != typeInfo)
-		{
-			auto it = _typeInfos.Find(parentInfo);
-			if (it == _typeInfos.End())
-			{
-				Debug::LogError("Parent type '%s' not registered", parentInfo.name());
-				return nullptr;
-			}
-			parentType = it->second;
-		}
+		const Type* parentType = type->GetBaseType();
+// 		if (parentType != type)
+// 			RegisterType(parentType);
 
-		auto type = new Type(info, name, parentType, func, size);
-		_typeInfos[typeInfo] = type;
-		_types.Add(type->GetName(), type);
+		_types.Add(type->GetHash(), type);
+		_constTypes.Add(type->GetHash(), type);
 
 		for (; parentType != nullptr; parentType = parentType->GetBaseType())
 			_derived[parentType].Add(type);
 
-		if (func)
-			func(type);
+		type->Register();
 
-		return type;
+		return true;
 	}
 
 	const Type* Context::FindType(const HashString& name)
 	{
-		auto it = _types.Find(name);
+		auto it = _types.Find(name.GetHash());
 		return it != _types.End() ? it->second : nullptr;
 	}
 

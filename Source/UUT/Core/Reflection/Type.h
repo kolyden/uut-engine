@@ -6,13 +6,16 @@ namespace uut
 	class String;
 	class MemberInfo;
 	class PropertyInfo;
+	class Object;
+	class ValueType;
 
 	enum class TypeInfo
 	{
-		Class,
 		Struct,
-		Method,
+		Class,
 		Enum,
+		Property,
+		Method,
 	};
 
 	class Type
@@ -20,18 +23,16 @@ namespace uut
 	public:
 		using REGFUNC = void(*)(Type*);
 
-		Type(TypeInfo info, const char* name, const Type* base, REGFUNC regfunc, size_t size);
+		Type(const char* name, const Type* base, REGFUNC regfunc);
 		virtual ~Type();
 
 		const char* GetName() const;
 		size_t GetHash() const;
 		String ToString() const;
 
-		TypeInfo GetInfo() const;
-		size_t GetSize() const;
-		bool IsClass() const;
-		bool IsMethod() const;
-		bool IsEnum() const;
+// 		bool IsClass() const;
+// 		bool IsMethod() const;
+// 		bool IsEnum() const;
 
 		void AddMember(MemberInfo* member);
 		const List<const MemberInfo*>& GetMembers() const;
@@ -43,19 +44,59 @@ namespace uut
 		bool IsDerived(const Type* from) const;
 		bool CanConvert(const Type* to) const;
 
+		bool Convert(const ValueType& source, const Type* resultType, ValueType& result) const;
+
+		virtual size_t GetSize() const = 0;
+		virtual void PlacementDtor(void* ptr) const = 0;
+
+		static size_t StringToHast(const char* str);
+
 	protected:
 		std::string _name;
 		const size_t _hash;
 		const Type* _base;
 		REGFUNC _regfunc;
-		TypeInfo _info;
-		size_t _size;
+// 		TypeInfo _info;
 		List<const MemberInfo*> _members;
+
+		void Register();
+
+		friend class Context;
+	};
+
+	template<class C>
+	class TypeImpl : public Type
+	{
+	public:
+		TypeImpl(const char* name, const Type* base, REGFUNC regfunc)
+			: Type(name, base, regfunc)
+		{
+		}
+
+		template<typename U = typename C::Super,
+			std::enable_if_t<std::is_same<C, U>::value>* = nullptr>
+		TypeImpl(const char* name, REGFUNC regfunc)
+			: Type(name, nullptr, regfunc)
+		{
+		}
+
+		template<typename U = typename C::Super,
+			std::enable_if_t<!std::is_same<C, U>::value>* = nullptr>
+			TypeImpl(const char* name, REGFUNC regfunc)
+			: Type(name, C::Super::GetTypeStatic(), regfunc)
+		{
+		}
+
+		virtual size_t GetSize() const override { return sizeof(C); }
+		virtual void PlacementDtor(void* ptr) const override
+		{
+			static_cast<C*>(ptr)->~C();
+		}
 	};
 
 	template<class C>
 	static const Type* typeof() {
-		return C::__internalType;
+		return C::GetTypeStatic();
 	}
 
 	template<>
@@ -72,18 +113,22 @@ namespace uut
 	public: \
 	typedef typeName ClassName; \
 	typedef parentType Super; \
-	static const uut::Type* GetType() { return __internalType; } \
-	static void _RegisterInternal(Type* internalType); \
+	static const Type* GetTypeStatic() { return _GetTypeInternal(); } \
 	private: \
-	static Type* __internalType; \
-	template<class C> friend const uut::Type* typeof(); \
+	static Type* _GetTypeInternal(); \
+	static void _RegisterInternal(Type* internalType); \
 	friend class Context;
 
 #define UUT_TYPE_IMPLEMENT(type) \
-	Type* type::__internalType = nullptr; \
+	UUT_TYPE_IMPLEMENT_EX(type, #type)
+
+#define UUT_TYPE_IMPLEMENT_EX(type, name) \
+	Type* type::_GetTypeInternal() \
+	{ static TypeImpl<type> type(name, &type::_RegisterInternal); return &type; } \
 	void type::_RegisterInternal(Type* internalType)
 
-#define UUT_REGISTER_TYPE(info, type, name) Context::RegisterType<type>(info, name, &type::_RegisterInternal)
+
+#define UUT_REGISTER_TYPE(type) Context::RegisterType<type>()
 
 #define UUT_DEFAULT(type, value) \
 	template<> static constexpr const type& GetDefault<type>() \

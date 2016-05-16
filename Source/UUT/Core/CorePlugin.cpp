@@ -1,5 +1,6 @@
 #include "CorePlugin.h"
 #include "Context.h"
+#include "ValueType.h"
 #include "IO/Stream.h"
 #include "IO/FileStream.h"
 #include "IO/MemoryStream.h"
@@ -11,13 +12,13 @@
 #include "Windows/Window.h"
 #include "Attribute.h"
 #include "AttributeUsage.h"
-#include "Numeric.h"
 #include "Boolean.h"
-#include "Enum.h"
+#include "Char.h"
+#include "Numeric.h"
 #include "Single.h"
 #include "Double.h"
+#include "Enum.h"
 #include "Engine.h"
-#include "ValueType.h"
 #include "Math/Vector2.h"
 #include <Core/Math/Radian.h>
 #include <Core/Math/Degree.h>
@@ -35,13 +36,11 @@ namespace uut
 		// BASE
 		UUT_REGISTER_OBJECT(BaseObject);
 		UUT_REGISTER_OBJECT(ValueType);
-
-		// STATIC
-		UUT_REGISTER_OBJECT(StaticObject);
 		UUT_REGISTER_OBJECT(Debug);
 
 		// FUNDAMENTAL
 		UUT_REGISTER_OBJECT(Boolean);
+		UUT_REGISTER_OBJECT(Char);
 		UUT_REGISTER_OBJECT(Int8);
 		UUT_REGISTER_OBJECT(UInt8);
 		UUT_REGISTER_OBJECT(Int16);
@@ -54,7 +53,7 @@ namespace uut
 		UUT_REGISTER_OBJECT(Double);
 
 		// ENUM
-		UUT_REGISTER_OBJECT(EnumValueBase);
+		UUT_REGISTER_OBJECT(Enum);
 
 		// CORE
 		UUT_REGISTER_OBJECT(Object);
@@ -66,10 +65,10 @@ namespace uut
 		UUT_REGISTER_OBJECT(String);
 
 		// Math
+		UUT_REGISTER_OBJECT(Degree);
 		UUT_REGISTER_OBJECT(Vector2);
 		UUT_REGISTER_OBJECT(IntVector2);
 		UUT_REGISTER_OBJECT(Radian);
-		UUT_REGISTER_OBJECT(Degree);
 
 		// IO
 		UUT_REGISTER_OBJECT(Stream);
