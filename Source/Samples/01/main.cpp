@@ -66,6 +66,72 @@ namespace uut
 	}
 
 	////////////////////
+	template <typename T>
+	struct _eat {
+		T   _value;
+
+		template <typename Any>
+		_eat& operator =(Any value) { return *this; }   // Игнорирует аргумент.
+
+		explicit _eat(T value) : _value(value) { }      // Преобразует из T.
+		operator T() const { return _value; }           // Преобразует в T.
+	};
+
+#define EXPAND(X) X    // for MSVC10 compatibility
+
+	// compute number of (variadic) macro arguments
+	// from http://groups.google.com/group/comp.std.c/browse_thread/thread/77ee8c8f92e4a3fb/346fc464319b1ee5?pli=1
+#define PP_NARG(...) EXPAND( PP_NARG_(__VA_ARGS__, PP_RSEQ_N()) )
+#define PP_NARG_(...) EXPAND( PP_ARG_N(__VA_ARGS__) )
+#define PP_ARG_N(_1, _2, _3, _4, _5, _6, _7, _8, N, ...) N
+#define PP_RSEQ_N() 8, 7, 6, 5, 4, 3, 2, 1, 0
+
+#define PP_ENUM_NAME_1(arg0) #arg0
+#define PP_ENUM_NAME_2(arg0, arg1) #arg0, #arg1
+#define PP_ENUM_NAME_3(arg0, arg1, arg2) #arg0, #arg1, #arg2
+#define PP_ENUM_NAME_4(arg0, arg1, arg2, arg3) #arg0, #arg1, #arg2, #arg3
+
+#define PP_ENUM_NAME_(N) PP_ENUM_NAME_##N
+#define PP_ENUM_NAME_EVAL(N) PP_ENUM_NAME_(N)
+#define PP_ENUM_NAME(...) EXPAND( PP_ENUM_NAME_EVAL(EXPAND( PP_NARG(__VA_ARGS__) ))(__VA_ARGS__) )
+
+#define PP_ENUM_VALUE_1(arg0) (_eat<Enum>)arg0
+#define PP_ENUM_VALUE_2(arg0, arg1) (_eat<Enum>)arg0, (_eat<Enum>)arg1
+#define PP_ENUM_VALUE_3(arg0, arg1, arg2) (_eat<Enum>)arg0, (_eat<Enum>)arg1, (_eat<Enum>)arg2
+#define PP_ENUM_VALUE_4(arg0, arg1, arg2, arg3) (_eat<Enum>)arg0, (_eat<Enum>)arg1, (_eat<Enum>)arg2, (_eat<Enum>)arg3
+
+#define PP_ENUM_VALUE_(N) PP_ENUM_VALUE_##N
+#define PP_ENUM_VALUE_EVAL(N) PP_ENUM_VALUE_(N)
+#define PP_ENUM_VALUE(...) EXPAND( PP_ENUM_VALUE_EVAL(EXPAND( PP_NARG(__VA_ARGS__) ))(__VA_ARGS__) )
+
+
+
+#define UUT_ENUM_TEST(name, ...) \
+	struct name { \
+	enum Enum { __VA_ARGS__ }; \
+	static constexpr int COUNT = PP_NARG(__VA_ARGS__); \
+	static const char* NAMES[COUNT]; \
+	static const int VALUES[COUNT]; \
+	}; \
+	const char* name::NAMES[COUNT] = { EXPAND( PP_ENUM_NAME(__VA_ARGS__) ) }; \
+	const int name::VALUES[COUNT] = { EXPAND( PP_ENUM_VALUE(__VA_ARGS__) ) };
+
+	UUT_ENUM_TEST(Direction, North = 1, East = 2, South = 4, West = 8)
+
+	template<typename T>
+	static void RegisterValues(Type* type, unsigned count, const char* names[], const int values[])
+	{
+		for (unsigned i = 0; i < count; i++)
+		{
+			String name = names[i];
+			int value = values[i];
+			type->AddMember(
+				new StaticPropertyInfo<T>(name,
+					[name, value]() -> T { return (T)value; }, nullptr));
+		}
+	}
+
+	////////////////////
 #define UUT_ENUM(type) \
 	class type ## Enum : public EnumValue<type> \
 	{ UUT_STRUCT(type ## Enum, Enum) }; \
@@ -79,12 +145,12 @@ namespace uut
 
 #define UUT_REGISTER_ENUM_VALUE(name) \
 	internalType->AddMember( \
-		new StaticPropertyInfo<ClassName, EnumType>(#name, \
+		new StaticPropertyInfo<EnumType>(#name, \
 			[]() -> EnumType { return EnumType::name; }, nullptr));
 
 #define UUT_REGISTER_ENUM_VALUE_EX(name, value) \
 	internalType->AddMember( \
-		new StaticPropertyInfo<ClassName, EnumType>(name, \
+		new StaticPropertyInfo<EnumType>(name, \
 			[]() -> EnumType { return value; }, nullptr));
 
 	UUT_ENUM(Test)
@@ -96,6 +162,10 @@ namespace uut
 		UUT_REGISTER_ENUM_VALUE(ValueC);
 		UUT_REGISTER_ENUM_VALUE(ValueD);
 		UUT_REGISTER_ENUM_VALUE(ValueZ);
+
+		UUT_REGISTER_CONVERTER_FUNC(String, ToString);
+
+		RegisterValues<Test>(internalType, Direction::COUNT, Direction::NAMES, Direction::VALUES);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -128,11 +198,11 @@ namespace uut
 		Variant var7(Math::HALF_PI);
 		Variant var8(L'Я');
 
-		constexpr auto bool_def = GetDefault<bool>();
-		constexpr auto float_def = GetDefault<float>();
-		constexpr auto int_def = GetDefault<int>();
-		constexpr auto enum_def = GetDefault<Test>();
-		auto vec2_def = GetDefault<Vector2>();
+		constexpr auto bool_def = GetDefault<bool>(); UUT_ASSERT(bool_def == false);
+		constexpr auto float_def = GetDefault<float>(); UUT_ASSERT(float_def == 0.0f);
+		constexpr auto int_def = GetDefault<int>(); UUT_ASSERT(int_def == 0);
+		constexpr auto enum_def = GetDefault<Test>(); UUT_ASSERT(enum_def == Test::ValueA);
+		auto ivec2_def = GetDefault<IntVector2>(); UUT_ASSERT(ivec2_def == IntVector2::Zero);
 
 		auto vec = var1.Get<Vector2>();
 		auto ivec = var1.Get<IntVector2>(); UUT_ASSERT(ivec == Vector2(12, 46));
@@ -142,13 +212,95 @@ namespace uut
 		auto flag = var5.Get<Test>(); UUT_ASSERT(flag == Test::ValueZ);
 		auto flagInt = var5.Get<int>(); UUT_ASSERT(flagInt == 42);
 		auto angleDeg = var7.Get<Degree>(); UUT_ASSERT(angleDeg.GetDegrees() == 90);
-		auto angle = var7.Get<float>();
+		auto angle = var7.Get<float>(); UUT_ASSERT(angle == Math::HALF_PI.GetRadians());
 		auto c = var8.Get<wchar_t>(); UUT_ASSERT(c != 'Я');
+
+		auto fstr = var3.Get<String>();
+		auto flagStr = var5.Get<String>();
 
 		auto str = StringFormat("Object type = ", typeof<Test>(), " and value = ");
 	}
 
 	static bool show_test_window = false;
+
+	static String ArgTypeToString(const Type* type)
+	{
+		if (type == nullptr)
+			return "void";
+
+		return type->GetName();
+	}
+
+	static void DrawArgList(const List<const Type*>& args)
+	{
+		for (unsigned i = 0; i < args.Count(); i++)
+		{
+			auto it = args[i];
+			if (i > 0)
+			{
+				ImGui::SameLine();
+				ImGui::Text(",");
+			}
+
+			ImGui::SameLine();
+			ImGui::Text(it->GetName());
+		}
+	}
+
+	static void DrawMembers(const Type* type, bool showCtor)
+	{
+		for (auto info : type->GetMembers())
+		{
+			switch (info->GetMemberType())
+			{
+			case MemberType::Property:
+			{
+				ImGui::Text("prop: %s", info->GetName().GetData());
+				auto prop = static_cast<const PropertyInfo*>(info);
+				if (prop->IsStatic())
+				{
+					auto value = prop->GetValue(nullptr).Get<int>();
+					ImGui::SameLine();
+					ImGui::Text(" = %d", value);
+				}
+			}
+			break;
+
+			case MemberType::Constructor:
+				if (showCtor)
+				{
+					ImGui::Text("Constructor (");
+					auto ctor = (const ConstructorInfo*)info;
+					DrawArgList(ctor->GetArgsTypes());
+					ImGui::SameLine();
+					ImGui::Text(")");
+				}
+				break;
+
+			case MemberType::Method:
+				{
+					auto method = (const MethodInfo*)info;
+					ImGui::Text("method: %s %s(",
+						ArgTypeToString(method->GetReturnType()),
+						info->GetName().GetData());
+					DrawArgList(method->GetArgsTypes());
+					ImGui::SameLine();
+					ImGui::Text(")");
+				}
+				break;
+
+			case MemberType::Converter:
+			{
+				auto converter = (const ConverterInfo*)info;
+				ImGui::Text("Convert to %s", converter->GetResultType()->GetName());
+			}
+			break;
+
+			default:
+				ImGui::Text(info->GetName());
+			}
+		}
+	}
 
 	void SampleApp::OnFrame()
 	{
@@ -212,48 +364,16 @@ namespace uut
 					ImGui::BeginGroup();
 
 					ImGui::Text(current->GetName());
-					auto baseType = current->GetBaseType();
-// 					ImGui::Separator();
-					for (; baseType != nullptr; baseType = baseType->GetBaseType())
+					
+					for (auto baseType = current->GetBaseType(); baseType != nullptr; baseType = baseType->GetBaseType())
 						ImGui::Text(baseType->GetName());
 
 					ImGui::Separator();
-					for (auto info : current->GetMembers())
-					{						
-						switch (info->GetMemberType())
-						{
-						case MemberType::Property:
-							{
-								ImGui::Text("prop: %s", info->GetName().GetData());
-								auto prop = static_cast<const PropertyInfo*>(info);
-								if (prop->IsStatic())
-								{
-									auto value = prop->GetValue(nullptr).Get<Test>();
-									ImGui::SameLine();
-									ImGui::Text(" = %d", (int)value);
-								}
-							}
-							break;
+					DrawMembers(current, true);
 
-						case MemberType::Constructor:
-							ImGui::Text("Constructor");
-							break;
-
-						case MemberType::Method:
-							ImGui::Text("method: %s", info->GetName().GetData());
-							break;
-
-						case MemberType::Converter:
-							{
-								auto converter = (const ConverterInfo*)info;
-								ImGui::Text("Convert to %s", converter->GetResultType()->GetName());
-							}
-							break;
-
-						default:
-							ImGui::Text(info->GetName());
-						}
-					}
+					ImGui::Separator();
+					for (auto baseType = current->GetBaseType(); baseType != nullptr; baseType = baseType->GetBaseType())
+						DrawMembers(baseType, false);
 					ImGui::EndGroup();
 				}				
 			}

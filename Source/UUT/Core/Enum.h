@@ -35,7 +35,7 @@ namespace uut
 
 		operator T () const { return static_cast<T>(_value); }
 
-		String ToString() const { return Enum::ToString(T::GetTypeStatic()); }
+		String ToString() const { return Enum::ToString(typeof<T>()); }
 
 		bool operator == (T other) const { return static_cast<T>(_value) == other; }
 		bool operator != (T other) const { return static_cast<T>(_value) != other; }

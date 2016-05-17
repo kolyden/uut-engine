@@ -23,6 +23,8 @@
 #include <Core/Math/Radian.h>
 #include <Core/Math/Degree.h>
 #include "Debug.h"
+#include "Math/Vector3.h"
+#include "Math/IntVector3.h"
 
 namespace uut
 {
@@ -69,6 +71,8 @@ namespace uut
 		UUT_REGISTER_OBJECT(Vector2);
 		UUT_REGISTER_OBJECT(IntVector2);
 		UUT_REGISTER_OBJECT(Radian);
+		UUT_REGISTER_OBJECT(Vector3);
+		UUT_REGISTER_OBJECT(IntVector3);
 
 		// IO
 		UUT_REGISTER_OBJECT(Stream);

@@ -27,7 +27,6 @@ namespace uut
 		UUT_REGISTER_CONVERTER_FUNC(float, GetRadians);
 	}
 
-	const Radian Radian::Default;
 	const Radian Radian::Zero;
 
 	Radian::Radian(const Degree& angle)

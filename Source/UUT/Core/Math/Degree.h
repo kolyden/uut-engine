@@ -59,7 +59,6 @@ namespace uut
 		bool operator>= (const Degree& d) const { return _angle >= d._angle; }
 		bool operator>  (const Degree& d) const { return _angle > d._angle; }
 
-		static const Degree Default;
 		static const Degree Zero;
 
 	protected:
@@ -68,4 +67,6 @@ namespace uut
 
 	extern Degree operator"" _deg(long double angle);
 	extern Degree operator"" _deg(unsigned long long int angle);
+
+	UUT_DEFAULT(Degree, Degree::Zero)
 }

@@ -45,6 +45,8 @@ namespace uut
 		bool CanConvert(const Type* to) const;
 
 		bool Convert(const ValueType& source, const Type* resultType, ValueType& result) const;
+		template<class C> bool Convert(const ValueType& source, C& result) const
+		{ return Convert(source, typeof<C>(), result);}
 
 		virtual size_t GetSize() const = 0;
 		virtual void PlacementDtor(void* ptr) const = 0;

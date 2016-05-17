@@ -7,9 +7,14 @@ namespace uut
 	{
 		UUT_REGISTER_CONVERTER_DEFAULT(double);
 		UUT_REGISTER_CONVERTER_DEFAULT(int);
+		UUT_REGISTER_CONVERTER_FUNC(String, ToString);
 	}
 
-	const Single Single::Default;
+	String Single::ToString() const
+	{
+		return std::to_string(_value);
+	}
+
 	const Single Single::Zero(0.0f);
 	const Single Single::One(1.0f);
 	const Single Single::MaxValue(std::numeric_limits<float>::max());

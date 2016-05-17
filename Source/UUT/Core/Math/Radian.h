@@ -53,7 +53,6 @@ namespace uut
 		bool operator>= (const Radian& r) const { return _angle >= r._angle; }
 		bool operator>  (const Radian& r) const { return _angle > r._angle; }
 
-		static const Radian Default;
 		static const Radian Zero;
 
 	protected:
@@ -62,4 +61,6 @@ namespace uut
 
 	extern Radian operator"" _rad(long double angle);
 	extern Radian operator"" _rad(unsigned long long int angle);
+
+	UUT_DEFAULT(Radian, Radian::Zero)
 }

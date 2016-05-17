@@ -67,7 +67,7 @@ namespace uut
 	};
 
 	////////////////////////////////////////////////////////////////////////////
-	template<class C, typename T>
+	template<typename T>
 	class StaticPropertyInfo : public PropertyInfo
 	{
 	public:

@@ -10,7 +10,8 @@ namespace uut
 		constexpr Single() : FundamentalValue(0.0f) {}
 		constexpr Single(float value) : FundamentalValue(value) {}
 
-		static const Single Default;
+		String ToString() const;
+
 		static const Single Zero;
 		static const Single One;
 		static const Single MaxValue;
@@ -20,4 +21,5 @@ namespace uut
 	};
 
 	UUT_FUNDAMENTAL(float, Single)
+	UUT_DEFAULT(Single, Single::Zero)
 }

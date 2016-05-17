@@ -2,9 +2,19 @@
 #include "Vector2.h"
 #include <algorithm>
 #include "Math.h"
+#include <Core/Reflection/ConstructorInfo.h>
+#include <Core/Reflection/ConverterInfo.h>
 
 namespace uut
 {
+	UUT_STRUCT_IMPLEMENT(Vector3)
+	{
+		UUT_REGISTER_CTOR(float, float);
+		UUT_REGISTER_CTOR(float, float, float);
+		UUT_REGISTER_CTOR(Vector2);
+		UUT_REGISTER_CONVERTER_FUNC(Vector2, ToVector2);
+	}
+
 	const Vector3 Vector3::Zero(0, 0, 0);
 	const Vector3 Vector3::One(1, 1, 1);
 	const Vector3 Vector3::AxisX(1, 0, 0);
@@ -106,6 +116,11 @@ namespace uut
 	Vector3 operator*(float s, const Vector3& vec)
 	{
 		return Vector3(vec.x*s, vec.y*s, vec.z*s);
+	}
+
+	Vector2 Vector3::ToVector2() const
+	{
+		return Vector2(x, y);
 	}
 
 	float Vector3::Length() const

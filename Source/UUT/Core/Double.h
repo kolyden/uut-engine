@@ -11,7 +11,6 @@ namespace uut
 		constexpr Double() : FundamentalValue(0.0) {}
 		constexpr Double(double value) : FundamentalValue(value) {}
 
-		static const Double Default;
 		static const Double Zero;
 		static const Double One;
 		static const Double MaxValue;
@@ -21,4 +20,5 @@ namespace uut
 	};
 
 	UUT_FUNDAMENTAL(double, Single)
+	UUT_DEFAULT(Double, Double::Zero)
 }

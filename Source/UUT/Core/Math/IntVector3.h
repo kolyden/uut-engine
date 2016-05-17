@@ -1,17 +1,19 @@
 #pragma once
+#include <Core/ValueType.h>
 
 namespace uut
 {
-	class Vector2;
+	class IntVector2;
 
-	class IntVector3
+	class IntVector3 : public ValueType
 	{
+		UUT_STRUCT(IntVector3, ValueType)
 	public:
 		IntVector3();
-		IntVector3(int ix, int iy, int iz);
 		explicit IntVector3(int val);
-		IntVector3(const IntVector3& vec);
-		IntVector3(const Vector2& vec);
+		IntVector3(int ix, int iy);
+		IntVector3(int ix, int iy, int iz);
+		IntVector3(const IntVector2& vec);
 
 		operator int* () { return m; }
 		operator const int* () const { return m; }
@@ -29,12 +31,11 @@ namespace uut
 
 		friend IntVector3 operator * (int s, const IntVector3& vec) { return IntVector3(vec.x*s, vec.y*s, vec.z*s); }
 
+		IntVector2 ToVector2() const;
+
 		void Set(int i) { x = i; y = i; }
 		void Set(int ix, int iy) { x = ix; y = iy; }
 		int Area() const { return x*y; }
-
-		IntVector3& operator = (const IntVector3& vec);
-// 		IntVector3& operator = (IntVector3&& vec);
 
 		bool operator == (const IntVector3& vec) const { return x == vec.x && y == vec.y; }
 		bool operator != (const IntVector3& vec) const { return x != vec.x || y != vec.y; }
@@ -60,4 +61,6 @@ namespace uut
 			};
 		};
 	};
+
+	UUT_DEFAULT(IntVector3, IntVector3::Zero)
 }

@@ -1,11 +1,13 @@
 #pragma once
+#include <Core/ValueType.h>
 
 namespace uut
 {
 	class Vector2;
 
-	class Vector3
+	class Vector3 : public ValueType
 	{
+		UUT_STRUCT(Vector3, ValueType)
 	public:
 		Vector3();
 		explicit Vector3(float f);
@@ -30,6 +32,8 @@ namespace uut
 		Vector3 operator/(float s) const;
 
 		friend Vector3 operator *(float s, const Vector3& vec);
+
+		Vector2 ToVector2() const;
 
 		float Length() const;
 		float LengthSqr() const;
@@ -75,4 +79,6 @@ namespace uut
 			};
 		};
 	};
+
+	UUT_DEFAULT(Vector3, Vector3::Zero)
 }

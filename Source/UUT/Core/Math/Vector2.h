@@ -53,7 +53,6 @@ namespace uut
 
 		static Vector2 Scale(const Vector2& vec, float s);
 
-		static const Vector2 Default;
 		static const Vector2 Zero;  // ( 0,  0)
 		static const Vector2 One;   // ( 1,  1)
 		static const Vector2 Left;  // (-1,  0)
@@ -71,4 +70,6 @@ namespace uut
 			};
 		};
 	};
+
+	UUT_DEFAULT(Vector2, Vector2::Zero)
 }

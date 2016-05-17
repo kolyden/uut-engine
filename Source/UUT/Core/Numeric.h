@@ -5,11 +5,10 @@
 namespace uut
 {
 	template<typename T>
-	class Numeric : public ValueType, public FundamentalValue<T>
+	class Numeric : public FundamentalValue<T>
 	{
-// 		UUT_STRUCT(Numeric, Fundamental)
 	public:
-		Numeric() : FundamentalValue(0) {}
+		constexpr Numeric() : FundamentalValue(0) {}
 		explicit constexpr Numeric(T value) : FundamentalValue(value) {}
 
 // 		Numeric<T>& operator = (T value)
@@ -20,20 +19,12 @@ namespace uut
 
 		static const T MaxValue;
 		static const T MinValue;
-		static const Numeric<T> Zero;
-		static const Numeric<T> One;
-		static const Numeric<T> Default;
 
 		static constexpr T DefaultValue = static_cast<T>(0);
 	};
 
 	template<typename T>const T Numeric<T>::MaxValue = std::numeric_limits<T>::max();
 	template<typename T>const T Numeric<T>::MinValue = std::numeric_limits<T>::min();
-	template<typename T>const Numeric<T> Numeric<T>::Zero(0);
-	template<typename T>const Numeric<T> Numeric<T>::One(1);
-	template<typename T>const Numeric<T> Numeric<T>::Default(0);
-
-
 
 // #define UUT_NUMERIC(name, type) \
 // 	class name : public Numeric<type> \
@@ -54,20 +45,24 @@ namespace uut
 
 
 #define UUT_NUMERIC(name, type) \
-	class name : public Numeric<type> \
-	{ UUT_STRUCT(name, ValueType) }; \
- 	UUT_FUNDAMENTAL(type, name)
+	class name : public ValueType, public Numeric<type> \
+	{ UUT_STRUCT(name, ValueType) \
+	public: constexpr name() {} \
+	constexpr name(type value) : Numeric(value) {} \
+	static const name Zero; }; \
+ 	UUT_FUNDAMENTAL(type, name) \
+	UUT_DEFAULT(name, name::Zero)
 
-// #define UUT_NUMERIC_IMPLEMENT(name, type) \
-// 	UUT_STRUCT_IMPLEMENT(Numeric<type>) {} \
-// 	UUT_STRUCT_IMPLEMENT(name)
+#define UUT_NUMERIC_IMPLEMENT(name) \
+	const name name::Zero(0); \
+	UUT_STRUCT_IMPLEMENT(name)
 
-	UUT_NUMERIC(Int8, int8_t);
-	UUT_NUMERIC(UInt8, uint8_t);
-	UUT_NUMERIC(Int16, int16_t);
-	UUT_NUMERIC(UInt16, uint16_t);
-	UUT_NUMERIC(Int32, int32_t);
-	UUT_NUMERIC(UInt32, uint32_t);
-	UUT_NUMERIC(Int64, int64_t);
-	UUT_NUMERIC(UInt64, uint64_t);
+	UUT_NUMERIC(Int8, int8_t)
+	UUT_NUMERIC(UInt8, uint8_t)
+	UUT_NUMERIC(Int16, int16_t)
+	UUT_NUMERIC(UInt16, uint16_t)
+	UUT_NUMERIC(Int32, int32_t)
+	UUT_NUMERIC(UInt32, uint32_t)
+	UUT_NUMERIC(Int64, int64_t)
+	UUT_NUMERIC(UInt64, uint64_t)
 }

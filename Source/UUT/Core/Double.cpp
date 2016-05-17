@@ -9,7 +9,6 @@ namespace uut
 		UUT_REGISTER_CONVERTER_DEFAULT(int);
 	}
 
-	const Double Double::Default;
 	const Double Double::Zero(0.0);
 	const Double Double::One(1.0);
 	const Double Double::MaxValue(std::numeric_limits<double>::max());
