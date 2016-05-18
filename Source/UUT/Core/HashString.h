@@ -1,4 +1,5 @@
 #pragma once
+#include <Core/Platform.h>
 #include <string>
 
 namespace uut

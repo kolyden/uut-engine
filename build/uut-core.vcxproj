@@ -19,6 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\RPG\Entity.cpp" />
+    <ClCompile Include="..\Source\RPG\Item.cpp" />
+    <ClCompile Include="..\Source\RPG\ItemContainer.cpp" />
+    <ClCompile Include="..\Source\RPG\ItemSlot.cpp" />
+    <ClCompile Include="..\Source\RPG\ItemType.cpp" />
+    <ClCompile Include="..\Source\RPG\Level.cpp" />
+    <ClCompile Include="..\Source\RPG\LevelIndex.cpp" />
+    <ClCompile Include="..\Source\RPG\Quest.cpp" />
+    <ClCompile Include="..\Source\RPG\Trait.cpp" />
+    <ClCompile Include="..\Source\RPG\TraitContainer.cpp" />
+    <ClCompile Include="..\Source\RPG\World.cpp" />
     <ClCompile Include="..\Source\UUT\Core\Attribute.cpp" />
     <ClCompile Include="..\Source\UUT\Core\AttributeUsage.cpp" />
     <ClCompile Include="..\Source\UUT\Core\BaseObject.cpp" />
@@ -112,6 +123,17 @@
     <ClCompile Include="..\Source\UUT\Video\Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Source\RPG\Entity.h" />
+    <ClInclude Include="..\Source\RPG\Item.h" />
+    <ClInclude Include="..\Source\RPG\ItemContainer.h" />
+    <ClInclude Include="..\Source\RPG\ItemSlot.h" />
+    <ClInclude Include="..\Source\RPG\ItemType.h" />
+    <ClInclude Include="..\Source\RPG\Level.h" />
+    <ClInclude Include="..\Source\RPG\LevelIndex.h" />
+    <ClInclude Include="..\Source\RPG\Quest.h" />
+    <ClInclude Include="..\Source\RPG\Trait.h" />
+    <ClInclude Include="..\Source\RPG\TraitContainer.h" />
+    <ClInclude Include="..\Source\RPG\World.h" />
     <ClInclude Include="..\Source\UUT\Core\Assert.h" />
     <ClInclude Include="..\Source\UUT\Core\Attribute.h" />
     <ClInclude Include="..\Source\UUT\Core\AttributeUsage.h" />

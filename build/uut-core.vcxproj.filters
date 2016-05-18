@@ -37,6 +37,9 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{b6fc0f15-a59c-4786-85ff-5c86607e2851}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RPG">
+      <UniqueIdentifier>{f715a8a9-eee4-4607-b0c6-8d73a60e8f49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\UUT\Core\Windows\Application.cpp">
@@ -311,6 +314,39 @@
     </ClCompile>
     <ClCompile Include="..\Source\UUT\Core\Fundamental.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RPG\Entity.cpp">
+      <Filter>RPG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RPG\Item.cpp">
+      <Filter>RPG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RPG\ItemContainer.cpp">
+      <Filter>RPG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RPG\ItemSlot.cpp">
+      <Filter>RPG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RPG\ItemType.cpp">
+      <Filter>RPG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RPG\Level.cpp">
+      <Filter>RPG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RPG\Quest.cpp">
+      <Filter>RPG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RPG\Trait.cpp">
+      <Filter>RPG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RPG\TraitContainer.cpp">
+      <Filter>RPG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RPG\World.cpp">
+      <Filter>RPG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\RPG\LevelIndex.cpp">
+      <Filter>RPG</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -628,6 +664,39 @@
     </ClInclude>
     <ClInclude Include="..\Source\UUT\Core\Fundamental.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\RPG\Entity.h">
+      <Filter>RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\RPG\Item.h">
+      <Filter>RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\RPG\ItemContainer.h">
+      <Filter>RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\RPG\ItemSlot.h">
+      <Filter>RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\RPG\ItemType.h">
+      <Filter>RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\RPG\Level.h">
+      <Filter>RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\RPG\Quest.h">
+      <Filter>RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\RPG\Trait.h">
+      <Filter>RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\RPG\TraitContainer.h">
+      <Filter>RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\RPG\World.h">
+      <Filter>RPG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\RPG\LevelIndex.h">
+      <Filter>RPG</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
