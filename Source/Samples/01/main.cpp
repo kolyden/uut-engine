@@ -134,8 +134,11 @@ namespace uut
 	////////////////////
 #define UUT_ENUM(type) \
 	class type ## Enum : public EnumValue<type> \
-	{ UUT_STRUCT(type ## Enum, Enum) }; \
-	UUT_FUNDAMENTAL(type, type ## Enum)
+	{ UUT_STRUCT(type ## Enum, Enum) \
+	public: constexpr type ## Enum() {} \
+	constexpr type ## Enum(type value) : EnumValue(value) {} }; \
+	UUT_FUNDAMENTAL(type, type ## Enum) \
+	namespace detail { template<>struct Enum<type> { typedef type ## Enum TYPE; }; }
 
 #define UUT_ENUM_IMPLEMENT(type) \
 	UUT_STRUCT_IMPLEMENT(type ## Enum)
@@ -165,7 +168,7 @@ namespace uut
 
 		UUT_REGISTER_CONVERTER_FUNC(String, ToString);
 
-		RegisterValues<Test>(internalType, Direction::COUNT, Direction::NAMES, Direction::VALUES);
+// 		RegisterValues<Test>(internalType, Direction::COUNT, Direction::NAMES, Direction::VALUES);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -197,6 +200,7 @@ namespace uut
 		Variant var6(typeof<float>());
 		Variant var7(Math::HALF_PI);
 		Variant var8(L'ß');
+		Variant var9(256);
 
 		constexpr auto bool_def = GetDefault<bool>(); UUT_ASSERT(bool_def == false);
 		constexpr auto float_def = GetDefault<float>(); UUT_ASSERT(float_def == 0.0f);
@@ -211,9 +215,13 @@ namespace uut
 		auto b = var4.Get<bool>(); UUT_ASSERT(b == true);
 		auto flag = var5.Get<Test>(); UUT_ASSERT(flag == Test::ValueZ);
 		auto flagInt = var5.Get<int>(); UUT_ASSERT(flagInt == 42);
+		auto type = var6.Get<Type>(); UUT_ASSERT(type == typeof<float>());
 		auto angleDeg = var7.Get<Degree>(); UUT_ASSERT(angleDeg.GetDegrees() == 90);
 		auto angle = var7.Get<float>(); UUT_ASSERT(angle == Math::HALF_PI.GetRadians());
 		auto c = var8.Get<wchar_t>(); UUT_ASSERT(c != 'ß');
+		auto vari = var9.Get<int>(); UUT_ASSERT(vari == 256);
+		auto varf = var9.Get<float>(); UUT_ASSERT(varf == 256);
+		auto vars = var9.Get<String>(); UUT_ASSERT(vars == "256");
 
 		auto fstr = var3.Get<String>();
 		auto flagStr = var5.Get<String>();

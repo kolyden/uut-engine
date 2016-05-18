@@ -1,6 +1,7 @@
 #pragma once
 #include <Core/Fundamental.h>
 #include <limits>
+#include "String.h"
 
 namespace uut
 {
@@ -16,6 +17,8 @@ namespace uut
 // 			FundamentalValue<T>::_value = value;
 // 			return *this;
 // 		}
+
+		String ToString() const { return std::to_string(FundamentalValue<T>::GetValue()); }
 
 		static const T MaxValue;
 		static const T MinValue;

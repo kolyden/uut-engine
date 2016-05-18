@@ -29,9 +29,9 @@ namespace uut
 	public:
 		typedef T EnumType;
 
-		EnumValue() {};
-		explicit EnumValue(int value) { _value = value; };
-		explicit EnumValue(T value) { _value = static_cast<int>(value); }
+		constexpr EnumValue() {};
+		explicit constexpr EnumValue(int value) { _value = value; };
+		explicit constexpr EnumValue(T value) { _value = static_cast<int>(value); }
 
 		operator T () const { return static_cast<T>(_value); }
 
@@ -46,4 +46,9 @@ namespace uut
 	};
 
 	template<typename T> const EnumValue<T> EnumValue<T>::Default(DefaultValue);
+
+	namespace detail
+	{
+		template<class C> struct Enum {};
+	}
 }

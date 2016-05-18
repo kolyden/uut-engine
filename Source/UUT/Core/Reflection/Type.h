@@ -75,17 +75,8 @@ namespace uut
 		{
 		}
 
-		template<typename U = typename C::Super,
-			std::enable_if_t<std::is_same<C, U>::value>* = nullptr>
 		TypeImpl(const char* name, REGFUNC regfunc)
-			: Type(name, nullptr, regfunc)
-		{
-		}
-
-		template<typename U = typename C::Super,
-			std::enable_if_t<!std::is_same<C, U>::value>* = nullptr>
-			TypeImpl(const char* name, REGFUNC regfunc)
-			: Type(name, C::Super::GetTypeStatic(), regfunc)
+			: Type(name, CtorGetBaseType(), regfunc)
 		{
 		}
 
@@ -93,6 +84,12 @@ namespace uut
 		virtual void PlacementDtor(void* ptr) const override
 		{
 			static_cast<C*>(ptr)->~C();
+		}
+
+	protected:
+		static constexpr const Type* CtorGetBaseType()
+		{
+			return std::is_same<C, typename C::Super>::value ? nullptr : C::Super::GetTypeStatic();
 		}
 	};
 

@@ -44,7 +44,9 @@ namespace uut
 		template<typename T, std::enable_if_t<std::is_enum<T>::value>* = nullptr>
 		Variant(T value)
 		{
-			SetStruct(typeof<EnumValue<T>>(), EnumValue<T>(value), sizeof(EnumValue<T>));
+			SetStruct(typeof<typename detail::Enum<T>::TYPE>(),
+				detail::Enum<T>::TYPE(value),
+				sizeof(detail::Enum<T>::TYPE));
 			_type = VariantType::Enum;
 		}
 
@@ -98,6 +100,14 @@ namespace uut
 
 		const Type* GetType() const { return _dataType; }
 
+		// TYPE
+		template<class C, std::enable_if_t<std::is_base_of<Type, 
+			std::remove_pointer_t<std::remove_const_t<C>>>::value>* = nullptr>
+		const Type* Get() const
+		{
+			return _dataType;
+		}
+
 		// FUNDAMETNAL - NUMERIC
 		template<class C, class = typename std::enable_if<std::is_fundamental<C>::value>::type>
 		C Get(C defaultValue = typename detail::Fundamental<C>::TYPE::DefaultValue) const
@@ -115,13 +125,13 @@ namespace uut
 
 		// ENUM
 		template<class C, std::enable_if_t<std::is_enum<C>::value>* = nullptr>
-		C Get(C defaultValue = EnumValue<C>::DefaultValue) const
+		C Get(C defaultValue = GetDefault<C>()) const
 		{
-			auto data = GetStruct<EnumValue<C>>();
+			auto data = GetStruct<typename detail::Enum<C>::TYPE>();
 			if (data != nullptr)
 				return *data;
 
-			EnumValue<C> value;
+			typename detail::Enum<C>::TYPE value;
 			if (TryCastStruct(value))
 				return value;
 
@@ -172,14 +182,14 @@ namespace uut
 		template<class C, std::enable_if_t<std::is_enum<C>::value>* = nullptr>
 		bool TryGet(C& value) const
 		{
-			auto data = GetStruct<EnumValue<C>>();
+			auto data = GetStruct<typename detail::Enum<C>::TYPE>();
 			if (data != nullptr)
 			{
 				value = *data;
 				return true;
 			}
 
-			EnumValue<C> enumValue;
+			typename detail::Enum<C>::TYPE enumValue;
 			if (TryCastStruct(enumValue))
 			{
 				value = enumValue;

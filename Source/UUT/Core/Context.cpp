@@ -66,6 +66,8 @@ namespace uut
 			return true;
 
 		const Type* parentType = type->GetBaseType();
+		if (parentType != nullptr && !_types.Contains(parentType->GetHash()))
+			return false;
 // 		if (parentType != type)
 // 			RegisterType(parentType);
 
