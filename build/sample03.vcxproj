@@ -154,32 +154,6 @@
       <Project>{d7e670a5-f52c-42a0-aba3-077e694c2a2f}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Source\Samples\03\DefaultTileset.cpp" />
-    <ClCompile Include="..\Source\Samples\03\EditorLevel.cpp" />
-    <ClCompile Include="..\Source\Samples\03\EditorLevelChunk.cpp" />
-    <ClCompile Include="..\Source\Samples\03\Entity.cpp" />
-    <ClCompile Include="..\Source\Samples\03\Level.cpp" />
-    <ClCompile Include="..\Source\Samples\03\LevelCell.cpp" />
-    <ClCompile Include="..\Source\Samples\03\LevelChunk.cpp" />
-    <ClCompile Include="..\Source\Samples\03\main.cpp" />
-    <ClCompile Include="..\Source\Samples\03\Minimap.cpp" />
-    <ClCompile Include="..\Source\Samples\03\Tile.cpp" />
-    <ClCompile Include="..\Source\Samples\03\Tileset.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\Source\Samples\03\DefaultTileset.h" />
-    <ClInclude Include="..\Source\Samples\03\EditorLevel.h" />
-    <ClInclude Include="..\Source\Samples\03\EditorLevelChunk.h" />
-    <ClInclude Include="..\Source\Samples\03\Entity.h" />
-    <ClInclude Include="..\Source\Samples\03\Level.h" />
-    <ClInclude Include="..\Source\Samples\03\LevelCell.h" />
-    <ClInclude Include="..\Source\Samples\03\LevelChunk.h" />
-    <ClInclude Include="..\Source\Samples\03\main.h" />
-    <ClInclude Include="..\Source\Samples\03\Minimap.h" />
-    <ClInclude Include="..\Source\Samples\03\Tile.h" />
-    <ClInclude Include="..\Source\Samples\03\Tileset.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

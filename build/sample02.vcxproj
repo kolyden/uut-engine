@@ -146,12 +146,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\Samples\02\main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\Source\Samples\02\main.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="uut-core.vcxproj">
       <Project>{d7e670a5-f52c-42a0-aba3-077e694c2a2f}</Project>
     </ProjectReference>

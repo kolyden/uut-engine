@@ -1,702 +1,921 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Core">
-      <UniqueIdentifier>{ccb4975f-757f-4cce-949a-e876b2735280}</UniqueIdentifier>
+    <Filter Include="UUT">
+      <UniqueIdentifier>{ce2f9d16-f4ac-44b4-986a-c9918384326d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Collections">
-      <UniqueIdentifier>{e38afce0-cdab-4405-bfc9-c91d70a0f9ad}</UniqueIdentifier>
+    <Filter Include="UUT\Core">
+      <UniqueIdentifier>{d30541b5-b299-4666-a02b-60896a8e996a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Windows">
-      <UniqueIdentifier>{24ef05b7-48d7-484f-b05d-097e98ca88eb}</UniqueIdentifier>
+    <Filter Include="UUT\Video">
+      <UniqueIdentifier>{c6c38fd8-dbe7-447b-8682-a9991e97f37b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\IO">
-      <UniqueIdentifier>{501cd357-7662-4db0-a5e7-cabf1b365b18}</UniqueIdentifier>
+    <Filter Include="UUT\Resources">
+      <UniqueIdentifier>{02249177-1cfb-4c94-baaa-73b95e6d32c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\GUI">
-      <UniqueIdentifier>{8522d3a2-660c-46d2-a695-f087e33646dc}</UniqueIdentifier>
+    <Filter Include="UUT\Core\Collections">
+      <UniqueIdentifier>{cfa9d302-0e93-489a-ad77-0368662e333a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Math">
-      <UniqueIdentifier>{17085e56-69f0-40d4-96f5-daf548940985}</UniqueIdentifier>
+    <Filter Include="UUT\Core\IO">
+      <UniqueIdentifier>{b1bd1cba-7795-4640-9c5b-d28415f90522}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Reflection">
-      <UniqueIdentifier>{267ea074-1456-4759-a857-e2558ec0d069}</UniqueIdentifier>
+    <Filter Include="UUT\Core\Math">
+      <UniqueIdentifier>{fbdbc84d-5ea8-4f61-bc92-5f0b9ac33262}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Video">
-      <UniqueIdentifier>{eb0601fc-5cf7-4dcb-a1f5-5e4bea5607cd}</UniqueIdentifier>
+    <Filter Include="UUT\Core\Reflection">
+      <UniqueIdentifier>{4b8dd7a0-f48a-4f3e-aa0f-34e3dd8576bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Video\Loaders">
-      <UniqueIdentifier>{2d7b0878-9645-4be1-8c66-d07ee7f62e5e}</UniqueIdentifier>
+    <Filter Include="UUT\Core\Windows">
+      <UniqueIdentifier>{de952370-2595-424c-9eea-3ea93fe3a512}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Video\Effects">
-      <UniqueIdentifier>{78480b9b-6677-48ff-be94-c32aecf71785}</UniqueIdentifier>
+    <Filter Include="UUT\Video\DX9">
+      <UniqueIdentifier>{21fdf8c9-8b65-462a-a325-d50fc908f73e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Video\DX9">
-      <UniqueIdentifier>{6973d5c1-ff71-4604-b1b8-49219a14e216}</UniqueIdentifier>
+    <Filter Include="UUT\Video\ImageEffects">
+      <UniqueIdentifier>{a318752b-8a42-4005-b4a7-6daa59d2b6c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{b6fc0f15-a59c-4786-85ff-5c86607e2851}</UniqueIdentifier>
+    <Filter Include="UUT\Video\Loaders">
+      <UniqueIdentifier>{3da2e75e-f78b-424c-a6c9-121f1daf4325}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RPG">
-      <UniqueIdentifier>{f715a8a9-eee4-4607-b0c6-8d73a60e8f49}</UniqueIdentifier>
+    <Filter Include="UUT\GUI">
+      <UniqueIdentifier>{03e934c0-9d8e-4e21-9f4c-050b182dc3c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern">
+      <UniqueIdentifier>{dd7d9303-8c0d-45e1-8293-5d3a62508ea0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\ImGui">
+      <UniqueIdentifier>{1f779932-6cc8-47f3-a655-e0f47d5adde5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\SDL2">
+      <UniqueIdentifier>{977689df-b8f1-47ff-b21f-6194cf501e76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\STB">
+      <UniqueIdentifier>{844ef482-55f4-4aa9-879a-443adcba0346}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\UUT\Core\Windows\Application.cpp">
-      <Filter>Core\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Windows\Window.cpp">
-      <Filter>Core\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\Vector2.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\IntVector2.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\Math.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\IO\Input.cpp">
-      <Filter>Core\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\IntRect.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\Rect.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\Matrix4.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\Vector3.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\Random.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\Quaternion.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\Plane.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\Ray3.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\Degree.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\Radian.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\Vector4.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\IO\File.cpp">
-      <Filter>Core\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\IO\FileStream.cpp">
-      <Filter>Core\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\IO\MemoryStream.cpp">
-      <Filter>Core\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\IO\Path.cpp">
-      <Filter>Core\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\IO\Stream.cpp">
-      <Filter>Core\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\IO\Directory.cpp">
-      <Filter>Core\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\IO\TextReader.cpp">
-      <Filter>Core\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Math\IntVector3.cpp">
-      <Filter>Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\GUI\DebugGUI.cpp">
-      <Filter>Core\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Reflection\Type.cpp">
-      <Filter>Core\Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\BufferObject.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Camera.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Color.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Color32.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\FreeCamera.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Geometry.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Graphics.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Image.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\IndexBuffer.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Renderer.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\RenderState.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Sprite.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Texture.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Texture2D.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Vertex.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\VertexBuffer.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\VertexDeclaration.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\VideoPlugin.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Viewport.cpp">
-      <Filter>Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Loaders\Texture2DLoader.cpp">
-      <Filter>Video\Loaders</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\Effects\Plasma.cpp">
-      <Filter>Video\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\DX9\DX9IndexBuffer.cpp">
-      <Filter>Video\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\DX9\DX9Plugin.cpp">
-      <Filter>Video\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\DX9\DX9Renderer.cpp">
-      <Filter>Video\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\DX9\DX9Texture2D.cpp">
-      <Filter>Video\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\DX9\DX9VertexBuffer.cpp">
-      <Filter>Video\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Video\DX9\DX9VertexDeclaration.cpp">
-      <Filter>Video\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Resources\Resource.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Resources\ResourceCache.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Resources\ResourceLoader.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Reflection\MemberInfo.cpp">
-      <Filter>Core\Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Reflection\MemberType.cpp">
-      <Filter>Core\Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Reflection\FieldAttribute.cpp">
-      <Filter>Core\Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Attribute.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\AttributeUsage.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Context.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\CorePlugin.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Debug.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Engine.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Enum.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\HashString.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Module.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Object.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\ObjectFactory.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Platform.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Plugin.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\RefCounted.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\String.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Time.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Timer.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\TimeSpan .cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\ValueType.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Variant.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Boolean.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\BaseObject.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Numeric.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Reflection\PropertyInfo.cpp">
-      <Filter>Core\Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Reflection\MethodInfo.cpp">
-      <Filter>Core\Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Reflection\ConstructorInfo.cpp">
-      <Filter>Core\Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Reflection\ConverterInfo.cpp">
-      <Filter>Core\Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Single.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Double.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Char.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\UUT\Core\Fundamental.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\RPG\Entity.cpp">
-      <Filter>RPG</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\RPG\Item.cpp">
-      <Filter>RPG</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\RPG\ItemContainer.cpp">
-      <Filter>RPG</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\RPG\ItemSlot.cpp">
-      <Filter>RPG</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\RPG\ItemType.cpp">
-      <Filter>RPG</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\RPG\Level.cpp">
-      <Filter>RPG</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\RPG\Quest.cpp">
-      <Filter>RPG</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\RPG\Trait.cpp">
-      <Filter>RPG</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\RPG\TraitContainer.cpp">
-      <Filter>RPG</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\RPG\World.cpp">
-      <Filter>RPG</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\RPG\LevelIndex.cpp">
-      <Filter>RPG</Filter>
-    </ClCompile>
+    <ClInclude Include="..\UUT\Core\Assert.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Attribute.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\AttributeUsage.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\BaseObject.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Boolean.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Char.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Context.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\CorePlugin.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Debug.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Double.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Engine.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Enum.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Fundamental.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\HashString.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IEquatable.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Module.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Numeric.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Object.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\ObjectFactory.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Platform.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Plugin.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Ptr.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\RefCounted.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Single.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\String.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Time.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Timer.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\TimeSpan .h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\ValueType.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Variant.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Collections\Array.h">
+      <Filter>UUT\Core\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Collections\BitArray.h">
+      <Filter>UUT\Core\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Collections\Dictionary.h">
+      <Filter>UUT\Core\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Collections\Enumerator.h">
+      <Filter>UUT\Core\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Collections\HashSet.h">
+      <Filter>UUT\Core\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Collections\IComparer.h">
+      <Filter>UUT\Core\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Collections\List.h">
+      <Filter>UUT\Core\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\Directory.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\File.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\FileMode.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\FileStream.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\Input.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\MemoryStream.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\Path.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\Stream.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\TextReader.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Degree.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\IntRect.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\IntVector2.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\IntVector3.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Math.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Matrix4.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Plane.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Quaternion.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Radian.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Random.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Ray3.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Rect.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Vector2.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Vector3.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Vector4.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Reflection\ConstructorInfo.h">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Reflection\ConverterInfo.h">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Reflection\FieldAttribute.h">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Reflection\FunctionUtils.h">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Reflection\MemberInfo.h">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Reflection\MemberType.h">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Reflection\MethodAttributes.h">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Reflection\MethodInfo.h">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Reflection\PropertyInfo.h">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Reflection\Type.h">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Windows\Application.h">
+      <Filter>UUT\Core\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Windows\Window.h">
+      <Filter>UUT\Core\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Resources\Resource.h">
+      <Filter>UUT\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Resources\ResourceCache.h">
+      <Filter>UUT\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Resources\ResourceLoader.h">
+      <Filter>UUT\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\DX9\DX9Defs.h">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\DX9\DX9IndexBuffer.h">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\DX9\DX9Plugin.h">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\DX9\DX9Renderer.h">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\DX9\DX9Texture2D.h">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\DX9\DX9VertexBuffer.h">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\DX9\DX9VertexDeclaration.h">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\ImageEffects\Plasma.h">
+      <Filter>UUT\Video\ImageEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Loaders\Texture2DLoader.h">
+      <Filter>UUT\Video\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\BufferObject.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Camera.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Color.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Color32.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\FreeCamera.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Geometry.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Graphics.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Image.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\IndexBuffer.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Renderer.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\RenderState.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Sprite.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Texture.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Texture2D.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Topology.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Vertex.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\VertexBuffer.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\VertexDeclaration.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\VideoPlugin.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Viewport.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\GUI\DebugGUI.h">
+      <Filter>UUT\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\ImGui\imconfig.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\ImGui\imgui.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\ImGui\imgui_internal.h">
+      <Filter>Extern\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\begin_code.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\close_code.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_assert.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_atomic.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_audio.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_bits.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_blendmode.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_clipboard.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_config.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_config_android.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_config_iphoneos.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_config_macosx.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_config_minimal.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_config_pandora.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_config_psp.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_config_windows.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_config_winrt.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_config_wiz.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_copying.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_cpuinfo.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_egl.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_endian.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_error.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_events.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_filesystem.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_gamecontroller.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_gesture.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_haptic.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_hints.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_joystick.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_keyboard.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_keycode.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_loadso.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_log.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_main.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_messagebox.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_mouse.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_mutex.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_name.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_opengl.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_opengles.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_opengles2.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_opengles2_gl2.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_opengles2_gl2ext.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_opengles2_gl2platform.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_opengles2_khrplatform.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_opengl_glext.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_pixels.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_platform.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_power.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_quit.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_rect.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_render.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_revision.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_rwops.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_scancode.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_shape.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_stdinc.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_surface.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_system.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_syswm.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_test.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_test_assert.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_test_common.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_test_compare.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_test_crc32.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_test_font.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_test_fuzzer.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_test_harness.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_test_images.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_test_log.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_test_md5.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_test_random.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_thread.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_timer.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_touch.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_types.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_version.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\SDL2\SDL_video.h">
+      <Filter>Extern\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\STB\stb_image.h">
+      <Filter>Extern\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\STB\stb_rect_pack.h">
+      <Filter>Extern\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\STB\stb_textedit.h">
+      <Filter>Extern\STB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\STB\stb_truetype.h">
+      <Filter>Extern\STB</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Source\UUT\Core\Collections\Array.h">
-      <Filter>Core\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Collections\Dictionary.h">
-      <Filter>Core\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Collections\List.h">
-      <Filter>Core\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Windows\Application.h">
-      <Filter>Core\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Windows\Window.h">
-      <Filter>Core\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\Vector2.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\IntVector2.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\Math.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\IO\Input.h">
-      <Filter>Core\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\IntRect.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\Rect.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\Matrix4.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\Vector3.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Collections\IComparer.h">
-      <Filter>Core\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\Random.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\Quaternion.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\Plane.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\Ray3.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\Degree.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\Radian.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\Vector4.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\IO\File.h">
-      <Filter>Core\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\IO\FileMode.h">
-      <Filter>Core\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\IO\FileStream.h">
-      <Filter>Core\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\IO\MemoryStream.h">
-      <Filter>Core\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\IO\Path.h">
-      <Filter>Core\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\IO\Stream.h">
-      <Filter>Core\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\IO\Directory.h">
-      <Filter>Core\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\IO\TextReader.h">
-      <Filter>Core\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Math\IntVector3.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Collections\BitArray.h">
-      <Filter>Core\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Collections\HashSet.h">
-      <Filter>Core\Collections</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\GUI\DebugGUI.h">
-      <Filter>Core\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Reflection\Type.h">
-      <Filter>Core\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\BufferObject.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Camera.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Color.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Color32.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\FreeCamera.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Geometry.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Graphics.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Image.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\IndexBuffer.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Renderer.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\RenderState.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Sprite.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Texture.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Texture2D.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Topology.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Vertex.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\VertexBuffer.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\VertexDeclaration.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\VideoPlugin.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Viewport.h">
-      <Filter>Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Loaders\Texture2DLoader.h">
-      <Filter>Video\Loaders</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\Effects\Plasma.h">
-      <Filter>Video\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\DX9\DX9Defs.h">
-      <Filter>Video\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\DX9\DX9IndexBuffer.h">
-      <Filter>Video\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\DX9\DX9Plugin.h">
-      <Filter>Video\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\DX9\DX9Renderer.h">
-      <Filter>Video\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\DX9\DX9Texture2D.h">
-      <Filter>Video\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\DX9\DX9VertexBuffer.h">
-      <Filter>Video\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Video\DX9\DX9VertexDeclaration.h">
-      <Filter>Video\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Resources\Resource.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Resources\ResourceCache.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Resources\ResourceLoader.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Reflection\MemberInfo.h">
-      <Filter>Core\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Reflection\MemberType.h">
-      <Filter>Core\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Reflection\FieldAttribute.h">
-      <Filter>Core\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Assert.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Attribute.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\AttributeUsage.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Context.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\CorePlugin.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Debug.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Engine.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Enum.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\HashString.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\IEquatable.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Module.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Numeric.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Object.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\ObjectFactory.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Platform.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Plugin.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Ptr.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\RefCounted.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\String.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Time.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Timer.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\TimeSpan .h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\ValueType.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Variant.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Boolean.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\BaseObject.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Reflection\PropertyInfo.h">
-      <Filter>Core\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Reflection\MethodInfo.h">
-      <Filter>Core\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Reflection\MethodAttributes.h">
-      <Filter>Core\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Reflection\ConstructorInfo.h">
-      <Filter>Core\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Reflection\FunctionUtils.h">
-      <Filter>Core\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Reflection\ConverterInfo.h">
-      <Filter>Core\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Single.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Double.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Char.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\UUT\Core\Fundamental.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\RPG\Entity.h">
-      <Filter>RPG</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\RPG\Item.h">
-      <Filter>RPG</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\RPG\ItemContainer.h">
-      <Filter>RPG</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\RPG\ItemSlot.h">
-      <Filter>RPG</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\RPG\ItemType.h">
-      <Filter>RPG</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\RPG\Level.h">
-      <Filter>RPG</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\RPG\Quest.h">
-      <Filter>RPG</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\RPG\Trait.h">
-      <Filter>RPG</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\RPG\TraitContainer.h">
-      <Filter>RPG</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\RPG\World.h">
-      <Filter>RPG</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\RPG\LevelIndex.h">
-      <Filter>RPG</Filter>
-    </ClInclude>
+    <ClCompile Include="..\UUT\Core\Attribute.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\AttributeUsage.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\BaseObject.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Boolean.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Char.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Context.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\CorePlugin.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Debug.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Double.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Engine.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Enum.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Fundamental.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\HashString.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Module.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Numeric.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Object.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\ObjectFactory.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Platform.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Plugin.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\RefCounted.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Single.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\String.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Time.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Timer.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\TimeSpan .cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\ValueType.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Variant.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\Directory.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\File.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\FileStream.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\Input.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\MemoryStream.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\Path.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\Stream.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\TextReader.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Degree.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\IntRect.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\IntVector2.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\IntVector3.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Math.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Matrix4.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Plane.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Quaternion.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Radian.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Random.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Ray3.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Rect.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Vector2.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Vector3.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Vector4.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Reflection\ConstructorInfo.cpp">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Reflection\ConverterInfo.cpp">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Reflection\FieldAttribute.cpp">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Reflection\MemberInfo.cpp">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Reflection\MemberType.cpp">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Reflection\MethodInfo.cpp">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Reflection\PropertyInfo.cpp">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Reflection\Type.cpp">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Windows\Application.cpp">
+      <Filter>UUT\Core\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Windows\Window.cpp">
+      <Filter>UUT\Core\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Resources\Resource.cpp">
+      <Filter>UUT\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Resources\ResourceCache.cpp">
+      <Filter>UUT\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Resources\ResourceLoader.cpp">
+      <Filter>UUT\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\DX9\DX9IndexBuffer.cpp">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\DX9\DX9Plugin.cpp">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\DX9\DX9Renderer.cpp">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\DX9\DX9Texture2D.cpp">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\DX9\DX9VertexBuffer.cpp">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\DX9\DX9VertexDeclaration.cpp">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\ImageEffects\Plasma.cpp">
+      <Filter>UUT\Video\ImageEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Loaders\Texture2DLoader.cpp">
+      <Filter>UUT\Video\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\BufferObject.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Camera.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Color.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Color32.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\FreeCamera.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Geometry.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Graphics.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Image.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\IndexBuffer.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Renderer.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\RenderState.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Sprite.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Texture.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Texture2D.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Vertex.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\VertexBuffer.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\VertexDeclaration.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\VideoPlugin.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Viewport.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\GUI\DebugGUI.cpp">
+      <Filter>UUT\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\ImGui\imgui.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\ImGui\imgui_demo.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\ImGui\imgui_draw.cpp">
+      <Filter>Extern\ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
