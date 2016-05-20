@@ -9,8 +9,10 @@ namespace uut
 	{
 	public:
 		IntRect();
-		IntRect(const IntVector2& pos, const IntVector2& size);
 		IntRect(int x, int y, int width, int height);
+		IntRect(const IntVector2& pos, int width, int height);
+		IntRect(int x, int y, const IntVector2& size);
+		IntRect(const IntVector2& pos, const IntVector2& size);
 		IntRect(const IntRect& rect);
 		IntRect(IntRect&& rect);
 		IntRect(const Rect& rect);

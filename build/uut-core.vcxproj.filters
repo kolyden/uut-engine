@@ -52,6 +52,9 @@
     <Filter Include="Extern\STB">
       <UniqueIdentifier>{844ef482-55f4-4aa9-879a-443adcba0346}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UUT\Tilemap">
+      <UniqueIdentifier>{2c2e1770-aa02-4694-88ff-720f944a2643}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\UUT\Core\Assert.h">
@@ -633,6 +636,18 @@
     <ClInclude Include="..\Extern\STB\stb_truetype.h">
       <Filter>Extern\STB</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\Tilemap.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\Tileset.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\TilemapLayer.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\TilesetLayer.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -916,6 +931,18 @@
     </ClCompile>
     <ClCompile Include="..\Extern\ImGui\imgui_draw.cpp">
       <Filter>Extern\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\Tilemap.cpp">
+      <Filter>UUT\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\Tileset.cpp">
+      <Filter>UUT\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\TilemapLayer.cpp">
+      <Filter>UUT\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\TilesetLayer.cpp">
+      <Filter>UUT\Tilemap</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

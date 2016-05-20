@@ -147,6 +147,21 @@ namespace uut
 			texture);
 	}
 
+	void Graphics::DrawQuad(const Rect& rect, float z, Texture2D* texture, const Rect& texRect, const Color32& color)
+	{
+		const Vector3 p0(rect.GetLeft(), rect.GetTop(), z);
+		const Vector3 p1(rect.GetRight(), rect.GetTop(), z);
+		const Vector3 p2(rect.GetRight(), rect.GetBottom(), z);
+		const Vector3 p3(rect.GetLeft(), rect.GetBottom(), z);
+
+		DrawQuad(
+			Vertex(p0, color, Vector2(texRect.x, texRect.y)),
+			Vertex(p1, color, Vector2(texRect.x + texRect.width, texRect.y)),
+			Vertex(p2, color, Vector2(texRect.x + texRect.width, texRect.y + texRect.height)),
+			Vertex(p3, color, Vector2(texRect.x, texRect.y + texRect.height)),
+			texture);
+	}
+
 	void Graphics::DrawSolidCube(const Vector3& center, float side, const Color32& color)
 	{
 		const float hsize = side / 2;

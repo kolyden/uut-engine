@@ -9,6 +9,27 @@ namespace uut
 	{
 	}
 
+	IntRect::IntRect(int _x, int _y, int _width, int _height)
+		: x(_x), y(_y)
+		, width(_width)
+		, height(_height)
+	{
+	}
+
+	IntRect::IntRect(const IntVector2& pos, int _width, int _height)
+		: x(pos.x), y(pos.y)
+		, width(_width)
+		, height(_height)
+	{
+	}
+
+	IntRect::IntRect(int _x, int _y, const IntVector2& size)
+		: x(_x), y(_y)
+		, width(size.x)
+		, height(size.y)
+	{
+	}
+
 	IntRect::IntRect(const IntVector2& pos, const IntVector2& size)
 		: x(pos.x), y(pos.y)
 		, width(size.x)
@@ -16,12 +37,6 @@ namespace uut
 	{
 	}
 
-	IntRect::IntRect(int _x, int _y, int _width, int _height)
-		: x(_x), y(_y)
-		, width(_width)
-		, height(_height)
-	{
-	}
 
 	IntRect::IntRect(const IntRect& rect)
 		: x(rect.x), y(rect.y)
