@@ -70,6 +70,11 @@ namespace uut
 		return !IsOpened() || _position >= _size;
 	}
 
+	const Path& MemoryStream::GetPath() const
+	{
+		return Path::Empty;
+	}
+
 	void MemoryStream::SetPosition(unsigned position)
 	{
 		if (IsOpened())

@@ -18,6 +18,7 @@ namespace uut
 		virtual bool CanSeek() const override;
 		virtual bool IsOpened() const override;
 		virtual bool IsEOF() const override;
+		virtual const Path& GetPath() const override;
 
 		virtual void SetPosition(unsigned position) override;
 		virtual unsigned GetPosition() const override;

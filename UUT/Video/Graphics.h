@@ -7,6 +7,7 @@
 
 namespace uut
 {
+	class BitmapFont;
 	class Geometry;
 	class Rect;
 	class Vector3;
@@ -58,6 +59,8 @@ namespace uut
 
 		void DrawPrimitive(Topology topology, const List<Vertex>& vertexes, Texture2D* texture = nullptr);
 		void DrawIndexedPrimitive(Topology topology, const List<Vertex>& vertexes, const List<uint16_t>& indexes, Texture2D* texture = nullptr);
+
+		void PrintText(const Vector2& position, float z, const String& text, BitmapFont* font, const Color32& color = Color32::White);
 
 		void Flush();
 

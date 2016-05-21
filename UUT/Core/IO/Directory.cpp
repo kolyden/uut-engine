@@ -75,7 +75,7 @@ namespace uut
 	{
 		DWORD ret = ::GetCurrentDirectoryA(g_buff_size, g_buff);
 		if (ret == 0)
-			return Path::EMPTY;
+			return Path::Empty;
 
 		return String(g_buff);
 	}

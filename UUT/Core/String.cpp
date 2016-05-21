@@ -187,7 +187,7 @@ namespace uut
 	int String::Replace(char oldChar, char newChar)
 	{
 		int count = 0;
-		for (int i = 0; i < Count(); i++)
+		for (uint i = 0; i < Count(); i++)
 		{
 			if (CompareChar(_data[i], oldChar) != 0)
 				continue;

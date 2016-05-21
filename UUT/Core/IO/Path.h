@@ -29,6 +29,7 @@ namespace uut
 		Path GetDirectoryName() const;
 		const String& GetFileName() const;
 		String GetFileNameWithoutExtension() const;
+		String GetFullPath() const;
 
 		const List<String>& GetComponents() const;
 
@@ -58,7 +59,7 @@ namespace uut
 
 		static Path GetUserDirectory(const String& company, const String& appname);
 
-		static const Path EMPTY;
+		static const Path Empty;
 
 	protected:
 		List<String> _components;

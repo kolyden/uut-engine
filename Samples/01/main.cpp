@@ -10,6 +10,10 @@
 #include <Core/Reflection/MethodInfo.h>
 #include <Core/Reflection/ConstructorInfo.h>
 #include <Core/Reflection/ConverterInfo.h>
+#include <Windows.h>
+#include <Resources/ResourceLoader.h>
+#include <Video/BitmapFont.h>
+#include <Video/Loaders/BitmapFontLoader.h>
 
 namespace uut
 {
@@ -181,19 +185,19 @@ namespace uut
 	{
 		UUT_REGISTER_OBJECT(TestEnum);
 
-		_texture = _renderer->CreateTexture(IntVector2(texSize), TextureAccess::Streaming);
-		_plasma = new Plasma(_texture->GetSize());
+		_cache->AddLoader(new BitmapFontLoader(_cache));
 
 		_gui = new DebugGUI(_renderer, _input);
 		_graphics = new Graphics(_renderer);
 		_graphics->SetProjection(Graphics::PM_2D);
+		_font = _cache->Load<BitmapFont>("Consolas.fnt");
 
 		_timer.Start();
 
 // 		auto obj = Context::CreateObject<()
 
 		Variant var1(Vector2(12.111f, 45.6789f));
-		Variant var2(_texture);
+		Variant var2(_font);
 		Variant var3(666.555f);
 		Variant var4(true);
 		Variant var5(Test::ValueZ);
@@ -210,7 +214,7 @@ namespace uut
 
 		auto vec = var1.Get<Vector2>();
 		auto ivec = var1.Get<IntVector2>(); UUT_ASSERT(ivec == Vector2(12, 46));
-		auto obj = var2.Get<Object>(); UUT_ASSERT(obj == _texture);
+// 		auto obj = var2.Get<Object>(); UUT_ASSERT(obj == _font);
 		auto i = var3.Get<int>(); UUT_ASSERT(i == 666);
 		auto b = var4.Get<bool>(); UUT_ASSERT(b == true);
 		auto flag = var5.Get<Test>(); UUT_ASSERT(flag == Test::ValueZ);
@@ -401,6 +405,10 @@ namespace uut
 // 			_plasma->Apply(_texture,
 // 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10));
 // 			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
+			_graphics->SetMaterial(Graphics::MT_TRANSPARENT);
+			_graphics->SetProjection(Graphics::PM_2D);
+			if (_font)
+				_graphics->PrintText(Vector2::Zero, 15, "Test", _font, Color32::Black);
 			_graphics->Flush();
 
 			_gui->SetupCamera();
@@ -411,7 +419,11 @@ namespace uut
 	}
 }
 
-int main(int argc, char *argv[])
+int CALLBACK WinMain(
+	_In_ HINSTANCE hInstance,
+	_In_ HINSTANCE hPrevInstance,
+	_In_ LPSTR     lpCmdLine,
+	_In_ int       nCmdShow)
 {
 	uut::SampleApp app;
 	app.Run();

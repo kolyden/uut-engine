@@ -59,7 +59,7 @@ namespace uut
 		bool Equals(const String& str) const;
 		bool Equals(const String& str, StringComparison comparisonType) const;
 
-		int Count() const { return static_cast<int>(_data.size()); }
+		uint Count() const { return _data.size(); }
 		bool IsEmpty() const { return _data.empty(); }
 
 		operator const char*() const { return _data.c_str(); }

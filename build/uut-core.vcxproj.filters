@@ -570,42 +570,6 @@
     <ClInclude Include="..\Extern\SDL2\SDL_syswm.h">
       <Filter>Extern\SDL2</Filter>
     </ClInclude>
-    <ClInclude Include="..\Extern\SDL2\SDL_test.h">
-      <Filter>Extern\SDL2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Extern\SDL2\SDL_test_assert.h">
-      <Filter>Extern\SDL2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Extern\SDL2\SDL_test_common.h">
-      <Filter>Extern\SDL2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Extern\SDL2\SDL_test_compare.h">
-      <Filter>Extern\SDL2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Extern\SDL2\SDL_test_crc32.h">
-      <Filter>Extern\SDL2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Extern\SDL2\SDL_test_font.h">
-      <Filter>Extern\SDL2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Extern\SDL2\SDL_test_fuzzer.h">
-      <Filter>Extern\SDL2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Extern\SDL2\SDL_test_harness.h">
-      <Filter>Extern\SDL2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Extern\SDL2\SDL_test_images.h">
-      <Filter>Extern\SDL2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Extern\SDL2\SDL_test_log.h">
-      <Filter>Extern\SDL2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Extern\SDL2\SDL_test_md5.h">
-      <Filter>Extern\SDL2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Extern\SDL2\SDL_test_random.h">
-      <Filter>Extern\SDL2</Filter>
-    </ClInclude>
     <ClInclude Include="..\Extern\SDL2\SDL_thread.h">
       <Filter>Extern\SDL2</Filter>
     </ClInclude>
@@ -647,6 +611,18 @@
     </ClInclude>
     <ClInclude Include="..\UUT\Tilemap\TilesetLayer.h">
       <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Font.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\BitmapFont.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Loaders\BitmapFontLoader.h">
+      <Filter>UUT\Video\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\BinaryReader.h">
+      <Filter>UUT\Core\IO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -943,6 +919,18 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Tilemap\TilesetLayer.cpp">
       <Filter>UUT\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Font.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\BitmapFont.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Loaders\BitmapFontLoader.cpp">
+      <Filter>UUT\Video\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\BinaryReader.cpp">
+      <Filter>UUT\Core\IO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

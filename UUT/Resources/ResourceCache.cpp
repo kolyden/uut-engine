@@ -53,6 +53,9 @@ namespace uut
 			return nullptr;
 
 		auto stream = File::OpenRead(path);
+		if (stream == nullptr)
+			return nullptr;
+
 		for (auto& loader : group->_loaders)
 		{
 			auto data = loader->Load(stream);

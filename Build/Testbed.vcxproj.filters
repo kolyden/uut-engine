@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{09b96624-4821-4cd7-8eba-6845e3a27c76}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Testbed\main.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Testbed\TestItemAttribute.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Testbed\TestContext.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Testbed\BaseTest.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Testbed\TestbedPlugin.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Testbed\main.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Testbed\TestItemAttribute.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Testbed\TestContext.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Testbed\BaseTest.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Testbed\TestbedPlugin.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

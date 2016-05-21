@@ -3,6 +3,7 @@
 #include <Core/Windows/Window.h>
 #include <Core/IO/Input.h>
 #include <Video/Renderer.h>
+#include <Resources/ResourceCache.h>
 
 namespace uut
 {
@@ -21,6 +22,7 @@ namespace uut
 		SharedPtr<Window> _window;
 		SharedPtr<Renderer> _renderer;
 		SharedPtr<Input> _input;
+		SharedPtr<ResourceCache> _cache;
 		IntVector2 _windowSize;
 
 		virtual void OnInit() {}

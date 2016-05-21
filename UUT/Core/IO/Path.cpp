@@ -13,7 +13,7 @@ namespace std
 		{
 			// djb2 algorithm
 			size_t h = 5381;
-			for (int i = 0; i < str.Count(); i++)
+			for (unsigned i = 0; i < str.Count(); i++)
 				h = ((h << 5) + h) + str[i];
 
 			return h;
@@ -23,7 +23,7 @@ namespace std
 
 namespace uut
 {
-	const Path Path::EMPTY;
+	const Path Path::Empty;
 
 	Path::Path()
 		: _hash(0)
@@ -95,7 +95,7 @@ namespace uut
 	Path Path::GetDirectoryName() const
 	{
 		if (_components.Count() < 2)
-			return EMPTY;
+			return Empty;
 
 		return FromComponents(_components.GetRange(0, _components.Count() - 1));
 	}
@@ -117,6 +117,17 @@ namespace uut
 			name = name.Substring(0, pos);
 
 		return name;
+	}
+
+	String Path::GetFullPath() const
+	{
+		auto base_path = SDL_GetBasePath();
+		String fullPath;
+		if (base_path != nullptr)
+			fullPath = base_path;
+		fullPath += String::Join(_components, "/");
+
+		return fullPath;
 	}
 
 	const List<String>& Path::GetComponents() const
@@ -208,7 +219,7 @@ namespace uut
 	Path Path::Combine(const Path& a, const Path& b)
 	{
 		if (a.IsEmpty() && b.IsEmpty())
-			return Path::EMPTY;
+			return Path::Empty;
 
 		if (a.IsEmpty())
 			return b;
@@ -232,7 +243,7 @@ namespace uut
 	Path Path::FromComponents(const List<String>& components)
 	{
 		if (components.IsEmpty())
-			return Path::EMPTY;
+			return Path::Empty;
 
 		Path ret = components[0];
 		for (uint i = 1; i < components.Count(); i++)

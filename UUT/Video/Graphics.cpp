@@ -5,6 +5,7 @@
 #include "Vertex.h"
 #include "VertexBuffer.h"
 #include "Geometry.h"
+#include "BitmapFont.h"
 
 namespace uut
 {
@@ -369,6 +370,28 @@ namespace uut
 
 		for (uint i = 0; i < count; i++)
 			_vertices[_vdxIndex++] = vertexes[indexes[i]];
+	}
+
+	void Graphics::PrintText(const Vector2& position, float z, const String& text, BitmapFont* font, const Color32& color)
+	{
+		if (font == nullptr || text.IsEmpty())
+			return;
+
+// 		SetMaterial(MT_TRANSPARENT);
+// 		SetProjection(PM_2D);
+
+		Vector2 pos = position;
+		IntRect rect;
+		Rect tex;
+		uint8_t page;
+
+		for (uint i = 0; i < text.Count(); i++)
+		{
+			const uint32_t code = text[i];
+			const uint32_t next = (i < (text.Count() - 1) ? text[i + 1] : 0);
+			if (font->PrintToQuad(pos, code, next, rect, tex, page))
+				DrawQuad(rect, z, font->GetTexture(page), tex, color);
+		}
 	}
 
 	void Graphics::Flush()

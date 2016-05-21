@@ -4,27 +4,16 @@
 
 namespace uut
 {
-	template<typename T>
+	template<typename T, uint N>
 	class Array
 	{
 	public:
-		Array() : _data(nullptr), _count(0) {}
-		explicit Array(int count)
-			: _count(count)
-		{
-			UUT_ASSERT(count > 0);
-			_data = new T[_count];
-		}
-
-		virtual ~Array() { delete[] _data; }
-
 		T& operator[] (uint index) { return _data[index]; }
 		const T& operator[] (uint index) const { return _data[index]; }
 
-		uint Count() const { return _count; }
+		static uint Count() { return N; }
 
 	protected:
-		T* _data;
-        uint _count;
+		T _data[N];
 	};
 }

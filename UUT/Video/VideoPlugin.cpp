@@ -15,6 +15,9 @@
 #include "Graphics.h"
 #include "imageEffects/Plasma.h"
 #include "Loaders/Texture2DLoader.h"
+#include "Loaders/BitmapFontLoader.h"
+#include "Font.h"
+#include "BitmapFont.h"
 
 namespace uut
 {
@@ -41,10 +44,15 @@ namespace uut
 		UUT_REGISTER_OBJECT(FreeCamera);
 		UUT_REGISTER_OBJECT(Geometry);
 
+		// Fonts
+		UUT_REGISTER_OBJECT(Font);
+		UUT_REGISTER_OBJECT(BitmapFont);
+
 		// Effects
 		UUT_REGISTER_OBJECT(Plasma);
 
 		UUT_REGISTER_OBJECT(Texture2DLoader);
+		UUT_REGISTER_OBJECT(BitmapFontLoader);
 
 		UUT_REGISTER_MODULE(Renderer);
 		UUT_REGISTER_MODULE(Graphics);

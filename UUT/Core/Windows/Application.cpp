@@ -1,6 +1,7 @@
 #include "Application.h"
 #include <Core/Timer.h>
 #include <Video/DX9/DX9Renderer.h>
+#include <Video/Loaders/Texture2DLoader.h>
 
 namespace uut
 {
@@ -25,11 +26,13 @@ namespace uut
 		_window->Create();
 
 		_input = new Input();
+		_cache = new ResourceCache();
 
 		_renderer = DynamicCast<Renderer>(DX9Renderer::Create(_window));
 		if (_renderer == nullptr)
 			return;
 
+		_cache->AddLoader(new Texture2DLoader(_renderer));
 		_renderer->ResetStates();
 		OnInit();
 

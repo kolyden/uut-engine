@@ -20,24 +20,26 @@ namespace uut
 	{
 		Close();
 
+		String fullPath = path.GetFullPath();
 		switch (mode)
 		{
 		case FileMode::OpenRead:
-			_handle = SDL_RWFromFile(path.ToUtf8(), "r");
+			_handle = SDL_RWFromFile(fullPath, "rb");
 			break;
 
 		case FileMode::Create:
-			_handle = SDL_RWFromFile(path.ToUtf8(), "w");
+			_handle = SDL_RWFromFile(fullPath, "wb");
 			break;
 
 		case FileMode::Append:
-			_handle = SDL_RWFromFile(path.ToUtf8(), "a");
+			_handle = SDL_RWFromFile(fullPath, "ab");
 			break;
 		}
 
 		if (_handle == nullptr)
 			return false;
 
+		_path = path;
 		_fileMode = mode;
 		return true;
 	}
@@ -49,6 +51,7 @@ namespace uut
 
 		SDL_RWclose(_handle);
 		_handle = nullptr;
+		_path = Path::Empty;
 	}
 
 
@@ -78,6 +81,11 @@ namespace uut
 			return true;
 
 		return GetPosition() == GetLength();
+	}
+
+	const Path& FileStream::GetPath() const
+	{
+		return _path;
 	}
 
 	void FileStream::SetPosition(unsigned position)
