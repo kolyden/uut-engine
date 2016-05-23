@@ -185,12 +185,10 @@ namespace uut
 	{
 		UUT_REGISTER_OBJECT(TestEnum);
 
-		_cache->AddLoader(new BitmapFontLoader(_cache));
-
-		_gui = new DebugGUI(_renderer, _input);
-		_graphics = new Graphics(_renderer);
+		_gui = new DebugGUI();
+		_graphics = new Graphics();
 		_graphics->SetProjection(Graphics::PM_2D);
-		_font = _cache->Load<BitmapFont>("Consolas.fnt");
+		_font = _cache->Load<Font>("Consolas.fnt");
 
 		_timer.Start();
 
@@ -408,7 +406,7 @@ namespace uut
 			_graphics->SetMaterial(Graphics::MT_TRANSPARENT);
 			_graphics->SetProjection(Graphics::PM_2D);
 			if (_font)
-				_graphics->PrintText(Vector2::Zero, 15, "Test", _font, Color32::Black);
+				_graphics->PrintText(Vector2(10, 10), 15, "qwertyuiopasdfghjklzxcvbnm", _font, Color32::Black);
 			_graphics->Flush();
 
 			_gui->SetupCamera();

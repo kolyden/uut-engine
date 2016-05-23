@@ -11,8 +11,7 @@ namespace uut
 	UUT_OBJECT_IMPLEMENT(BitmapFontLoader)
 	{}
 
-	BitmapFontLoader::BitmapFontLoader(ResourceCache* cache)
-		: _cache(cache)
+	BitmapFontLoader::BitmapFontLoader()
 	{		
 	}
 
@@ -36,9 +35,6 @@ namespace uut
 
 	SharedPtr<Resource> BitmapFontLoader::Load(Stream* stream)
 	{
-		if (_cache == nullptr)
-			return SharedPtr<Resource>::Empty;
-
 		auto reader = SharedPtr<BinaryReader>::Make(stream);
 
 		List<uint8_t> magic;
@@ -78,9 +74,9 @@ namespace uut
 			}
 			else if (type == 2)
 			{
-				reader->SkipBytes(size);
+// 				reader->SkipBytes(size);
 // 				face = new FontFaceBM(header.fontSize);
-// 				reader->ReadBytes(size, &face->_info);
+				reader->ReadBytes(size, &face->_info);
 			}
 			else if (type == 3)
 			{
@@ -125,22 +121,22 @@ namespace uut
 
 		face->_glyphs = chars;
 		face->_kerningPairs = kernings;
-		face->UpdateGlyphsMap();
-		face->UpdateKerningMap();
 
-// 		auto cache = ResourceCache::Instance();
+		auto cache = ResourceCache::Instance();
 		const auto basedir = stream->GetPath().GetDirectoryName();
 		for(auto& name : pages)
 		{
-			auto tex = _cache->Load<Texture2D>(Path::Combine(basedir, name));
+			auto tex = cache->Load<Texture2D>(Path::Combine(basedir, name));
 			face->_textures << SharedPtr<Texture2D>(tex);
 		}
 
+		face->UpdateGlyphsMap();
+		face->UpdateKerningMap();
 		return DynamicCast<Resource>(face);
 	}
 
 	const Type* BitmapFontLoader::GetResourceType() const
 	{
-		return typeof<BitmapFont>();
+		return typeof<Font>();
 	}
 }

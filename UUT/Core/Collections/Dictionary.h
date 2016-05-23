@@ -157,14 +157,14 @@ namespace uut
 			return dict;
 		}
 
-		static const Dictionary EMPTY;
+		static const Dictionary Empty;
 
 	protected:
 		DataMap _dataMap;
 	};
 
 	template<class TKey, class TValue>
-	const Dictionary<TKey, TValue> Dictionary<TKey, TValue>::EMPTY;
+	const Dictionary<TKey, TValue> Dictionary<TKey, TValue>::Empty;
 
 	template<class TKey, class TValue> typename Dictionary<TKey, TValue>::Iterator begin(Dictionary<TKey, TValue>& list) { return list.Begin(); }
 	template<class TKey, class TValue> typename Dictionary<TKey, TValue>::Iterator end(Dictionary<TKey, TValue>& list) { return list.End(); }

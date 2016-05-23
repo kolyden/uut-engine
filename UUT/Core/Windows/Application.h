@@ -20,9 +20,9 @@ namespace uut
 	protected:
 		SharedPtr<Engine> _engine;
 		SharedPtr<Window> _window;
-		SharedPtr<Renderer> _renderer;
-		SharedPtr<Input> _input;
-		SharedPtr<ResourceCache> _cache;
+		WeakPtr<Renderer> _renderer;
+		WeakPtr<Input> _input;
+		WeakPtr<ResourceCache> _cache;
 		IntVector2 _windowSize;
 
 		virtual void OnInit() {}

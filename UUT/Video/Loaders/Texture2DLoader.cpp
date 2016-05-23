@@ -32,13 +32,8 @@ namespace uut
 	UUT_OBJECT_IMPLEMENT(Texture2DLoader)
 	{}
 
-	Texture2DLoader::Texture2DLoader(Renderer* renderer)
-		: _renderer(renderer)
+	Texture2DLoader::Texture2DLoader()
 	{
-	}
-
-	Texture2DLoader::~Texture2DLoader()
-	{		
 	}
 
 	SharedPtr<Resource> Texture2DLoader::Load(Stream* stream)
@@ -54,7 +49,8 @@ namespace uut
 		if (source == nullptr)
 			return SharedPtr<Resource>::Empty;
 
-		auto tex = _renderer->CreateTexture(size);
+		auto renderer = Renderer::Instance();
+		auto tex = renderer->CreateTexture(size);
 		if (!tex)
 			return SharedPtr<Resource>::Empty;
 

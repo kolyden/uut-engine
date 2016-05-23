@@ -9,12 +9,9 @@ namespace uut
 	{
 		UUT_OBJECT(BitmapFontLoader, ResourceLoader)
 	public:
-		explicit BitmapFontLoader(ResourceCache* cache);
+		BitmapFontLoader();
 
 		virtual SharedPtr<Resource> Load(Stream* stream) override;
 		virtual const Type* GetResourceType() const override;
-
-	protected:
-		WeakPtr<ResourceCache> _cache;
 	};
 }

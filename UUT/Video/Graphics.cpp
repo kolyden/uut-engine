@@ -5,16 +5,18 @@
 #include "Vertex.h"
 #include "VertexBuffer.h"
 #include "Geometry.h"
-#include "BitmapFont.h"
+#include "Font.h"
+#include <Core/Reflection/ConstructorInfo.h>
 
 namespace uut
 {
 	UUT_MODULE_IMPLEMENT(Graphics)
-	{}
+	{
+		UUT_REGISTER_CTOR_DEFAULT();
+	}
 
-	Graphics::Graphics(Renderer* renderer)
-		: _renderer(renderer)
-		, _vbufCount(5000)
+	Graphics::Graphics()
+		: _vbufCount(5000)
 		, _topology(Topology::TrinagleList)
 		, _vertices(nullptr)
 		, _vdxIndex(0)
@@ -23,6 +25,7 @@ namespace uut
 		, _currentMT(MT_OPAQUE)
 		, _nextMT(MT_OPAQUE)
 	{
+		_renderer = Renderer::Instance();
 		_vbuf = _renderer->CreateVertexBuffer(Vertex::SIZE*_vbufCount);
 		_vdec = _renderer->CreateVertexDeclaration(Vertex::DECLARE);
 
@@ -372,7 +375,7 @@ namespace uut
 			_vertices[_vdxIndex++] = vertexes[indexes[i]];
 	}
 
-	void Graphics::PrintText(const Vector2& position, float z, const String& text, BitmapFont* font, const Color32& color)
+	void Graphics::PrintText(const Vector2& position, float z, const String& text, Font* font, const Color32& color)
 	{
 		if (font == nullptr || text.IsEmpty())
 			return;

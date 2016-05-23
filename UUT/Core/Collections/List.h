@@ -212,7 +212,7 @@ namespace uut
 		List<T> GetRange(uint index, uint count) const
 		{
 			if (count <= 0)
-				return EMPTY;
+				return Empty;
 
 			UUT_ASSERT(index >= 0 && index < Count());
 			UUT_ASSERT(index + count <= Count());
@@ -338,7 +338,7 @@ namespace uut
 			return ret;
 		}
 
-		static const List<T> EMPTY;
+		static const List<T> Empty;
 
 		template<typename ... Args>
 		static List<T> Make(Args... args)
@@ -355,16 +355,11 @@ namespace uut
 		DataType _data;
 	};
 
-	template<class T> const List<T> List<T>::EMPTY;
+	template<class T> const List<T> List<T>::Empty;
 
 	template<class T> typename List<T>::Iterator begin(List<T>& list) { return list.Begin(); }
 	template<class T> typename List<T>::Iterator end(List<T>& list) { return list.End(); }
 
 	template<class T> typename List<T>::ConstIterator begin(const List<T>& list) { return list.Begin(); }
 	template<class T> typename List<T>::ConstIterator end(const List<T>& list) { return list.End(); }
-
-// 	template<typename T> constexpr static const List<T>& GetDefault<List<T>>()
-// 	{
-// 		return List<T>::Empty;
-// 	}
 }

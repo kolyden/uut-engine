@@ -19,7 +19,7 @@ namespace uut
 	{
 		UUT_MODULE(DebugGUI, Module)
 	public:
-		explicit DebugGUI(Renderer* renderer, Input* input);
+		explicit DebugGUI();
 
 		void NewFrame();
 
@@ -32,8 +32,8 @@ namespace uut
 
 	protected:
 		Timer _timer;
-		SharedPtr<Renderer> _renderer;
-		SharedPtr<Input> _input;
+		WeakPtr<Renderer> _renderer;
+		WeakPtr<Input> _input;
 		SharedPtr<VertexBuffer> _vb;
 		SharedPtr<VertexDeclaration> _vd;
 		SharedPtr<IndexBuffer> _ib;

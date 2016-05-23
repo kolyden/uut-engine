@@ -7,11 +7,14 @@
 #include <Video/IndexBuffer.h>
 #include <IMGUI/imgui.h>
 #include <SDL2/SDL.h>
+#include <Core/Reflection/ConstructorInfo.h>
 
 namespace uut
 {
 	UUT_MODULE_IMPLEMENT(DebugGUI)
-	{}
+	{
+		UUT_REGISTER_CTOR_DEFAULT();
+	}
 
 	struct UIVertex
 	{
@@ -26,12 +29,13 @@ namespace uut
 		VertexElement(VertexElement::DT_FLOAT2, VertexElement::UT_TEXCOORD, offsetof(UIVertex, tx)),
 	};
 
-	DebugGUI::DebugGUI(Renderer* renderer, Input* input)
-		: _renderer(renderer)
-		, _input(input)
-		, _vbSize(0)
+	DebugGUI::DebugGUI()
+		: _vbSize(0)
 		, _ibSize(0)
 	{
+		_renderer = Renderer::Instance();
+		_input = Input::Instance();
+
 		ImGuiIO& io = ImGui::GetIO();
 		io.IniFilename = nullptr;
 		io.LogFilename = nullptr;

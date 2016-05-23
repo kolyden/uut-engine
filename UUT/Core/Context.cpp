@@ -12,6 +12,7 @@ namespace uut
 	Context::ConstTypeDict Context::_constTypes;
 	Context::DerivedDict Context::_derived;
 	Context::ModuleDict Context::_modules;
+	Context::ModuleInstMap Context::_moduleInst;
 
 	SharedPtr<Object> Context::CreateObject(const Type* type)
 	{
@@ -133,6 +134,12 @@ namespace uut
 		}
 
 		_modules.Add(type->GetName(), SharedPtr<Module>(module));
+
+		for (auto base = type; base != nullptr && base != Module::GetTypeStatic(); base = base->GetBaseType())
+		{
+			_moduleInst[base] = module;
+		}
+
 		module->OnRegister();
 	}
 
@@ -141,17 +148,8 @@ namespace uut
 		if (type == nullptr)
 			return nullptr;
 
-		auto it = _modules.Find(type->GetName());
-		if (it != _modules.End())
-			return it->second;
-
-		for (auto& module : _modules)
-		{
-			if (module.second->GetType()->IsDerived(type))
-				return module.second;
-		}
-
-		return nullptr;
+		auto it = _moduleInst.Find(type);
+		return it == _moduleInst.End() ? nullptr : it->second;
 	}
 
 	Module* Context::FindModule(const HashString& name)

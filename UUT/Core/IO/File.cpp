@@ -53,7 +53,7 @@ namespace uut
 	{
 // 		auto stream = OpenRead(path);
 // 		if (!stream)
-			return List<String>::EMPTY;
+			return List<String>::Empty;
 
 // 		auto reader = SharedPtr<TextReader>::Make(stream);
 	}

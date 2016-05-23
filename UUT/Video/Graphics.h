@@ -7,7 +7,7 @@
 
 namespace uut
 {
-	class BitmapFont;
+	class Font;
 	class Geometry;
 	class Rect;
 	class Vector3;
@@ -34,7 +34,7 @@ namespace uut
 			MT_TRANSPARENT,
 		};
 
-		explicit Graphics(Renderer* renderer);
+		Graphics();
 		virtual ~Graphics();
 
 		void SetProjection(ProjectionMode mode);
@@ -60,14 +60,14 @@ namespace uut
 		void DrawPrimitive(Topology topology, const List<Vertex>& vertexes, Texture2D* texture = nullptr);
 		void DrawIndexedPrimitive(Topology topology, const List<Vertex>& vertexes, const List<uint16_t>& indexes, Texture2D* texture = nullptr);
 
-		void PrintText(const Vector2& position, float z, const String& text, BitmapFont* font, const Color32& color = Color32::White);
+		void PrintText(const Vector2& position, float z, const String& text, Font* font, const Color32& color = Color32::White);
 
 		void Flush();
 
 		Renderer* GetRenderer() const;
 
 	protected:
-		SharedPtr<Renderer> _renderer;
+		WeakPtr<Renderer> _renderer;
 		SharedPtr<VertexBuffer> _vbuf;
 		SharedPtr<VertexDeclaration> _vdec;
 

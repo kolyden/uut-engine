@@ -14,7 +14,24 @@ namespace uut
 		const String& GetName() const override;
 
 		virtual const ArgsTypes& GetArgsTypes() const = 0;
-		virtual bool Call(void* ptr, const List<Variant>& args = List<Variant>::EMPTY) const = 0;
+		virtual bool Call(void* ptr, const List<Variant>& args = List<Variant>::Empty) const = 0;
+	};
+
+	//////////////////////////////////////////////////////////////////////////
+	template<class C>
+	class DefaultCtorInfo : public ConstructorInfo
+	{
+	public:
+		virtual const ArgsTypes& GetArgsTypes() const override
+		{
+			return ArgsTypes::Empty;
+		}
+
+		virtual bool Call(void* ptr, const List<Variant>& args = List<Variant>::Empty) const override
+		{
+			new (ptr) C();
+			return true;
+		}
 	};
 
 	//////////////////////////////////////////////////////////////////////////
@@ -31,7 +48,7 @@ namespace uut
 			return types;
 		}
 
-		virtual bool Call(void* ptr, const List<Variant>& args = List<Variant>::EMPTY) const override
+		virtual bool Call(void* ptr, const List<Variant>& args = List<Variant>::Empty) const override
 		{
 			TUPLE tuple;
 			for (int i = 0; i < ARGS_COUNT; i++)
@@ -49,5 +66,6 @@ namespace uut
 		}
 	};
 
+#define UUT_REGISTER_CTOR_DEFAULT() internalType->AddMember(new DefaultCtorInfo<ClassName>());
 #define UUT_REGISTER_CTOR(...) internalType->AddMember(new ConstructorInfoImpl<ClassName, __VA_ARGS__>());
 }

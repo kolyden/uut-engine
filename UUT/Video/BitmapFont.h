@@ -35,16 +35,32 @@ namespace uut
 
 		const FontGlyph* GetGlyph(uint32_t id) const;
 		int16_t GetKerning(uint32_t a, uint32_t b) const;
-		Texture2D* GetTexture(int index) const;
 
-		bool PrintToQuad(Vector2& pos, uint32_t code, uint32_t next, IntRect& rect, Rect& tex, uint8_t& page) const;
+		Texture2D* GetTexture(int index) const override;
+		bool PrintToQuad(Vector2& pos, uint32_t code, uint32_t next, IntRect& rect, Rect& tex, uint8_t& page) const override;
 
 	protected:
+		struct FaceInfo
+		{
+			uint16_t lineHeight;
+			uint16_t base;
+			uint16_t scaleW;
+			uint16_t scaleH;
+			uint16_t pages;
+			uint8_t bitField;
+			uint8_t alphaChnl;
+			uint8_t redChnl;
+			uint8_t greenChnl;
+			uint8_t blueChnl;
+		};
+
 		List<FontGlyph> _glyphs;
 		List<FontKerningPair> _kerningPairs;
 		Dictionary<uint32_t, uint16_t> _glyphMap;
+		Dictionary<uint32_t, Rect> _glyphRect;
 		Dictionary<uint32_t, Dictionary<uint32_t, uint16_t>> _kerningMap;
 		List<SharedPtr<Texture2D>> _textures;
+		FaceInfo _info;
 
 		void UpdateGlyphsMap();
 		void UpdateKerningMap();

@@ -17,7 +17,7 @@ namespace uut
 
 		SharedPtr<DebugGUI> _gui;
 		SharedPtr<Graphics> _graphics;
-		SharedPtr<BitmapFont> _font;
+		SharedPtr<Font> _font;
 
 		Timer _timer;
 

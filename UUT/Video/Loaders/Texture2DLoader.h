@@ -9,13 +9,9 @@ namespace uut
 	{
 		UUT_OBJECT(Texture2DLoader, ResourceLoader)
 	public:
-		explicit Texture2DLoader(Renderer* renderer);
-		virtual ~Texture2DLoader();
+		explicit Texture2DLoader();
 
 		SharedPtr<Resource> Load(Stream* stream) override;
 		const Type* GetResourceType() const override;
-
-	protected:
-		SharedPtr<Renderer> _renderer;
 	};
 }

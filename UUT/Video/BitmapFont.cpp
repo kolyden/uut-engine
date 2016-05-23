@@ -44,22 +44,15 @@ namespace uut
 		if (glyph == nullptr)
 			return false;
 
-		auto texture = GetTexture(glyph->page);
 		page = glyph->page;
 
 		rect = IntRect(
 			pos.x + glyph->offsetX,
-			pos.y + glyph->offsetY,
+			pos.y + _info.lineHeight - glyph->offsetY - glyph->h,
 			glyph->w, glyph->h);
 
-		const float invTexW = 1.0f / texture->GetSize().x;
-		const float invTexH = 1.0f / texture->GetSize().y;
 
-		tex = Rect(
-			invTexW * glyph->x,
-			invTexH * glyph->y,
-			invTexW * glyph->w,
-			invTexH * glyph->h);
+		_glyphRect.TryGetValue(code, tex);
 
 		pos.x += glyph->advanceX + GetKerning(code, next);
 		return true;
@@ -70,7 +63,19 @@ namespace uut
 	{
 		_glyphMap.Clear();
 		for (uint i = 0; i < _glyphs.Count(); i++)
-			_glyphMap.Add(_glyphs[i].id, i);
+		{
+			const auto& glyph = _glyphs[i];
+			_glyphMap.Add(glyph.id, i);
+
+			auto page = glyph.page;
+			auto tex = GetTexture(page);
+			const float invTexW = 1.0f / (tex->GetSize().x - 1);
+			const float invTexH = 1.0f / (tex->GetSize().y - 1);
+
+			_glyphRect.Add(glyph.id,
+				Rect(invTexW * glyph.x, invTexH * glyph.y,
+					 invTexW * glyph.w, invTexH * glyph.h));
+		}
 	}
 
 	void BitmapFont::UpdateKerningMap()

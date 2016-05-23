@@ -40,13 +40,13 @@ namespace uut
 		CIterator Begin() const { return _data.begin(); }
 		CIterator End() const { return _data.end(); }
 
-		static const HashSet<T> EMPTY;
+		static const HashSet<T> Empty;
 
 	protected:
 		DataType _data;
 	};
 
-	template<class T> const HashSet<T> HashSet<T>::EMPTY;
+	template<class T> const HashSet<T> HashSet<T>::Empty;
 
 	template<class T> typename HashSet<T>::Iterator begin(HashSet<T>& container) { return container.Begin(); }
 	template<class T> typename HashSet<T>::Iterator end(HashSet<T>& container) { return container.End(); }

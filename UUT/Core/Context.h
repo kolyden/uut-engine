@@ -22,6 +22,7 @@ namespace uut
 		typedef HashSet<const Type*> DerivedSet;
 		typedef Dictionary<const Type*, DerivedSet> DerivedDict;
 		typedef Dictionary<HashString, SharedPtr<Module>> ModuleDict;
+		typedef Dictionary<const Type*, Module*> ModuleInstMap;
 
 		// OBJECT CREATION
 		static SharedPtr<Object> CreateObject(const Type* type);
@@ -50,6 +51,8 @@ namespace uut
 		static void RegisterModule(Module* module);
 		static Module* FindModule(const Type* type);
 		static Module* FindModule(const HashString& name);
+		template<class C>static C* FindModule()
+		{ return static_cast<C*>(FindModule(typeof<C>())); }
 
 	protected:
 		static bool _inited;
@@ -58,6 +61,7 @@ namespace uut
 		static ConstTypeDict _constTypes;
 		static DerivedDict _derived;
 		static ModuleDict _modules;
+		static ModuleInstMap _moduleInst;
 
 		static void Init();
 		static void Done();

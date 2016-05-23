@@ -2,6 +2,7 @@
 #include <Core/Timer.h>
 #include <Video/DX9/DX9Renderer.h>
 #include <Video/Loaders/Texture2DLoader.h>
+#include <Video/Loaders/BitmapFontLoader.h>
 
 namespace uut
 {
@@ -25,14 +26,18 @@ namespace uut
 		_window->SetSize(IntVector2(_windowSize));
 		_window->Create();
 
-		_input = new Input();
-		_cache = new ResourceCache();
+		Context::RegisterModule(new Input());
+		Context::RegisterModule(new ResourceCache());
+		Context::RegisterModule(DX9Renderer::Create(_window));
 
-		_renderer = DynamicCast<Renderer>(DX9Renderer::Create(_window));
+		_input = Context::FindModule<Input>();
+		_cache = Context::FindModule<ResourceCache>();
+		_renderer = Context::FindModule<Renderer>();
 		if (_renderer == nullptr)
 			return;
 
-		_cache->AddLoader(new Texture2DLoader(_renderer));
+		_cache->AddLoader(new Texture2DLoader());
+		_cache->AddLoader(new BitmapFontLoader());
 		_renderer->ResetStates();
 		OnInit();
 
