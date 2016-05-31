@@ -7,6 +7,8 @@
 
 namespace uut
 {
+	class Tilemap;
+
 	class SampleApp : public Application
 	{
 	public:
@@ -18,6 +20,7 @@ namespace uut
 		SharedPtr<DebugGUI> _gui;
 		SharedPtr<Graphics> _graphics;
 		SharedPtr<Font> _font;
+		SharedPtr<Tilemap> _tilemap;
 
 		Timer _timer;
 

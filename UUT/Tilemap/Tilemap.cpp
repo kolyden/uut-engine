@@ -8,6 +8,7 @@ namespace uut
 
 	Tilemap::Tilemap()
 		: _size(0)
+		, _cellSize(16)
 	{
 	}
 
@@ -31,6 +32,16 @@ namespace uut
 			it->SetSize(_size);
 	}
 
+	void Tilemap::SetCellSize(const Vector2& size)
+	{
+		_cellSize = size;
+	}
+
+	const Vector2& Tilemap::GetCellSize() const
+	{
+		return _cellSize;
+	}
+
 	void Tilemap::Clear()
 	{
 		_layers.Clear();
@@ -49,6 +60,9 @@ namespace uut
 			return;
 
 		for (auto& it : _layers)
-			it->DrawLayer(graphics);
+		{
+			if (it->IsVisible())
+				it->DrawLayer(graphics);
+		}
 	}
 }

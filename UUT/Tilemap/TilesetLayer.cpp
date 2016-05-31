@@ -13,7 +13,18 @@ namespace uut
 
 	TilesetLayer::TilesetLayer()
 		: _size(0)
+		, _transparent(false)
 	{
+	}
+
+	void TilesetLayer::SetTransparent(bool transparent)
+	{
+		_transparent = transparent;
+	}
+
+	bool TilesetLayer::GetTransparent() const
+	{
+		return _transparent;
 	}
 
 	void TilesetLayer::SetTileset(Tileset* tileset)
@@ -36,6 +47,12 @@ namespace uut
 		return _tiles[Pos2Index(x, y)];
 	}
 
+	void TilesetLayer::Fill(uint8_t tile)
+	{
+		for (uint i = 0; i < _tiles.Count(); i++)
+			_tiles[i] = tile;
+	}
+
 	void TilesetLayer::Fill(const IntRect& rect, uint8_t tile)
 	{
 	}
@@ -44,13 +61,23 @@ namespace uut
 	{
 // 		Fill(IntRect(0, 0, _size), 0);
 		for (uint i = 0; i < _tiles.Count(); i++)
-			_tiles[i] = 0;
+			_tiles[i] = EMPTY_TILE;
+	}
+
+	void TilesetLayer::ForEach(IterateFunc func)
+	{
+		for (uint i = 0; i < _tiles.Count(); i++)
+		{
+			const auto pos = Index2Pos(i);
+			func(pos.x, pos.y, _tiles[i]);
+		}
 	}
 
 	void TilesetLayer::SetSize(const IntVector2& size)
 	{
 		_size = size;
 		_tiles.SetSize(_size.Area());
+		Clear();
 	}
 
 	void TilesetLayer::Update(float deltaTime)
@@ -62,23 +89,25 @@ namespace uut
 		if (_tileset == nullptr)
 			return;
 
-		graphics->SetMaterial(Graphics::MT_OPAQUE);
+		const auto& cellSize = _tilemap->GetCellSize();
+
+		graphics->SetMaterial(_transparent ? Graphics::MT_TRANSPARENT : Graphics::MT_OPAQUE);
 		auto tex = _tileset->GetTexture();
-		const Vector2 texSize = tex->GetSize();
-		auto& rects = _tileset->GetRects();
+		auto& items = _tileset->GetItems();
 
 		for (int y = 0; y < _size.y; y++)
 		{
 			for (int x = 0; x < _size.x; x++)
 			{
 				int index = Pos2Index(x, y);
-				auto texRect = Rect(rects[index]);
-				texRect.x /= texSize.x;
-				texRect.y /= texSize.y;
-				texRect.width /= texSize.x;
-				texRect.height /= texSize.y;
+				auto tile = _tiles[index];
+				if (tile == EMPTY_TILE)
+					continue;
 
-				graphics->DrawQuad(Rect(), 0, tex, texRect);
+				auto& item = items[tile];
+				graphics->DrawQuad(
+					Rect(cellSize.x*x, cellSize.y*(_tilemap->GetSize().y - y - 1), cellSize.x, cellSize.y),
+					20, tex, item.normalizedRect);
 			}
 		}
 	}
@@ -87,5 +116,10 @@ namespace uut
 	int TilesetLayer::Pos2Index(int x, int y) const
 	{
 		return y*_size.x + x;
+	}
+
+	IntVector2 TilesetLayer::Index2Pos(int index) const
+	{
+		return IntVector2(index % _size.x, div(index, _size.x).quot);
 	}
 }

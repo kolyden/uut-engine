@@ -14,6 +14,9 @@
 #include <Resources/ResourceLoader.h>
 #include <Video/BitmapFont.h>
 #include <Video/Loaders/BitmapFontLoader.h>
+#include <Tilemap/Tilemap.h>
+#include <Tilemap/TilesetLayer.h>
+#include <Tilemap/Tileset.h>
 
 namespace uut
 {
@@ -190,9 +193,38 @@ namespace uut
 		_graphics->SetProjection(Graphics::PM_2D);
 		_font = _cache->Load<Font>("Consolas.fnt");
 
-		_timer.Start();
+		_tilemap = new Tilemap();
+		_tilemap->SetSize(IntVector2(10, 10));
+		_tilemap->SetCellSize(Vector2(32));
+		auto layer1 = _tilemap->AddLayer<TilesetLayer>("Tiles");
+		auto layer2 = _tilemap->AddLayer<TilesetLayer>("Objects");
 
-// 		auto obj = Context::CreateObject<()
+		auto tileset = new Tileset();
+		tileset->SetTexture(_cache->Load<Texture2D>("rogueliketiles.png"));
+		tileset->GenerateItems(IntVector2(16));
+// 		tileset->SetItems({
+// 			TilesetItem(16, 0, 16, 16), TilesetItem(16, 16, 16, 16), TilesetItem(32, 0, 16, 16),
+// 			TilesetItem(0, 0, 16, 16), TilesetItem(0, 48, 16, 16) });
+
+		layer1->SetTileset(tileset);
+		layer1->ForEach([this](int x, int y, uint8_t& tile)
+		{
+			tile = x == 0 || y == 0 || x == _tilemap->GetSize().x - 1 || y == _tilemap->GetSize().y - 1 ? 7 : 1;
+		});
+		layer1->SetTile(5, 0, 2);
+
+		layer2->SetTileset(tileset);
+		layer2->SetTransparent(true);
+		layer2->Clear();
+		layer2->SetTile(3, 3, 0);
+		layer2->SetTile(6, 7, 0);
+		layer2->SetTile(2, 8, 0);
+		layer2->SetTile(8, 1, 18);
+		layer2->SetTile(4, 0, 16);
+		layer2->SetTile(6, 0, 16);
+		layer2->SetTile(5, 5, 42);
+
+		_timer.Start();
 
 		Variant var1(Vector2(12.111f, 45.6789f));
 		Variant var2(_font);
@@ -212,7 +244,7 @@ namespace uut
 
 		auto vec = var1.Get<Vector2>();
 		auto ivec = var1.Get<IntVector2>(); UUT_ASSERT(ivec == Vector2(12, 46));
-// 		auto obj = var2.Get<Object>(); UUT_ASSERT(obj == _font);
+		auto obj = var2.Get<Object>(); UUT_ASSERT(obj == _font);
 		auto i = var3.Get<int>(); UUT_ASSERT(i == 666);
 		auto b = var4.Get<bool>(); UUT_ASSERT(b == true);
 		auto flag = var5.Get<Test>(); UUT_ASSERT(flag == Test::ValueZ);
@@ -316,6 +348,8 @@ namespace uut
 	{
 		_timer.Update();
 		_gui->NewFrame();
+		if (_tilemap)
+			_tilemap->Update(_timer.GetDeltaTime());
 
 		///////////////////////////////////////////////////////////////
 		ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiSetCond_FirstUseEver);
@@ -407,6 +441,10 @@ namespace uut
 			_graphics->SetProjection(Graphics::PM_2D);
 			if (_font)
 				_graphics->PrintText(Vector2(10, 10), 15, "qwertyuiopasdfghjklzxcvbnm", _font, Color32::Black);
+			_graphics->Flush();
+
+			if (_tilemap)
+				_tilemap->Draw(_graphics);
 			_graphics->Flush();
 
 			_gui->SetupCamera();

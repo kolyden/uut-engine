@@ -13,6 +13,12 @@ namespace uut
 	public:
 		TilemapLayer();
 
+		void SetName(const String& name);
+		const String& GetName() const;
+
+		void SetVisible(bool visible);
+		bool IsVisible() const;
+
 		virtual void SetSize(const IntVector2& size) = 0;
 		virtual void Update(float deltaTime) = 0;
 		virtual void DrawLayer(Graphics* graphics) const = 0;
@@ -20,6 +26,8 @@ namespace uut
 
 	protected:
 		WeakPtr<Tilemap> _tilemap;
+		String _name;
+		bool _visible;
 
 		friend class Tilemap;
 	};
