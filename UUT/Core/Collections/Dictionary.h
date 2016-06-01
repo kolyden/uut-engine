@@ -22,7 +22,7 @@ namespace uut
 		Dictionary(DataMap&& data) { _dataMap = std::move(data); }
 // 		Dictionary(const Dictionary<TKey, TValue>& other) : _dataMap(other._dataMap) {}
 		Dictionary(Dictionary<TKey,TValue>&& other) { _dataMap = std::move(other._dataMap); }
-		Dictionary(std::initializer_list<std::pair<TKey,TValue>> items)
+		Dictionary(std::initializer_list<typename DataMap::value_type> items)
 			: _dataMap(items) {}
 
 		void Add(const TKey& key, TValue val)

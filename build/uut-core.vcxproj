@@ -172,6 +172,8 @@
     <ClInclude Include="..\UUT\Resources\Resource.h" />
     <ClInclude Include="..\UUT\Resources\ResourceCache.h" />
     <ClInclude Include="..\UUT\Resources\ResourceLoader.h" />
+    <ClInclude Include="..\UUT\Tilemap\ObjectLayer.h" />
+    <ClInclude Include="..\UUT\Tilemap\PassabilityLayer.h" />
     <ClInclude Include="..\UUT\Tilemap\Tilemap.h" />
     <ClInclude Include="..\UUT\Tilemap\TilemapLayer.h" />
     <ClInclude Include="..\UUT\Tilemap\Tileset.h" />
@@ -278,6 +280,8 @@
     <ClCompile Include="..\UUT\Resources\Resource.cpp" />
     <ClCompile Include="..\UUT\Resources\ResourceCache.cpp" />
     <ClCompile Include="..\UUT\Resources\ResourceLoader.cpp" />
+    <ClCompile Include="..\UUT\Tilemap\ObjectLayer.cpp" />
+    <ClCompile Include="..\UUT\Tilemap\PassabilityLayer.cpp" />
     <ClCompile Include="..\UUT\Tilemap\Tilemap.cpp" />
     <ClCompile Include="..\UUT\Tilemap\TilemapLayer.cpp" />
     <ClCompile Include="..\UUT\Tilemap\Tileset.cpp" />

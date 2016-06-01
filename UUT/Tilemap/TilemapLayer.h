@@ -19,6 +19,8 @@ namespace uut
 		void SetVisible(bool visible);
 		bool IsVisible() const;
 
+		Tilemap* GetTilemap() const { return _tilemap; }
+
 		virtual void SetSize(const IntVector2& size) = 0;
 		virtual void Update(float deltaTime) = 0;
 		virtual void DrawLayer(Graphics* graphics) const = 0;

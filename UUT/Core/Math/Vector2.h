@@ -52,6 +52,7 @@ namespace uut
 		static Vector2 Minimize(const Vector2& a, const Vector2& b);
 
 		static Vector2 Scale(const Vector2& vec, float s);
+		static Vector2 Scale(const Vector2& vec, const Vector2& scale);
 
 		static const Vector2 Zero;  // ( 0,  0)
 		static const Vector2 One;   // ( 1,  1)

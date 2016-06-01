@@ -183,4 +183,9 @@ namespace uut
 	{
 		return Vector2(s*vec.x, s*vec.y);
 	}
+
+	Vector2 Vector2::Scale(const Vector2& vec, const Vector2& scale)
+	{
+		return Vector2(scale.x*vec.x, scale.y*vec.y);
+	}
 }

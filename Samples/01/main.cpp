@@ -17,6 +17,8 @@
 #include <Tilemap/Tilemap.h>
 #include <Tilemap/TilesetLayer.h>
 #include <Tilemap/Tileset.h>
+#include <Tilemap/ObjectLayer.h>
+#include <Tilemap/PassabilityLayer.h>
 
 namespace uut
 {
@@ -179,6 +181,93 @@ namespace uut
 	}
 
 	////////////////////////////////////////////////////////////////////////////
+	class Player : public ObjectLayerItem
+	{
+	public:
+		Player(Texture2D* tex, PassabilityLayer* passability)
+			: _texture(tex), _passability(passability), _moving(false)
+		{
+		}
+
+		void Update(float deltaTime) override
+		{
+			if (!_moving)
+				return;
+
+			const float moveTime = 0.1f;
+
+			_time += deltaTime;
+			if (_time >= moveTime)
+			{
+				_moving = false;
+				_offset = Vector2::Zero;
+			}
+			else
+			{
+				const float t = 1.0f - _time / moveTime;
+				const auto& size = _layer->GetTilemap()->GetCellSize();
+				switch (_moveDir)
+				{
+				case Direction::West: _offset = Vector2::Scale(size, Vector2(+t, 0)); break;
+				case Direction::East: _offset = Vector2::Scale(size, Vector2(-t, 0)); break;
+				case Direction::North: _offset = Vector2::Scale(size, Vector2(0, -t)); break;
+				case Direction::South: _offset = Vector2::Scale(size, Vector2(0, +t)); break;
+				}
+			}
+		}
+
+		void Move(Direction::Enum dir)
+		{
+			if (_moving)
+				return;
+
+			static const Dictionary<Direction::Enum, IntVector2> dirOffset = {
+				{Direction::West, IntVector2(-1, 0) },
+				{Direction::East, IntVector2(+1, 0) },
+				{Direction::North, IntVector2(0, -1) },
+				{Direction::South, IntVector2(0, +1) }
+			};
+
+			IntVector2 offset;
+			if (!dirOffset.TryGetValue(dir, offset))
+				return;
+
+			const IntVector2 newPos = _position + offset;
+			if (_passability->IsBlocked(newPos.x, newPos.y))
+				return;
+
+			_position = newPos;
+			_moving = true;
+			_moveDir = dir;
+			_time = 0;
+			Update(0);
+		}
+
+		void Move(int dx, int dy)
+		{
+			SetPosition(_position + IntVector2(dx, dy));
+		}
+
+		void Draw(Graphics* graphics) const override
+		{
+			auto tilemap = _layer->GetTilemap();
+			auto& size = tilemap->GetSize();
+			auto& cellSize = tilemap->GetCellSize();
+
+			auto pos = IntVector2(_position.x, size.y - _position.y - 1);
+			graphics->DrawQuad(Rect(Vector2::Scale(cellSize, pos) + _offset, cellSize), 15, _texture);
+		}
+
+	protected:
+		SharedPtr<Texture2D> _texture;
+		WeakPtr<PassabilityLayer> _passability;
+		bool _moving;
+		Direction::Enum _moveDir;
+		float _time;
+		Vector2 _offset;
+	};
+
+	////////////////////////////////////////////////////////////////////////////
 	SampleApp::SampleApp()
 	{
 		_windowSize = IntVector2(800, 600);
@@ -198,6 +287,8 @@ namespace uut
 		_tilemap->SetCellSize(Vector2(32));
 		auto layer1 = _tilemap->AddLayer<TilesetLayer>("Tiles");
 		auto layer2 = _tilemap->AddLayer<TilesetLayer>("Objects");
+		auto layer3 = _tilemap->AddLayer<ObjectLayer>("Characters");
+		auto layer4 = _tilemap->AddLayer<PassabilityLayer>("Passability");
 
 		auto tileset = new Tileset();
 		tileset->SetTexture(_cache->Load<Texture2D>("rogueliketiles.png"));
@@ -207,22 +298,46 @@ namespace uut
 // 			TilesetItem(0, 0, 16, 16), TilesetItem(0, 48, 16, 16) });
 
 		layer1->SetTileset(tileset);
-		layer1->ForEach([this](int x, int y, uint8_t& tile)
+		layer1->ForEach([this, layer4](int x, int y, uint8_t& tile)
 		{
-			tile = x == 0 || y == 0 || x == _tilemap->GetSize().x - 1 || y == _tilemap->GetSize().y - 1 ? 7 : 1;
+			const uint8_t grassTile = 1;
+			const uint8_t wallTile = 7;
+
+			if (x == 0 || y == 0 || x == _tilemap->GetSize().x - 1 || y == _tilemap->GetSize().y - 1)
+			{
+				tile = wallTile;
+				layer4->SetBlocked(x, y, true);
+			}
+			else
+			{
+				tile = grassTile;
+				layer4->SetBlocked(x, y, false);
+			}
 		});
 		layer1->SetTile(5, 0, 2);
 
+		Dictionary<Direction::Enum, IntVector2> pairs = {
+			{ Direction::North, IntVector2::Zero },
+			{ Direction::West, IntVector2::Zero }
+		};
+
+		const uint8_t treeTile = 0;
+		const uint8_t torchTile = 16;
+		const uint8_t chestTile = 18;
+		const uint8_t welltile = 42;
 		layer2->SetTileset(tileset);
 		layer2->SetTransparent(true);
 		layer2->Clear();
-		layer2->SetTile(3, 3, 0);
-		layer2->SetTile(6, 7, 0);
-		layer2->SetTile(2, 8, 0);
-		layer2->SetTile(8, 1, 18);
-		layer2->SetTile(4, 0, 16);
-		layer2->SetTile(6, 0, 16);
-		layer2->SetTile(5, 5, 42);
+		layer2->SetTile(3, 3, treeTile); layer4->SetBlocked(3, 3, true);
+		layer2->SetTile(6, 7, treeTile); layer4->SetBlocked(6, 7, true);
+		layer2->SetTile(2, 8, treeTile); layer4->SetBlocked(2, 8, true);
+		layer2->SetTile(8, 1, chestTile); layer4->SetBlocked(8, 1, true);
+		layer2->SetTile(4, 0, torchTile);
+		layer2->SetTile(6, 0, torchTile);
+		layer2->SetTile(5, 5, welltile); layer4->SetBlocked(5, 5, true);
+
+		_player = new Player(_cache->Load<Texture2D>("angel.png"), layer4);
+		layer3->AddItem(IntVector2(5, 1), _player);
 
 		_timer.Start();
 
@@ -352,7 +467,8 @@ namespace uut
 			_tilemap->Update(_timer.GetDeltaTime());
 
 		///////////////////////////////////////////////////////////////
-		ImGui::SetNextWindowSize(ImVec2(400, 400), ImGuiSetCond_FirstUseEver);
+		ImGui::SetNextWindowPos(ImVec2(350, 50), ImGuiSetCond_FirstUseEver);
+		ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiSetCond_FirstUseEver);
 		if (ImGui::Begin("Context"))
 		{
 			ImGui::Checkbox("Show Test Window", &show_test_window);
@@ -428,6 +544,14 @@ namespace uut
 		{
 			ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
 			ImGui::ShowTestWindow(&show_test_window);
+		}
+
+		if (_player)
+		{
+			if (Input::IsKeyDown(SDL_SCANCODE_LEFT)) _player->Move(Direction::West);
+			if (Input::IsKeyDown(SDL_SCANCODE_RIGHT)) _player->Move(Direction::East);
+			if (Input::IsKeyDown(SDL_SCANCODE_UP)) _player->Move(Direction::North);
+			if (Input::IsKeyDown(SDL_SCANCODE_DOWN)) _player->Move(Direction::South);
 		}
 
 		///////////////////////////////////////////////////////////////

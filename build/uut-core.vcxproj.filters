@@ -624,6 +624,12 @@
     <ClInclude Include="..\UUT\Core\IO\BinaryReader.h">
       <Filter>UUT\Core\IO</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\ObjectLayer.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\PassabilityLayer.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -931,6 +937,12 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Core\IO\BinaryReader.cpp">
       <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\ObjectLayer.cpp">
+      <Filter>UUT\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\PassabilityLayer.cpp">
+      <Filter>UUT\Tilemap</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
