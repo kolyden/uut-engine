@@ -17,6 +17,18 @@ namespace uut
 		_items << SharedPtr<ObjectLayerItem>(item);
 		item->_position = position;
 		item->_layer = this;
+		item->OnInit();
+	}
+
+	ObjectLayerItem* ObjectLayer::GetItem(const IntVector2& position) const
+	{
+		for (auto& item : _items)
+		{
+			if (item->_position == position)
+				return item;
+		}
+
+		return nullptr;
 	}
 
 	void ObjectLayer::SetSize(const IntVector2& size)

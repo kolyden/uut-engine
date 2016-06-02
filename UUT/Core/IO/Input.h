@@ -1,6 +1,7 @@
 #pragma once
 #include <Core/Module.h>
 #include <Core/Math/IntVector2.h>
+#include <Core/Collections/Array.h>
 
 namespace uut
 {
@@ -24,8 +25,8 @@ namespace uut
 		static const int KEYS_COUNT = 512;
 
 		IntVector2 _mousePos;
-		uint8_t _prevKbState[KEYS_COUNT];
-		uint8_t _kbState[KEYS_COUNT];
+		Array<uint8_t, KEYS_COUNT> _prevKbState;
+		Array<uint8_t, KEYS_COUNT> _kbState;
 
 		int _kbMod;
 		bool _mouseButton[3];

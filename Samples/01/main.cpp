@@ -19,6 +19,7 @@
 #include <Tilemap/Tileset.h>
 #include <Tilemap/ObjectLayer.h>
 #include <Tilemap/PassabilityLayer.h>
+#include <Tilemap/InfoLayer.h>
 
 namespace uut
 {
@@ -176,15 +177,81 @@ namespace uut
 		UUT_REGISTER_ENUM_VALUE(ValueZ);
 
 		UUT_REGISTER_CONVERTER_FUNC(String, ToString);
-
-// 		RegisterValues<Test>(internalType, Direction::COUNT, Direction::NAMES, Direction::VALUES);
 	}
+
+	////////////////////////////////////////////////////////////////////////////
+	struct CellInfo
+	{
+		bool blocked;
+	};
+
+	class CellInfoLayer : public InfoLayer<CellInfo>
+	{
+		UUT_OBJECT(CellInfoLayer, TilemapLayer)
+	public:
+
+		void SetBlocked(int x, int y, bool blocked) { Get(x, y).blocked = blocked; }
+		bool IsBlocked(int x, int y) const { return Get(x, y).blocked; }
+
+		void Update(float deltaTime) override {}
+		void DrawLayer(Graphics* graphics) const override {}
+	};
+
+	UUT_OBJECT_IMPLEMENT(CellInfoLayer)
+	{}
+
+	////////////////////////////////////////////////////////////////////////////
+	class MapDoor : public ObjectLayerItem
+	{
+	public:
+		MapDoor(TilesetLayer* layer, uint8_t doorClosed, uint8_t doorOpen, bool opened = false)
+			: _tilelayer(layer)
+			, _tileClosed(doorClosed)
+			, _tileOpened(doorOpen)
+			, _opened(opened)
+		{}
+
+		void SetOpened(bool opened)
+		{
+			if (_opened == opened)
+				return;
+
+			_opened = opened;
+			UpdateTile();
+		}
+
+		bool IsOpened() const
+		{
+			return _opened;
+		}
+
+		virtual void Update(float deltaTime) override {}
+		virtual void Draw(Graphics* graphics) const override {}
+		virtual bool IsBlocked() const override { return !IsOpened(); }
+
+	protected:
+		WeakPtr<TilesetLayer> _tilelayer;
+		uint8_t _tileClosed;
+		uint8_t _tileOpened;
+		bool _opened;
+
+		virtual void OnInit() override
+		{
+			UpdateTile();
+		}
+
+		void UpdateTile()
+		{
+			_tilelayer->SetTile(_position.x, _position.y,
+				_opened ? _tileOpened : _tileClosed);
+		}
+	};
 
 	////////////////////////////////////////////////////////////////////////////
 	class Player : public ObjectLayerItem
 	{
 	public:
-		Player(Texture2D* tex, PassabilityLayer* passability)
+		Player(Texture2D* tex, CellInfoLayer* passability)
 			: _texture(tex), _passability(passability), _moving(false)
 		{
 		}
@@ -236,6 +303,20 @@ namespace uut
 			if (_passability->IsBlocked(newPos.x, newPos.y))
 				return;
 
+			auto item = _layer->GetItem(newPos);
+			if (item != nullptr)
+			{
+				if (item->IsBlocked())
+				{
+					auto door = dynamic_cast<MapDoor*>(item);
+					if (door == nullptr)
+						return;
+
+					door->SetOpened(true);
+					return;
+				}
+			}
+
 			_position = newPos;
 			_moving = true;
 			_moveDir = dir;
@@ -260,7 +341,7 @@ namespace uut
 
 	protected:
 		SharedPtr<Texture2D> _texture;
-		WeakPtr<PassabilityLayer> _passability;
+		WeakPtr<CellInfoLayer> _passability;
 		bool _moving;
 		Direction::Enum _moveDir;
 		float _time;
@@ -283,12 +364,12 @@ namespace uut
 		_font = _cache->Load<Font>("Consolas.fnt");
 
 		_tilemap = new Tilemap();
-		_tilemap->SetSize(IntVector2(10, 10));
+		_tilemap->SetSize(IntVector2(11));
 		_tilemap->SetCellSize(Vector2(32));
 		auto layer1 = _tilemap->AddLayer<TilesetLayer>("Tiles");
 		auto layer2 = _tilemap->AddLayer<TilesetLayer>("Objects");
 		auto layer3 = _tilemap->AddLayer<ObjectLayer>("Characters");
-		auto layer4 = _tilemap->AddLayer<PassabilityLayer>("Passability");
+		auto layer4 = _tilemap->AddLayer<CellInfoLayer>("Passability");
 
 		auto tileset = new Tileset();
 		tileset->SetTexture(_cache->Load<Texture2D>("rogueliketiles.png"));
@@ -314,7 +395,7 @@ namespace uut
 				layer4->SetBlocked(x, y, false);
 			}
 		});
-		layer1->SetTile(5, 0, 2);
+		layer1->SetTile(5, 0, 1); layer4->SetBlocked(5, 0, false);
 
 		Dictionary<Direction::Enum, IntVector2> pairs = {
 			{ Direction::North, IntVector2::Zero },
@@ -323,7 +404,6 @@ namespace uut
 
 		const uint8_t treeTile = 0;
 		const uint8_t torchTile = 16;
-		const uint8_t chestTile = 18;
 		const uint8_t welltile = 42;
 		layer2->SetTileset(tileset);
 		layer2->SetTransparent(true);
@@ -331,13 +411,14 @@ namespace uut
 		layer2->SetTile(3, 3, treeTile); layer4->SetBlocked(3, 3, true);
 		layer2->SetTile(6, 7, treeTile); layer4->SetBlocked(6, 7, true);
 		layer2->SetTile(2, 8, treeTile); layer4->SetBlocked(2, 8, true);
-		layer2->SetTile(8, 1, chestTile); layer4->SetBlocked(8, 1, true);
 		layer2->SetTile(4, 0, torchTile);
 		layer2->SetTile(6, 0, torchTile);
 		layer2->SetTile(5, 5, welltile); layer4->SetBlocked(5, 5, true);
 
 		_player = new Player(_cache->Load<Texture2D>("angel.png"), layer4);
 		layer3->AddItem(IntVector2(5, 1), _player);
+		layer3->AddItem(IntVector2(5, 0), new MapDoor(layer2, 2, 3));
+		layer3->AddItem(IntVector2(8, 1), new MapDoor(layer2, 18, 19));
 
 		_timer.Start();
 
@@ -367,7 +448,7 @@ namespace uut
 		auto type = var6.Get<Type>(); UUT_ASSERT(type == typeof<float>());
 		auto angleDeg = var7.Get<Degree>(); UUT_ASSERT(angleDeg.GetDegrees() == 90);
 		auto angle = var7.Get<float>(); UUT_ASSERT(angle == Math::HALF_PI.GetRadians());
-		auto c = var8.Get<wchar_t>(); UUT_ASSERT(c != 'ß');
+		auto c = var8.Get<wchar_t>(); UUT_ASSERT(c == L'ß');
 		auto vari = var9.Get<int>(); UUT_ASSERT(vari == 256);
 		auto varf = var9.Get<float>(); UUT_ASSERT(varf == 256);
 		auto vars = var9.Get<String>(); UUT_ASSERT(vars == "256");

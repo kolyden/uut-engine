@@ -630,6 +630,9 @@
     <ClInclude Include="..\UUT\Tilemap\PassabilityLayer.h">
       <Filter>UUT\Tilemap</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\InfoLayer.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">

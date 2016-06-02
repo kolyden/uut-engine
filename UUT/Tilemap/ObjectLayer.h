@@ -14,15 +14,19 @@ namespace uut
 
 		virtual void Update(float deltaTime) {}
 		virtual void Draw(Graphics* graphics) const {}
+		virtual bool IsBlocked() const { return true; }
 
 	protected:
 		IntVector2 _position;
 		int _zorder;
 		WeakPtr<ObjectLayer> _layer;
 
+		virtual void OnInit() {}
+
 		friend class ObjectLayer;
 	};
 
+	////////////////////////////////////////////////////////////////////////////
 	class ObjectLayer : public TilemapLayer
 	{
 		UUT_OBJECT(ObjectLayer, TilemapLayer)
@@ -30,6 +34,7 @@ namespace uut
 		ObjectLayer();
 
 		void AddItem(const IntVector2& position, ObjectLayerItem* item);
+		ObjectLayerItem* GetItem(const IntVector2& position) const;
 
 		void SetSize(const IntVector2& size) override;
 		void Update(float deltaTime) override;

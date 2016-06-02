@@ -172,6 +172,7 @@
     <ClInclude Include="..\UUT\Resources\Resource.h" />
     <ClInclude Include="..\UUT\Resources\ResourceCache.h" />
     <ClInclude Include="..\UUT\Resources\ResourceLoader.h" />
+    <ClInclude Include="..\UUT\Tilemap\InfoLayer.h" />
     <ClInclude Include="..\UUT\Tilemap\ObjectLayer.h" />
     <ClInclude Include="..\UUT\Tilemap\PassabilityLayer.h" />
     <ClInclude Include="..\UUT\Tilemap\Tilemap.h" />
