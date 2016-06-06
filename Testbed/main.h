@@ -14,11 +14,8 @@ namespace uut
 	protected:
 		static const int texSize = 402;
 
-		SharedPtr<Texture2D> _texture;
 		SharedPtr<DebugGUI> _gui;
 		SharedPtr<Graphics> _graphics;
-
-		Timer _timer;
 
 		virtual void OnInit() override;
 		virtual void OnFrame() override;

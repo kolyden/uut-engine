@@ -9,6 +9,7 @@
 #include <Core/Enum.h>
 #include <Core/Single.h>
 #include <Core/Double.h>
+#include <Core/IntPtr.h>
 
 namespace uut
 {

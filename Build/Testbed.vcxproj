@@ -153,6 +153,7 @@
     <ClCompile Include="..\Testbed\TestbedPlugin.cpp" />
     <ClCompile Include="..\Testbed\TestContext.cpp" />
     <ClCompile Include="..\Testbed\TestItemAttribute.cpp" />
+    <ClCompile Include="..\Testbed\TestTilemap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Testbed\BaseTest.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="..\Testbed\TestbedPlugin.h" />
     <ClInclude Include="..\Testbed\TestContext.h" />
     <ClInclude Include="..\Testbed\TestItemAttribute.h" />
+    <ClInclude Include="..\Testbed\TestTilemap.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="uut-core.vcxproj">

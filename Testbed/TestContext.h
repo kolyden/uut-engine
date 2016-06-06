@@ -3,10 +3,10 @@
 
 namespace uut
 {
-	class TestContext : public BaseTest
-	{
-		UUT_OBJECT(TestContext, BaseTest)
-	public:
-		TestContext();
-	};
+	//class TestContext : public BaseTest
+	//{
+	//	UUT_OBJECT(TestContext, BaseTest)
+	//public:
+	//	TestContext();
+	//};
 }

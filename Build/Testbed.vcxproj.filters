@@ -21,6 +21,9 @@
     <ClInclude Include="..\Testbed\TestbedPlugin.h">
       <Filter>Sources</Filter>
     </ClInclude>
+    <ClInclude Include="..\Testbed\TestTilemap.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Testbed\main.cpp">
@@ -36,6 +39,9 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\Testbed\TestbedPlugin.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Testbed\TestTilemap.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>

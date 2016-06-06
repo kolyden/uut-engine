@@ -16,6 +16,6 @@ namespace uut
 		UUT_REGISTER_OBJECT(TestItemAttribute);
 
 		UUT_REGISTER_OBJECT(BaseTest);
-		UUT_REGISTER_OBJECT(TestContext);
+// 		UUT_REGISTER_OBJECT(TestContext);
 	}
 }

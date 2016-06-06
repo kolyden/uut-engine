@@ -633,6 +633,12 @@
     <ClInclude Include="..\UUT\Tilemap\InfoLayer.h">
       <Filter>UUT\Tilemap</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Core\Nullable.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IntPtr.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -946,6 +952,12 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Tilemap\PassabilityLayer.cpp">
       <Filter>UUT\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Nullable.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IntPtr.cpp">
+      <Filter>UUT\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

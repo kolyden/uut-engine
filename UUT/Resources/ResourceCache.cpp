@@ -6,6 +6,23 @@
 
 namespace uut
 {
+	ResourceItem::ResourceItem()
+	{
+	}
+
+	ResourceItem::~ResourceItem()
+	{
+	}
+
+	ResourceGroup::ResourceGroup()
+	{
+	}
+
+	ResourceGroup::~ResourceGroup()
+	{
+	}
+
+	////////////////////////////////////////////////////////////////////////////
 	UUT_MODULE_IMPLEMENT(ResourceCache)
 	{}
 

@@ -5,19 +5,25 @@
 
 namespace uut
 {
-	class ResourceLoader;
 	class Resource;
+	class ResourceLoader;
 
 	struct ResourceItem : RefCounted
 	{
 		Path _path;
 		SharedPtr<Resource> _data;
+
+		ResourceItem();
+		~ResourceItem();
 	};
 
 	struct ResourceGroup : RefCounted
 	{
 		Dictionary<Path, SharedPtr<ResourceItem>> _items;
 		List<SharedPtr<ResourceLoader>> _loaders;
+
+		ResourceGroup();
+		~ResourceGroup();
 	};
 
 	class ResourceCache : public Module

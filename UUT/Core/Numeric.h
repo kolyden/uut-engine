@@ -46,12 +46,27 @@ namespace uut
 // 	UUT_NUMERIC(Float, float);
 // 	UUT_NUMERIC(Double, double);
 
+#define UUT_NUMERIC_OPERATORS(type) \
+	Numeric<type> operator+ (type value) const { return Numeric<type>(_value + value); } \
+	Numeric<type> operator- (type value) const { return Numeric<type>(_value - value); } \
+	Numeric<type> operator* (type value) const { return Numeric<type>(_value * value); } \
+	Numeric<type> operator/ (type value) const { return Numeric<type>(_value / value); } \
+	Numeric<type> operator+ (const Numeric<type>& value) const { return Numeric<type>(_value + value); } \
+	Numeric<type> operator- (const Numeric<type>& value) const { return Numeric<type>(_value - value); } \
+	Numeric<type> operator* (const Numeric<type>& value) const { return Numeric<type>(_value * value); } \
+	Numeric<type> operator/ (const Numeric<type>& value) const { return Numeric<type>(_value / value); } \
+	Numeric<type>& operator+= (type value) { _value += value; return *this; } \
+	Numeric<type>& operator-= (type value) { _value -= value; return *this; } \
+	Numeric<type>& operator*= (type value) { _value *= value; return *this; } \
+	Numeric<type>& operator/= (type value) { _value /= value; return *this; }
+
 
 #define UUT_NUMERIC(name, type) \
 	class name : public ValueType, public Numeric<type> \
 	{ UUT_STRUCT(name, ValueType) \
 	public: constexpr name() {} \
 	constexpr name(type value) : Numeric(value) {} \
+	UUT_NUMERIC_OPERATORS(type) \
 	static const name Zero; }; \
  	UUT_FUNDAMENTAL(type, name) \
 	UUT_DEFAULT(name, name::Zero)

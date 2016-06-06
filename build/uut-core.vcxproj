@@ -116,6 +116,7 @@
     <ClInclude Include="..\UUT\Core\Fundamental.h" />
     <ClInclude Include="..\UUT\Core\HashString.h" />
     <ClInclude Include="..\UUT\Core\IEquatable.h" />
+    <ClInclude Include="..\UUT\Core\IntPtr.h" />
     <ClInclude Include="..\UUT\Core\IO\BinaryReader.h" />
     <ClInclude Include="..\UUT\Core\IO\Directory.h" />
     <ClInclude Include="..\UUT\Core\IO\File.h" />
@@ -142,6 +143,7 @@
     <ClInclude Include="..\UUT\Core\Math\Vector3.h" />
     <ClInclude Include="..\UUT\Core\Math\Vector4.h" />
     <ClInclude Include="..\UUT\Core\Module.h" />
+    <ClInclude Include="..\UUT\Core\Nullable.h" />
     <ClInclude Include="..\UUT\Core\Numeric.h" />
     <ClInclude Include="..\UUT\Core\Object.h" />
     <ClInclude Include="..\UUT\Core\ObjectFactory.h" />
@@ -229,6 +231,7 @@
     <ClCompile Include="..\UUT\Core\Enum.cpp" />
     <ClCompile Include="..\UUT\Core\Fundamental.cpp" />
     <ClCompile Include="..\UUT\Core\HashString.cpp" />
+    <ClCompile Include="..\UUT\Core\IntPtr.cpp" />
     <ClCompile Include="..\UUT\Core\IO\BinaryReader.cpp" />
     <ClCompile Include="..\UUT\Core\IO\Directory.cpp" />
     <ClCompile Include="..\UUT\Core\IO\File.cpp" />
@@ -254,6 +257,7 @@
     <ClCompile Include="..\UUT\Core\Math\Vector3.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Vector4.cpp" />
     <ClCompile Include="..\UUT\Core\Module.cpp" />
+    <ClCompile Include="..\UUT\Core\Nullable.cpp" />
     <ClCompile Include="..\UUT\Core\Numeric.cpp" />
     <ClCompile Include="..\UUT\Core\Object.cpp" />
     <ClCompile Include="..\UUT\Core\ObjectFactory.cpp" />

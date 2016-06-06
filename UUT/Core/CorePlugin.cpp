@@ -26,6 +26,7 @@
 #include "Math/Vector3.h"
 #include "Math/IntVector3.h"
 #include "IO/BinaryReader.h"
+#include "IntPtr.h"
 
 namespace uut
 {
@@ -54,6 +55,7 @@ namespace uut
 		UUT_REGISTER_OBJECT(UInt64);
 		UUT_REGISTER_OBJECT(Single);
 		UUT_REGISTER_OBJECT(Double);
+		UUT_REGISTER_OBJECT(IntPtr);
 
 		// ENUM
 		UUT_REGISTER_OBJECT(Enum);

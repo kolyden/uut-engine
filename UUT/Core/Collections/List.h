@@ -98,7 +98,7 @@ namespace uut
 			return total;
 		}
 
-		virtual void RemoveAt(uint index)
+		virtual void RemoveAt(int index)
 		{
 			_data.erase(_data.begin() + index);
 		}
