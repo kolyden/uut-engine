@@ -3,6 +3,7 @@
 
 namespace uut
 {
+	class Graphics;
 	class IntRect;
 	class Tileset;
 
@@ -31,7 +32,8 @@ namespace uut
 
 		virtual void SetSize(const IntVector2& size) override;
 		virtual void Update(float deltaTime) override;
-		virtual void DrawLayer(Graphics* graphics) const override;
+
+		void DrawLayer(Graphics* graphics) const;
 
 	protected:
 		SharedPtr<Tileset> _tileset;

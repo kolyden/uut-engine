@@ -53,16 +53,4 @@ namespace uut
 		for (auto& it : _layers)
 			it->Update(deltaTime);
 	}
-
-	void Tilemap::Draw(Graphics* graphics) const
-	{
-		if (graphics == nullptr)
-			return;
-
-		for (auto& it : _layers)
-		{
-			if (it->IsVisible())
-				it->DrawLayer(graphics);
-		}
-	}
 }

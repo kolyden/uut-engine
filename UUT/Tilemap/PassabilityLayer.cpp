@@ -28,8 +28,4 @@ namespace uut
 	void PassabilityLayer::Update(float deltaTime)
 	{
 	}
-
-	void PassabilityLayer::DrawLayer(Graphics* graphics) const
-	{
-	}
 }

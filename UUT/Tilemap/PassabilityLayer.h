@@ -14,7 +14,6 @@ namespace uut
 
 		void SetSize(const IntVector2& size) override;
 		void Update(float deltaTime) override;
-		void DrawLayer(Graphics* graphics) const override;
 
 	protected:
 		std::vector<bool> _value;

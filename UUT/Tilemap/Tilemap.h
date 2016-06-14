@@ -5,7 +5,6 @@
 
 namespace uut
 {
-	class Graphics;
 	class TilemapLayer;
 
 	class Tilemap : public Resource
@@ -38,7 +37,6 @@ namespace uut
 		void Clear();
 
 		void Update(float deltaTime);
-		void Draw(Graphics* graphics) const;
 
 	protected:
 		IntVector2 _size;

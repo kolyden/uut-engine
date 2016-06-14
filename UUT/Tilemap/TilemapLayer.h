@@ -4,7 +4,6 @@
 
 namespace uut
 {
-	class Graphics;
 	class Tilemap;
 
 	class TilemapLayer : public Object
@@ -23,8 +22,6 @@ namespace uut
 
 		virtual void SetSize(const IntVector2& size) = 0;
 		virtual void Update(float deltaTime) = 0;
-		virtual void DrawLayer(Graphics* graphics) const = 0;
-		//? virtual void OnEdit(EditorEvent& evt) = 0; move in editor?
 
 	protected:
 		WeakPtr<Tilemap> _tilemap;

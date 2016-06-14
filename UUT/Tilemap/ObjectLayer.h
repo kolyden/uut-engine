@@ -3,6 +3,7 @@
 
 namespace uut
 {
+	class Graphics;
 	class ObjectLayer;
 
 	class ObjectLayerItem : public RefCounted
@@ -38,7 +39,8 @@ namespace uut
 
 		void SetSize(const IntVector2& size) override;
 		void Update(float deltaTime) override;
-		void DrawLayer(Graphics* graphics) const override;
+
+		void DrawLayer(Graphics* graphics) const;
 
 	protected:
 		List<SharedPtr<ObjectLayerItem>> _items;
