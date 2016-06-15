@@ -3,7 +3,6 @@
 
 namespace uut
 {
-	class Graphics;
 	class IntRect;
 	class Tileset;
 
@@ -11,7 +10,7 @@ namespace uut
 	{
 		UUT_OBJECT(TilesetLayer, TilemapLayer)
 	public:
-		const uint8_t EMPTY_TILE = 255;
+		static const uint8_t EMPTY_TILE = 255;
 		using IterateFunc = std::function<void(int x, int y, uint8_t& tile)>;
 
 		TilesetLayer();
@@ -32,8 +31,6 @@ namespace uut
 
 		virtual void SetSize(const IntVector2& size) override;
 		virtual void Update(float deltaTime) override;
-
-		void DrawLayer(Graphics* graphics) const;
 
 	protected:
 		SharedPtr<Tileset> _tileset;

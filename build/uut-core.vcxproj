@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Extern\AStar\fsa.h" />
+    <ClInclude Include="..\Extern\AStar\stlastar.h" />
     <ClInclude Include="..\Extern\ImGui\imconfig.h" />
     <ClInclude Include="..\Extern\ImGui\imgui.h" />
     <ClInclude Include="..\Extern\ImGui\imgui_internal.h" />
@@ -174,13 +176,17 @@
     <ClInclude Include="..\UUT\Resources\Resource.h" />
     <ClInclude Include="..\UUT\Resources\ResourceCache.h" />
     <ClInclude Include="..\UUT\Resources\ResourceLoader.h" />
+    <ClInclude Include="..\UUT\Tilemap\BlockedLayer.h" />
     <ClInclude Include="..\UUT\Tilemap\InfoLayer.h" />
     <ClInclude Include="..\UUT\Tilemap\ObjectLayer.h" />
-    <ClInclude Include="..\UUT\Tilemap\PassabilityLayer.h" />
+    <ClInclude Include="..\UUT\Tilemap\ObjectLayerRender.h" />
     <ClInclude Include="..\UUT\Tilemap\Tilemap.h" />
+    <ClInclude Include="..\UUT\Tilemap\TilemapChunk.h" />
     <ClInclude Include="..\UUT\Tilemap\TilemapLayer.h" />
+    <ClInclude Include="..\UUT\Tilemap\TilemapRender.h" />
     <ClInclude Include="..\UUT\Tilemap\Tileset.h" />
     <ClInclude Include="..\UUT\Tilemap\TilesetLayer.h" />
+    <ClInclude Include="..\UUT\Tilemap\TilesetLayerRender.h" />
     <ClInclude Include="..\UUT\Video\BitmapFont.h" />
     <ClInclude Include="..\UUT\Video\BufferObject.h" />
     <ClInclude Include="..\UUT\Video\Camera.h" />
@@ -285,12 +291,16 @@
     <ClCompile Include="..\UUT\Resources\Resource.cpp" />
     <ClCompile Include="..\UUT\Resources\ResourceCache.cpp" />
     <ClCompile Include="..\UUT\Resources\ResourceLoader.cpp" />
+    <ClCompile Include="..\UUT\Tilemap\BlockedLayer.cpp" />
     <ClCompile Include="..\UUT\Tilemap\ObjectLayer.cpp" />
-    <ClCompile Include="..\UUT\Tilemap\PassabilityLayer.cpp" />
+    <ClCompile Include="..\UUT\Tilemap\ObjectLayerRender.cpp" />
     <ClCompile Include="..\UUT\Tilemap\Tilemap.cpp" />
+    <ClCompile Include="..\UUT\Tilemap\TilemapChunk.cpp" />
     <ClCompile Include="..\UUT\Tilemap\TilemapLayer.cpp" />
+    <ClCompile Include="..\UUT\Tilemap\TilemapRender.cpp" />
     <ClCompile Include="..\UUT\Tilemap\Tileset.cpp" />
     <ClCompile Include="..\UUT\Tilemap\TilesetLayer.cpp" />
+    <ClCompile Include="..\UUT\Tilemap\TilesetLayerRender.cpp" />
     <ClCompile Include="..\UUT\Video\BitmapFont.cpp" />
     <ClCompile Include="..\UUT\Video\BufferObject.cpp" />
     <ClCompile Include="..\UUT\Video\Camera.cpp" />

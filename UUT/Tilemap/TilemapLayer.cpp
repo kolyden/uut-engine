@@ -7,7 +7,7 @@ namespace uut
 	{}
 
 	TilemapLayer::TilemapLayer()
-		: _visible(true)
+		: _active(true)
 	{		
 	}
 
@@ -21,13 +21,13 @@ namespace uut
 		return _name;
 	}
 
-	void TilemapLayer::SetVisible(bool visible)
+	void TilemapLayer::SetActive(bool active)
 	{
-		_visible = visible;
+		_active = active;
 	}
 
-	bool TilemapLayer::IsVisible() const
+	bool TilemapLayer::IsActive() const
 	{
-		return _visible;
+		return _active;
 	}
 }

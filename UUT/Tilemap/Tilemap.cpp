@@ -51,6 +51,9 @@ namespace uut
 	void Tilemap::Update(float deltaTime)
 	{
 		for (auto& it : _layers)
-			it->Update(deltaTime);
+		{
+			if (it->IsActive())
+				it->Update(deltaTime);
+		}
 	}
 }

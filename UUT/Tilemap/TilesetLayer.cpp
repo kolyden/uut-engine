@@ -1,10 +1,6 @@
 #include "TilesetLayer.h"
 #include "Tileset.h"
 #include "Tilemap.h"
-#include <Video/Graphics.h>
-#include <Core/Math/Rect.h>
-#include <Core/Math/Vector2.h>
-#include <Video/Texture2D.h>
 
 namespace uut
 {
@@ -84,33 +80,33 @@ namespace uut
 	{
 	}
 
-	void TilesetLayer::DrawLayer(Graphics* graphics) const
-	{
-		if (_tileset == nullptr)
-			return;
+	//void TilesetLayer::DrawLayer(Graphics* graphics) const
+	//{
+	//	if (_tileset == nullptr)
+	//		return;
 
-		const auto& cellSize = _tilemap->GetCellSize();
+	//	const auto& cellSize = _tilemap->GetCellSize();
 
-		graphics->SetMaterial(_transparent ? Graphics::MT_TRANSPARENT : Graphics::MT_OPAQUE);
-		auto tex = _tileset->GetTexture();
-		auto& items = _tileset->GetItems();
+	//	graphics->SetMaterial(_transparent ? Graphics::MT_TRANSPARENT : Graphics::MT_OPAQUE);
+	//	auto tex = _tileset->GetTexture();
+	//	auto& items = _tileset->GetItems();
 
-		for (int y = 0; y < _size.y; y++)
-		{
-			for (int x = 0; x < _size.x; x++)
-			{
-				int index = Pos2Index(x, y);
-				auto tile = _tiles[index];
-				if (tile == EMPTY_TILE)
-					continue;
+	//	for (int y = 0; y < _size.y; y++)
+	//	{
+	//		for (int x = 0; x < _size.x; x++)
+	//		{
+	//			int index = Pos2Index(x, y);
+	//			auto tile = _tiles[index];
+	//			if (tile == EMPTY_TILE)
+	//				continue;
 
-				auto& item = items[tile];
-				graphics->DrawQuad(
-					Rect(cellSize.x*x, cellSize.y*(_tilemap->GetSize().y - y - 1), cellSize.x, cellSize.y),
-					20, tex, item.normalizedRect);
-			}
-		}
-	}
+	//			auto& item = items[tile];
+	//			graphics->DrawQuad(
+	//				Rect(cellSize.x*x, cellSize.y*(_tilemap->GetSize().y - y - 1), cellSize.x, cellSize.y),
+	//				20, tex, item.normalizedRect);
+	//		}
+	//	}
+	//}
 
 	////////////////////////////////////////////////////////////////////
 	int TilesetLayer::Pos2Index(int x, int y) const

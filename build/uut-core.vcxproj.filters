@@ -55,6 +55,9 @@
     <Filter Include="UUT\Tilemap">
       <UniqueIdentifier>{2c2e1770-aa02-4694-88ff-720f944a2643}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Extern\AStar">
+      <UniqueIdentifier>{af93feeb-d732-4047-aceb-173318a3e49e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\UUT\Core\Assert.h">
@@ -627,9 +630,6 @@
     <ClInclude Include="..\UUT\Tilemap\ObjectLayer.h">
       <Filter>UUT\Tilemap</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\PassabilityLayer.h">
-      <Filter>UUT\Tilemap</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Tilemap\InfoLayer.h">
       <Filter>UUT\Tilemap</Filter>
     </ClInclude>
@@ -638,6 +638,27 @@
     </ClInclude>
     <ClInclude Include="..\UUT\Core\IntPtr.h">
       <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\TilemapRender.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\TilemapChunk.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\TilesetLayerRender.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\ObjectLayerRender.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\BlockedLayer.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\AStar\fsa.h">
+      <Filter>Extern\AStar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\AStar\stlastar.h">
+      <Filter>Extern\AStar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -950,14 +971,26 @@
     <ClCompile Include="..\UUT\Tilemap\ObjectLayer.cpp">
       <Filter>UUT\Tilemap</Filter>
     </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\PassabilityLayer.cpp">
-      <Filter>UUT\Tilemap</Filter>
-    </ClCompile>
     <ClCompile Include="..\UUT\Core\Nullable.cpp">
       <Filter>UUT\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\IntPtr.cpp">
       <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\TilemapRender.cpp">
+      <Filter>UUT\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\TilemapChunk.cpp">
+      <Filter>UUT\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\TilesetLayerRender.cpp">
+      <Filter>UUT\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\ObjectLayerRender.cpp">
+      <Filter>UUT\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\BlockedLayer.cpp">
+      <Filter>UUT\Tilemap</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

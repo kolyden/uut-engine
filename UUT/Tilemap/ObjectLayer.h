@@ -27,6 +27,8 @@ namespace uut
 		friend class ObjectLayer;
 	};
 
+	typedef List<SharedPtr<ObjectLayerItem>> ObjectLayerItemList;
+
 	////////////////////////////////////////////////////////////////////////////
 	class ObjectLayer : public TilemapLayer
 	{
@@ -36,13 +38,12 @@ namespace uut
 
 		void AddItem(const IntVector2& position, ObjectLayerItem* item);
 		ObjectLayerItem* GetItem(const IntVector2& position) const;
+		const ObjectLayerItemList& GetItems() const;
 
 		void SetSize(const IntVector2& size) override;
 		void Update(float deltaTime) override;
 
-		void DrawLayer(Graphics* graphics) const;
-
 	protected:
-		List<SharedPtr<ObjectLayerItem>> _items;
+		ObjectLayerItemList _items;
 	};
 }

@@ -31,6 +31,11 @@ namespace uut
 		return nullptr;
 	}
 
+	const ObjectLayerItemList& ObjectLayer::GetItems() const
+	{
+		return _items;
+	}
+
 	void ObjectLayer::SetSize(const IntVector2& size)
 	{
 	}
@@ -39,11 +44,5 @@ namespace uut
 	{
 		for (auto& item : _items)
 			item->Update(deltaTime);
-	}
-
-	void ObjectLayer::DrawLayer(Graphics* graphics) const
-	{
-		for (auto& item : _items)
-			item->Draw(graphics);
 	}
 }

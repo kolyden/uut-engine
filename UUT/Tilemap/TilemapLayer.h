@@ -15,8 +15,8 @@ namespace uut
 		void SetName(const String& name);
 		const String& GetName() const;
 
-		void SetVisible(bool visible);
-		bool IsVisible() const;
+		void SetActive(bool active);
+		bool IsActive() const;
 
 		Tilemap* GetTilemap() const { return _tilemap; }
 
@@ -26,7 +26,7 @@ namespace uut
 	protected:
 		WeakPtr<Tilemap> _tilemap;
 		String _name;
-		bool _visible;
+		bool _active;
 
 		friend class Tilemap;
 	};

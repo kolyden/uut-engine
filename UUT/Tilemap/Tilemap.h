@@ -15,10 +15,10 @@ namespace uut
 
 		void AddLayer(TilemapLayer* layer);
 
-		template<class C> C* AddLayer(const String& name = String::Empty)
+		template<class C, std::enable_if_t<std::is_base_of<TilemapLayer, C>::value>* = nullptr>
+		C* AddLayer(const String& name = String::Empty)
 		{
-			static_assert(std::is_base_of<TilemapLayer, C>::value, "must be derived from TilemapLayer");
-			auto layer = new C();
+			auto layer = SharedPtr<C>::Make();
 			if (layer == nullptr)
 				return nullptr;
 
