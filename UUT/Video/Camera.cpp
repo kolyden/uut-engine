@@ -28,4 +28,15 @@ namespace uut
 
 		renderer->SetTransform(RT_VIEW, _matView);
 	}
+
+	const Matrix4& Camera::UpdateViewMatrix()
+	{
+		if (_viewUpdate)
+		{
+			_viewUpdate = false;
+			UpdateView();
+		}
+
+		return _matView;
+	}
 }

@@ -63,15 +63,13 @@ namespace uut
 			return;
 
 		const Vector2 size = _texture->GetSize();
-		const float invW = 1.0f / (size.x - 1);
-		const float invH = 1.0f / (size.y - 1);
 		for (auto& item : _items)
 		{
 			item.normalizedRect = Rect(
-				invW * item.textureRect.x,
-				invH * item.textureRect.y,
-				invW * item.textureRect.width,
-				invH * item.textureRect.height);
+				1.0f * item.textureRect.x / size.x,
+				1.0f * item.textureRect.y / size.y,
+				1.0f * item.textureRect.width / size.x,
+				1.0f * item.textureRect.height / size.y);
 		}
 	}
 }

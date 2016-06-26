@@ -16,6 +16,7 @@ namespace uut
 		virtual ~Camera();
 
 		void Setup(Renderer* renderer);
+		const Matrix4& UpdateViewMatrix();
 
 		virtual Ray3 CastRay(const Vector2& screenPos, Renderer* renderer) const = 0;
 

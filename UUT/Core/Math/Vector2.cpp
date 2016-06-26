@@ -188,4 +188,9 @@ namespace uut
 	{
 		return Vector2(scale.x*vec.x, scale.y*vec.y);
 	}
+
+	float Vector2::Distance(const Vector2& a, const Vector2& b)
+	{
+		return (b - a).Length();
+	}
 }

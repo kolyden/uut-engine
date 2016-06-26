@@ -19,7 +19,7 @@ namespace uut
 	{
 		UUT_MODULE(DebugGUI, Module)
 	public:
-		explicit DebugGUI();
+		DebugGUI();
 
 		void NewFrame();
 

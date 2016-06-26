@@ -54,6 +54,8 @@ namespace uut
 		static Vector2 Scale(const Vector2& vec, float s);
 		static Vector2 Scale(const Vector2& vec, const Vector2& scale);
 
+		static float Distance(const Vector2& a, const Vector2& b);
+
 		static const Vector2 Zero;  // ( 0,  0)
 		static const Vector2 One;   // ( 1,  1)
 		static const Vector2 Left;  // (-1,  0)

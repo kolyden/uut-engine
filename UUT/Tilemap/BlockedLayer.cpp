@@ -1,107 +1,85 @@
 #include "BlockedLayer.h"
 #include <AStar/stlastar.h>
 #include "Tilemap.h"
+#include <Core/Math/Math.h>
 
 namespace uut
 {
 	class MapSearchNode
 	{
 	public:
-		int x;	 // the (x,y) positions of the node
-		int y;
+		IntVector2 pos = IntVector2::Zero;
 
 		static BlockedLayer* _layer;
 		static int MAP_WIDTH;
 		static int MAP_HEIGHT;
 
-		MapSearchNode() { x = y = 0; }
-		MapSearchNode(int px, int py) { x = px; y = py; }
+		MapSearchNode() {}
+		MapSearchNode(int x, int y) : pos(x, y) {}
+		explicit MapSearchNode(const IntVector2& position) : pos(position) {}
 
 		float GoalDistanceEstimate(const MapSearchNode &nodeGoal) const
 		{
-			return fabsf(x - nodeGoal.x) + fabsf(y - nodeGoal.y);
+			return Math::Abs(pos.x - nodeGoal.pos.x) + Math::Abs(pos.y - nodeGoal.pos.y);
 		}
 
 		bool IsGoal(const MapSearchNode &nodeGoal) const
 		{
-			if ((x == nodeGoal.x) &&
-				(y == nodeGoal.y))
-			{
-				return true;
-			}
-
-			return false;
+			return (pos == nodeGoal.pos);
 		}
 
-		bool GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSearchNode *parent_node) const
+		bool GetSuccessors(AStarSearch<MapSearchNode>* astarsearch, const MapSearchNode* parent_node) const
 		{
-			int parent_x = -1;
-			int parent_y = -1;
+			IntVector2 parent_pos(-1, -1);
 
 			if (parent_node)
-			{
-				parent_x = parent_node->x;
-				parent_y = parent_node->y;
-			}
-
+				parent_pos = parent_node->pos;
 
 			MapSearchNode NewNode;
-
 			// push each possible move except allowing the search to go backwards
-
-			if ((GetMap(x - 1, y) < 9)
-				&& !((parent_x == x - 1) && (parent_y == y))
+			if ((GetMap(pos.x - 1, pos.y) < 9)
+				&& !((parent_pos.x == pos.x - 1) && (parent_pos.y == pos.y))
 				)
 			{
-				NewNode = MapSearchNode(x - 1, y);
+				NewNode = MapSearchNode(pos.x - 1, pos.y);
 				astarsearch->AddSuccessor(NewNode);
 			}
 
-			if ((GetMap(x, y - 1) < 9)
-				&& !((parent_x == x) && (parent_y == y - 1))
+			if ((GetMap(pos.x, pos.y - 1) < 9)
+				&& !((parent_pos.x == pos.x) && (parent_pos.y == pos.y - 1))
 				)
 			{
-				NewNode = MapSearchNode(x, y - 1);
+				NewNode = MapSearchNode(pos.x, pos.y - 1);
 				astarsearch->AddSuccessor(NewNode);
 			}
 
-			if ((GetMap(x + 1, y) < 9)
-				&& !((parent_x == x + 1) && (parent_y == y))
+			if ((GetMap(pos.x + 1, pos.y) < 9)
+				&& !((parent_pos.x == pos.x + 1) && (parent_pos.y == pos.y))
 				)
 			{
-				NewNode = MapSearchNode(x + 1, y);
+				NewNode = MapSearchNode(pos.x + 1, pos.y);
 				astarsearch->AddSuccessor(NewNode);
 			}
 
-
-			if ((GetMap(x, y + 1) < 9)
-				&& !((parent_x == x) && (parent_y == y + 1))
+			if ((GetMap(pos.x, pos.y + 1) < 9)
+				&& !((parent_pos.x == pos.x) && (parent_pos.y == pos.y + 1))
 				)
 			{
-				NewNode = MapSearchNode(x, y + 1);
+				NewNode = MapSearchNode(pos.x, pos.y + 1);
 				astarsearch->AddSuccessor(NewNode);
 			}
 
 			return true;
 		}
 
-		float GetCost(const MapSearchNode &successor) const
+		float GetCost(const MapSearchNode& successor) const
 		{
-			return (float)GetMap(x, y);
+			return static_cast<float>(GetMap(pos.x, pos.y));
 		}
 
 		bool IsSameState(const MapSearchNode &rhs) const
 		{
-			// same state in a maze search is simply when (x,y) are the same
-			if ((x == rhs.x) &&
-				(y == rhs.y))
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			return pos == rhs.pos;
 		}
 
 		static int GetMap(int x, int y)
@@ -145,18 +123,10 @@ namespace uut
 		const unsigned int NumSearches = 1;
 		while (SearchCount < NumSearches)
 		{
-			// Create a start state
-			MapSearchNode nodeStart;
-			nodeStart.x = start.x;
-			nodeStart.y = start.y;
-
-			// Define the goal state
-			MapSearchNode nodeEnd;
-			nodeEnd.x = end.x;
-			nodeEnd.y = end.y;
+			MapSearchNode nodeStart(start);
+			MapSearchNode nodeEnd(end);
 
 			// Set Start and goal states
-
 			astarsearch.SetStartAndGoalStates(nodeStart, nodeEnd);
 
 			unsigned int SearchState;
@@ -174,7 +144,7 @@ namespace uut
 
 				int steps = 0;
 
-				path << IntVector2(node->x, node->y);
+				path << IntVector2(node->pos);
 				for (;; )
 				{
 					node = astarsearch.GetSolutionNext();
@@ -184,7 +154,7 @@ namespace uut
 						break;
 					}
 
-					path << IntVector2(node->x, node->y);
+					path << IntVector2(node->pos);
 					steps++;
 				};
 
