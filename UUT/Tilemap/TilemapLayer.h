@@ -18,7 +18,7 @@ namespace uut
 		void SetActive(bool active);
 		bool IsActive() const;
 
-		Tilemap* GetTilemap() const { return _tilemap; }
+		SharedPtr<Tilemap> GetTilemap() const;
 
 		virtual void SetSize(const IntVector2& size) = 0;
 		virtual void Update(float deltaTime) = 0;

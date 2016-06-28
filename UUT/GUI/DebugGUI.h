@@ -32,12 +32,10 @@ namespace uut
 
 	protected:
 		Timer _timer;
-		WeakPtr<Renderer> _renderer;
-		WeakPtr<Input> _input;
 		SharedPtr<VertexBuffer> _vb;
 		SharedPtr<VertexDeclaration> _vd;
 		SharedPtr<IndexBuffer> _ib;
-		SharedPtr<Texture2D> _font;
+		SharedPtr<Texture2D> _fontTex;
 		Matrix4 _matProj;
 		RenderState _renderState;
 

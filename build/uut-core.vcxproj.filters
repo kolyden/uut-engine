@@ -126,9 +126,6 @@
     <ClInclude Include="..\UUT\Core\Ptr.h">
       <Filter>UUT\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\Core\RefCounted.h">
-      <Filter>UUT\Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Core\Single.h">
       <Filter>UUT\Core</Filter>
     </ClInclude>
@@ -660,6 +657,9 @@
     <ClInclude Include="..\Extern\AStar\stlastar.h">
       <Filter>Extern\AStar</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Core\Version.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -717,9 +717,6 @@
       <Filter>UUT\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Plugin.cpp">
-      <Filter>UUT\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Core\RefCounted.cpp">
       <Filter>UUT\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Single.cpp">
@@ -991,6 +988,9 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Tilemap\BlockedLayer.cpp">
       <Filter>UUT\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Version.cpp">
+      <Filter>UUT\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

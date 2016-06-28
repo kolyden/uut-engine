@@ -9,22 +9,22 @@ namespace uut
 	ObjectLayerRender::ObjectLayerRender()
 	{}
 
-	void ObjectLayerRender::SetObjectLayer(ObjectLayer* layer)
+	void ObjectLayerRender::SetObjectLayer(SharedPtr<ObjectLayer> layer)
 	{
 		_objectLayer = layer;
 	}
 
-	ObjectLayer* ObjectLayerRender::GetObjectLayer() const
+	SharedPtr<ObjectLayer> ObjectLayerRender::GetObjectLayer() const
 	{
-		return _objectLayer;
+		return _objectLayer.Lock();
 	}
 
 	void ObjectLayerRender::Draw(Graphics* graphics) const
 	{
-		if (_objectLayer == nullptr)
-			return;
-
-		for (auto& item : _objectLayer->GetItems())
-			item->Draw(graphics);
+		if (auto layer = _objectLayer.Lock())
+		{
+			for (auto& item : layer->GetItems())
+				item->Draw(graphics);
+		}
 	}
 }

@@ -33,7 +33,7 @@ namespace uut
 		char fontName[STRING_BUFFER];
 	};
 
-	SharedPtr<Resource> BitmapFontLoader::Load(Stream* stream)
+	SharedPtr<Resource> BitmapFontLoader::Load(SharedPtr<Stream> stream)
 	{
 		auto reader = SharedPtr<BinaryReader>::Make(stream);
 
@@ -45,7 +45,7 @@ namespace uut
 			magic[2] != 'F')
 		{
 // 			ENG_LOGERROR("Not a BMFont format");
-			return SharedPtr<Resource>::Empty;
+			return nullptr;
 		}
 
 		bool loadHeader = false;
@@ -54,11 +54,11 @@ namespace uut
 		if (version != 3)
 		{
 // 			ENG_LOGERROR("BMFont old version");
-			return SharedPtr<Resource>::Empty;
+			return nullptr;
 		}
 
 		BMFontHeader header;
-		SharedPtr<BitmapFont> face(new BitmapFont());
+		auto face = SharedPtr<BitmapFont>::Make();
 		List<String> pages;
 		List<FontGlyph> chars;
 		List<FontKerningPair> kernings;
@@ -112,12 +112,12 @@ namespace uut
 			else
 			{
 // 				ENG_LOGERROR("Error fnt format");
-				return SharedPtr<Resource>::Empty;
+				return nullptr;
 			}
 		}
 
 		if (!loadHeader || !face)
-			return SharedPtr<Resource>::Empty;
+			return nullptr;
 
 		face->_glyphs = chars;
 		face->_kerningPairs = kernings;
@@ -127,7 +127,7 @@ namespace uut
 		for(auto& name : pages)
 		{
 			auto tex = cache->Load<Texture2D>(Path::Combine(basedir, name));
-			face->_textures << SharedPtr<Texture2D>(tex);
+			face->_textures << tex;
 		}
 
 		face->UpdateGlyphsMap();

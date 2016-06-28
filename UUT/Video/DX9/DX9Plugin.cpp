@@ -9,7 +9,7 @@
 namespace uut
 {
 	DX9Plugin::DX9Plugin()
-		: Plugin("DirectX9", PluginVersion(0, 1))
+		: Plugin("DirectX9", Version(0, 1))
 	{
 	}
 

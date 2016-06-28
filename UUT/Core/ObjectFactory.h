@@ -6,7 +6,7 @@ namespace uut
 	class Type;
 	class Object;
 
-	class ObjectFactory : public RefCounted
+	class ObjectFactory
 	{
 	public:
 		ObjectFactory();

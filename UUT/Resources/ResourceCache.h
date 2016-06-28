@@ -8,7 +8,7 @@ namespace uut
 	class Resource;
 	class ResourceLoader;
 
-	struct ResourceItem : RefCounted
+	struct ResourceItem
 	{
 		Path _path;
 		SharedPtr<Resource> _data;
@@ -17,7 +17,7 @@ namespace uut
 		~ResourceItem();
 	};
 
-	struct ResourceGroup : RefCounted
+	struct ResourceGroup
 	{
 		Dictionary<Path, SharedPtr<ResourceItem>> _items;
 		List<SharedPtr<ResourceLoader>> _loaders;
@@ -33,25 +33,25 @@ namespace uut
 		ResourceCache();
 		virtual ~ResourceCache();
 
-		bool AddResource(Resource* resource, const Path& path);
+		bool AddResource(SharedPtr<Resource> resource, const Path& path);
 		
-		Resource* Find(const Type* type, const Path& path) const;
-		Resource* Load(const Type* type, const Path& path, bool silent = false) const;
+		SharedPtr<Resource> Find(const Type* type, const Path& path) const;
+		SharedPtr<Resource> Load(const Type* type, const Path& path, bool silent = false) const;
 
-		void AddLoader(ResourceLoader* loader);
+		void AddLoader(SharedPtr<ResourceLoader> loader);
 
-		ResourceGroup* FindGroup(const Type* type) const;
-		ResourceItem* FindItem(const Type* type, const Path& path) const;
+		SharedPtr<ResourceGroup> FindGroup(const Type* type) const;
+		SharedPtr<ResourceItem> FindItem(const Type* type, const Path& path) const;
 
-		template<class C>C* Find(const Path& path) const { return static_cast<C*>(Find(typeof<C>(), path)); }
-		template<class C>C* Load(const Path& path, bool silent = false) { return static_cast<C*>(Load(typeof<C>(), path, silent)); }
-		template<class C>ResourceGroup* FindGroup() const { return static_cast<C*>(FindGroup(typeof<C>())); }
-		template<class C>ResourceItem* FindItem(const Path& path) const { return static_cast<C*>(FindItem(typeof<C>(), path)); }
+		template<class C>SharedPtr<C> Find(const Path& path) const { return StaticCast<C>(Find(typeof<C>(), path)); }
+		template<class C>SharedPtr<C> Load(const Path& path, bool silent = false) { return StaticCast<C>(Load(typeof<C>(), path, silent)); }
+		template<class C>SharedPtr<ResourceGroup> FindGroup() const { return StaticCast<C>(FindGroup(typeof<C>())); }
+		template<class C>SharedPtr<ResourceItem> FindItem(const Path& path) const { return StaticCast<C>(FindItem(typeof<C>(), path)); }
 
 	protected:
 		Dictionary<const Type*, SharedPtr<ResourceGroup>> _groups;
 
-		ResourceGroup* CreateGroup(const Type* type);
-		ResourceItem* CreateItem(const Type* type, const Path& path);
+		SharedPtr<ResourceGroup> CreateGroup(const Type* type);
+		SharedPtr<ResourceItem> CreateItem(const Type* type, const Path& path);
 	};
 }

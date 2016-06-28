@@ -15,7 +15,7 @@ namespace uut
 
 	SharedPtr<FileStream> File::Open(const Path& path, FileMode mode)
 	{
-		auto stream = SharedPtr<FileStream>(new FileStream());
+		auto stream = SharedPtr<FileStream>::Make();
 		if (stream->Open(path, mode))
 			return stream;
 

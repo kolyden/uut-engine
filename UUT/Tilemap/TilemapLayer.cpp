@@ -30,4 +30,9 @@ namespace uut
 	{
 		return _active;
 	}
+
+	SharedPtr<Tilemap> TilemapLayer::GetTilemap() const
+	{
+		return _tilemap.Lock();
+	}
 }

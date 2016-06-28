@@ -33,9 +33,6 @@ namespace uut
 		: _vbSize(0)
 		, _ibSize(0)
 	{
-		_renderer = Renderer::Instance();
-		_input = Input::Instance();
-
 		ImGuiIO& io = ImGui::GetIO();
 		io.IniFilename = nullptr;
 		io.LogFilename = nullptr;
@@ -64,15 +61,16 @@ namespace uut
 
 		io.RenderDrawListsFn = &StaticRenderDrawLists;
 
-		_vd = _renderer->CreateVertexDeclaration(g_declare);
+		auto renderer = Renderer::Instance();
+		_vd = renderer->CreateVertexDeclaration(g_declare);
 		_timer.Start();
 
 		unsigned char* pixels;
 		int width, height, pitch;
 		io.Fonts->GetTexDataAsAlpha8(&pixels, &width, &height);
 
-		_font = _renderer->CreateTexture(IntVector2(width, height), TextureAccess::Streaming);
-		auto pBits = static_cast<uint8_t*>(_font->Lock(&pitch));
+		_fontTex = renderer->CreateTexture(IntVector2(width, height), TextureAccess::Streaming);
+		auto pBits = static_cast<uint8_t*>(_fontTex->Lock(&pitch));
 		for (int y = 0; y < height; y++)
 		for (int x = 0; x < width; x++)
 		{
@@ -81,9 +79,9 @@ namespace uut
 			*ptr = Color32(255, 255, 255, alpha).ToInt();
 		}
 			//memcpy((unsigned char *)pBits + pitch * y, pixels + (width * bytes_per_pixel) * y, (width * bytes_per_pixel));
-		_font->Unlock();
+		_fontTex->Unlock();
 
-		io.Fonts->TexID = static_cast<void*>(_font);
+		io.Fonts->TexID = static_cast<void*>(&_fontTex);
 
 		_renderState.cullMode = CullMode::Disabled;
 		_renderState.lightning = false;
@@ -106,16 +104,16 @@ namespace uut
 	void DebugGUI::NewFrame()
 	{
 		_timer.Update();
-		Vector2 size = _renderer->GetScreenSize();
+		Vector2 size = Renderer::Instance()->GetScreenSize();
 		auto& io = ImGui::GetIO();
 
 		io.DisplaySize.x = size.x;
 		io.DisplaySize.y = size.y;
 		io.DeltaTime = _timer.GetDeltaTime();
-		io.MousePos.x = static_cast<float>(_input->GetMousePos().x);
-		io.MousePos.y = static_cast<float>(_input->GetMousePos().y);
-		io.MouseDown[0] = _input->IsMouseButton(0);
-		io.MouseDown[1] = _input->IsMouseButton(1);
+		io.MousePos.x = static_cast<float>(Input::GetMousePos().x);
+		io.MousePos.y = static_cast<float>(Input::GetMousePos().y);
+		io.MouseDown[0] = Input::IsMouseButton(0);
+		io.MouseDown[1] = Input::IsMouseButton(1);
 
 		_matProj = Matrix4::OrthoOffCenter(
 			0, size.x, 0, size.y, 0.1f, 100.0f);
@@ -125,9 +123,10 @@ namespace uut
 
 	void DebugGUI::SetupCamera()
 	{
-		_renderer->SetTransform(RT_VIEW, Matrix4::Identity);
-		_renderer->SetTransform(RT_WORLD, Matrix4::Identity);
-		_renderer->SetTransform(RT_PROJECTION, _matProj);
+		auto render = Renderer::Instance();
+		render->SetTransform(RT_VIEW, Matrix4::Identity);
+		render->SetTransform(RT_WORLD, Matrix4::Identity);
+		render->SetTransform(RT_PROJECTION, _matProj);
 	}
 
 	void DebugGUI::Draw() const
@@ -157,19 +156,20 @@ namespace uut
 	///////////////////////////////////////////////////////////////////////////
 	void DebugGUI::RenderDrawLists(ImDrawData* draw_data)
 	{
+		auto renderer = Renderer::Instance();
 		if (!_vb || _vbSize < draw_data->TotalVtxCount)
 		{
 			_vbSize = draw_data->TotalVtxCount + 5000;
-			_vb = _renderer->CreateVertexBuffer(sizeof(UIVertex)*_vbSize);
+			_vb = renderer->CreateVertexBuffer(sizeof(UIVertex)*_vbSize);
 		}
 
 		if (!_ib || _ibSize < draw_data->TotalIdxCount)
 		{
 			_ibSize = draw_data->TotalIdxCount + 10000;
-			_ib = _renderer->CreateIndexBuffer(sizeof(ImDrawIdx)*_ibSize, sizeof(ImDrawIdx) == 2 ? false : true);
+			_ib = renderer->CreateIndexBuffer(sizeof(ImDrawIdx)*_ibSize, sizeof(ImDrawIdx) == 2 ? false : true);
 		}
 
-		const Vector2 size = _renderer->GetScreenSize();
+		const Vector2 size = renderer->GetScreenSize();
 
 		UIVertex* vtx_dst;
 		ImDrawIdx* idx_dst;
@@ -196,10 +196,10 @@ namespace uut
 		_vb->Unlock();
 		_ib->Unlock();
 
-		_renderer->SetState(_renderState);
-		_renderer->SetVertexBuffer(_vb, sizeof(UIVertex));
-		_renderer->SetIndexBuffer(_ib);
-		_renderer->SetVertexDeclaration(_vd);
+		renderer->SetState(_renderState);
+		renderer->SetVertexBuffer(_vb, sizeof(UIVertex));
+		renderer->SetIndexBuffer(_ib);
+		renderer->SetVertexDeclaration(_vd);
 
 		// Render command lists
 		int vtx_offset = 0;
@@ -217,10 +217,11 @@ namespace uut
 				else
 				{
 					//const RECT r = { (LONG)pcmd->ClipRect.x, (LONG)pcmd->ClipRect.y, (LONG)pcmd->ClipRect.z, (LONG)pcmd->ClipRect.w };
-					_renderer->SetTexture(0, static_cast<Texture2D*>(pcmd->TextureId));
-					_renderer->SetScissorRect(
+					auto texPtr = static_cast<SharedPtr<Texture2D>*>(pcmd->TextureId);
+					renderer->SetTexture(0, texPtr != nullptr ? *texPtr : nullptr);
+					renderer->SetScissorRect(
 						IntRect::FromLBRT((int)pcmd->ClipRect.x, (int)pcmd->ClipRect.w, (int)pcmd->ClipRect.z, (int)pcmd->ClipRect.y));
-					_renderer->DrawIndexedPrimitive(Topology::TrinagleList,
+					renderer->DrawIndexedPrimitive(Topology::TrinagleList,
 						vtx_offset, 0, cmd_list->VtxBuffer.size(), idx_offset, pcmd->ElemCount / 3);
 				}
 				idx_offset += pcmd->ElemCount;
@@ -228,10 +229,10 @@ namespace uut
 			vtx_offset += cmd_list->VtxBuffer.size();
 		}
 
-		_renderer->SetVertexBuffer(nullptr, 0);
-		_renderer->SetIndexBuffer(nullptr);
-		_renderer->SetVertexDeclaration(nullptr);
-		_renderer->SetTexture(0, nullptr);
+		renderer->SetVertexBuffer(nullptr, 0);
+		renderer->SetIndexBuffer(nullptr);
+		renderer->SetVertexDeclaration(nullptr);
+		renderer->SetTexture(0, nullptr);
 	}
 
 	void DebugGUI::StaticRenderDrawLists(ImDrawData* draw_data)

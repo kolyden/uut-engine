@@ -25,9 +25,9 @@ namespace uut
 		, _currentMT(MT_OPAQUE)
 		, _nextMT(MT_OPAQUE)
 	{
-		_renderer = Renderer::Instance();
-		_vbuf = _renderer->CreateVertexBuffer(Vertex::SIZE*_vbufCount);
-		_vdec = _renderer->CreateVertexDeclaration(Vertex::DECLARE);
+		auto renderer = Renderer::Instance();
+		_vbuf = renderer->CreateVertexBuffer(Vertex::SIZE*_vbufCount);
+		_vdec = renderer->CreateVertexDeclaration(Vertex::DECLARE);
 
 		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
 
@@ -402,11 +402,6 @@ namespace uut
 		DrawAll();
 	}
 
-	Renderer* Graphics::GetRenderer() const
-	{
-		return _renderer;
-	}
-
 	///////////////////////////////////////////////////////////////////////////
 	void Graphics::TestBatch(Topology topology, Texture2D* tex, int vrtCount)
 	{
@@ -439,26 +434,27 @@ namespace uut
 	{
 		_vbuf->Unlock();
 
-		_renderer->SetState(_renderState);
+		auto render = Renderer::Instance();
+		render->SetState(_renderState);
 		if (_currentPM != PM_NONE)
-			_renderer->SetTransform(RT_PROJECTION, _matProj);
+			render->SetTransform(RT_PROJECTION, _matProj);
 
-		_renderer->SetTexture(0, _texture);
-		_renderer->SetVertexBuffer(_vbuf, Vertex::SIZE);
-		_renderer->SetVertexDeclaration(_vdec);
+		render->SetTexture(0, _texture);
+		render->SetVertexBuffer(_vbuf, Vertex::SIZE);
+		render->SetVertexDeclaration(_vdec);
 
 		switch (_topology)
 		{
 		case Topology::PointList:
-			_renderer->DrawPrimitive(_topology, _vdxIndex);
+			render->DrawPrimitive(_topology, _vdxIndex);
 			break;
 
 		case Topology::LineList:
-			_renderer->DrawPrimitive(_topology, _vdxIndex / 2);
+			render->DrawPrimitive(_topology, _vdxIndex / 2);
 			break;
 
 		case Topology::TrinagleList:
-			_renderer->DrawPrimitive(_topology, _vdxIndex / 3);
+			render->DrawPrimitive(_topology, _vdxIndex / 3);
 			break;
 
 		default:
@@ -472,7 +468,8 @@ namespace uut
 
 	void Graphics::UpdateProjection()
 	{
-		const Vector2 size = _renderer->GetScreenSize();
+		auto render = Renderer::Instance();
+		const Vector2 size = render->GetScreenSize();
 		switch (_currentPM)
 		{
 		case PM_2D:

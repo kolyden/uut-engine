@@ -11,7 +11,7 @@ namespace uut
 	public:
 		BitmapFontLoader();
 
-		virtual SharedPtr<Resource> Load(Stream* stream) override;
+		virtual SharedPtr<Resource> Load(SharedPtr<Stream> stream) override;
 		virtual const Type* GetResourceType() const override;
 	};
 }

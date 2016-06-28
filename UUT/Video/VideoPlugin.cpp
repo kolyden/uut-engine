@@ -22,7 +22,7 @@
 namespace uut
 {
 	VideoPlugin::VideoPlugin()
-		: Plugin("Video", PluginVersion(0, 1))
+		: Plugin("Video", Version(0, 1))
 	{
 	}
 

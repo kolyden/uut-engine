@@ -28,10 +28,10 @@ namespace uut
 		virtual bool BeginScene() override;
 		virtual void EndScene() override;
 
-		virtual bool SetTexture(int stage, Texture2D* texture) override;
-		virtual bool SetVertexBuffer(VertexBuffer* buffer, uint16_t stride, uint32_t offset) override;
-		virtual bool SetIndexBuffer(IndexBuffer* buffer) override;
-		virtual bool SetVertexDeclaration(VertexDeclaration* declare) override;
+		virtual bool SetTexture(int stage, SharedPtr<Texture2D> texture) override;
+		virtual bool SetVertexBuffer(SharedPtr<VertexBuffer> buffer, uint16_t stride, uint32_t offset) override;
+		virtual bool SetIndexBuffer(SharedPtr<IndexBuffer> buffer) override;
+		virtual bool SetVertexDeclaration(SharedPtr<VertexDeclaration> declare) override;
 
 		virtual bool DrawPrimitive(Topology topology, uint32_t primitiveCount, uint32_t offset) override;
 		virtual bool DrawIndexedPrimitive(Topology topology, int baseVertexIndex, uint32_t minVertexIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount) override;

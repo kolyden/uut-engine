@@ -64,10 +64,7 @@ namespace uut
 
 		void Flush();
 
-		Renderer* GetRenderer() const;
-
 	protected:
-		WeakPtr<Renderer> _renderer;
 		SharedPtr<VertexBuffer> _vbuf;
 		SharedPtr<VertexDeclaration> _vdec;
 

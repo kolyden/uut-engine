@@ -10,12 +10,13 @@ namespace uut
 	UUT_TYPE(typeName, parentType) \
 	public: \
 	virtual const Type* GetType() const { return GetTypeStatic(); } \
+	SharedPtr<ClassName> GetSharedThis() { return DynamicCast<ClassName>(GetThisObject()); } \
 	private:
 
 #define UUT_OBJECT_IMPLEMENT(type) \
 	UUT_TYPE_IMPLEMENT(type)
 
-	class Object : public BaseObject, public IEquatable, public RefCounted
+	class Object : public BaseObject, public IEquatable, std::enable_shared_from_this<Object>
 	{
 		UUT_OBJECT(Object, BaseObject)
 	public:
@@ -23,5 +24,7 @@ namespace uut
 
 		virtual bool Equals(const Object* obj) const override;
 		virtual String ToString();
+
+		SharedPtr<Object> GetThisObject() { return shared_from_this(); }
 	};
 }

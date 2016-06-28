@@ -39,7 +39,7 @@ namespace uut
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	void Context::AddPlugin(Plugin* plugin)
+	void Context::AddPlugin(SharedPtr<Plugin> plugin)
 	{
 		if (plugin == nullptr)
 			return;
@@ -120,7 +120,7 @@ namespace uut
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	void Context::RegisterModule(Module* module)
+	void Context::RegisterModule(SharedPtr<Module> module)
 	{
 		if (module == nullptr)
 			return;
@@ -149,7 +149,7 @@ namespace uut
 			return nullptr;
 
 		auto it = _moduleInst.Find(type);
-		return it == _moduleInst.End() ? nullptr : it->second;
+		return it == _moduleInst.End() ? nullptr : it->second.Lock();
 	}
 
 	Module* Context::FindModule(const HashString& name)
@@ -173,7 +173,5 @@ namespace uut
 
 	void Context::Done()
 	{
-
 	}
-
 }

@@ -10,7 +10,7 @@
 
 #include <d3dx9.h>
 #include <DxErr.h>
-#pragma comment(lib, "d3dx9.lib")
+//#pragma comment(lib, "d3dx9.lib")
 #pragma comment(lib, "dxerr.lib")
 
 namespace uut
@@ -251,7 +251,7 @@ namespace uut
 		_d3ddev->EndScene();
 	}
 
-	bool DX9Renderer::SetTexture(int stage, Texture2D* texture)
+	bool DX9Renderer::SetTexture(int stage, SharedPtr<Texture2D> texture)
 	{
 		HRESULT ret;
 		if (texture == nullptr)
@@ -265,21 +265,21 @@ namespace uut
 		return TestReturnCode(ret);
 	}
 
-	bool DX9Renderer::SetVertexBuffer(VertexBuffer* buffer, uint16_t stride, uint32_t offset)
+	bool DX9Renderer::SetVertexBuffer(SharedPtr<VertexBuffer> buffer, uint16_t stride, uint32_t offset)
 	{
 		auto data = buffer ? reinterpret_cast<LPDIRECT3DVERTEXBUFFER9>(buffer->GetInternalHandle()) : nullptr;
 		HRESULT ret = _d3ddev->SetStreamSource(0, data, offset, stride);
 		return TestReturnCode(ret);
 	}
 
-	bool DX9Renderer::SetIndexBuffer(IndexBuffer* buffer)
+	bool DX9Renderer::SetIndexBuffer(SharedPtr<IndexBuffer> buffer)
 	{
 		auto data = buffer ? reinterpret_cast<LPDIRECT3DINDEXBUFFER9>(buffer->GetInternalHandle()) : nullptr;
 		HRESULT ret = _d3ddev->SetIndices(data);
 		return TestReturnCode(ret);
 	}
 
-	bool DX9Renderer::SetVertexDeclaration(VertexDeclaration* declare)
+	bool DX9Renderer::SetVertexDeclaration(SharedPtr<VertexDeclaration> declare)
 	{
 		HRESULT ret;
 		if (declare == nullptr)
@@ -346,11 +346,10 @@ namespace uut
 		if (!TestReturnCode(ret))
 			return SharedPtr<Texture2D>::Empty;
 
-		SharedPtr<DX9Texture2D> tex(new DX9Texture2D());
+		auto tex = SharedPtr<DX9Texture2D>::Make();
 		tex->_data = data;
 		tex->_size = size;
-
-		return DynamicCast<Texture2D>(tex);
+		return tex;
 	}
 
 	SharedPtr<VertexBuffer> DX9Renderer::CreateVertexBuffer(uint32_t size)
@@ -364,10 +363,9 @@ namespace uut
 		if (!TestReturnCode(ret))
 			return SharedPtr<VertexBuffer>::Empty;
 
-		SharedPtr<DX9VertexBuffer> vb(new DX9VertexBuffer());
+		auto vb = SharedPtr<DX9VertexBuffer>::Make();
 		vb->_data = data;
 		vb->_size = size;
-
 		return DynamicCast<VertexBuffer>(vb);
 	}
 
@@ -383,11 +381,10 @@ namespace uut
 		if (!TestReturnCode(ret))
 			return SharedPtr<IndexBuffer>::Empty;
 
-		SharedPtr<DX9IndexBuffer> vb(new DX9IndexBuffer());
-		vb->_data = data;
-		vb->_size = size;
-
-		return DynamicCast<IndexBuffer>(vb);
+		auto ib = SharedPtr<DX9IndexBuffer>::Make();
+		ib->_data = data;
+		ib->_size = size;
+		return ib;
 	}
 
 	SharedPtr<VertexDeclaration> DX9Renderer::CreateVertexDeclaration(const List<VertexElement>& elements)
@@ -414,10 +411,10 @@ namespace uut
 		if (!TestReturnCode(ret))
 			return SharedPtr<VertexDeclaration>::Empty;
 
-		SharedPtr<DX9VertexDeclaration> vd(new DX9VertexDeclaration());
+		auto vd = SharedPtr<DX9VertexDeclaration>::Make();
 		vd->_elements = elements;
 		vd->_data = data;
-		return DynamicCast<VertexDeclaration>(vd);
+		return vd;
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -425,6 +422,21 @@ namespace uut
 	{
 		if (window == nullptr || !window->IsCreated())
 			return SharedPtr<DX9Renderer>::Empty;
+
+		HMODULE libHandle = LoadLibrary(L"d3d9.dll");
+		if (libHandle == nullptr)
+			return nullptr;
+
+		// Define a function pointer to the Direct3DCreate9Ex function.
+		typedef LPDIRECT3D9 (WINAPI *LPDIRECT3DCREATE9)(UINT);
+
+		// Obtain the address of the Direct3DCreate9Ex function. 
+		auto createFuncPtr = (LPDIRECT3DCREATE9)GetProcAddress(libHandle, "Direct3DCreate9");
+		if (createFuncPtr == nullptr)
+		{
+			FreeLibrary(libHandle);
+			return nullptr;
+		}
 		
 		SDL_SysWMinfo sdlInfo;
 		SDL_VERSION(&sdlInfo.version);
@@ -435,7 +447,7 @@ namespace uut
 			return SharedPtr<DX9Renderer>::Empty;
 		}
 
-		LPDIRECT3D9 d3d = Direct3DCreate9(D3D_SDK_VERSION);
+		LPDIRECT3D9 d3d = createFuncPtr(D3D_SDK_VERSION);
 		if (d3d == nullptr)
 			return SharedPtr<DX9Renderer>::Empty;
 
@@ -448,7 +460,7 @@ namespace uut
 		d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
 		d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 
-		SharedPtr<DX9Renderer> renderer(new DX9Renderer());
+		auto renderer = SharedPtr<DX9Renderer>::Make();
 		
 		renderer->_window = window;
 		renderer->_d3d = d3d;

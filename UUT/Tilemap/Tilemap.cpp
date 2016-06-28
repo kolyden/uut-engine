@@ -12,13 +12,13 @@ namespace uut
 	{
 	}
 
-	void Tilemap::AddLayer(TilemapLayer* layer)
+	void Tilemap::AddLayer(SharedPtr<TilemapLayer> layer)
 	{
-		if (layer == nullptr || layer->_tilemap != nullptr)
+		if (layer == nullptr || !layer->_tilemap.Expired())
 			return;
 
-		layer->_tilemap = this;
-		_layers << SharedPtr<TilemapLayer>(layer);
+		layer->_tilemap = GetSharedThis();
+		_layers << layer;
 		layer->SetSize(_size);
 	}
 

@@ -58,10 +58,10 @@ namespace uut
 		virtual bool BeginScene() = 0;
 		virtual void EndScene() = 0;
 
-		virtual bool SetTexture(int stage, Texture2D* texture) = 0;
-		virtual bool SetVertexBuffer(VertexBuffer* buffer, uint16_t stride, uint32_t offset = 0) = 0;
-		virtual bool SetIndexBuffer(IndexBuffer* buffer) = 0;
-		virtual bool SetVertexDeclaration(VertexDeclaration* declare) = 0;
+		virtual bool SetTexture(int stage, SharedPtr<Texture2D> texture) = 0;
+		virtual bool SetVertexBuffer(SharedPtr<VertexBuffer> buffer, uint16_t stride, uint32_t offset = 0) = 0;
+		virtual bool SetIndexBuffer(SharedPtr<IndexBuffer> buffer) = 0;
+		virtual bool SetVertexDeclaration(SharedPtr<VertexDeclaration> declare) = 0;
 
 		virtual bool DrawPrimitive(Topology topology, uint32_t primitiveCount, uint32_t offset = 0) = 0;
 		virtual bool DrawIndexedPrimitive(Topology topology, int baseVertexIndex, uint32_t minVertexIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount) = 0;

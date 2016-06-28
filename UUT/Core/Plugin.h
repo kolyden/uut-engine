@@ -1,32 +1,19 @@
 #pragma once
-#include "RefCounted.h"
-#include "String.h"
-#include "HashString.h"
+#include <Core/String.h>
+#include <Core/HashString.h>
+#include <Core/Version.h>
 
 namespace uut
 {
-	struct PluginVersion
-	{
-		PluginVersion();
-		PluginVersion(uint16_t _major, uint16_t _minor);
 
-		bool operator ==(const PluginVersion& version) const;
-		bool operator != (const PluginVersion& version) const;
-		bool operator <(const PluginVersion& version) const;
 
-		String ToString() const;
-
-		uint16_t major;
-		uint16_t minor;
-	};
-
-	class Plugin : public RefCounted
+	class Plugin
 	{
 	public:
-		Plugin(const HashString& name, const PluginVersion& version);
+		Plugin(const HashString& name, const Version& version);
 
 		const HashString& GetPluginName() const;
-		const PluginVersion& GetPluginVersion() const;
+		const Version& GetPluginVersion() const;
 
 		String ToString() const;
 
@@ -38,7 +25,7 @@ namespace uut
 
 	private:
 		HashString _pluginName;
-		PluginVersion _pluginVersion;
+		Version _pluginVersion;
 	};
 
 #define UUT_REGISTER_OBJECT(type) UUT_REGISTER_TYPE(type)

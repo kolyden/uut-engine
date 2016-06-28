@@ -11,8 +11,8 @@ namespace uut
 	public:
 		ObjectLayerRender();
 
-		void SetObjectLayer(ObjectLayer* layer);
-		ObjectLayer* GetObjectLayer() const;
+		void SetObjectLayer(SharedPtr<ObjectLayer> layer);
+		SharedPtr<ObjectLayer> GetObjectLayer() const;
 
 		virtual	void Draw(Graphics* graphics) const override;
 

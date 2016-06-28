@@ -23,12 +23,12 @@ namespace uut
 		return _transparent;
 	}
 
-	void TilesetLayer::SetTileset(Tileset* tileset)
+	void TilesetLayer::SetTileset(SharedPtr<Tileset> tileset)
 	{
 		_tileset = tileset;
 	}
 
-	Tileset* TilesetLayer::GetTileset() const
+	SharedPtr<Tileset> TilesetLayer::GetTileset() const
 	{
 		return _tileset;
 	}

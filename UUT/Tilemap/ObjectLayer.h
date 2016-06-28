@@ -6,10 +6,11 @@ namespace uut
 	class Graphics;
 	class ObjectLayer;
 
-	class ObjectLayerItem : public RefCounted
+	class ObjectLayerItem
 	{
 	public:
 		ObjectLayerItem() : _zorder(0) {}
+		virtual ~ObjectLayerItem() {}
 
 		void SetPosition(const IntVector2& position) { _position = position; }
 
@@ -36,8 +37,8 @@ namespace uut
 	public:
 		ObjectLayer();
 
-		void AddItem(const IntVector2& position, ObjectLayerItem* item);
-		ObjectLayerItem* GetItem(const IntVector2& position) const;
+		void AddItem(const IntVector2& position, SharedPtr<ObjectLayerItem> item);
+		SharedPtr<ObjectLayerItem> GetItem(const IntVector2& position) const;
 		const ObjectLayerItemList& GetItems() const;
 
 		void SetSize(const IntVector2& size) override;

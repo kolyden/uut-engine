@@ -11,7 +11,7 @@ namespace uut
 	{
 	}
 
-	void Tileset::SetTexture(Texture2D* texture)
+	void Tileset::SetTexture(SharedPtr<Texture2D> texture)
 	{
 		if (_texture == texture)
 			return;
@@ -20,7 +20,7 @@ namespace uut
 		UpdateNormalizedRects();
 	}
 
-	Texture2D* Tileset::GetTexture() const
+	SharedPtr<Texture2D> Tileset::GetTexture() const
 	{
 		return _texture;
 	}

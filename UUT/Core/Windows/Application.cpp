@@ -30,15 +30,15 @@ namespace uut
 		Context::RegisterModule(new ResourceCache());
 		Context::RegisterModule(DX9Renderer::Create(_window));
 
-		_input = Context::FindModule<Input>();
-		_cache = Context::FindModule<ResourceCache>();
-		_renderer = Context::FindModule<Renderer>();
-		if (_renderer == nullptr)
+		auto input = Context::FindModule<Input>();
+		auto cache = Context::FindModule<ResourceCache>();
+		auto renderer = Context::FindModule<Renderer>();
+		if (renderer == nullptr)
 			return;
 
-		_cache->AddLoader(new Texture2DLoader());
-		_cache->AddLoader(new BitmapFontLoader());
-		_renderer->ResetStates();
+		cache->AddLoader(new Texture2DLoader());
+		cache->AddLoader(new BitmapFontLoader());
+		renderer->ResetStates();
 		OnInit();
 
 		Timer timer;
@@ -51,10 +51,10 @@ namespace uut
 		while (!_engine->IsExiting())
 		{
 			_engine->RunFrame();
-			_input->UpdateState();
+			input->UpdateState();
 
 			OnFrame();
-			_renderer->Present();
+			renderer->Present();
 
 			timer.Update();
 			frameTime += timer.GetDeltaTime();

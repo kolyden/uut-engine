@@ -22,7 +22,7 @@ namespace uut
 		typedef HashSet<const Type*> DerivedSet;
 		typedef Dictionary<const Type*, DerivedSet> DerivedDict;
 		typedef Dictionary<HashString, SharedPtr<Module>> ModuleDict;
-		typedef Dictionary<const Type*, Module*> ModuleInstMap;
+		typedef Dictionary<const Type*, WeakPtr<Module>> ModuleInstMap;
 
 		// OBJECT CREATION
 		static SharedPtr<Object> CreateObject(const Type* type);
@@ -30,7 +30,7 @@ namespace uut
 		template<class C> static SharedPtr<Object> CreateObject() { return CreateObject(typeof<C>()); }
 
 		// PLUGINS
-		static void AddPlugin(Plugin* plugin);
+		static void AddPlugin(SharedPtr<Plugin> plugin);
 		//static void RemovePlugin()
 		static const PluginList& GetPlugins() { return _plugins; }
 
@@ -48,11 +48,11 @@ namespace uut
 		template<class C> static bool RegisterType() { return RegisterType(C::_GetTypeInternal()); }
 
 		// MODULES
-		static void RegisterModule(Module* module);
+		static void RegisterModule(SharedPtr<Module> module);
 		static Module* FindModule(const Type* type);
 		static Module* FindModule(const HashString& name);
 		template<class C>static C* FindModule()
-		{ return static_cast<C*>(FindModule(typeof<C>())); }
+		{ return dynamic_cast<C*>(FindModule(typeof<C>())); }
 
 	protected:
 		static bool _inited;

@@ -31,7 +31,7 @@
 namespace uut
 {
 	CorePlugin::CorePlugin()
-		: Plugin("Core", PluginVersion(0, 1))
+		: Plugin("Core", Version(0, 1))
 	{
 	}
 

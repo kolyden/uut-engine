@@ -110,7 +110,7 @@ namespace uut
 
 	bool BlockedLayer::MakePath(const IntVector2& start, const IntVector2& end, List<IntVector2>& path)
 	{
-		auto& size = _tilemap->GetSize();
+		auto& size = _tilemap.Lock()->GetSize();
 
 		MapSearchNode::_layer = this;
 		MapSearchNode::MAP_WIDTH = size.x;

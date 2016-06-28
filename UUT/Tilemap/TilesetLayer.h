@@ -18,8 +18,8 @@ namespace uut
 		void SetTransparent(bool transparent);
 		bool GetTransparent() const;
 
-		void SetTileset(Tileset* tileset);
-		Tileset* GetTileset() const;
+		void SetTileset(SharedPtr<Tileset> tileset);
+		SharedPtr<Tileset> GetTileset() const;
 
 		void SetTile(int x, int y, uint8_t tile);
 		uint8_t GetTile(int x, int y) const;

@@ -34,7 +34,7 @@ namespace uut
 	{
 	}
 
-	bool ResourceCache::AddResource(Resource* resource, const Path& path)
+	bool ResourceCache::AddResource(SharedPtr<Resource> resource, const Path& path)
 	{
 		if (resource == nullptr)
 			return false;
@@ -47,7 +47,7 @@ namespace uut
 		return true;
 	}
 
-	Resource* ResourceCache::Find(const Type* type, const Path& path) const
+	SharedPtr<Resource> ResourceCache::Find(const Type* type, const Path& path) const
 	{
 		if (type == nullptr || path.IsEmpty())
 			return nullptr;
@@ -56,8 +56,9 @@ namespace uut
 		return item != nullptr ? item->_data.Get() : nullptr;
 	}
 
-	Resource* ResourceCache::Load(const Type* type, const Path& path, bool silent /*= false*/) const
+	SharedPtr<Resource> ResourceCache::Load(const Type* type, const Path& path, bool silent /*= false*/) const
 	{
+		return nullptr;
 		if (type == nullptr || path.IsEmpty())
 			return nullptr;
 
@@ -69,36 +70,36 @@ namespace uut
 		if (group == nullptr)
 			return nullptr;
 
-		auto stream = File::OpenRead(path);
+		auto stream = DynamicCast<Stream>(File::OpenRead(path));
 		if (stream == nullptr)
 			return nullptr;
 
 		for (auto& loader : group->_loaders)
 		{
-			auto data = loader->Load(stream);
-			if (!data)
+			auto resource = loader->Load(stream);
+			if (!resource)
 				continue;
 
-			item = new ResourceItem();
+			item = SharedPtr<ResourceItem>::Make();
 			item->_path = path;
-			item->_data = data;
+			item->_data = resource;
 			group->_items[path] = item;
-			return data;
+			return resource;
 		}
 
 		return nullptr;
 	}
 
-	void ResourceCache::AddLoader(ResourceLoader* loader)
+	void ResourceCache::AddLoader(SharedPtr<ResourceLoader> loader)
 	{
 		if (loader == nullptr)
 			return;
 
 		auto group = CreateGroup(loader->GetResourceType());
-		group->_loaders.Add(SharedPtr<ResourceLoader>(loader));
+		group->_loaders << loader;
 	}
 
-	ResourceGroup* ResourceCache::FindGroup(const Type* type) const
+	SharedPtr<ResourceGroup> ResourceCache::FindGroup(const Type* type) const
 	{
 		if (type == nullptr)
 			return nullptr;
@@ -107,7 +108,7 @@ namespace uut
 		return it != _groups.End() ? it->second.Get() : nullptr;
 	}
 
-	ResourceItem* ResourceCache::FindItem(const Type* type, const Path& path) const
+	SharedPtr<ResourceItem> ResourceCache::FindItem(const Type* type, const Path& path) const
 	{
 		if (type == nullptr || path.IsEmpty())
 			return nullptr;
@@ -124,26 +125,26 @@ namespace uut
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	ResourceGroup* ResourceCache::CreateGroup(const Type* type)
+	SharedPtr<ResourceGroup> ResourceCache::CreateGroup(const Type* type)
 	{
-		SharedPtr<ResourceGroup> group;
-		if (_groups.TryGetValue(type, group))
-			return group;
+		auto it = _groups.Find(type);
+		if (it != _groups.End())
+			return it->second;
 
-		group = new ResourceGroup();
+		auto group = SharedPtr<ResourceGroup>::Make();
 		_groups[type] = group;
 		return group;
 	}
 
-	ResourceItem* ResourceCache::CreateItem(const Type* type, const Path& path)
+	SharedPtr<ResourceItem> ResourceCache::CreateItem(const Type* type, const Path& path)
 	{
 		auto group = CreateGroup(type);
 
-		SharedPtr<ResourceItem> item;
-		if (group->_items.TryGetValue(path, item))
-			return item;
+		auto it = group->_items.Find(path);
+		if (it != group->_items.End())
+			return it->second;
 
-		item = new ResourceItem();
+		auto item = SharedPtr<ResourceItem>::Make();
 		item->_path = path;
 		group->_items[path] = item;
 		return item;

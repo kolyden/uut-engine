@@ -36,28 +36,25 @@ namespace uut
 	{
 	}
 
-	SharedPtr<Resource> Texture2DLoader::Load(Stream* stream)
+	SharedPtr<Resource> Texture2DLoader::Load(SharedPtr<Stream> stream)
 	{
-		if (stream == nullptr)
-			return SharedPtr<Resource>::Empty;
-
 		stbi_io_callbacks callbacks{ &ReadStream, &SeekStream, &IsEOFStream };
 
 		IntVector2 size;
 		int comp;
 		auto source = stbi_load_from_callbacks(&callbacks, stream, &size.x, &size.y, &comp, STBI_rgb_alpha);
 		if (source == nullptr)
-			return SharedPtr<Resource>::Empty;
+			return nullptr;
 
 		auto renderer = Renderer::Instance();
 		auto tex = renderer->CreateTexture(size);
 		if (!tex)
-			return SharedPtr<Resource>::Empty;
+			return nullptr;
 
 		int pitch;
 		auto dest = static_cast<stbi_uc*>(tex->Lock(&pitch));
 		if (!dest)
-			return SharedPtr<Resource>::Empty;
+			return nullptr;
 
 		for (int y = 0; y < size.y; y++)
 		{

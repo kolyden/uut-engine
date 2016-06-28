@@ -2,41 +2,7 @@
 
 namespace uut
 {
-	PluginVersion::PluginVersion()
-		: major()
-		, minor(0)
-	{}
-
-	PluginVersion::PluginVersion(uint16_t _major, uint16_t _minor)
-		: major(_major)
-		, minor(_minor)
-	{}
-
-	bool PluginVersion::operator==(const PluginVersion& version) const
-	{
-		return major == version.major && minor == version.minor;
-	}
-
-	bool PluginVersion::operator!=(const PluginVersion& version) const
-	{
-		return major != version.major || minor != version.minor;
-	}
-
-	bool PluginVersion::operator<(const PluginVersion& version) const
-	{
-		if (major == version.major)
-			return minor < version.minor;
-
-		return major < version.major;
-	}
-
-	String PluginVersion::ToString() const
-	{
-		return String::Format("%u.%u", major, minor);
-	}
-
-	///////////////////////////////////////////////////////////////////
-	Plugin::Plugin(const HashString& name, const PluginVersion& version)
+	Plugin::Plugin(const HashString& name, const Version& version)
 		: _pluginName(name)
 		, _pluginVersion(version)
 	{
@@ -47,7 +13,7 @@ namespace uut
 		return _pluginName;
 	}
 
-	const PluginVersion& Plugin::GetPluginVersion() const
+	const Version& Plugin::GetPluginVersion() const
 	{
 		return _pluginVersion;
 	}

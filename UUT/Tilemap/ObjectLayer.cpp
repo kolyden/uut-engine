@@ -9,18 +9,18 @@ namespace uut
 	{
 	}
 
-	void ObjectLayer::AddItem(const IntVector2& position, ObjectLayerItem* item)
+	void ObjectLayer::AddItem(const IntVector2& position, SharedPtr<ObjectLayerItem> item)
 	{
-		if (item == nullptr)
+		if (!item)
 			return;
 
-		_items << SharedPtr<ObjectLayerItem>(item);
+		_items << item;
 		item->_position = position;
-		item->_layer = this;
+		item->_layer = GetSharedThis();
 		item->OnInit();
 	}
 
-	ObjectLayerItem* ObjectLayer::GetItem(const IntVector2& position) const
+	SharedPtr<ObjectLayerItem> ObjectLayer::GetItem(const IntVector2& position) const
 	{
 		for (auto& item : _items)
 		{

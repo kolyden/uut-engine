@@ -11,8 +11,8 @@ namespace uut
 	public:
 		TilesetLayerRender();
 
-		void SetTilesetLayer(TilesetLayer* layer);
-		TilesetLayer* GetTilesetLayer() const;
+		void SetTilesetLayer(SharedPtr<TilesetLayer> layer);
+		SharedPtr<TilesetLayer> GetTilesetLayer() const;
 
 		virtual void Draw(Graphics* graphics) const override;
 

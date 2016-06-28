@@ -152,7 +152,6 @@
     <ClInclude Include="..\UUT\Core\Platform.h" />
     <ClInclude Include="..\UUT\Core\Plugin.h" />
     <ClInclude Include="..\UUT\Core\Ptr.h" />
-    <ClInclude Include="..\UUT\Core\RefCounted.h" />
     <ClInclude Include="..\UUT\Core\Reflection\ConstructorInfo.h" />
     <ClInclude Include="..\UUT\Core\Reflection\ConverterInfo.h" />
     <ClInclude Include="..\UUT\Core\Reflection\FieldAttribute.h" />
@@ -170,6 +169,7 @@
     <ClInclude Include="..\UUT\Core\TimeSpan .h" />
     <ClInclude Include="..\UUT\Core\ValueType.h" />
     <ClInclude Include="..\UUT\Core\Variant.h" />
+    <ClInclude Include="..\UUT\Core\Version.h" />
     <ClInclude Include="..\UUT\Core\Windows\Application.h" />
     <ClInclude Include="..\UUT\Core\Windows\Window.h" />
     <ClInclude Include="..\UUT\GUI\DebugGUI.h" />
@@ -269,7 +269,6 @@
     <ClCompile Include="..\UUT\Core\ObjectFactory.cpp" />
     <ClCompile Include="..\UUT\Core\Platform.cpp" />
     <ClCompile Include="..\UUT\Core\Plugin.cpp" />
-    <ClCompile Include="..\UUT\Core\RefCounted.cpp" />
     <ClCompile Include="..\UUT\Core\Reflection\ConstructorInfo.cpp" />
     <ClCompile Include="..\UUT\Core\Reflection\ConverterInfo.cpp" />
     <ClCompile Include="..\UUT\Core\Reflection\FieldAttribute.cpp" />
@@ -285,6 +284,7 @@
     <ClCompile Include="..\UUT\Core\TimeSpan .cpp" />
     <ClCompile Include="..\UUT\Core\ValueType.cpp" />
     <ClCompile Include="..\UUT\Core\Variant.cpp" />
+    <ClCompile Include="..\UUT\Core\Version.cpp" />
     <ClCompile Include="..\UUT\Core\Windows\Application.cpp" />
     <ClCompile Include="..\UUT\Core\Windows\Window.cpp" />
     <ClCompile Include="..\UUT\GUI\DebugGUI.cpp" />
