@@ -37,13 +37,9 @@ namespace uut
 		StdShared& GetShared() { return _data; }
 		const StdShared& GetShared() const { return _data; }
 
-		static const SharedPtr Empty;
-
 	protected:
 		StdShared _data;
 	};
-
-	template<class T> const SharedPtr<T> SharedPtr<T>::Empty;
 
 	//////////////////////////////////////////////////////////
 	template<class T>
@@ -61,13 +57,9 @@ namespace uut
 
 		bool Expired() const { return _data.expired(); }
 
-		static const WeakPtr Empty;
-
 	protected:
 		StdShared _data;
 	};
-
-	template<class T> const WeakPtr<T> WeakPtr<T>::Empty;
 
 	/// Perform a static cast from one shared pointer type to another.
 	template <class T, class U> SharedPtr<T> StaticCast(const SharedPtr<U>& ptr)
@@ -81,15 +73,24 @@ namespace uut
 		return std::dynamic_pointer_cast<T>(ptr.GetShared());
 	}
 
-	/// Perform a static cast from one weak pointer type to another.
-	template <class T, class U> WeakPtr<T> StaticCast(const WeakPtr<U>& ptr)
-	{
-		return std::static_pointer_cast<T, U>(ptr.Lock().GetShared());
-	}
+// 	/// Perform a static cast from one weak pointer type to another.
+// 	template <class T, class U> WeakPtr<T> StaticCast(const WeakPtr<U>& ptr)
+// 	{
+// 		return std::static_pointer_cast<T, U>(ptr.Lock().GetShared());
+// 	}
+// 
+// 	/// Perform a dynamic cast from one weak pointer type to another.
+// 	template <class T, class U> WeakPtr<T> DynamicCast(const WeakPtr<U>& ptr)
+// 	{
+// 		return std::dynamic_pointer_cast<T, U>(ptr.Lock().GetShared());
+// 	}
 
-	/// Perform a dynamic cast from one weak pointer type to another.
-	template <class T, class U> WeakPtr<T> DynamicCast(const WeakPtr<U>& ptr)
+	template<class T> using SPtr = SharedPtr<T>;
+	template<class T> using WPtr = WeakPtr<T>;
+
+	template<class T, typename... Args>
+	static SharedPtr<T> MakeShared(Args... args)
 	{
-		return std::dynamic_pointer_cast<T, U>(ptr.Lock().GetShared());
+		return std::make_shared<T>(args...);
 	}
 }

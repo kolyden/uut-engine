@@ -58,7 +58,7 @@ namespace uut
 		UUT_REGISTER_OBJECT(IntPtr);
 
 		// ENUM
-		UUT_REGISTER_OBJECT(Enum);
+		UUT_REGISTER_OBJECT(EnumValue);
 
 		// CORE
 		UUT_REGISTER_OBJECT(Object);

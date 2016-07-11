@@ -6,7 +6,7 @@ namespace uut
 {
 	class Double : public ValueType, public FundamentalValue<double>
 	{
-		UUT_STRUCT(Double, ValueType)
+		UUT_VALUETYPE(Double, ValueType)
 	public:
 		constexpr Double() : FundamentalValue(0.0) {}
 		constexpr Double(double value) : FundamentalValue(value) {}

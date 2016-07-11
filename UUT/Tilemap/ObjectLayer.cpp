@@ -2,7 +2,7 @@
 
 namespace uut
 {
-	UUT_STRUCT_IMPLEMENT(ObjectLayer)
+	UUT_VALUETYPE_IMPLEMENT(ObjectLayer)
 	{}
 
 	ObjectLayer::ObjectLayer()

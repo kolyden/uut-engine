@@ -3,7 +3,7 @@
 
 namespace uut
 {
-	UUT_STRUCT_IMPLEMENT(String)
+	UUT_VALUETYPE_IMPLEMENT(String)
 	{}
 
 	const String String::Empty;

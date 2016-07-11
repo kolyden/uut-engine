@@ -29,4 +29,13 @@ namespace uut
 
 		friend class Context;
 	};
+
+	template<class T>
+	class ModuleInstance
+	{
+	public:
+		T* operator->() const {
+			return T::Instance();
+		}
+	};
 }

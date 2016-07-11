@@ -115,6 +115,7 @@
     <ClInclude Include="..\UUT\Core\Double.h" />
     <ClInclude Include="..\UUT\Core\Engine.h" />
     <ClInclude Include="..\UUT\Core\Enum.h" />
+    <ClInclude Include="..\UUT\Core\EnumFlags.h" />
     <ClInclude Include="..\UUT\Core\Fundamental.h" />
     <ClInclude Include="..\UUT\Core\HashString.h" />
     <ClInclude Include="..\UUT\Core\IEquatable.h" />
@@ -130,6 +131,7 @@
     <ClInclude Include="..\UUT\Core\IO\Stream.h" />
     <ClInclude Include="..\UUT\Core\IO\TextReader.h" />
     <ClInclude Include="..\UUT\Core\Math\Degree.h" />
+    <ClInclude Include="..\UUT\Core\Math\Hash.h" />
     <ClInclude Include="..\UUT\Core\Math\IntRect.h" />
     <ClInclude Include="..\UUT\Core\Math\IntVector2.h" />
     <ClInclude Include="..\UUT\Core\Math\IntVector3.h" />
@@ -235,6 +237,7 @@
     <ClCompile Include="..\UUT\Core\Double.cpp" />
     <ClCompile Include="..\UUT\Core\Engine.cpp" />
     <ClCompile Include="..\UUT\Core\Enum.cpp" />
+    <ClCompile Include="..\UUT\Core\EnumFlags.cpp" />
     <ClCompile Include="..\UUT\Core\Fundamental.cpp" />
     <ClCompile Include="..\UUT\Core\HashString.cpp" />
     <ClCompile Include="..\UUT\Core\IntPtr.cpp" />
@@ -248,6 +251,7 @@
     <ClCompile Include="..\UUT\Core\IO\Stream.cpp" />
     <ClCompile Include="..\UUT\Core\IO\TextReader.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Degree.cpp" />
+    <ClCompile Include="..\UUT\Core\Math\Hash.cpp" />
     <ClCompile Include="..\UUT\Core\Math\IntRect.cpp" />
     <ClCompile Include="..\UUT\Core\Math\IntVector2.cpp" />
     <ClCompile Include="..\UUT\Core\Math\IntVector3.cpp" />

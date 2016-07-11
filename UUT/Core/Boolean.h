@@ -6,7 +6,7 @@ namespace uut
 {
 	class Boolean : public ValueType, public FundamentalValue<bool>
 	{
-		UUT_STRUCT(Boolean, ValueType)
+		UUT_VALUETYPE(Boolean, ValueType)
 	public:
 		constexpr Boolean() : FundamentalValue(false) {}
 		constexpr Boolean(bool value) : FundamentalValue(value) {}

@@ -7,7 +7,7 @@ namespace uut
 
 	class Degree : public ValueType
 	{
-		UUT_STRUCT(Degree, ValueType)
+		UUT_VALUETYPE(Degree, ValueType)
 	public:
 		explicit constexpr Degree(float angle = 0.0f) : _angle(angle) {};
 		Degree(const Radian& angle);

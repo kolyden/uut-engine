@@ -7,7 +7,7 @@ namespace uut
 
 	class IntVector3 : public ValueType
 	{
-		UUT_STRUCT(IntVector3, ValueType)
+		UUT_VALUETYPE(IntVector3, ValueType)
 	public:
 		IntVector3();
 		explicit IntVector3(int val);

@@ -7,16 +7,16 @@
 namespace uut
 {
 #define UUT_OBJECT(typeName, parentType) \
-	UUT_TYPE(typeName, parentType) \
+	UUT_BASETYPE(typeName, parentType) \
 	public: \
 	virtual const Type* GetType() const { return GetTypeStatic(); } \
 	SharedPtr<ClassName> GetSharedThis() { return DynamicCast<ClassName>(GetThisObject()); } \
 	private:
 
 #define UUT_OBJECT_IMPLEMENT(type) \
-	UUT_TYPE_IMPLEMENT(type)
+	UUT_BASETYPE_IMPLEMENT(type)
 
-	class Object : public BaseObject, public IEquatable, std::enable_shared_from_this<Object>
+	class Object : public BaseObject, public IEquatable, public std::enable_shared_from_this<Object>
 	{
 		UUT_OBJECT(Object, BaseObject)
 	public:

@@ -5,7 +5,7 @@ namespace uut
 {
 	class Single : public ValueType, public FundamentalValue<float>
 	{
-		UUT_STRUCT(Single, ValueType)
+		UUT_VALUETYPE(Single, ValueType)
 	public:
 		constexpr Single() : FundamentalValue(0.0f) {}
 		constexpr Single(float value) : FundamentalValue(value) {}

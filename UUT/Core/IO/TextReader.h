@@ -9,7 +9,7 @@ namespace uut
 	{
 		UUT_OBJECT(TextReader, Object)
 	public:
-		explicit TextReader(Stream* source);
+		explicit TextReader(const SharedPtr<Stream>& source);
 		virtual ~TextReader();
 
 // 		wchar_t Read();

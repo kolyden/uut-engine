@@ -6,7 +6,7 @@ namespace uut
 {
 	class Char : public ValueType, public FundamentalValue<uint16_t>
 	{
-		UUT_STRUCT(Char, ValueType)
+		UUT_VALUETYPE(Char, ValueType)
 	public:
 		constexpr Char() : FundamentalValue(0) {}
 		constexpr Char(char value) : FundamentalValue(value) {}

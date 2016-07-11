@@ -4,7 +4,7 @@
 
 namespace uut
 {
-	UUT_STRUCT_IMPLEMENT(IntPtr)
+	UUT_VALUETYPE_IMPLEMENT(IntPtr)
 	{
 		UUT_REGISTER_CTOR_DEFAULT();
 		UUT_REGISTER_CTOR(intptr_t);

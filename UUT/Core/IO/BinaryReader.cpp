@@ -21,7 +21,7 @@ namespace uut
 	{
 	}
 
-	BinaryReader::BinaryReader(Stream* source)
+	BinaryReader::BinaryReader(const SharedPtr<Stream>& source)
 		: _source(source)
 	{
 	}

@@ -33,7 +33,7 @@ namespace uut
 		return jt->second;
 	}
 
-	Texture2D* BitmapFont::GetTexture(int index) const
+	const SharedPtr<Texture2D>& BitmapFont::GetTexture(int index) const
 	{
 		return _textures[index];
 	}

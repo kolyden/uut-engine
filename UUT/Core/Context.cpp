@@ -17,7 +17,7 @@ namespace uut
 	SharedPtr<Object> Context::CreateObject(const Type* type)
 	{
 		if (type == nullptr)
-			return SharedPtr<Object>::Empty;
+			return nullptr;
 
 // 		if (type->GetFactory() == nullptr)
 // 			return type->Create();
@@ -30,7 +30,7 @@ namespace uut
 // 
 // 		Debug::LogError("No factory for '%s' type", type->GetName());
 
-		return SharedPtr<Object>::Empty;
+		return nullptr;
 	}
 
 	SharedPtr<Object> Context::CreateObject(const HashString& name)
@@ -120,7 +120,7 @@ namespace uut
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	void Context::RegisterModule(SharedPtr<Module> module)
+	void Context::RegisterModule(const SharedPtr<Module>& module)
 	{
 		if (module == nullptr)
 			return;
@@ -149,7 +149,7 @@ namespace uut
 			return nullptr;
 
 		auto it = _moduleInst.Find(type);
-		return it == _moduleInst.End() ? nullptr : it->second.Lock();
+		return it == _moduleInst.End() ? nullptr : it->second;
 	}
 
 	Module* Context::FindModule(const HashString& name)

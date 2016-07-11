@@ -2,6 +2,6 @@
 
 namespace uut
 {
-	UUT_TYPE_IMPLEMENT(BaseObject)
+	UUT_BASETYPE_IMPLEMENT(BaseObject)
 	{}
 }

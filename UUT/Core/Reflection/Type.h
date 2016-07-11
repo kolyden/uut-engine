@@ -1,8 +1,11 @@
 #pragma once
 #include <Core/Collections/List.h>
+#include <Core/Ptr.h>
+#include <Core/Collections/Dictionary.h>
 
 namespace uut
 {
+	class Attribute;
 	class String;
 	class MemberInfo;
 	class PropertyInfo;
@@ -34,6 +37,8 @@ namespace uut
 // 		bool IsMethod() const;
 // 		bool IsEnum() const;
 
+		bool AddAttribute(const SharedPtr<Attribute>& attr);
+
 		void AddMember(MemberInfo* member);
 		const List<const MemberInfo*>& GetMembers() const;
 		const MemberInfo* FindMember(const String& name) const;
@@ -60,6 +65,8 @@ namespace uut
 		REGFUNC _regfunc;
 // 		TypeInfo _info;
 		List<const MemberInfo*> _members;
+		List<SharedPtr<Attribute>> _attributes;
+		static Dictionary<const Type*, List<Attribute*>> _attributeTypes;
 
 		void Register();
 
@@ -104,11 +111,11 @@ namespace uut
 	}
 
 	template<typename T>
-	static constexpr const T& GetDefault() {
+	static const T& GetDefault() {
 		return T::Default;
 	}
 
-#define UUT_TYPE(typeName, parentType) \
+#define UUT_BASETYPE(typeName, parentType) \
 	public: \
 	typedef typeName ClassName; \
 	typedef parentType Super; \
@@ -118,20 +125,19 @@ namespace uut
 	static void _RegisterInternal(Type* internalType); \
 	friend class Context;
 
-#define UUT_TYPE_IMPLEMENT(type) \
-	UUT_TYPE_IMPLEMENT_EX(type, #type)
+#define UUT_BASETYPE_IMPLEMENT(type) \
+	UUT_BASETYPE_IMPLEMENT_EX(type, #type)
 
-#define UUT_TYPE_IMPLEMENT_EX(type, name) \
+#define UUT_BASETYPE_IMPLEMENT_EX(type, name) \
 	Type* type::_GetTypeInternal() \
 	{ static TypeImpl<type> type(name, &type::_RegisterInternal); return &type; } \
 	void type::_RegisterInternal(Type* internalType)
 
-
 #define UUT_REGISTER_TYPE(type) Context::RegisterType<type>()
 
 #define UUT_DEFAULT(type, value) \
-	template<> static constexpr const type& GetDefault<type>() \
-	{ return value; }
+	template<> static const type& GetDefault<type>() \
+	{ static type ret(value); return ret; }
 
 #define UUT_VALUE_TYPE(type, value) \
 	template<> static const Type* typeof<type>() \

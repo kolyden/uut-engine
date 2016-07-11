@@ -6,7 +6,7 @@ namespace uut
 {
 	class IntPtr : public ValueType, public FundamentalValue<void*>
 	{
-		UUT_STRUCT(IntPtr, ValueType)
+		UUT_VALUETYPE(IntPtr, ValueType)
 	public:
 		constexpr IntPtr() : FundamentalValue(nullptr) {}
 		explicit constexpr IntPtr(intptr_t value) : FundamentalValue(reinterpret_cast<void*>(value)) {}

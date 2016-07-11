@@ -5,7 +5,7 @@ namespace uut
 {
 	class BaseObject
 	{
-		UUT_TYPE(BaseObject, BaseObject)
+		UUT_BASETYPE(BaseObject, BaseObject)
 	public:
 		constexpr BaseObject() {}
 	};

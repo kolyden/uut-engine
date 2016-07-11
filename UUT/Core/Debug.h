@@ -15,7 +15,7 @@ namespace uut
 
 	class Debug : public ValueType
 	{
-		UUT_STRUCT(Debug, ValueType)
+		UUT_VALUETYPE(Debug, ValueType)
 	public:
 		static void LogMessage(LogType type, const char* message, ...);
 		static void LogMessageV(LogType type, const char* message, va_list args);

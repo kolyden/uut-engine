@@ -36,7 +36,7 @@ namespace uut
 		const FontGlyph* GetGlyph(uint32_t id) const;
 		int16_t GetKerning(uint32_t a, uint32_t b) const;
 
-		Texture2D* GetTexture(int index) const override;
+		const SharedPtr<Texture2D>& GetTexture(int index) const override;
 		bool PrintToQuad(Vector2& pos, uint32_t code, uint32_t next, IntRect& rect, Rect& tex, uint8_t& page) const override;
 
 	protected:

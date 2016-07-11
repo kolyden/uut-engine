@@ -7,7 +7,7 @@ namespace uut
 
 	class Vector2 : public ValueType
 	{
-		UUT_STRUCT(Vector2, ValueType)
+		UUT_VALUETYPE(Vector2, ValueType)
 	public:
 		constexpr Vector2() : x(0), y(0) {}
 		constexpr Vector2(float fx, float fy) : x(fx), y(fy) {}

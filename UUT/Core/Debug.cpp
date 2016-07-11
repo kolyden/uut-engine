@@ -3,7 +3,7 @@
 
 namespace uut
 {
-	UUT_STRUCT_IMPLEMENT(Debug)
+	UUT_VALUETYPE_IMPLEMENT(Debug)
 	{}
 
 	void Debug::LogMessage(LogType type, const char* message, ...)

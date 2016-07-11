@@ -13,7 +13,7 @@ namespace uut
 		ResourceLoader();
 		virtual ~ResourceLoader();
 
-		virtual SharedPtr<Resource> Load(SharedPtr<Stream> stream) = 0;
+		virtual SharedPtr<Resource> Load(const SharedPtr<Stream>& stream) = 0;
 		virtual const Type* GetResourceType() const = 0;
 	};
 }

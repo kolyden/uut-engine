@@ -7,6 +7,7 @@
 #include <Core/Plugin.h>
 #include <Core/Variant.h>
 #include <Core/Enum.h>
+#include <Core/EnumFlags.h>
 #include <Core/Reflection/MethodInfo.h>
 #include <Core/Reflection/ConstructorInfo.h>
 #include <Core/Reflection/ConverterInfo.h>
@@ -16,16 +17,55 @@
 
 namespace uut
 {
+	template<class T>
+	static void EnumRegisterMemebers(Type* type)
+	{
+		for (auto& it : Enum<T>::GetNames())
+		{
+			T value = it.first;
+			//type->AddMember(new EnumProperty<T>(it.first));
+			type->AddMember(new StaticPropertyInfo<T>(it.second,
+				[&value]() -> T { return value; }, nullptr));
+		}
+	}
+
 	enum class Test
 	{
 		ValueA,
 		ValueB,
 		ValueC,
-		ValueD,
 		ValueZ = 42,
 	};
+	UUT_ENUMFLAG(TestFlags, Test);
+	UUT_ENUMFLAG_IMPLEMENT(TestFlags, Test)
+	{
+		RegisterValues(
+			"ValueA", Test::ValueA,
+			"ValueB", Test::ValueB,
+			"ValueC", Test::ValueC,
+			"ValueZ", Test::ValueZ);
+		EnumRegisterMemebers<Test>(internalType);
+	}
 
-	////
+	enum class Direction
+	{
+		North,
+		East,
+		South,
+		West,
+	};
+	UUT_ENUM(Direction);
+
+	UUT_ENUM_IMPLEMENT(Direction)
+	{
+		RegisterValues(
+			"North", Direction::North,
+			"East", Direction::East,
+			"South", Direction::South,
+			"West", Direction::West);
+		EnumRegisterMemebers<Direction>(internalType);
+	}
+
 	namespace detail
 	{
 		// FNV-1a constants
@@ -44,133 +84,6 @@ namespace uut
 			return hash_one(str[0], str + 1, basis);
 		}
 	}
-	////
-	namespace detail
-	{
-		template<typename Arg>
-		String& Write(String& o, Arg&& arg) {
-			return o += ToString<std::remove_reference_t<Arg>>(arg);
-		}
-
-		template<typename Arg, typename ...Args>
-		String& Write(String& o, Arg&& arg, Args&&... args)
-		{
-			o += ToString<std::remove_reference_t<Arg>>(arg);
-			return Write(o, std::forward<Args>(args)...);
-		}
-	}
-
-	template<typename... Args>
-	static String StringFormat(Args... args)
-	{
-		String str;
-		detail::Write(str, args...);
-		return str;
-	}
-
-	////////////////////
-	template <typename T>
-	struct _eat {
-		T   _value;
-
-		template <typename Any>
-		_eat& operator =(Any value) { return *this; }   // Игнорирует аргумент.
-
-		explicit _eat(T value) : _value(value) { }      // Преобразует из T.
-		operator T() const { return _value; }           // Преобразует в T.
-	};
-
-#define EXPAND(X) X    // for MSVC10 compatibility
-
-	// compute number of (variadic) macro arguments
-	// from http://groups.google.com/group/comp.std.c/browse_thread/thread/77ee8c8f92e4a3fb/346fc464319b1ee5?pli=1
-#define PP_NARG(...) EXPAND( PP_NARG_(__VA_ARGS__, PP_RSEQ_N()) )
-#define PP_NARG_(...) EXPAND( PP_ARG_N(__VA_ARGS__) )
-#define PP_ARG_N(_1, _2, _3, _4, _5, _6, _7, _8, N, ...) N
-#define PP_RSEQ_N() 8, 7, 6, 5, 4, 3, 2, 1, 0
-
-#define PP_ENUM_NAME_1(arg0) #arg0
-#define PP_ENUM_NAME_2(arg0, arg1) #arg0, #arg1
-#define PP_ENUM_NAME_3(arg0, arg1, arg2) #arg0, #arg1, #arg2
-#define PP_ENUM_NAME_4(arg0, arg1, arg2, arg3) #arg0, #arg1, #arg2, #arg3
-
-#define PP_ENUM_NAME_(N) PP_ENUM_NAME_##N
-#define PP_ENUM_NAME_EVAL(N) PP_ENUM_NAME_(N)
-#define PP_ENUM_NAME(...) EXPAND( PP_ENUM_NAME_EVAL(EXPAND( PP_NARG(__VA_ARGS__) ))(__VA_ARGS__) )
-
-#define PP_ENUM_VALUE_1(arg0) (_eat<Enum>)arg0
-#define PP_ENUM_VALUE_2(arg0, arg1) (_eat<Enum>)arg0, (_eat<Enum>)arg1
-#define PP_ENUM_VALUE_3(arg0, arg1, arg2) (_eat<Enum>)arg0, (_eat<Enum>)arg1, (_eat<Enum>)arg2
-#define PP_ENUM_VALUE_4(arg0, arg1, arg2, arg3) (_eat<Enum>)arg0, (_eat<Enum>)arg1, (_eat<Enum>)arg2, (_eat<Enum>)arg3
-
-#define PP_ENUM_VALUE_(N) PP_ENUM_VALUE_##N
-#define PP_ENUM_VALUE_EVAL(N) PP_ENUM_VALUE_(N)
-#define PP_ENUM_VALUE(...) EXPAND( PP_ENUM_VALUE_EVAL(EXPAND( PP_NARG(__VA_ARGS__) ))(__VA_ARGS__) )
-
-
-
-#define UUT_ENUM_TEST(name, ...) \
-	struct name { \
-	enum Enum { __VA_ARGS__ }; \
-	static constexpr int COUNT = PP_NARG(__VA_ARGS__); \
-	static const char* NAMES[COUNT]; \
-	static const int VALUES[COUNT]; \
-	}; \
-	const char* name::NAMES[COUNT] = { EXPAND( PP_ENUM_NAME(__VA_ARGS__) ) }; \
-	const int name::VALUES[COUNT] = { EXPAND( PP_ENUM_VALUE(__VA_ARGS__) ) };
-
-	UUT_ENUM_TEST(Direction, North = 1, East = 2, South = 4, West = 8)
-
-	template<typename T>
-	static void RegisterValues(Type* type, unsigned count, const char* names[], const int values[])
-	{
-		for (unsigned i = 0; i < count; i++)
-		{
-			String name = names[i];
-			int value = values[i];
-			type->AddMember(
-				new StaticPropertyInfo<T>(name,
-					[name, value]() -> T { return (T)value; }, nullptr));
-		}
-	}
-
-	////////////////////
-#define UUT_ENUM(type) \
-	class type ## Enum : public EnumValue<type> \
-	{ UUT_STRUCT(type ## Enum, Enum) \
-	public: constexpr type ## Enum() {} \
-	constexpr type ## Enum(type value) : EnumValue(value) {} }; \
-	UUT_FUNDAMENTAL(type, type ## Enum) \
-	namespace detail { template<>struct Enum<type> { typedef type ## Enum TYPE; }; }
-
-#define UUT_ENUM_IMPLEMENT(type) \
-	UUT_STRUCT_IMPLEMENT(type ## Enum)
-
-#define UUT_REGISTER_ENUM(type) \
-	UUT_REGISTER_TYPE(TypeInfo::Enum, EnumValue<type>, #type)
-
-#define UUT_REGISTER_ENUM_VALUE(name) \
-	internalType->AddMember( \
-		new StaticPropertyInfo<EnumType>(#name, \
-			[]() -> EnumType { return EnumType::name; }, nullptr));
-
-#define UUT_REGISTER_ENUM_VALUE_EX(name, value) \
-	internalType->AddMember( \
-		new StaticPropertyInfo<EnumType>(name, \
-			[]() -> EnumType { return value; }, nullptr));
-
-	UUT_ENUM(Test)
-
-	UUT_ENUM_IMPLEMENT(Test)
-	{
- 		UUT_REGISTER_ENUM_VALUE(ValueA);
-		UUT_REGISTER_ENUM_VALUE(ValueB);
-		UUT_REGISTER_ENUM_VALUE(ValueC);
-		UUT_REGISTER_ENUM_VALUE(ValueD);
-		UUT_REGISTER_ENUM_VALUE(ValueZ);
-
-		UUT_REGISTER_CONVERTER_FUNC(String, ToString);
-	}
 
 	////////////////////////////////////////////////////////////////////////////
 	SampleApp::SampleApp()
@@ -180,36 +93,39 @@ namespace uut
 
 	void SampleApp::OnInit()
 	{
-		UUT_REGISTER_OBJECT(TestEnum);
+		Context::RegisterType<TestFlags>();
+		UUT_REGISTER_ENUM(Direction);
 
-		_gui = new DebugGUI();
-		_graphics = new Graphics();
-		_graphics->SetProjection(Graphics::PM_2D);
+		Context::RegisterModule(new DebugGUI());
+		Context::RegisterModule(new Graphics());
+
+		Graphics::Instance()->SetProjection(Graphics::PM_2D);
+		_tex = ResourceCache::Instance()->Load<Texture2D>("rogueliketiles.png");
 		_font = ResourceCache::Instance()->Load<Font>("Consolas.fnt");
 
 		Variant var1(Vector2(12.111f, 45.6789f));
 		Variant var2(_font);
 		Variant var3(666.555f);
 		Variant var4(true);
-		Variant var5(Test::ValueZ);
+// 		Variant var5(Test::ValueZ);
 		Variant var6(typeof<float>());
 		Variant var7(Math::HALF_PI);
 		Variant var8(L'Я');
 		Variant var9(256);
 
-		constexpr auto bool_def = GetDefault<bool>(); UUT_ASSERT(bool_def == false);
-		constexpr auto float_def = GetDefault<float>(); UUT_ASSERT(float_def == 0.0f);
-		constexpr auto int_def = GetDefault<int>(); UUT_ASSERT(int_def == 0);
-		constexpr auto enum_def = GetDefault<Test>(); UUT_ASSERT(enum_def == Test::ValueA);
-		auto ivec2_def = GetDefault<IntVector2>(); UUT_ASSERT(ivec2_def == IntVector2::Zero);
+		auto& bool_def = GetDefault<bool>(); UUT_ASSERT(bool_def == false);
+		auto& float_def = GetDefault<float>(); UUT_ASSERT(float_def == 0.0f);
+		auto& int_def = GetDefault<int>(); UUT_ASSERT(int_def == 0);
+		auto& enum_def = GetDefault<Test>(); UUT_ASSERT(enum_def == Test::ValueA);
+		auto& ivec2_def = GetDefault<IntVector2>(); UUT_ASSERT(ivec2_def == IntVector2::Zero);
 
 		auto vec = var1.Get<Vector2>();
 		auto ivec = var1.Get<IntVector2>(); UUT_ASSERT(ivec == Vector2(12, 46));
 		auto obj = var2.Get<Object>(); UUT_ASSERT(obj == _font);
 		auto i = var3.Get<int>(); UUT_ASSERT(i == 666);
 		auto b = var4.Get<bool>(); UUT_ASSERT(b == true);
-		auto flag = var5.Get<Test>(); UUT_ASSERT(flag == Test::ValueZ);
-		auto flagInt = var5.Get<int>(); UUT_ASSERT(flagInt == 42);
+// 		auto flag = var5.Get<Test>(); UUT_ASSERT(flag == Test::ValueZ);
+// 		auto flagInt = var5.Get<int>(); UUT_ASSERT(flagInt == 42);
 		auto type = var6.Get<Type>(); UUT_ASSERT(type == typeof<float>());
 		auto angleDeg = var7.Get<Degree>(); UUT_ASSERT(angleDeg.GetDegrees() == 90);
 		auto angle = var7.Get<float>(); UUT_ASSERT(angle == Math::HALF_PI.GetRadians());
@@ -219,9 +135,9 @@ namespace uut
 		auto vars = var9.Get<String>(); UUT_ASSERT(vars == "256");
 
 		auto fstr = var3.Get<String>();
-		auto flagStr = var5.Get<String>();
+// 		auto flagStr = var5.Get<String>();
 
-		auto str = StringFormat("Object type = ", typeof<Test>(), " and value = ");
+// 		auto str = StringFormat("Object type = ", typeof<Test>(), " and value = ");
 	}
 
 	static bool show_test_window = false;
@@ -307,7 +223,7 @@ namespace uut
 
 	void SampleApp::OnFrame()
 	{
-		_gui->NewFrame();
+		DebugGUI::Instance()->NewFrame();
 
 		///////////////////////////////////////////////////////////////
 		ImGui::SetNextWindowPos(ImVec2(350, 50), ImGuiSetCond_FirstUseEver);
@@ -391,20 +307,25 @@ namespace uut
 
 		///////////////////////////////////////////////////////////////
 		auto renderer = Renderer::Instance();
+		auto graphics = Graphics::Instance();
+		auto gui = DebugGUI::Instance();
+
 		renderer->Clear(Color32(114, 144, 154));
 		if (renderer->BeginScene())
 		{
 // 			_plasma->Apply(_texture,
 // 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10));
 // 			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
-			_graphics->SetMaterial(Graphics::MT_TRANSPARENT);
-			_graphics->SetProjection(Graphics::PM_2D);
+			graphics->SetMaterial(Graphics::MT_TRANSPARENT);
+			graphics->SetProjection(Graphics::PM_2D);
 			if (_font)
-				_graphics->PrintText(Vector2(10, 10), 15, "qwertyuiopasdfghjklzxcvbnm", _font, Color32::Black);
-			_graphics->Flush();
+				graphics->PrintText(Vector2(10, 10), 15, "qwertyuiopasdfghjklzxcvbnm", _font, Color32::Black);
+			if (_tex)
+				graphics->DrawQuad(IntRect(10, 30, _tex->GetWidth() * 2, _tex->GetHeight() * 2), 15, _tex);
+			graphics->Flush();
 
-			_gui->SetupCamera();
-			_gui->Draw();
+			gui->SetupCamera();
+			gui->Draw();
 
 			renderer->EndScene();
 		}

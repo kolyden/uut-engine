@@ -660,6 +660,12 @@
     <ClInclude Include="..\UUT\Core\Version.h">
       <Filter>UUT\Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Hash.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\EnumFlags.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -990,6 +996,12 @@
       <Filter>UUT\Tilemap</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Version.cpp">
+      <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Hash.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\EnumFlags.cpp">
       <Filter>UUT\Core</Filter>
     </ClCompile>
   </ItemGroup>

@@ -11,7 +11,7 @@ namespace uut
 		UUT_OBJECT(BinaryReader, Object)
 	public:
 		BinaryReader();
-		explicit BinaryReader(Stream* source);
+		explicit BinaryReader(const SharedPtr<Stream>& source);
 
 		unsigned ReadBytes(unsigned count, void* buffer) const;
 		unsigned ReadBytes(unsigned count, List<uint8_t>& bytes) const;

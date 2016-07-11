@@ -29,10 +29,10 @@ namespace uut
 	{
 		if (_type == VariantType::Struct)
 			_dataType->PlacementDtor(_data.data());
-		_type = VariantType::Empty;
-		_dataType = nullptr;
 		_shared = nullptr;
+		_dataType = nullptr;
 		_data.clear();
+		_type = VariantType::Empty;
 	}
 
 	const ValueType* Variant::GetStruct(const Type* type) const
@@ -91,12 +91,12 @@ namespace uut
 		return false;
 	}
 
-	Object* Variant::GetObject() const
+	SharedPtr<Object> Variant::GetObject() const
 	{
-		return IsObject() ? _shared.Get() : nullptr;
+		return IsObject() ? _shared : nullptr;
 	}
 
-	Object* Variant::GetObject(const Type* type) const
+	SharedPtr<Object> Variant::GetObject(const Type* type) const
 	{
 		if (type == nullptr || !IsObject())
 			return nullptr;
@@ -116,10 +116,10 @@ namespace uut
 		memcpy(_data.data(), &value, size);
 	}
 
-	void Variant::SetObject(const Type* type, Object* value)
+	void Variant::SetObject(const Type* type, const SharedPtr<Object>& obj)
 	{
 		_type = VariantType::Object;
 		_dataType = type;
-		_shared = value;
+		_shared = obj;
 	}
 }

@@ -64,20 +64,14 @@ namespace uut
 		}
 
 		// OBJECT
-		template<typename T, std::enable_if_t < std::is_base_of<Object, T>::value>* = nullptr >
-		Variant(T* value)
-		{
-			SetObject(typeof<T>(), value);
-		}
+// 		template<typename T, std::enable_if_t < std::is_base_of<Object, T>::value>* = nullptr >
+// 		Variant(T* value)
+// 		{
+// 			SetObject(typeof<T>(), value);
+// 		}
 
 		template<typename T>
-		Variant(SharedPtr<T>& value)
-		{
-			SetObject(typeof<T>(), value);
-		}
-
-		template<typename T>
-		Variant(WeakPtr<T>& value)
+		Variant(const SharedPtr<T>& value)
 		{
 			SetObject(typeof<T>(), value);
 		}
@@ -95,9 +89,9 @@ namespace uut
 		const ValueType* GetStruct(const Type* type) const;
 		template<class C>const C* GetStruct() const { return static_cast<const C*>(GetStruct(typeof<C>())); }		
 
-		Object* GetObject() const;
-		Object* GetObject(const Type* type) const;
-		template<class C>C* GetObject() const { return static_cast<C*>(GetObject(typeof<C>())); }
+		SharedPtr<Object> GetObject() const;
+		SharedPtr<Object> GetObject(const Type* type) const;
+		template<class C>SharedPtr<C> GetObject() const { return StaticCast<C>(GetObject(typeof<C>())); }
 
 		const Type* GetType() const { return _dataType; }
 
@@ -156,7 +150,7 @@ namespace uut
 
 		// OBJECT
 		template<class C, std::enable_if_t<std::is_base_of<Object, C>::value>* = nullptr>
-		C* Get() const { return static_cast<C*>(GetObject(typeof<C>())); }
+		SharedPtr<C> Get() const { return StaticCast<C>(GetObject(typeof<C>())); }
 
 		// FUNDAMETNAL - NUMERIC
 		template<class C, class = typename std::enable_if<std::is_fundamental<C>::value>::type>
@@ -216,9 +210,9 @@ namespace uut
 
 		// OBJECT
 		template<class C, std::enable_if_t<std::is_base_of<Object, C>::value>* = nullptr>
-		bool TryGet(C** value) const
+		bool TryGet(SharedPtr<C>& value) const
 		{
-			auto obj = static_cast<C*>(GetObject(typeof<C>()));
+			auto obj = GetObject<C>();
 			if (obj == nullptr)
 				return false;
 
@@ -238,7 +232,7 @@ namespace uut
 		template<class C>bool TryCastStruct(C& value) const { return TryCastStruct(typeof<C>(), value); }
 
 		void SetStruct(const Type* type, const ValueType& value, uint size);
-		void SetObject(const Type* type, Object* value);
+		void SetObject(const Type* type, const SharedPtr<Object>& obj);
 	};
 
 	template<> static constexpr const Variant& GetDefault<Variant>()

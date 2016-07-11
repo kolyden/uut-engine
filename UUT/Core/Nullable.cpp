@@ -2,7 +2,7 @@
 
 namespace uut
 {
-	UUT_STRUCT_IMPLEMENT(Nullable)
+	UUT_VALUETYPE_IMPLEMENT(Nullable)
 	{}
 
 	ValueType* Nullable::GetValue()

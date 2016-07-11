@@ -7,7 +7,7 @@
 
 namespace uut
 {
-	UUT_STRUCT_IMPLEMENT(IntVector3)
+	UUT_VALUETYPE_IMPLEMENT(IntVector3)
 	{
 		UUT_REGISTER_CTOR(int, int);
 		UUT_REGISTER_CTOR(int, int, int);

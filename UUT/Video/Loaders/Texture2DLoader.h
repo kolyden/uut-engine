@@ -11,7 +11,7 @@ namespace uut
 	public:
 		explicit Texture2DLoader();
 
-		SharedPtr<Resource> Load(SharedPtr<Stream> stream) override;
+		SharedPtr<Resource> Load(const SharedPtr<Stream>& stream) override;
 		const Type* GetResourceType() const override;
 	};
 }

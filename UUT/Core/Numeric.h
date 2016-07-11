@@ -31,9 +31,9 @@ namespace uut
 
 // #define UUT_NUMERIC(name, type) \
 // 	class name : public Numeric<type> \
-// 	{ UUT_STRUCT(name, Numeric<type>) } \
+// 	{ UUT_VALUETYPE(name, Numeric<type>) } \
 // 
-// #define UUT_NUMERIC_IMPLEMENT(type) UUT_STRUCT_IMPLEMENT(type) {}
+// #define UUT_NUMERIC_IMPLEMENT(type) UUT_VALUETYPE_IMPLEMENT(type) {}
 // 
 // 	UUT_NUMERIC(Int8, int8_t);
 // 	UUT_NUMERIC(UInt8, uint8_t);
@@ -63,7 +63,7 @@ namespace uut
 
 #define UUT_NUMERIC(name, type) \
 	class name : public ValueType, public Numeric<type> \
-	{ UUT_STRUCT(name, ValueType) \
+	{ UUT_VALUETYPE(name, ValueType) \
 	public: constexpr name() {} \
 	constexpr name(type value) : Numeric(value) {} \
 	UUT_NUMERIC_OPERATORS(type) \
@@ -73,7 +73,7 @@ namespace uut
 
 #define UUT_NUMERIC_IMPLEMENT(name) \
 	const name name::Zero(0); \
-	UUT_STRUCT_IMPLEMENT(name)
+	UUT_VALUETYPE_IMPLEMENT(name)
 
 	UUT_NUMERIC(Int8, int8_t)
 	UUT_NUMERIC(UInt8, uint8_t)

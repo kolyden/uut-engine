@@ -251,7 +251,7 @@ namespace uut
 		_d3ddev->EndScene();
 	}
 
-	bool DX9Renderer::SetTexture(int stage, SharedPtr<Texture2D> texture)
+	bool DX9Renderer::SetTexture(int stage, const SharedPtr<Texture2D>& texture)
 	{
 		HRESULT ret;
 		if (texture == nullptr)
@@ -265,21 +265,21 @@ namespace uut
 		return TestReturnCode(ret);
 	}
 
-	bool DX9Renderer::SetVertexBuffer(SharedPtr<VertexBuffer> buffer, uint16_t stride, uint32_t offset)
+	bool DX9Renderer::SetVertexBuffer(const SharedPtr<VertexBuffer>& buffer, uint16_t stride, uint32_t offset)
 	{
 		auto data = buffer ? reinterpret_cast<LPDIRECT3DVERTEXBUFFER9>(buffer->GetInternalHandle()) : nullptr;
 		HRESULT ret = _d3ddev->SetStreamSource(0, data, offset, stride);
 		return TestReturnCode(ret);
 	}
 
-	bool DX9Renderer::SetIndexBuffer(SharedPtr<IndexBuffer> buffer)
+	bool DX9Renderer::SetIndexBuffer(const SharedPtr<IndexBuffer>& buffer)
 	{
 		auto data = buffer ? reinterpret_cast<LPDIRECT3DINDEXBUFFER9>(buffer->GetInternalHandle()) : nullptr;
 		HRESULT ret = _d3ddev->SetIndices(data);
 		return TestReturnCode(ret);
 	}
 
-	bool DX9Renderer::SetVertexDeclaration(SharedPtr<VertexDeclaration> declare)
+	bool DX9Renderer::SetVertexDeclaration(const SharedPtr<VertexDeclaration>& declare)
 	{
 		HRESULT ret;
 		if (declare == nullptr)
@@ -344,7 +344,7 @@ namespace uut
 		HRESULT ret = _d3ddev->CreateTexture(size.x, size.y, 1,
 			D3DUSAGE_DYNAMIC, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &data, nullptr);
 		if (!TestReturnCode(ret))
-			return SharedPtr<Texture2D>::Empty;
+			return nullptr;
 
 		auto tex = SharedPtr<DX9Texture2D>::Make();
 		tex->_data = data;
@@ -355,13 +355,13 @@ namespace uut
 	SharedPtr<VertexBuffer> DX9Renderer::CreateVertexBuffer(uint32_t size)
 	{
 		if (size == 0)
-			return SharedPtr<VertexBuffer>::Empty;
+			return nullptr;
 
 		LPDIRECT3DVERTEXBUFFER9 data;
 		HRESULT ret = _d3ddev->CreateVertexBuffer(size,
 			D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY, 0, D3DPOOL_DEFAULT, &data, nullptr);
 		if (!TestReturnCode(ret))
-			return SharedPtr<VertexBuffer>::Empty;
+			return nullptr;
 
 		auto vb = SharedPtr<DX9VertexBuffer>::Make();
 		vb->_data = data;
@@ -372,14 +372,14 @@ namespace uut
 	SharedPtr<IndexBuffer> DX9Renderer::CreateIndexBuffer(uint32_t size, bool use32)
 	{
 		if (size == 0)
-			return SharedPtr<IndexBuffer>::Empty;
+			return nullptr;
 
 		LPDIRECT3DINDEXBUFFER9 data;
 		D3DFORMAT format = use32 ? D3DFMT_INDEX32 : D3DFMT_INDEX16;
 		HRESULT ret = _d3ddev->CreateIndexBuffer(size,
 			D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY, format, D3DPOOL_DEFAULT, &data, nullptr);
 		if (!TestReturnCode(ret))
-			return SharedPtr<IndexBuffer>::Empty;
+			return nullptr;
 
 		auto ib = SharedPtr<DX9IndexBuffer>::Make();
 		ib->_data = data;
@@ -391,7 +391,7 @@ namespace uut
 	{
 		const int count = elements.Count();
 		if (count == 0)
-			return SharedPtr<VertexDeclaration>::Empty;
+			return nullptr;
 
 		auto declare = new D3DVERTEXELEMENT9[count + 1];
 		for (int i = 0; i < count;i++)
@@ -409,7 +409,7 @@ namespace uut
 		HRESULT ret = _d3ddev->CreateVertexDeclaration(declare, &data);
 		delete[] declare;
 		if (!TestReturnCode(ret))
-			return SharedPtr<VertexDeclaration>::Empty;
+			return nullptr;
 
 		auto vd = SharedPtr<DX9VertexDeclaration>::Make();
 		vd->_elements = elements;
@@ -418,10 +418,10 @@ namespace uut
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	SharedPtr<DX9Renderer> DX9Renderer::Create(Window* window)
+	SharedPtr<DX9Renderer> DX9Renderer::Create(const SharedPtr<Window>& window)
 	{
 		if (window == nullptr || !window->IsCreated())
-			return SharedPtr<DX9Renderer>::Empty;
+			return nullptr;
 
 		HMODULE libHandle = LoadLibrary(L"d3d9.dll");
 		if (libHandle == nullptr)
@@ -444,12 +444,12 @@ namespace uut
 		if (!SDL_GetWindowWMInfo(sdlWindow, &sdlInfo))
 		{
 			Debug::LogError("Couldn't get window information: %s", SDL_GetError());
-			return SharedPtr<DX9Renderer>::Empty;
+			return nullptr;
 		}
 
 		LPDIRECT3D9 d3d = createFuncPtr(D3D_SDK_VERSION);
 		if (d3d == nullptr)
-			return SharedPtr<DX9Renderer>::Empty;
+			return nullptr;
 
 		D3DPRESENT_PARAMETERS d3dpp;
 		ZeroMemory(&d3dpp, sizeof(D3DPRESENT_PARAMETERS));
@@ -471,7 +471,7 @@ namespace uut
 		{
 			d3d->Release();
 			Debug::LogError("Can't create D3D9 Device");
-			return SharedPtr<DX9Renderer>::Empty;
+			return nullptr;
 		}
 
 		D3DVIEWPORT9 vp;

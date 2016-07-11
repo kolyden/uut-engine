@@ -6,7 +6,7 @@ namespace uut
 	UUT_OBJECT_IMPLEMENT(TextReader)
 	{}
 
-	TextReader::TextReader(Stream* source)
+	TextReader::TextReader(const SharedPtr<Stream>& source)
 	{
 		if (source != nullptr && source->CanRead())
 			_source = source;

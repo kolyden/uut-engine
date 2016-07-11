@@ -2,10 +2,12 @@
 #include <Core/Context.h>
 #include <Core/String.h>
 #include <Core/Reflection/PropertyInfo.h>
+#include <Core/Attribute.h>
 #include "ConverterInfo.h"
 
 namespace uut
 {
+	uut::Dictionary<const Type*, uut::List<Attribute*>> Type::_attributeTypes;
 
 	Type::Type(const char* name, const Type* base, REGFUNC regfunc)
 		: _name(name)
@@ -34,7 +36,17 @@ namespace uut
 		return _name;
 	}
 
-// 	bool Type::IsClass() const
+	bool Type::AddAttribute(const SharedPtr<Attribute>& attr)
+	{
+		if (!attr)
+			return false;
+
+		_attributes << attr;
+		_attributeTypes[attr->GetType()] << attr;
+		return true;
+	}
+
+	// 	bool Type::IsClass() const
 // 	{
 // 		return _info == TypeInfo::Class;
 // 	}

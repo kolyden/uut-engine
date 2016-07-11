@@ -5,23 +5,18 @@
 
 namespace uut
 {
-	UUT_TYPE_IMPLEMENT(Enum)
+	UUT_VALUETYPE_IMPLEMENT(EnumValue)
 	{
-		UUT_REGISTER_CONVERTER_FUNC(int, GetData);
+		UUT_REGISTER_CONVERTER_FUNC(int, GetValue);
 	}
 
-	const Enum Enum::Default;
-
-	String Enum::ToString(const Type* type) const
+	void EnumValue::SetValue(int value)
 	{
-		for (auto& it : type->GetProperties())
-		{
-			auto var = it->GetValue(nullptr).Get<Enum>();
-			const int i = var.GetData();
-			if (i == _value)
-				return it->GetName();
-		}
+		_value = value;
+	}
 
-		return String::Empty;
+	int EnumValue::GetValue() const
+	{
+		return _value;
 	}
 }

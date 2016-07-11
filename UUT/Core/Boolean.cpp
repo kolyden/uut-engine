@@ -2,7 +2,7 @@
 
 namespace uut
 {
-	UUT_STRUCT_IMPLEMENT(Boolean)
+	UUT_VALUETYPE_IMPLEMENT(Boolean)
 	{		
 	}
 

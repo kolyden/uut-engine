@@ -2,7 +2,7 @@
 
 namespace uut
 {
-// 	UUT_STRUCT_IMPLEMENT(Fundamental)
+// 	UUT_VALUETYPE_IMPLEMENT(Fundamental)
 // 	{		
 // 	}
 }

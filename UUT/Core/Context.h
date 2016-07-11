@@ -22,7 +22,7 @@ namespace uut
 		typedef HashSet<const Type*> DerivedSet;
 		typedef Dictionary<const Type*, DerivedSet> DerivedDict;
 		typedef Dictionary<HashString, SharedPtr<Module>> ModuleDict;
-		typedef Dictionary<const Type*, WeakPtr<Module>> ModuleInstMap;
+		typedef Dictionary<const Type*, Module*> ModuleInstMap;
 
 		// OBJECT CREATION
 		static SharedPtr<Object> CreateObject(const Type* type);
@@ -48,7 +48,7 @@ namespace uut
 		template<class C> static bool RegisterType() { return RegisterType(C::_GetTypeInternal()); }
 
 		// MODULES
-		static void RegisterModule(SharedPtr<Module> module);
+		static void RegisterModule(const SharedPtr<Module>& module);
 		static Module* FindModule(const Type* type);
 		static Module* FindModule(const HashString& name);
 		template<class C>static C* FindModule()

@@ -12,4 +12,12 @@ namespace uut
 	Resource::~Resource()
 	{
 	}
+
+	String Resource::ToString()
+	{
+		if (_resourcePath.IsEmpty())
+			return Super::ToString();
+
+		return Super::ToString() + " (" + _resourcePath.GetFullPath() + ")";
+	}
 }

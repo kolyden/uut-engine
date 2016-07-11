@@ -33,9 +33,9 @@ namespace uut
 		char fontName[STRING_BUFFER];
 	};
 
-	SharedPtr<Resource> BitmapFontLoader::Load(SharedPtr<Stream> stream)
+	SharedPtr<Resource> BitmapFontLoader::Load(const SharedPtr<Stream>& stream)
 	{
-		auto reader = SharedPtr<BinaryReader>::Make(stream);
+		auto reader = MakeShared<BinaryReader>(stream);
 
 		List<uint8_t> magic;
 		reader->ReadBytes(3, magic);
@@ -58,7 +58,7 @@ namespace uut
 		}
 
 		BMFontHeader header;
-		auto face = SharedPtr<BitmapFont>::Make();
+		auto font = MakeShared<BitmapFont>();
 		List<String> pages;
 		List<FontGlyph> chars;
 		List<FontKerningPair> kernings;
@@ -76,7 +76,7 @@ namespace uut
 			{
 // 				reader->SkipBytes(size);
 // 				face = new FontFaceBM(header.fontSize);
-				reader->ReadBytes(size, &face->_info);
+				reader->ReadBytes(size, &font->_info);
 			}
 			else if (type == 3)
 			{
@@ -116,23 +116,23 @@ namespace uut
 			}
 		}
 
-		if (!loadHeader || !face)
+		if (!loadHeader || !font)
 			return nullptr;
 
-		face->_glyphs = chars;
-		face->_kerningPairs = kernings;
+		font->_glyphs = chars;
+		font->_kerningPairs = kernings;
 
 		auto cache = ResourceCache::Instance();
 		const auto basedir = stream->GetPath().GetDirectoryName();
 		for(auto& name : pages)
 		{
 			auto tex = cache->Load<Texture2D>(Path::Combine(basedir, name));
-			face->_textures << tex;
+			font->_textures << tex;
 		}
 
-		face->UpdateGlyphsMap();
-		face->UpdateKerningMap();
-		return DynamicCast<Resource>(face);
+		font->UpdateGlyphsMap();
+		font->UpdateKerningMap();
+		return font;
 	}
 
 	const Type* BitmapFontLoader::GetResourceType() const

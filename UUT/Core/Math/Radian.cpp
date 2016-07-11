@@ -18,7 +18,7 @@ namespace uut
 	}
 
 	////
-	UUT_STRUCT_IMPLEMENT(Radian)
+	UUT_VALUETYPE_IMPLEMENT(Radian)
 	{
 		UUT_REGISTER_CTOR(float);
 		UUT_REGISTER_CTOR(Degree);

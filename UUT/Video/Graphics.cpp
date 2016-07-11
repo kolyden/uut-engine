@@ -114,7 +114,7 @@ namespace uut
 		_vdxIndex++;
 	}
 
-	void Graphics::DrawTrinagle(const Vertex& v0, const Vertex& v1, const Vertex& v2, Texture2D* texture /*= nullptr*/)
+	void Graphics::DrawTrinagle(const Vertex& v0, const Vertex& v1, const Vertex& v2, const SharedPtr<Texture2D>& texture /*= nullptr*/)
 	{
 		TestBatch(Topology::TrinagleList, texture, 3);
 
@@ -123,7 +123,7 @@ namespace uut
 		_vertices[_vdxIndex++] = v2;
 	}
 
-	void Graphics::DrawQuad(const Vertex& v0, const Vertex& v1, const Vertex& v2, const Vertex& v3, Texture2D* texture /*= nullptr*/)
+	void Graphics::DrawQuad(const Vertex& v0, const Vertex& v1, const Vertex& v2, const Vertex& v3, const SharedPtr<Texture2D>& texture /*= nullptr*/)
 	{
 		TestBatch(Topology::TrinagleList, texture, 6);
 
@@ -136,7 +136,7 @@ namespace uut
 		_vertices[_vdxIndex++] = v2;
 	}
 
-	void Graphics::DrawQuad(const Rect& rect, float z /* = 0.0f */, Texture2D* texture /* = nullptr */, const Color32& color /* = Color32::WHITE */)
+	void Graphics::DrawQuad(const Rect& rect, float z /* = 0.0f */, const SharedPtr<Texture2D>& texture /* = nullptr */, const Color32& color /* = Color32::WHITE */)
 	{
 		const Vector3 p0(rect.GetLeft(), rect.GetTop(), z);
 		const Vector3 p1(rect.GetRight(), rect.GetTop(), z);
@@ -151,7 +151,7 @@ namespace uut
 			texture);
 	}
 
-	void Graphics::DrawQuad(const Rect& rect, float z, Texture2D* texture, const Rect& texRect, const Color32& color)
+	void Graphics::DrawQuad(const Rect& rect, float z, const SharedPtr<Texture2D>& texture, const Rect& texRect, const Color32& color)
 	{
 		const Vector3 p0(rect.GetLeft(), rect.GetTop(), z);
 		const Vector3 p1(rect.GetRight(), rect.GetTop(), z);
@@ -263,7 +263,7 @@ namespace uut
 // 		DrawPolyLine({ v3, v7, v6, v2, v3 }, color);
 	}
 
-	void Graphics::DrawCube(const Vector3& center, float side, const Color32& color, Texture2D* texture)
+	void Graphics::DrawCube(const Vector3& center, float side, const Color32& color, const SharedPtr<Texture2D>& texture)
 	{
 		const float hsize = side / 2;
 
@@ -326,7 +326,7 @@ namespace uut
 			texture);
 	}
 
-	void Graphics::DrawGeometry(const Matrix4& transform, Geometry* geometry, Texture2D* texture)
+	void Graphics::DrawGeometry(const Matrix4& transform, Geometry* geometry, const SharedPtr<Texture2D>& texture)
 	{
 		if (geometry == nullptr)
 			return;
@@ -350,7 +350,7 @@ namespace uut
 		}
 	}
 
-	void Graphics::DrawPrimitive(Topology topology, const List<Vertex>& vertexes, Texture2D* texture /* = nullptr */)
+	void Graphics::DrawPrimitive(Topology topology, const List<Vertex>& vertexes, const SharedPtr<Texture2D>& texture /* = nullptr */)
 	{
 		const uint count = vertexes.Count();
 		if (count == 0)
@@ -363,7 +363,7 @@ namespace uut
 	}
 
 	void Graphics::DrawIndexedPrimitive(Topology topology, const List<Vertex>& vertexes,
-		const List<uint16_t>& indexes, Texture2D* texture /* = nullptr */)
+		const List<uint16_t>& indexes, const SharedPtr<Texture2D>& texture /* = nullptr */)
 	{
 		const uint count = indexes.Count();
 		if (count == 0)
@@ -403,7 +403,7 @@ namespace uut
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	void Graphics::TestBatch(Topology topology, Texture2D* tex, int vrtCount)
+	void Graphics::TestBatch(Topology topology, const SharedPtr<Texture2D>& tex, int vrtCount)
 	{
 		if (_topology == topology && _texture == tex &&
 			_vdxIndex + vrtCount < _vbufCount &&

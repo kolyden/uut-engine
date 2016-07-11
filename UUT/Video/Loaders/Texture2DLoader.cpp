@@ -36,7 +36,7 @@ namespace uut
 	{
 	}
 
-	SharedPtr<Resource> Texture2DLoader::Load(SharedPtr<Stream> stream)
+	SharedPtr<Resource> Texture2DLoader::Load(const SharedPtr<Stream>& stream)
 	{
 		stbi_io_callbacks callbacks{ &ReadStream, &SeekStream, &IsEOFStream };
 
