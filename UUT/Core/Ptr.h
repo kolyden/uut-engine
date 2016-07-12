@@ -61,6 +61,23 @@ namespace uut
 		StdShared _data;
 	};
 
+	//////////////////////////////////////////////////////////
+// 	template<class T>
+// 	class UniquePtr
+// 	{
+// 	public:
+// 		typedef std::unique_ptr<T> StdShared;
+// 
+// 		UniquePtr() {}
+// 		UniquePtr(nullptr_t) {}
+// 		UniquePtr(T* ptr) : _data(ptr) {}
+// 		UniquePtr(StdShared&& ptr) : _data(std::move(ptr)) {}
+// 		UniquePtr(UniquePtr&& ptr) : _data(std::move(ptr._z)) {}
+// 	protected:
+// 		StdShared _data;
+// 	};
+
+	//////////////////////////////////////////////////////////
 	/// Perform a static cast from one shared pointer type to another.
 	template <class T, class U> SharedPtr<T> StaticCast(const SharedPtr<U>& ptr)
 	{

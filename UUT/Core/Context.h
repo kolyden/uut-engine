@@ -12,6 +12,7 @@ namespace uut
 	class Type;
 	class Object;
 	class Module;
+	class Attribute;
 
 	class Context
 	{
@@ -24,13 +25,17 @@ namespace uut
 		typedef Dictionary<HashString, SharedPtr<Module>> ModuleDict;
 		typedef Dictionary<const Type*, Module*> ModuleInstMap;
 
+		typedef List<const Attribute*> AttributeList;
+		typedef Dictionary<const Type*, AttributeList> AttributeTypes;
+		typedef Dictionary<const Attribute*, const Type*> AttributeAttach;
+
 		// OBJECT CREATION
 		static SharedPtr<Object> CreateObject(const Type* type);
 		static SharedPtr<Object> CreateObject(const HashString& name);
-		template<class C> static SharedPtr<Object> CreateObject() { return CreateObject(typeof<C>()); }
+		template<class C> static SharedPtr<C> CreateObject() { return DynamicCast<C>(CreateObject(TypeOf<C>())); }
 
 		// PLUGINS
-		static void AddPlugin(SharedPtr<Plugin> plugin);
+		static void AddPlugin(const SharedPtr<Plugin>& plugin);
 		//static void RemovePlugin()
 		static const PluginList& GetPlugins() { return _plugins; }
 
@@ -52,7 +57,14 @@ namespace uut
 		static Module* FindModule(const Type* type);
 		static Module* FindModule(const HashString& name);
 		template<class C>static C* FindModule()
-		{ return dynamic_cast<C*>(FindModule(typeof<C>())); }
+		{ return dynamic_cast<C*>(FindModule(TypeOf<C>())); }
+
+		// ATTRIBUTES
+		static const AttributeList& GetAttributes(const Type* type);
+		static const Type* GetAttributeAttach(const Attribute* attr);
+
+		template<class C> static const AttributeList& GetAttributes()
+		{ return GetAttributes(TypeOf<C>()); }
 
 	protected:
 		static bool _inited;
@@ -62,6 +74,8 @@ namespace uut
 		static DerivedDict _derived;
 		static ModuleDict _modules;
 		static ModuleInstMap _moduleInst;
+		static AttributeTypes _attributeTypes;
+		static AttributeAttach _attributeAttach;
 
 		static void Init();
 		static void Done();

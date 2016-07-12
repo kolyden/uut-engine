@@ -4,11 +4,11 @@
 #include <Core/Reflection/PropertyInfo.h>
 #include <Core/Attribute.h>
 #include "ConverterInfo.h"
+#include <Core/Debug.h>
+#include <Core/AttributeUsage.h>
 
 namespace uut
 {
-	uut::Dictionary<const Type*, uut::List<Attribute*>> Type::_attributeTypes;
-
 	Type::Type(const char* name, const Type* base, REGFUNC regfunc)
 		: _name(name)
 		, _hash(StringToHast(name))
@@ -41,25 +41,60 @@ namespace uut
 		if (!attr)
 			return false;
 
+		auto attrType = attr->GetType();
+		auto attrUsage = attrType->FindAttribute<AttributeUsage>();
+		if (attrUsage != nullptr)
+		{
+			// TODO: test targets
+
+			if (!attrUsage->IsAllowMultiple() && FindAttribute(attrType) != nullptr)
+			{
+				Debug::LogWarning("Multiple attributes of %s not allowed", attrType->GetName());
+				return false;
+			}
+		}
+
 		_attributes << attr;
-		_attributeTypes[attr->GetType()] << attr;
 		return true;
 	}
 
-	// 	bool Type::IsClass() const
-// 	{
-// 		return _info == TypeInfo::Class;
-// 	}
-// 
-// 	bool Type::IsMethod() const
-// 	{
-// 		return _info == TypeInfo::Method;
-// 	}
-// 
-// 	bool Type::IsEnum() const
-// 	{
-// 		return _info == TypeInfo::Enum;
-// 	}
+	const Attribute* Type::FindAttribute(const Type* type) const
+	{
+		if (type == nullptr)
+			return nullptr;
+
+		for (auto& attr : _attributes)
+		{
+			if (attr->GetType()->IsDerived(type))
+				return attr;
+		}
+
+		return nullptr;
+	}
+
+	size_t Type::FindAttributes(const Type* type, List<const Attribute*>& list) const
+	{
+		if (type == nullptr)
+			return 0;
+
+		size_t count = 0;
+		for (auto& attr : _attributes)
+		{
+			if (attr->GetType()->IsDerived(type))
+			{
+				count++;
+				list << attr;
+			}
+		}
+		return count;
+	}
+
+	List<const Attribute*> Type::FindAttributes(const Type* type) const
+	{
+		List<const Attribute*> list;
+		FindAttributes(type, list);
+		return list;
+	}
 
 	void Type::AddMember(MemberInfo* member)
 	{

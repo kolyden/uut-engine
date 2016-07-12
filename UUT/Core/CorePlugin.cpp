@@ -63,6 +63,7 @@ namespace uut
 		// CORE
 		UUT_REGISTER_OBJECT(Object);
 		UUT_REGISTER_OBJECT(Attribute);
+		UUT_REGISTER_OBJECT(AttributeTargets);
 		UUT_REGISTER_OBJECT(AttributeUsage);
 		UUT_REGISTER_OBJECT(Engine);
 		UUT_REGISTER_OBJECT(Module);

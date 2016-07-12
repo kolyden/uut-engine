@@ -35,7 +35,7 @@ namespace uut
 		template<typename T, std::enable_if_t<std::is_fundamental<T>::value>* = nullptr>
 		Variant(T value)
 		{
-			SetStruct(typeof<typename detail::Fundamental<T>::TYPE>(),
+			SetStruct(TypeOf<typename detail::Fundamental<T>::TYPE>(),
 				detail::Fundamental<T>::TYPE(value),
 				sizeof(detail::Fundamental<T>::TYPE));
 			_type = VariantType::Fundamental;
@@ -45,7 +45,7 @@ namespace uut
 		template<typename T, std::enable_if_t<std::is_enum<T>::value>* = nullptr>
 		Variant(T value)
 		{
-			SetStruct(typeof<typename detail::Enum<T>::TYPE>(),
+			SetStruct(TypeOf<typename detail::Enum<T>::TYPE>(),
 				detail::Enum<T>::TYPE(value),
 				sizeof(detail::Enum<T>::TYPE));
 			_type = VariantType::Enum;
@@ -55,7 +55,7 @@ namespace uut
 		template<typename T, std::enable_if_t<std::is_base_of<ValueType, T>::value>* = nullptr>
 		Variant(const T& value)
 		{
-			SetStruct(typeof<T>(), value, sizeof(T));
+			SetStruct(TypeOf<T>(), value, sizeof(T));
 		}
 
 		Variant(const Type* type, const ValueType& value)
@@ -73,7 +73,7 @@ namespace uut
 		template<typename T>
 		Variant(const SharedPtr<T>& value)
 		{
-			SetObject(typeof<T>(), value);
+			SetObject(TypeOf<T>(), value);
 		}
 
 		~Variant();
@@ -87,11 +87,11 @@ namespace uut
 		bool IsObject() const { return _type == VariantType::Object; }
 
 		const ValueType* GetStruct(const Type* type) const;
-		template<class C>const C* GetStruct() const { return static_cast<const C*>(GetStruct(typeof<C>())); }		
+		template<class C>const C* GetStruct() const { return static_cast<const C*>(GetStruct(TypeOf<C>())); }
 
 		SharedPtr<Object> GetObject() const;
 		SharedPtr<Object> GetObject(const Type* type) const;
-		template<class C>SharedPtr<C> GetObject() const { return StaticCast<C>(GetObject(typeof<C>())); }
+		template<class C>SharedPtr<C> GetObject() const { return StaticCast<C>(GetObject(TypeOf<C>())); }
 
 		const Type* GetType() const { return _dataType; }
 
@@ -137,7 +137,7 @@ namespace uut
 		template<class C, std::enable_if_t<std::is_base_of<ValueType, C>::value>* = nullptr>
 		C Get(const C& defaultValue = GetDefault<C>()) const
 		{
-			const C* data = static_cast<const C*>(GetStruct(typeof<C>()));
+			const C* data = static_cast<const C*>(GetStruct(TypeOf<C>()));
 			if (data != nullptr)
 				return *data;
 
@@ -150,7 +150,7 @@ namespace uut
 
 		// OBJECT
 		template<class C, std::enable_if_t<std::is_base_of<Object, C>::value>* = nullptr>
-		SharedPtr<C> Get() const { return StaticCast<C>(GetObject(typeof<C>())); }
+		SharedPtr<C> Get() const { return StaticCast<C>(GetObject(TypeOf<C>())); }
 
 		// FUNDAMETNAL - NUMERIC
 		template<class C, class = typename std::enable_if<std::is_fundamental<C>::value>::type>
@@ -198,14 +198,14 @@ namespace uut
 		template<class C, std::enable_if_t<std::is_base_of<ValueType, C>::value>* = nullptr>
 		bool TryGet(C& value) const
 		{
-			const C* data = static_cast<const C*>(GetStruct(typeof<C>()));
+			const C* data = static_cast<const C*>(GetStruct(TypeOf<C>()));
 			if (data != nullptr)
 			{
 				value = *data;
 				return true;
 			}				
 
-			return TryCastStruct(typeof<C>(), value);
+			return TryCastStruct(TypeOf<C>(), value);
 		}
 
 		// OBJECT
@@ -229,7 +229,7 @@ namespace uut
 		SharedPtr<Object> _shared;
 
 		bool TryCastStruct(const Type* type, ValueType& value) const;
-		template<class C>bool TryCastStruct(C& value) const { return TryCastStruct(typeof<C>(), value); }
+		template<class C>bool TryCastStruct(C& value) const { return TryCastStruct(TypeOf<C>(), value); }
 
 		void SetStruct(const Type* type, const ValueType& value, uint size);
 		void SetObject(const Type* type, const SharedPtr<Object>& obj);

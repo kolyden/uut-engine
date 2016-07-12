@@ -48,13 +48,13 @@ namespace uut
 
 		virtual const ArgsTypes& GetArgsTypes() const override
 		{
-			static const List<const Type*> types{typeof<Args>()...};
+			static const List<const Type*> types{ TypeOf<Args>()... };
 			return types;
 		}
 
 		virtual const Type* GetReturnType() const override
 		{
-			return typeof<Ret>();
+			return TypeOf<Ret>();
 		}
 
 		virtual bool Call(const List<Variant>& args) const override
@@ -103,13 +103,13 @@ namespace uut
 
 		virtual const ArgsTypes& GetArgsTypes() const override
 		{
-			static const List<const Type*> types{ typeof<Args>()... };
+			static const List<const Type*> types{ TypeOf<Args>()... };
 			return types;
 		}
 
 		virtual const Type* GetReturnType() const override
 		{
-			return typeof<Ret>();
+			return TypeOf<Ret>();
 		}
 
 		virtual bool Call(const List<Variant>& args) const override

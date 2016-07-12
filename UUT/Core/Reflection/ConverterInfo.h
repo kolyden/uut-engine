@@ -27,7 +27,7 @@ namespace uut
 
 		virtual const Type* GetResultType() const override
 		{
-			return typeof<TOut>();
+			return TypeOf<TOut>();
 		}
 
 		virtual bool Convert(const ValueType& source, ValueType& result) const override
@@ -50,7 +50,7 @@ namespace uut
 	public:
 		virtual const Type* GetResultType() const override
 		{
-			return typeof<TOut>();
+			return TypeOf<TOut>();
 		}
 
 		virtual bool Convert(const ValueType& source, ValueType& result) const override

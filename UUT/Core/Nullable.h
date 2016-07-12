@@ -18,7 +18,7 @@ namespace uut
 		template<class C, std::enable_if_t<std::is_base_of<ValueType, C>::value>* = nullptr>
 		bool TryGet(C& value) const
 		{
-			return TryGetValue(typeof<C>(), value);
+			return TryGetValue(TypeOf<C>(), value);
 		}
 
 	protected:

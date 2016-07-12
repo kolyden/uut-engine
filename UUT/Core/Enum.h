@@ -85,7 +85,7 @@ namespace uut
 			if (it != Enum<T>::Names.end())
 				return it->second;
 
-			return typeof<T>()->GetName() + "(" + std::to_string(_value) + ")";
+			return TypeOf<T>()->GetName() + "(" + std::to_string(_value) + ")";
 		}
 
 	protected:
@@ -93,37 +93,37 @@ namespace uut
 			class = typename std::enable_if<sizeof...(Args) % 2 == 0, void>::type>
 			static void RegisterValues(Args&&... args)
 		{
-			RegisterRecurse<0, Args...>(std::tuple<Args...>(args...));
+			_internalRegisterRecurse<0, Args...>(std::tuple<Args...>(args...));
 		}
 
-	private:
 		static String ToStringStatic(T value)
 		{
-			auto it = Enum<T>::Names.find(value);
-			if (it != Enum<T>::Names.end())
+			auto it = Enum<T>::Names.Find(value);
+			if (it != Enum<T>::Names.End())
 				return it->second;
 
 			return std::to_string(static_cast<int>(value));
 		}
 
+	private:
 		template<size_t index, typename... Args,
 			std::enable_if_t<(index < sizeof...(Args)), void>* = nullptr>
-			static void RegisterRecurse(const std::tuple<Args...>& args)
+			static void _internalRegisterRecurse(const std::tuple<Args...>& args)
 		{
-			TupleSetName<index, Args...>(args);
-			TupleSetValue<index + 1, Args...>(args);
+			_internalTupleSetName<index, Args...>(args);
+			_internalTupleSetValue<index + 1, Args...>(args);
 
-			RegisterRecurse<index + 2, Args...>(args);
+			_internalRegisterRecurse<index + 2, Args...>(args);
 		}
 
 		template<size_t index, typename... Args,
 			std::enable_if_t<(index >= sizeof...(Args)), void>* = nullptr>
-			static void RegisterRecurse(const std::tuple<Args...>& args)
+			static void _internalRegisterRecurse(const std::tuple<Args...>& args)
 		{
 		}
 
 		template<int index, typename... Args>
-		static void TupleSetValue(const std::tuple<Args...>& args)
+		static void _internalTupleSetValue(const std::tuple<Args...>& args)
 		{
 			// 			static_assert(is_convertible<typename tuple_element<index, tuple<Args...>>::type, T>::value,
 			// 				"expect enum value");
@@ -131,7 +131,7 @@ namespace uut
 		}
 
 		template<int index, typename... Args>
-		static void TupleSetName(const std::tuple<Args...>& args)
+		static void _internalTupleSetName(const std::tuple<Args...>& args)
 		{
 			Enum<T>::Names[std::get<index + 1>(args)] = std::get<index>(args);
 		}

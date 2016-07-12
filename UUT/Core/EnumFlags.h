@@ -47,9 +47,7 @@ namespace uut
 	namespace detail { \
 	template<> struct Enum<type> { typedef name TYPE; }; } \
 	UUT_DEFAULT(type, (type)0); \
-	UUT_VALUE_TYPE(type, name)
-
-#define UUT_ENUMFLAG_OPERATORS(name) \
+	UUT_VALUE_TYPE(type, name) \
 	static name operator| (name::EnumType a, name::EnumType b) { \
 		return name(static_cast<int>(a) | static_cast<int>(b)); \
 	}

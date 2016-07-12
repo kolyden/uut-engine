@@ -3,6 +3,8 @@
 #include "Debug.h"
 #include "Plugin.h"
 #include "Module.h"
+#include "Attribute.h"
+#include "AttributeUsage.h"
 
 namespace uut
 {
@@ -13,6 +15,8 @@ namespace uut
 	Context::DerivedDict Context::_derived;
 	Context::ModuleDict Context::_modules;
 	Context::ModuleInstMap Context::_moduleInst;
+	Context::AttributeTypes Context::_attributeTypes;
+	Context::AttributeAttach Context::_attributeAttach;
 
 	SharedPtr<Object> Context::CreateObject(const Type* type)
 	{
@@ -39,7 +43,7 @@ namespace uut
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	void Context::AddPlugin(SharedPtr<Plugin> plugin)
+	void Context::AddPlugin(const SharedPtr<Plugin>& plugin)
 	{
 		if (plugin == nullptr)
 			return;
@@ -79,6 +83,26 @@ namespace uut
 			_derived[parentType].Add(type);
 
 		type->Register();
+		if (parentType != nullptr)
+		{
+			for (auto& attr : parentType->GetAttributes())
+			{
+				auto attrType = attr->GetType();
+				auto attrUsage = attrType->FindAttribute<AttributeUsage>();
+				if (attrUsage == nullptr || !attrUsage->IsInherited())
+					continue;
+				if (!attrUsage->IsAllowMultiple() && type->FindAttribute(attrType) != nullptr)
+					continue;
+
+				type->AddAttribute(attr);
+			}
+		}
+
+		for (auto& attr : type->GetAttributes())
+		{
+			_attributeTypes[attr->GetType()] << attr;
+			_attributeAttach[attr] = type;
+		}
 
 		return true;
 	}
@@ -155,6 +179,24 @@ namespace uut
 	Module* Context::FindModule(const HashString& name)
 	{
 		return FindModule(FindType(name));
+	}
+
+	const Context::AttributeList& Context::GetAttributes(const Type* type)
+	{
+		if (type == nullptr)
+			return AttributeList::Empty;
+
+		auto it = _attributeTypes.Find(type);
+		return it != _attributeTypes.End() ? it->second : AttributeList::Empty;
+	}
+
+	const Type* Context::GetAttributeAttach(const Attribute* attr)
+	{
+		if (attr == nullptr)
+			return nullptr;
+
+		auto it = _attributeAttach.Find(attr);
+		return it != _attributeAttach.End() ? it->second : nullptr;
 	}
 
 	//////////////////////////////////////////////////////////////////////////////

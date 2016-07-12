@@ -134,9 +134,4 @@ namespace uut
 		font->UpdateKerningMap();
 		return font;
 	}
-
-	const Type* BitmapFontLoader::GetResourceType() const
-	{
-		return typeof<Font>();
-	}
 }

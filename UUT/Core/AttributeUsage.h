@@ -1,10 +1,12 @@
 #pragma once
 #include <Core/Attribute.h>
+#include <Core/EnumFlags.h>
 
 namespace uut
 {
 	enum class AttributeTarget
 	{
+		None = 0,
 		Method = 1,
 		Class = 2,
 		Property = 4,
@@ -12,18 +14,22 @@ namespace uut
 		Attribute = 16,
 		All = Method | Class | Property | Event | Attribute,
 	};
+	UUT_ENUMFLAG(AttributeTargets, AttributeTarget)
 
 	class AttributeUsage : public Attribute
 	{
 		UUT_OBJECT(AttributeUsage, Attribute)
 	public:
-		explicit AttributeUsage(AttributeTarget target, bool allowMultiple = false, bool inherited = true);
+		explicit AttributeUsage(AttributeTargets targets, bool allowMultiple = false, bool inherited = true);
 
+		const AttributeTargets& GetTargets() const { return _targets; }
 		bool IsAllowMultiple() const { return _allowMultiple; }
 		bool IsInherited() const { return _inherited; }
 
+		String ToString() override;
+
 	protected:
-		AttributeTarget _target;
+		AttributeTargets _targets;
 		bool _allowMultiple;
 		bool _inherited;
 	};

@@ -22,6 +22,6 @@ namespace uut
 	{
 	public:
 		virtual SharedPtr<Object> Create() override { return SharedPtr<C>::Make(); }
-		virtual const Type* GetType() const override { return typeof<C>(); }
+		virtual const Type* GetType() const override { return TypeOf<C>(); }
 	};
 }

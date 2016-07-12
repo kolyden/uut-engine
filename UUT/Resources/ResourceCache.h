@@ -27,8 +27,8 @@ namespace uut
 
 		void AddLoader(const SharedPtr<ResourceLoader>& loader);
 
-		template<class C>SharedPtr<C> Find(const Path& path) const { return StaticCast<C>(Find(typeof<C>(), path)); }
-		template<class C>SharedPtr<C> Load(const Path& path, bool silent = false) { return StaticCast<C>(Load(typeof<C>(), path, silent)); }
+		template<class C>SharedPtr<C> Find(const Path& path) const { return StaticCast<C>(Find(TypeOf<C>(), path)); }
+		template<class C>SharedPtr<C> Load(const Path& path, bool silent = false) { return StaticCast<C>(Load(TypeOf<C>(), path, silent)); }
 
 	protected:
 		Dictionary<const Type*, List<SharedPtr<ResourceLoader>>> _loaders;

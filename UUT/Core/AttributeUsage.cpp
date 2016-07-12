@@ -1,16 +1,32 @@
 #include "AttributeUsage.h"
 
 namespace uut
-{	
-	UUT_OBJECT_IMPLEMENT(AttributeUsage)
+{
+	UUT_ENUMFLAG_IMPLEMENT(AttributeTargets, AttributeTarget)
 	{
-		internalType->AddAttribute(new AttributeUsage(AttributeTarget::Attribute));
+		RegisterValues(
+			"Method", AttributeTarget::Method,
+			"Class", AttributeTarget::Class,
+			"Property", AttributeTarget::Property,
+			"Event", AttributeTarget::Event,
+			"Attribute", AttributeTarget::Attribute,
+			"All", AttributeTarget::All);
 	}
 
-	AttributeUsage::AttributeUsage(AttributeTarget target, bool allowMultiple /*= false*/, bool inherited /*= true*/)
-		: _target(target)
+	UUT_OBJECT_IMPLEMENT(AttributeUsage)
+	{
+		internalType->AddAttribute(new AttributeUsage(AttributeTarget::Attribute, false, true));
+	}
+
+	AttributeUsage::AttributeUsage(AttributeTargets targets, bool allowMultiple /*= false*/, bool inherited /*= true*/)
+		: _targets(targets)
 		, _allowMultiple(allowMultiple)
 		, _inherited(inherited)
 	{
+	}
+
+	String AttributeUsage::ToString()
+	{
+		return Super::ToString() + "(targets:" + _targets.ToString() + ")";
 	}
 }

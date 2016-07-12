@@ -71,9 +71,4 @@ namespace uut
 		stbi_image_free(source);
 		return DynamicCast<Resource>(tex);
 	}
-
-	const Type* Texture2DLoader::GetResourceType() const
-	{
-		return typeof<Texture2D>();
-	}
 }

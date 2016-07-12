@@ -14,18 +14,42 @@
 #include <Windows.h>
 #include <Resources/ResourceLoader.h>
 #include <Video/BitmapFont.h>
+#include <Core/Attribute.h>
+#include <Core/AttributeUsage.h>
 
 namespace uut
 {
+	class TestAttribute : public Attribute
+	{
+		UUT_OBJECT(TestAttribute, Attribute)
+	public:
+		explicit TestAttribute(const String& text) : _text(text) {}
+
+		const String& GetText() const { return _text; }
+
+		String ToString() override
+		{
+			return Super::ToString() + "(text:'" + _text + "')";
+		}
+
+	protected:
+		String _text;
+	};
+
+	UUT_OBJECT_IMPLEMENT(TestAttribute)
+	{
+		internalType->AddAttribute(new AttributeUsage(AttributeTarget::All, false, false));
+	}
+
+	////////////////////////////////////////////////////////////////////////////
 	template<class T>
 	static void EnumRegisterMemebers(Type* type)
 	{
 		for (auto& it : Enum<T>::GetNames())
 		{
 			T value = it.first;
-			//type->AddMember(new EnumProperty<T>(it.first));
 			type->AddMember(new StaticPropertyInfo<T>(it.second,
-				[&value]() -> T { return value; }, nullptr));
+				[value]() -> T { return value; }, nullptr));
 		}
 	}
 
@@ -44,7 +68,8 @@ namespace uut
 			"ValueB", Test::ValueB,
 			"ValueC", Test::ValueC,
 			"ValueZ", Test::ValueZ);
-		EnumRegisterMemebers<Test>(internalType);
+ 		EnumRegisterMemebers<Test>(internalType);
+		internalType->AddAttribute(new TestAttribute("hello"));
 	}
 
 	enum class Direction
@@ -55,7 +80,6 @@ namespace uut
 		West,
 	};
 	UUT_ENUM(Direction);
-
 	UUT_ENUM_IMPLEMENT(Direction)
 	{
 		RegisterValues(
@@ -64,6 +88,7 @@ namespace uut
 			"South", Direction::South,
 			"West", Direction::West);
 		EnumRegisterMemebers<Direction>(internalType);
+		internalType->AddAttribute(new TestAttribute("world"));
 	}
 
 	namespace detail
@@ -95,6 +120,7 @@ namespace uut
 	{
 		Context::RegisterType<TestFlags>();
 		UUT_REGISTER_ENUM(Direction);
+		UUT_REGISTER_OBJECT(TestAttribute);
 
 		Context::RegisterModule(new DebugGUI());
 		Context::RegisterModule(new Graphics());
@@ -108,7 +134,7 @@ namespace uut
 		Variant var3(666.555f);
 		Variant var4(true);
 // 		Variant var5(Test::ValueZ);
-		Variant var6(typeof<float>());
+		Variant var6(TypeOf<float>());
 		Variant var7(Math::HALF_PI);
 		Variant var8(L'ß');
 		Variant var9(256);
@@ -126,7 +152,7 @@ namespace uut
 		auto b = var4.Get<bool>(); UUT_ASSERT(b == true);
 // 		auto flag = var5.Get<Test>(); UUT_ASSERT(flag == Test::ValueZ);
 // 		auto flagInt = var5.Get<int>(); UUT_ASSERT(flagInt == 42);
-		auto type = var6.Get<Type>(); UUT_ASSERT(type == typeof<float>());
+		auto type = var6.Get<Type>(); UUT_ASSERT(type == TypeOf<float>());
 		auto angleDeg = var7.Get<Degree>(); UUT_ASSERT(angleDeg.GetDegrees() == 90);
 		auto angle = var7.Get<float>(); UUT_ASSERT(angle == Math::HALF_PI.GetRadians());
 		auto c = var8.Get<wchar_t>(); UUT_ASSERT(c == L'ß');
@@ -163,6 +189,14 @@ namespace uut
 
 			ImGui::SameLine();
 			ImGui::Text(it->GetName());
+		}
+	}
+
+	static void DrawAttributes(const Type* type)
+	{
+		for (auto& attribute : type->GetAttributes())
+		{
+			ImGui::Text("attr: %s", attribute->ToString().GetData());
 		}
 	}
 
@@ -289,6 +323,7 @@ namespace uut
 
 					ImGui::Separator();
 					DrawMembers(current, true);
+					DrawAttributes(current);
 
 					ImGui::Separator();
 					for (auto baseType = current->GetBaseType(); baseType != nullptr; baseType = baseType->GetBaseType())

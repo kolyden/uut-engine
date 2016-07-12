@@ -24,6 +24,7 @@ namespace uut
 	class Type
 	{
 	public:
+		typedef List<SharedPtr<Attribute>> AttributeList;
 		using REGFUNC = void(*)(Type*);
 
 		Type(const char* name, const Type* base, REGFUNC regfunc);
@@ -37,8 +38,17 @@ namespace uut
 // 		bool IsMethod() const;
 // 		bool IsEnum() const;
 
+		// ATTRIBUTES
 		bool AddAttribute(const SharedPtr<Attribute>& attr);
+		const Attribute* FindAttribute(const Type* type) const;
+		size_t FindAttributes(const Type* type, List<const Attribute*>& list) const;
+		List<const Attribute*> FindAttributes(const Type* type) const;
+		const AttributeList& GetAttributes() const { return _attributes; }
 
+		template<class C> const C* FindAttribute() const
+		{ return static_cast<const C*>(FindAttribute(TypeOf<C>())); }
+
+		// MEMBERS
 		void AddMember(MemberInfo* member);
 		const List<const MemberInfo*>& GetMembers() const;
 		const MemberInfo* FindMember(const String& name) const;
@@ -51,7 +61,7 @@ namespace uut
 
 		bool Convert(const ValueType& source, const Type* resultType, ValueType& result) const;
 		template<class C> bool Convert(const ValueType& source, C& result) const
-		{ return Convert(source, typeof<C>(), result);}
+		{ return Convert(source, TypeOf<C>(), result);}
 
 		virtual size_t GetSize() const = 0;
 		virtual void PlacementDtor(void* ptr) const = 0;
@@ -63,10 +73,8 @@ namespace uut
 		const size_t _hash;
 		const Type* _base;
 		REGFUNC _regfunc;
-// 		TypeInfo _info;
 		List<const MemberInfo*> _members;
-		List<SharedPtr<Attribute>> _attributes;
-		static Dictionary<const Type*, List<Attribute*>> _attributeTypes;
+		AttributeList _attributes;
 
 		void Register();
 
@@ -101,12 +109,12 @@ namespace uut
 	};
 
 	template<class C>
-	static const Type* typeof() {
+	static const Type* TypeOf() {
 		return C::GetTypeStatic();
 	}
 
 	template<>
-	static const Type* typeof<void>() {
+	static const Type* TypeOf<void>() {
 		return nullptr;
 	}
 
@@ -140,6 +148,6 @@ namespace uut
 	{ static type ret(value); return ret; }
 
 #define UUT_VALUE_TYPE(type, value) \
-	template<> static const Type* typeof<type>() \
-	{ return typeof<value>(); }
+	template<> static const Type* TypeOf<type>() \
+	{ return TypeOf<value>(); }
 }

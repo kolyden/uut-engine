@@ -2,6 +2,7 @@
 #include <Core/Reflection/Type.h>
 #include "Debug.h"
 #include "AttributeUsage.h"
+#include "Context.h"
 
 namespace uut
 {
@@ -15,10 +16,19 @@ namespace uut
 
 	Attribute::~Attribute()
 	{
-		
 	}
 
-// 	Attribute* Attribute::GetAttribute(const Type* type, bool inherit)
+	const Type* Attribute::GetAttachedType() const
+	{
+		return Context::GetAttributeAttach(this);
+	}
+
+	const Attribute::AttributeList& Attribute::GetAttributes(const Type* type)
+	{
+		return Context::GetAttributes(type);
+	}
+
+	// 	Attribute* Attribute::GetAttribute(const Type* type, bool inherit)
 // 	{
 // 		if (type == nullptr)
 // 			return nullptr;
