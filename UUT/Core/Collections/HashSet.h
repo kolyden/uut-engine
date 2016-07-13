@@ -35,6 +35,14 @@ namespace uut
 			return true;
 		}
 
+		Iterator Remove(Iterator iterator)
+		{
+			return _data.erase(iterator);
+		}
+
+		Iterator Find(const T& item) { return _data.find(item); }
+		CIterator Find(const T& item) const { return _data.find(item); }
+
 		Iterator Begin() { return _data.begin(); }
 		Iterator End() { return _data.end(); }
 		CIterator Begin() const { return _data.begin(); }
@@ -51,8 +59,8 @@ namespace uut
 	template<class T> typename HashSet<T>::Iterator begin(HashSet<T>& container) { return container.Begin(); }
 	template<class T> typename HashSet<T>::Iterator end(HashSet<T>& container) { return container.End(); }
 
-	template<class T> typename HashSet<T>::ConstIterator begin(const HashSet<T>& container) { return container.Begin(); }
-	template<class T> typename HashSet<T>::ConstIterator end(const HashSet<T>& container) { return container.End(); }
+	template<class T> typename HashSet<T>::CIterator begin(const HashSet<T>& container) { return container.Begin(); }
+	template<class T> typename HashSet<T>::CIterator end(const HashSet<T>& container) { return container.End(); }
 
 // 	template<typename T> constexpr static const HashSet<T>& GetDefault<HashSet<T>>()
 // 	{

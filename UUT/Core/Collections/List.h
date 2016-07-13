@@ -23,7 +23,7 @@ namespace uut
 
 		List() {}
 		List(const List<T>& other) : _data(other._data) {}
-		List(List<T>&& other) { _data = std::move(other._data); }
+		List(List<T>&& other) : _data(std::move(other._data)) {}
 		explicit List(const T& data, uint count = 1) : _data(data, count) {}
 		List(const T* data, uint count) : _data(data, data + count) {}
 		List(std::initializer_list<T> items) : _data(items) {}

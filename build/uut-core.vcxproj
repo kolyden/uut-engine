@@ -96,6 +96,12 @@
     <ClInclude Include="..\Extern\STB\stb_rect_pack.h" />
     <ClInclude Include="..\Extern\STB\stb_textedit.h" />
     <ClInclude Include="..\Extern\STB\stb_truetype.h" />
+    <ClInclude Include="..\UUT\CES\Component.h" />
+    <ClInclude Include="..\UUT\CES\Entity.h" />
+    <ClInclude Include="..\UUT\CES\EntityGroup.h" />
+    <ClInclude Include="..\UUT\CES\EntityPool.h" />
+    <ClInclude Include="..\UUT\CES\Matcher.h" />
+    <ClInclude Include="..\UUT\CES\System.h" />
     <ClInclude Include="..\UUT\Core\Assert.h" />
     <ClInclude Include="..\UUT\Core\Attribute.h" />
     <ClInclude Include="..\UUT\Core\AttributeUsage.h" />
@@ -112,6 +118,7 @@
     <ClInclude Include="..\UUT\Core\Context.h" />
     <ClInclude Include="..\UUT\Core\CorePlugin.h" />
     <ClInclude Include="..\UUT\Core\Debug.h" />
+    <ClInclude Include="..\UUT\Core\Delegate.h" />
     <ClInclude Include="..\UUT\Core\Double.h" />
     <ClInclude Include="..\UUT\Core\Engine.h" />
     <ClInclude Include="..\UUT\Core\Enum.h" />
@@ -226,6 +233,12 @@
     <ClCompile Include="..\Extern\ImGui\imgui.cpp" />
     <ClCompile Include="..\Extern\ImGui\imgui_demo.cpp" />
     <ClCompile Include="..\Extern\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="..\UUT\CES\Component.cpp" />
+    <ClCompile Include="..\UUT\CES\Entity.cpp" />
+    <ClCompile Include="..\UUT\CES\EntityGroup.cpp" />
+    <ClCompile Include="..\UUT\CES\EntityPool.cpp" />
+    <ClCompile Include="..\UUT\CES\Matcher.cpp" />
+    <ClCompile Include="..\UUT\CES\System.cpp" />
     <ClCompile Include="..\UUT\Core\Attribute.cpp" />
     <ClCompile Include="..\UUT\Core\AttributeUsage.cpp" />
     <ClCompile Include="..\UUT\Core\BaseObject.cpp" />

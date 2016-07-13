@@ -16,6 +16,10 @@
 #include <Video/BitmapFont.h>
 #include <Core/Attribute.h>
 #include <Core/AttributeUsage.h>
+#include <CES/EntityPool.h>
+#include <CES/Entity.h>
+#include <CES/Matcher.h>
+#include <CES/EntityGroup.h>
 
 namespace uut
 {
@@ -111,6 +115,64 @@ namespace uut
 	}
 
 	////////////////////////////////////////////////////////////////////////////
+	class Position : public Component
+	{
+		UUT_VALUETYPE(Position, Component)
+	public:
+		int x, y;
+
+		void Reset(int ix, int iy)
+		{
+			x = ix;
+			y = iy;
+		}
+	};
+
+	UUT_VALUETYPE_IMPLEMENT(Position) {}
+
+	class Move : public Component
+	{
+		UUT_VALUETYPE(Move, Component)
+	public:
+		int dx, dy;
+
+		void Reset(int idx, int idy)
+		{
+			dx = idx;
+			dy = idy;
+		}
+	};
+	UUT_VALUETYPE_IMPLEMENT(Move) {}
+
+	class MoveSystem : public System
+	{
+	protected:
+		SharedPtr<EntityGroup> _group;
+
+		void Init() override
+		{
+			_group = _pool->AddGroup(new MatcherAllOf<Move>());
+			_group->onAdd += [](const SharedPtr<Entity>& entity)
+			{
+				int a = 0;
+				a++;
+			};
+		}
+
+		void Execute() override
+		{
+			for (auto& ent : _pool->GetEntities(MatcherAllOf<Position, Move>()))
+			{
+				auto pos = ent->Get<Position>();
+				auto move = ent->Get<Move>();
+				ent->Replace<Position>(
+					pos->x + move->dx,
+					pos->y + move->dy);
+			}
+		}
+	};
+
+	////////////////////////////////////////////////////////////////////////////
 	SampleApp::SampleApp()
 	{
 		_windowSize = IntVector2(800, 600);
@@ -164,6 +226,19 @@ namespace uut
 // 		auto flagStr = var5.Get<String>();
 
 // 		auto str = StringFormat("Object type = ", typeof<Test>(), " and value = ");
+
+		////////////////////////////////////////////////////////////////////////////
+		EntityPool pool;
+		pool.AddSystem(new MoveSystem());
+		auto ent1 = pool.CreateEntity();
+		ent1->Add<Position>(10, 15);
+		ent1->Add<Move>(5, 0);
+		pool.Execute();
+
+		auto ent2 = pool.CreateEntity();
+		ent2->Add<Position>(4, 2);
+
+		auto pos = ent1->Get<Position>();
 	}
 
 	static bool show_test_window = false;

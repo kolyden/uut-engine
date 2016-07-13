@@ -58,6 +58,9 @@
     <Filter Include="Extern\AStar">
       <UniqueIdentifier>{af93feeb-d732-4047-aceb-173318a3e49e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UUT\CES">
+      <UniqueIdentifier>{54481c06-1877-4b56-bf5e-214a9127d13f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\UUT\Core\Assert.h">
@@ -666,6 +669,27 @@
     <ClInclude Include="..\UUT\Core\EnumFlags.h">
       <Filter>UUT\Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\CES\Component.h">
+      <Filter>UUT\CES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\CES\Entity.h">
+      <Filter>UUT\CES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\CES\System.h">
+      <Filter>UUT\CES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Delegate.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\CES\EntityPool.h">
+      <Filter>UUT\CES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\CES\Matcher.h">
+      <Filter>UUT\CES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\CES\EntityGroup.h">
+      <Filter>UUT\CES</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1003,6 +1027,24 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Core\EnumFlags.cpp">
       <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\CES\Component.cpp">
+      <Filter>UUT\CES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\CES\Entity.cpp">
+      <Filter>UUT\CES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\CES\System.cpp">
+      <Filter>UUT\CES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\CES\EntityPool.cpp">
+      <Filter>UUT\CES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\CES\Matcher.cpp">
+      <Filter>UUT\CES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\CES\EntityGroup.cpp">
+      <Filter>UUT\CES</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
