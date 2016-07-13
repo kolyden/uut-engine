@@ -173,6 +173,7 @@
     <ClInclude Include="..\UUT\Core\Reflection\Type.h" />
     <ClInclude Include="..\UUT\Core\Single.h" />
     <ClInclude Include="..\UUT\Core\String.h" />
+    <ClInclude Include="..\UUT\Core\StringFormat.h" />
     <ClInclude Include="..\UUT\Core\Time.h" />
     <ClInclude Include="..\UUT\Core\Timer.h" />
     <ClInclude Include="..\UUT\Core\TimeSpan .h" />

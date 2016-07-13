@@ -690,6 +690,9 @@
     <ClInclude Include="..\UUT\CES\EntityGroup.h">
       <Filter>UUT\CES</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Core\StringFormat.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
