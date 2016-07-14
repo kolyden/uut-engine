@@ -29,9 +29,9 @@ namespace uut
 		T* Get() const { return _data.get(); }
 
 		template<typename... Args>
-		static SharedPtr<T> Make(Args... args)
+		static SharedPtr<T> Make(Args&&... args)
 		{
-			return std::make_shared<T>(args...);
+			return std::make_shared<T>(std::forward<Args>(args)...);
 		}
 
 		StdShared& GetShared() { return _data; }

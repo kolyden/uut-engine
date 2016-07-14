@@ -31,13 +31,13 @@ namespace uut
 		Context::RegisterModule(DX9Renderer::Create(_window));
 
 		auto input = Context::FindModule<Input>();
-		auto cache = Context::FindModule<ResourceCache>();
 		auto renderer = Context::FindModule<Renderer>();
 		if (renderer == nullptr)
 			return;
 
-		cache->AddLoader(new Texture2DLoader());
-		cache->AddLoader(new BitmapFontLoader());
+// 		auto cache = Context::FindModule<ResourceCache>();
+// 		cache->AddLoader(new Texture2DLoader());
+// 		cache->AddLoader(new BitmapFontLoader());
 		renderer->ResetStates();
 		OnInit();
 

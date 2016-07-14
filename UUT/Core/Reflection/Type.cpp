@@ -6,6 +6,7 @@
 #include "ConverterInfo.h"
 #include <Core/Debug.h>
 #include <Core/AttributeUsage.h>
+#include "ConstructorInfo.h"
 
 namespace uut
 {
@@ -34,6 +35,29 @@ namespace uut
 	String Type::ToString() const
 	{
 		return _name;
+	}
+
+	SharedPtr<Object> Type::CreateObject() const
+	{
+		if (!IsDerived<Object>())
+			return nullptr;
+
+		for (auto it : _members)
+		{
+			if (it->GetMemberType() != MemberType::Constructor)
+				continue;
+
+			auto ctor = static_cast<const ConstructorInfo*>(it);
+			if (ctor->GetArgsTypes().Count() != 0)
+				continue;
+
+			auto buf = new char[GetSize()];
+			ctor->Call(buf);
+			auto obj = reinterpret_cast<Object*>(buf);
+			return obj;
+		}
+
+		return nullptr;
 	}
 
 	bool Type::AddAttribute(const SharedPtr<Attribute>& attr)

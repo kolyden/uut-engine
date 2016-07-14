@@ -18,7 +18,7 @@ namespace uut
 		SharedPtr<Entity> CreateEntity();
 	
 		void AddSystem(const SharedPtr<System>& system);
-		SharedPtr<EntityGroup> AddGroup(const SharedPtr<Matcher>& matcher);
+		SharedPtr<EntityGroup> AddGroup(const Matcher& matcher);
 
 		void Execute();
 

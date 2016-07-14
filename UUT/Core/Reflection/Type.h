@@ -38,6 +38,9 @@ namespace uut
 // 		bool IsMethod() const;
 // 		bool IsEnum() const;
 
+		SharedPtr<Object> CreateObject() const;
+		template<class C> SharedPtr<C> CreateObject() const { return DynamicCast<C>(CreateObject()); }
+
 		// ATTRIBUTES
 		bool AddAttribute(const SharedPtr<Attribute>& attr);
 		const Attribute* FindAttribute(const Type* type) const;
@@ -58,8 +61,9 @@ namespace uut
 
 		bool IsDerived(const Type* from) const;
 		bool CanConvert(const Type* to) const;
-
 		bool Convert(const ValueType& source, const Type* resultType, ValueType& result) const;
+
+		template<class C> bool IsDerived() const { return IsDerived(TypeOf<C>()); }
 		template<class C> bool Convert(const ValueType& source, C& result) const
 		{ return Convert(source, TypeOf<C>(), result);}
 

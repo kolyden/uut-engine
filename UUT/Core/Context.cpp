@@ -165,6 +165,8 @@ namespace uut
 		}
 
 		module->OnRegister();
+		if (_inited)
+			module->OnInit();
 	}
 
 	Module* Context::FindModule(const Type* type)

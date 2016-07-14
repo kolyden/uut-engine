@@ -28,11 +28,8 @@ namespace uut
 		_systems << system;
 	}
 
-	SharedPtr<EntityGroup> EntityPool::AddGroup(const SharedPtr<Matcher>& matcher)
+	SharedPtr<EntityGroup> EntityPool::AddGroup(const Matcher& matcher)
 	{
-		if (!matcher)
-			return nullptr;
-
 		auto group = SharedPtr<EntityGroup>::Make(matcher);
 		group->_pool = this;
 		_groups << group;

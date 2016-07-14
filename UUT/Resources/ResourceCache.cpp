@@ -4,6 +4,7 @@
 #include "Resource.h"
 #include "ResourceLoader.h"
 #include <Core/Debug.h>
+#include "ResourceLoaderAttribute.h"
 
 namespace uut
 {
@@ -24,7 +25,7 @@ namespace uut
 			return false;
 
 		resource->_resourcePath = path;
-		_groups[resource->GetType()]._items[path] = resource;
+		_groups[resource->GetType()][path.GetHash()] = resource;
 		return true;
 	}
 
@@ -37,8 +38,8 @@ namespace uut
 		if (it == _groups.End())
 			return nullptr;
 
-		auto jt = it->second._items.Find(path);
-		if (jt == it->second._items.End())
+		auto jt = it->second.Find(path.GetHash());
+		if (jt == it->second.End())
 			return nullptr;
 
 		return jt->second;
@@ -68,7 +69,7 @@ namespace uut
 				continue;
 
 			resource->_resourcePath = path;
-			_groups[type]._items[path] = resource;
+			_groups[type][path.GetHash()] = resource;
 			return resource;
 		}
 
@@ -78,11 +79,39 @@ namespace uut
 		return nullptr;
 	}
 
+	const ResourceCache::ResourceDict& ResourceCache::GetResources(const Type* type) const
+	{
+		auto it = _groups.Find(type);
+		return it != _groups.End() ? it->second : ResourceDict::Empty;
+	}
+
 	void ResourceCache::AddLoader(const SharedPtr<ResourceLoader>& loader)
 	{
 		if (loader == nullptr)
 			return;
 
 		_loaders[loader->GetResourceType()] << loader;
+	}
+
+	bool ResourceCache::OnInit()
+	{
+		if (!Super::OnInit())
+			return false;
+
+		auto list = Attribute::GetAttributes<ResourceLoaderAttribute>();
+		for (auto it : list)
+		{
+			auto type = Context::GetAttributeAttach(it);
+			if (!type->IsDerived<ResourceLoader>())
+				continue;
+
+			auto loader = type->CreateObject<ResourceLoader>();
+			if (!loader)
+				continue;
+
+			AddLoader(loader);
+		}
+
+		return true;
 	}
 }

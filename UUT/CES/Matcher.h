@@ -11,43 +11,39 @@ namespace uut
 	class Matcher
 	{
 	public:
-		virtual ~Matcher()
+		Matcher();
+		Matcher(const Matcher& matcher);
+		Matcher(Matcher&& matcher);
+
+		bool Matches(const SharedPtr<Entity>& entity) const;
+
+		template<typename... Args>
+		static Matcher AllOf()
 		{
+			Matcher matcher;
+			matcher._allof = { TypeOf<Args>()... };
+			return matcher;
 		}
 
-		virtual bool Matches(const SharedPtr<Entity>& entity) const = 0;
-	};
-
-	template<typename... Args>
-	class MatcherAllOf : public Matcher
-	{
-	public:
-		typedef std::array<const Type*, sizeof...(Args)> DataType;
-		static const DataType Data;
-
-		bool Matches(const SharedPtr<Entity>& entity) const override
+		template<typename... Args>
+		static Matcher AnyOf()
 		{
-			return _internalRecurseMatches<0>(entity);
+			Matcher matcher;
+			matcher._anyof = { TypeOf<Args>()... };
+			return matcher;
+		}
+
+		template<typename... Args>
+		static Matcher NoneOf()
+		{
+			Matcher matcher;
+			matcher._noneof = { TypeOf<Args>()... };
+			return matcher;
 		}
 
 	protected:
-		template<size_t index,
-			std::enable_if_t<(index < sizeof...(Args)), void>* = nullptr>
-		static bool _internalRecurseMatches(const SharedPtr<Entity>& entity)
-		{
-			if (!entity->HasComponent(Data[index]))
-				return false;
-
-			return _internalRecurseMatches<index + 1>(entity);
-		}
-
-		template<size_t index,
-			std::enable_if_t<(index >= sizeof...(Args)), void>* = nullptr>
-		static bool _internalRecurseMatches(const SharedPtr<Entity>& entity)
-		{
-			return true;
-		}
+		List<const Type*> _allof;
+		List<const Type*> _anyof;
+		List<const Type*> _noneof;
 	};
-
-	template<typename... Args> const typename MatcherAllOf<Args...>::DataType MatcherAllOf<Args...>::Data = { TypeOf<Args>()... };
 }

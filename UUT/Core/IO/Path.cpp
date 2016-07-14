@@ -67,6 +67,11 @@ namespace uut
 		return File::Exists(*this) || Directory::Exist(*this);
 	}
 
+	size_t Path::GetHash() const
+	{
+		return _hash;
+	}
+
 	String Path::GetExtension() const
 	{
 		const int count = _components.Count();

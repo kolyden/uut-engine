@@ -19,6 +19,7 @@ namespace uut
 
 		bool IsEmpty() const;
 		bool IsExist() const;
+		size_t GetHash() const;
 
 		String GetExtension() const;
 		bool IsExtension(const String& ext,
@@ -63,7 +64,7 @@ namespace uut
 
 	protected:
 		List<String> _components;
-		unsigned _hash;
+		size_t _hash;
 
 		void UpdateHash();
 	};

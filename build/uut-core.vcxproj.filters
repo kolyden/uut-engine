@@ -693,6 +693,9 @@
     <ClInclude Include="..\UUT\Core\StringFormat.h">
       <Filter>UUT\Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Resources\ResourceLoaderAttribute.h">
+      <Filter>UUT\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1048,6 +1051,9 @@
     </ClCompile>
     <ClCompile Include="..\UUT\CES\EntityGroup.cpp">
       <Filter>UUT\CES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Resources\ResourceLoaderAttribute.cpp">
+      <Filter>UUT\Resources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

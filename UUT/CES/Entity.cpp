@@ -2,6 +2,15 @@
 
 namespace uut
 {
+	const EntityId EntityId::Invalid(std::numeric_limits<uint16_t>::max());
+
+	UUT_OBJECT_IMPLEMENT(Entity)
+	{}
+
+	Entity::Entity(Dictionary<const Type*, std::stack<Component*>>* pools)
+		: _componentPools(pools)
+	{
+	}
 
 	bool Entity::HasComponents(const List<const Type*>& types) const
 	{
@@ -12,6 +21,17 @@ namespace uut
 		}
 
 		return true;
+	}
+
+	bool Entity::HasAnyComponents(const List<const Type*>& types) const
+	{
+		for (auto it : types)
+		{
+			if (HasComponent(it))
+				return true;
+		}
+
+		return false;
 	}
 
 	void Entity::AddComponent(const Type* type, Component* component)
@@ -49,6 +69,7 @@ namespace uut
 
 		return it->second;
 	}
+
 
 	std::stack<Component*>* Entity::GetComponentPool(const Type* type) const
 	{

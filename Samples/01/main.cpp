@@ -12,7 +12,6 @@
 #include <Core/Reflection/ConstructorInfo.h>
 #include <Core/Reflection/ConverterInfo.h>
 #include <Windows.h>
-#include <Resources/ResourceLoader.h>
 #include <Video/BitmapFont.h>
 #include <Core/Attribute.h>
 #include <Core/AttributeUsage.h>
@@ -151,7 +150,7 @@ namespace uut
 
 		void Init() override
 		{
-			_group = _pool->AddGroup(new MatcherAllOf<Move>());
+			_group = _pool->AddGroup(Matcher::AllOf<Move>());
 			_group->onAdd += [](const SharedPtr<Entity>& entity)
 			{
 				int a = 0;
@@ -161,7 +160,7 @@ namespace uut
 
 		void Execute() override
 		{
-			for (auto& ent : _pool->GetEntities(MatcherAllOf<Position, Move>()))
+			for (auto& ent : _pool->GetEntities(Matcher::AllOf<Position, Move>()))
 			{
 				auto pos = ent->Get<Position>();
 				auto move = ent->Get<Move>();
@@ -230,13 +229,13 @@ namespace uut
 		////////////////////////////////////////////////////////////////////////////
 		EntityPool pool;
 		pool.AddSystem(new MoveSystem());
-		auto ent1 = pool.CreateEntity();
-		ent1->Add<Position>(10, 15);
-		ent1->Add<Move>(5, 0);
+		auto ent1 = pool.CreateEntity()->
+			Add<Position>(10, 15)->
+			Add<Move>(5, 0);
 		pool.Execute();
 
-		auto ent2 = pool.CreateEntity();
-		ent2->Add<Position>(4, 2);
+		pool.CreateEntity()->
+			Add<Position>(4, 2);
 
 		auto pos = ent1->Get<Position>();
 	}

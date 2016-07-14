@@ -186,6 +186,7 @@
     <ClInclude Include="..\UUT\Resources\Resource.h" />
     <ClInclude Include="..\UUT\Resources\ResourceCache.h" />
     <ClInclude Include="..\UUT\Resources\ResourceLoader.h" />
+    <ClInclude Include="..\UUT\Resources\ResourceLoaderAttribute.h" />
     <ClInclude Include="..\UUT\Tilemap\BlockedLayer.h" />
     <ClInclude Include="..\UUT\Tilemap\InfoLayer.h" />
     <ClInclude Include="..\UUT\Tilemap\ObjectLayer.h" />
@@ -309,6 +310,7 @@
     <ClCompile Include="..\UUT\Resources\Resource.cpp" />
     <ClCompile Include="..\UUT\Resources\ResourceCache.cpp" />
     <ClCompile Include="..\UUT\Resources\ResourceLoader.cpp" />
+    <ClCompile Include="..\UUT\Resources\ResourceLoaderAttribute.cpp" />
     <ClCompile Include="..\UUT\Tilemap\BlockedLayer.cpp" />
     <ClCompile Include="..\UUT\Tilemap\ObjectLayer.cpp" />
     <ClCompile Include="..\UUT\Tilemap\ObjectLayerRender.cpp" />

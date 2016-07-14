@@ -5,11 +5,16 @@
 #include <Resources/ResourceCache.h>
 #include <Video/BitmapFont.h>
 #include <Video/Texture2D.h>
+#include <Resources/ResourceLoaderAttribute.h>
+#include <Core/Reflection/ConstructorInfo.h>
 
 namespace uut
 {
 	UUT_OBJECT_IMPLEMENT(BitmapFontLoader)
-	{}
+	{
+		internalType->AddAttribute(new ResourceLoaderAttribute());
+		UUT_REGISTER_CTOR_DEFAULT()
+	}
 
 	BitmapFontLoader::BitmapFontLoader()
 	{		

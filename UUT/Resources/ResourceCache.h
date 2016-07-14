@@ -17,6 +17,8 @@ namespace uut
 	{
 		UUT_MODULE(ResourceCache, Module)
 	public:
+		typedef Dictionary<size_t, SharedPtr<Resource>> ResourceDict;
+
 		ResourceCache();
 		virtual ~ResourceCache();
 
@@ -24,14 +26,23 @@ namespace uut
 		
 		SharedPtr<Resource> Find(const Type* type, const Path& path) const;
 		SharedPtr<Resource> Load(const Type* type, const Path& path, bool silent = false);
+		const ResourceDict& GetResources(const Type* type) const;
 
 		void AddLoader(const SharedPtr<ResourceLoader>& loader);
 
-		template<class C>SharedPtr<C> Find(const Path& path) const { return StaticCast<C>(Find(TypeOf<C>(), path)); }
-		template<class C>SharedPtr<C> Load(const Path& path, bool silent = false) { return StaticCast<C>(Load(TypeOf<C>(), path, silent)); }
+		template<class C, class = typename std::enable_if<std::is_base_of<Resource, C>::value, void>::type>
+		SharedPtr<C> Find(const Path& path) const { return StaticCast<C>(Find(TypeOf<C>(), path)); }
+
+		template<class C, class = typename std::enable_if<std::is_base_of<Resource, C>::value, void>::type>
+		SharedPtr<C> Load(const Path& path, bool silent = false) { return StaticCast<C>(Load(TypeOf<C>(), path, silent)); }
+
+		template<class C, class = typename std::enable_if<std::is_base_of<Resource, C>::value, void>::type>
+		const ResourceDict& GetResources() const { return GetResources(TypeOf<Resource>()); }
 
 	protected:
 		Dictionary<const Type*, List<SharedPtr<ResourceLoader>>> _loaders;
-		Dictionary<const Type*, ResourceGroup> _groups;
+		Dictionary<const Type*, ResourceDict> _groups;
+
+		bool OnInit() override;
 	};
 }
