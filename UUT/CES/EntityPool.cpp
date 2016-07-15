@@ -1,6 +1,6 @@
 #include "EntityPool.h"
 #include "Entity.h"
-#include "Matcher.h"
+#include "EntityMatcher.h"
 #include "EntityGroup.h"
 
 namespace uut
@@ -12,13 +12,19 @@ namespace uut
 		return entity;
 	}
 
-	void EntityPool::Execute()
+	void EntityPool::Update()
 	{
 		for (auto& system : _systems)
-			system->Execute();
+			system->Update();
 	}
 
-	void EntityPool::AddSystem(const SharedPtr<System>& system)
+	void EntityPool::Render()
+	{
+		for (auto& system : _systems)
+			system->Render();
+	}
+
+	void EntityPool::AddSystem(const SharedPtr<EntitySystem>& system)
 	{
 		if (!system || system->_pool != nullptr)
 			return;
@@ -28,7 +34,7 @@ namespace uut
 		_systems << system;
 	}
 
-	SharedPtr<EntityGroup> EntityPool::AddGroup(const Matcher& matcher)
+	SharedPtr<EntityGroup> EntityPool::AddGroup(const EntityMatcher& matcher)
 	{
 		auto group = SharedPtr<EntityGroup>::Make(matcher);
 		group->_pool = this;
@@ -39,7 +45,7 @@ namespace uut
 		return group;
 	}
 
-	List<SharedPtr<Entity>> EntityPool::GetEntities(const Matcher& matcher) const
+	List<SharedPtr<Entity>> EntityPool::GetEntities(const EntityMatcher& matcher) const
 	{
 		List<EntityPtr> list;
 		for (auto& entity : _entities)

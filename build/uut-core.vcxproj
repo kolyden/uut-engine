@@ -100,8 +100,8 @@
     <ClInclude Include="..\UUT\CES\Entity.h" />
     <ClInclude Include="..\UUT\CES\EntityGroup.h" />
     <ClInclude Include="..\UUT\CES\EntityPool.h" />
-    <ClInclude Include="..\UUT\CES\Matcher.h" />
-    <ClInclude Include="..\UUT\CES\System.h" />
+    <ClInclude Include="..\UUT\CES\EntityMatcher.h" />
+    <ClInclude Include="..\UUT\CES\EntitySystem.h" />
     <ClInclude Include="..\UUT\Core\Assert.h" />
     <ClInclude Include="..\UUT\Core\Attribute.h" />
     <ClInclude Include="..\UUT\Core\AttributeUsage.h" />
@@ -239,8 +239,8 @@
     <ClCompile Include="..\UUT\CES\Entity.cpp" />
     <ClCompile Include="..\UUT\CES\EntityGroup.cpp" />
     <ClCompile Include="..\UUT\CES\EntityPool.cpp" />
-    <ClCompile Include="..\UUT\CES\Matcher.cpp" />
-    <ClCompile Include="..\UUT\CES\System.cpp" />
+    <ClCompile Include="..\UUT\CES\EntityMatcher.cpp" />
+    <ClCompile Include="..\UUT\CES\EntitySystem.cpp" />
     <ClCompile Include="..\UUT\Core\Attribute.cpp" />
     <ClCompile Include="..\UUT\Core\AttributeUsage.cpp" />
     <ClCompile Include="..\UUT\Core\BaseObject.cpp" />

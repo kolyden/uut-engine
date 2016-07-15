@@ -17,8 +17,9 @@
 #include <Core/AttributeUsage.h>
 #include <CES/EntityPool.h>
 #include <CES/Entity.h>
-#include <CES/Matcher.h>
+#include <CES/EntityMatcher.h>
 #include <CES/EntityGroup.h>
+#include <Video/Color.h>
 
 namespace uut
 {
@@ -114,60 +115,81 @@ namespace uut
 	}
 
 	////////////////////////////////////////////////////////////////////////////
-	class Position : public Component
-	{
-		UUT_VALUETYPE(Position, Component)
-	public:
-		int x, y;
 
-		void Reset(int ix, int iy)
+#define UUT_COMPONENT(name, dataType, dataName) \
+	class name : public Component \
+	{ \
+		UUT_VALUETYPE(name, Component) \
+	public: \
+		dataType dataName; \
+		void Reset(const dataType& value) \
+		{ dataName = value; } \
+	}; \
+	UUT_VALUETYPE_IMPLEMENT(name) {} \
+
+	class UIWidget : public Component
+	{
+		UUT_VALUETYPE(UIWidget, Component)
+	public:
+		IntRect rect;
+
+		void Reset(int x, int y, int w, int h)
 		{
-			x = ix;
-			y = iy;
+			rect = IntRect(x, y, w, h);
 		}
 	};
+	UUT_VALUETYPE_IMPLEMENT(UIWidget) {}
 
-	UUT_VALUETYPE_IMPLEMENT(Position) {}
+	UUT_COMPONENT(UIImage, SharedPtr<Texture2D>, texture)
+	UUT_COMPONENT(UIColor, Color32, color)
 
-	class Move : public Component
+	class UILabel : public Component
 	{
-		UUT_VALUETYPE(Move, Component)
+		UUT_VALUETYPE(UILabel, Component)
 	public:
-		int dx, dy;
+		SharedPtr<Font> font;
+		String text;
 
-		void Reset(int idx, int idy)
+		void Reset(const SharedPtr<Font>& fnt, const String& txt)
 		{
-			dx = idx;
-			dy = idy;
+			font = fnt;
+			text = txt;
 		}
 	};
-	UUT_VALUETYPE_IMPLEMENT(Move) {}
+	UUT_VALUETYPE_IMPLEMENT(UILabel) {}
 
-	class MoveSystem : public System
+	class UIImageRender : public EntitySystem
 	{
 	protected:
-		SharedPtr<EntityGroup> _group;
-
-		void Init() override
+		void Render() override
 		{
-			_group = _pool->AddGroup(Matcher::AllOf<Move>());
-			_group->onAdd += [](const SharedPtr<Entity>& entity)
+			static const EntityMatcher matcher =
+				EntityMatcher::AllOf<UIWidget>() |
+				EntityMatcher::AnyOf<UIImage, UIColor, UILabel>();
+
+			for (auto& ent : _pool->GetEntities(matcher))
 			{
-				int a = 0;
-				a++;
-			};
+				auto pos = ent->Get<UIWidget>();
+				auto img = ent->Get<UIImage>();
+				auto col = ent->Get<UIColor>();
+				auto txt = ent->Get<UILabel>();
+
+				const auto r = ToScreenSpace(pos->rect);
+				Graphics::Instance()->DrawQuad(
+					r, 15, img ? img->texture : nullptr,
+					col ? col->color : Color32::White);
+
+				if (txt == nullptr || !txt->font || txt->text.IsEmpty())
+					continue;
+
+				Graphics::Instance()->PrintText(IntVector2(r.x, r.y),
+					15, txt->text, txt->font, Color32::White);
+			}
 		}
 
-		void Execute() override
+		static IntRect ToScreenSpace(const IntRect& r)
 		{
-			for (auto& ent : _pool->GetEntities(Matcher::AllOf<Position, Move>()))
-			{
-				auto pos = ent->Get<Position>();
-				auto move = ent->Get<Move>();
-				ent->Replace<Position>(
-					pos->x + move->dx,
-					pos->y + move->dy);
-			}
+			return IntRect(r.x, 600 - r.y - r.height, r.width, r.height);
 		}
 	};
 
@@ -187,8 +209,9 @@ namespace uut
 		Context::RegisterModule(new Graphics());
 
 		Graphics::Instance()->SetProjection(Graphics::PM_2D);
-		_tex = ResourceCache::Instance()->Load<Texture2D>("rogueliketiles.png");
-		_font = ResourceCache::Instance()->Load<Font>("Consolas.fnt");
+		ModuleInstance<ResourceCache> cache;
+		_tex = cache->Load<Texture2D>("rogueliketiles.png");
+		_font = cache->Load<Font>("Consolas.fnt");
 
 		Variant var1(Vector2(12.111f, 45.6789f));
 		Variant var2(_font);
@@ -225,19 +248,17 @@ namespace uut
 // 		auto flagStr = var5.Get<String>();
 
 // 		auto str = StringFormat("Object type = ", typeof<Test>(), " and value = ");
-
 		////////////////////////////////////////////////////////////////////////////
-		EntityPool pool;
-		pool.AddSystem(new MoveSystem());
-		auto ent1 = pool.CreateEntity()->
-			Add<Position>(10, 15)->
-			Add<Move>(5, 0);
-		pool.Execute();
-
-		pool.CreateEntity()->
-			Add<Position>(4, 2);
-
-		auto pos = ent1->Get<Position>();
+		_pool = new EntityPool();
+		_pool->AddSystem(new UIImageRender());
+		_pool->CreateEntity()->
+			Add<UIWidget>(20, 20, 200, 50)->
+			Add<UIImage>(cache->Load<Texture2D>("brick_dark0.png"))->
+			Add<UIColor>(Color::Green);
+		_pool->CreateEntity()->
+			Add<UIWidget>(20, 80, 200, 50)->
+			Add<UIColor>(Color::Red)->
+			Add<UILabel>(_font, "Label");
 	}
 
 	static bool show_test_window = false;
@@ -419,6 +440,8 @@ namespace uut
 		auto graphics = Graphics::Instance();
 		auto gui = DebugGUI::Instance();
 
+		_pool->Update();
+
 		renderer->Clear(Color32(114, 144, 154));
 		if (renderer->BeginScene())
 		{
@@ -431,6 +454,7 @@ namespace uut
 				graphics->PrintText(Vector2(10, 10), 15, "qwertyuiopasdfghjklzxcvbnm", _font, Color32::Black);
 			if (_tex)
 				graphics->DrawQuad(IntRect(10, 30, _tex->GetWidth() * 2, _tex->GetHeight() * 2), 15, _tex);
+			_pool->Render();
 			graphics->Flush();
 
 			gui->SetupCamera();

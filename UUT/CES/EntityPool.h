@@ -8,8 +8,8 @@ namespace uut
 {
 	class EntityGroup;
 	class Component;
-	class System;
-	class Matcher;
+	class EntitySystem;
+	class EntityMatcher;
 	class Entity;
 
 	class EntityPool : public Object
@@ -17,15 +17,16 @@ namespace uut
 	public:
 		SharedPtr<Entity> CreateEntity();
 	
-		void AddSystem(const SharedPtr<System>& system);
-		SharedPtr<EntityGroup> AddGroup(const Matcher& matcher);
+		void AddSystem(const SharedPtr<EntitySystem>& system);
+		SharedPtr<EntityGroup> AddGroup(const EntityMatcher& matcher);
 
-		void Execute();
+		void Update();
+		void Render();
 
-		List<SharedPtr<Entity>> GetEntities(const Matcher& matcher) const;
+		List<SharedPtr<Entity>> GetEntities(const EntityMatcher& matcher) const;
 
 	protected:
-		List<SharedPtr<System>> _systems;
+		List<SharedPtr<EntitySystem>> _systems;
 		List<SharedPtr<Entity>> _entities;
 		List<SharedPtr<EntityGroup>> _groups;
 		Dictionary<const Type*, std::stack<Component*>> _componentsPool;

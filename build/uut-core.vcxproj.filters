@@ -675,16 +675,10 @@
     <ClInclude Include="..\UUT\CES\Entity.h">
       <Filter>UUT\CES</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\CES\System.h">
-      <Filter>UUT\CES</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Core\Delegate.h">
       <Filter>UUT\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\UUT\CES\EntityPool.h">
-      <Filter>UUT\CES</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\CES\Matcher.h">
       <Filter>UUT\CES</Filter>
     </ClInclude>
     <ClInclude Include="..\UUT\CES\EntityGroup.h">
@@ -695,6 +689,12 @@
     </ClInclude>
     <ClInclude Include="..\UUT\Resources\ResourceLoaderAttribute.h">
       <Filter>UUT\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\CES\EntitySystem.h">
+      <Filter>UUT\CES</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\CES\EntityMatcher.h">
+      <Filter>UUT\CES</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1040,13 +1040,7 @@
     <ClCompile Include="..\UUT\CES\Entity.cpp">
       <Filter>UUT\CES</Filter>
     </ClCompile>
-    <ClCompile Include="..\UUT\CES\System.cpp">
-      <Filter>UUT\CES</Filter>
-    </ClCompile>
     <ClCompile Include="..\UUT\CES\EntityPool.cpp">
-      <Filter>UUT\CES</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\CES\Matcher.cpp">
       <Filter>UUT\CES</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\CES\EntityGroup.cpp">
@@ -1054,6 +1048,12 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Resources\ResourceLoaderAttribute.cpp">
       <Filter>UUT\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\CES\EntitySystem.cpp">
+      <Filter>UUT\CES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\CES\EntityMatcher.cpp">
+      <Filter>UUT\CES</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
 
 namespace uut
 {
+	class EntityPool;
 	class Tilemap;
 	class Player;
 
@@ -20,6 +21,7 @@ namespace uut
 
 		SharedPtr<Font> _font;
 		SharedPtr<Texture2D> _tex;
+		SharedPtr<EntityPool> _pool;
 
 		virtual void OnInit() override;
 		virtual void OnFrame() override;

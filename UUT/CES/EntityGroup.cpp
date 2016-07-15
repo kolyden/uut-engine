@@ -1,9 +1,9 @@
 #include "EntityGroup.h"
-#include "Matcher.h"
+#include "EntityMatcher.h"
 
 namespace uut
 {
-	EntityGroup::EntityGroup(const Matcher& matcher)
+	EntityGroup::EntityGroup(const EntityMatcher& matcher)
 		: _pool(nullptr)
 		, _matcher(matcher)
 	{

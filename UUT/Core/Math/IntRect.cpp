@@ -58,6 +58,12 @@ namespace uut
 	{
 	}
 
+	bool IntRect::Intersect(const IntVector2& point) const
+	{
+		return point.x >= x && point.x <= x + width &&
+			point.y >= y && point.y <= y + height;
+	}
+
 	IntRect& IntRect::operator=(const IntRect& rect)
 	{
 		x = rect.x;

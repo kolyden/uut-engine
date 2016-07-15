@@ -2,7 +2,7 @@
 #include <Core/Collections/Dictionary.h>
 #include <Core/Reflection/Type.h>
 #include "Component.h"
-#include "System.h"
+#include "EntitySystem.h"
 #include <stack>
 #include <Core/Object.h>
 

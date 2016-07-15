@@ -22,6 +22,8 @@ namespace uut
 		int GetBottom() const { return y; }
 		int GetTop() const { return y + height; }
 
+		bool Intersect(const IntVector2& point) const;
+
 		IntRect& operator =(const IntRect& rect);
 		IntRect& operator =(IntRect&& rect);
 

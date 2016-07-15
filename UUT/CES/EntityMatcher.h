@@ -8,38 +8,41 @@ namespace uut
 {
 	class Entity;
 
-	class Matcher
+	class EntityMatcher
 	{
 	public:
-		Matcher();
-		Matcher(const Matcher& matcher);
-		Matcher(Matcher&& matcher);
+		EntityMatcher();
+		EntityMatcher(const EntityMatcher& matcher);
+		EntityMatcher(EntityMatcher&& matcher);
 
 		bool Matches(const SharedPtr<Entity>& entity) const;
 
 		template<typename... Args>
-		static Matcher AllOf()
+		static EntityMatcher AllOf()
 		{
-			Matcher matcher;
+			EntityMatcher matcher;
 			matcher._allof = { TypeOf<Args>()... };
 			return matcher;
 		}
 
 		template<typename... Args>
-		static Matcher AnyOf()
+		static EntityMatcher AnyOf()
 		{
-			Matcher matcher;
+			EntityMatcher matcher;
 			matcher._anyof = { TypeOf<Args>()... };
 			return matcher;
 		}
 
 		template<typename... Args>
-		static Matcher NoneOf()
+		static EntityMatcher NoneOf()
 		{
-			Matcher matcher;
+			EntityMatcher matcher;
 			matcher._noneof = { TypeOf<Args>()... };
 			return matcher;
 		}
+
+		EntityMatcher& operator|=(const EntityMatcher& matcher);
+		EntityMatcher operator|(const EntityMatcher& matcher) const;
 
 	protected:
 		List<const Type*> _allof;
