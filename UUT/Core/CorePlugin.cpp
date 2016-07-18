@@ -27,6 +27,8 @@
 #include "Math/IntVector3.h"
 #include "IO/BinaryReader.h"
 #include "IntPtr.h"
+#include "IO/StreamContainer.h"
+#include "IO/DirectoryContainer.h"
 
 namespace uut
 {
@@ -84,6 +86,8 @@ namespace uut
 		UUT_REGISTER_OBJECT(MemoryStream);
 		UUT_REGISTER_OBJECT(TextReader);
 		UUT_REGISTER_OBJECT(BinaryReader);
+		UUT_REGISTER_OBJECT(StreamContainer);
+		UUT_REGISTER_OBJECT(DirectoryContainer);
 
 		UUT_REGISTER_MODULE(Input);
 

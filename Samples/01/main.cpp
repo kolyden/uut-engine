@@ -394,7 +394,7 @@ namespace uut
 				ImGui::ListBoxHeader("##types");
 				for (auto type : typeList)
 				{
-					const auto typeName = type->ToString();
+					const auto typeName = type->GetName();
 					if (!filter.PassFilter(typeName))
 						continue;
 
@@ -411,7 +411,7 @@ namespace uut
 					ImGui::SameLine();
 					ImGui::BeginGroup();
 
-					ImGui::Text(current->GetName());
+					ImGui::Text(current->GetFullName());
 					
 					for (auto baseType = current->GetBaseType(); baseType != nullptr; baseType = baseType->GetBaseType())
 						ImGui::Text(baseType->GetName());

@@ -15,19 +15,22 @@ namespace uut
 		bool Open(const Path& path, FileMode mode);
 		void Close();
 
-		virtual bool CanRead() const override;
-		virtual bool CanWrite() const override;
-		virtual bool CanSeek() const override;
-		virtual bool IsOpened() const override;
-		virtual bool IsEOF() const override;
-		virtual const Path& GetPath() const override;
+		bool CanRead() const override;
+		bool CanWrite() const override;
+		bool CanSeek() const override;
+		bool IsOpened() const override;
+		bool IsEOF() const override;
+		const Path& GetPath() const override;
 
-		virtual void SetPosition(unsigned position) override;
-		virtual unsigned GetPosition() const override;
-		virtual unsigned GetLength() const override;
+		void SetPosition(unsigned position) override;
+		unsigned GetPosition() const override;
+		unsigned GetLength() const override;
 
-		virtual int Read(void* buffer, unsigned size) override;
-		virtual int Write(const void* buffer, unsigned size) override;
+		int Read(void* buffer, unsigned size) override;
+		int Write(const void* buffer, unsigned size) override;
+
+		static SharedPtr<FileStream> OpenStatic(const Path& path, FileMode mode);
+		static SharedPtr<FileStream> OpenRead(const Path& path) { return OpenStatic(path, FileMode::OpenRead); }
 
 	protected:
 		SDL_RWops* _handle;

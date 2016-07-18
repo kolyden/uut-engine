@@ -5,6 +5,7 @@
 
 namespace uut
 {
+	class StreamContainer;
 	class Resource;
 	class ResourceLoader;
 
@@ -22,6 +23,7 @@ namespace uut
 		ResourceCache();
 		virtual ~ResourceCache();
 
+		void AddContainer(const SharedPtr<StreamContainer>& container);
 		bool AddResource(const SharedPtr<Resource>& resource, const Path& path);
 		
 		SharedPtr<Resource> Find(const Type* type, const Path& path) const;
@@ -40,6 +42,7 @@ namespace uut
 		const ResourceDict& GetResources() const { return GetResources(TypeOf<Resource>()); }
 
 	protected:
+		List<SharedPtr<StreamContainer>> _containers;
 		Dictionary<const Type*, List<SharedPtr<ResourceLoader>>> _loaders;
 		Dictionary<const Type*, ResourceDict> _groups;
 

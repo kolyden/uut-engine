@@ -127,4 +127,33 @@ namespace uut
 
 		return SDL_RWwrite(_handle, buffer, 1, size);
 	}
+
+	SharedPtr<FileStream> FileStream::OpenStatic(const Path& path, FileMode mode)
+	{
+		String fullPath = path.GetFullPath();
+		SDL_RWops* handle = nullptr;
+		switch (mode)
+		{
+		case FileMode::OpenRead:
+			handle = SDL_RWFromFile(fullPath, "rb");
+			break;
+
+		case FileMode::Create:
+			handle = SDL_RWFromFile(fullPath, "wb");
+			break;
+
+		case FileMode::Append:
+			handle = SDL_RWFromFile(fullPath, "ab");
+			break;
+		}
+
+		if (handle == nullptr)
+			return nullptr;
+
+		auto file = MakeShared<FileStream>();
+		file->_handle = handle;
+		file->_path = path;
+		file->_fileMode = FileMode::OpenRead;
+		return file;
+	}
 }

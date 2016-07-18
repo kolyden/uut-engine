@@ -105,7 +105,8 @@ namespace uut
 	template<class T> using SPtr = SharedPtr<T>;
 	template<class T> using WPtr = WeakPtr<T>;
 
-	template<class T, typename... Args>
+	template<class T, typename... Args,
+		class = typename std::enable_if<std::is_constructible<T, Args...>::value, void>::type>
 	static SharedPtr<T> MakeShared(Args... args)
 	{
 		return std::make_shared<T>(args...);

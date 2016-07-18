@@ -27,10 +27,13 @@ namespace uut
 		typedef List<SharedPtr<Attribute>> AttributeList;
 		using REGFUNC = void(*)(Type*);
 
-		Type(const char* name, const Type* base, REGFUNC regfunc);
+		Type(const char* name, const Type* base, REGFUNC regfunc, const char* filename);
 		virtual ~Type();
 
 		const char* GetName() const;
+		const char* GetNamespace() const;
+		const char* GetFullName() const;
+
 		size_t GetHash() const;
 		String ToString() const;
 
@@ -74,6 +77,9 @@ namespace uut
 
 	protected:
 		std::string _name;
+		std::string _namespace;
+		std::string _fullname;
+
 		const size_t _hash;
 		const Type* _base;
 		REGFUNC _regfunc;
@@ -82,6 +88,9 @@ namespace uut
 
 		void Register();
 
+		static std::string GetNamespaceFromFile(const char* filename);
+		static std::string CreateFullName(const std::string& namesp, const std::string& name);
+
 		friend class Context;
 	};
 
@@ -89,18 +98,18 @@ namespace uut
 	class TypeImpl : public Type
 	{
 	public:
-		TypeImpl(const char* name, const Type* base, REGFUNC regfunc)
-			: Type(name, base, regfunc)
+		TypeImpl(const char* name, const Type* base, REGFUNC regfunc, const char* filename)
+			: Type(name, base, regfunc, filename)
 		{
 		}
 
-		TypeImpl(const char* name, REGFUNC regfunc)
-			: Type(name, CtorGetBaseType(), regfunc)
+		TypeImpl(const char* name, REGFUNC regfunc, const char* filename)
+			: Type(name, CtorGetBaseType(), regfunc, filename)
 		{
 		}
 
-		virtual size_t GetSize() const override { return sizeof(C); }
-		virtual void PlacementDtor(void* ptr) const override
+		size_t GetSize() const override { return sizeof(C); }
+		void PlacementDtor(void* ptr) const override
 		{
 			static_cast<C*>(ptr)->~C();
 		}
@@ -142,7 +151,7 @@ namespace uut
 
 #define UUT_BASETYPE_IMPLEMENT_EX(type, name) \
 	Type* type::_GetTypeInternal() \
-	{ static TypeImpl<type> type(name, &type::_RegisterInternal); return &type; } \
+	{ static TypeImpl<type> type(name, &type::_RegisterInternal, __FILE__); return &type; } \
 	void type::_RegisterInternal(Type* internalType)
 
 #define UUT_REGISTER_TYPE(type) Context::RegisterType<type>()

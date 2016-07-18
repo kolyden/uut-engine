@@ -696,6 +696,12 @@
     <ClInclude Include="..\UUT\CES\EntityMatcher.h">
       <Filter>UUT\CES</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\StreamContainer.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\DirectoryContainer.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1054,6 +1060,12 @@
     </ClCompile>
     <ClCompile Include="..\UUT\CES\EntityMatcher.cpp">
       <Filter>UUT\CES</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\StreamContainer.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\DirectoryContainer.cpp">
+      <Filter>UUT\Core\IO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

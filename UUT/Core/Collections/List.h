@@ -316,7 +316,7 @@ namespace uut
 
 		void Insert(uint index, const T& item)
 		{
-			_data.insert(index, item);
+			_data.insert(_data.begin() + index, item);
 		}
 
 		bool TrueForAll(Predicate match) const

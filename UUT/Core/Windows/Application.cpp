@@ -3,6 +3,8 @@
 #include <Video/DX9/DX9Renderer.h>
 #include <Video/Loaders/Texture2DLoader.h>
 #include <Video/Loaders/BitmapFontLoader.h>
+#include <Core/IO/DirectoryContainer.h>
+#include <Core/IO/Directory.h>
 
 namespace uut
 {
@@ -35,7 +37,8 @@ namespace uut
 		if (renderer == nullptr)
 			return;
 
-// 		auto cache = Context::FindModule<ResourceCache>();
+		auto cache = Context::FindModule<ResourceCache>();
+		cache->AddContainer(MakeShared<DirectoryContainer>(""));
 // 		cache->AddLoader(new Texture2DLoader());
 // 		cache->AddLoader(new BitmapFontLoader());
 		renderer->ResetStates();

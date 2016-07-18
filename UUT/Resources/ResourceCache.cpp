@@ -1,6 +1,5 @@
 #include "ResourceCache.h"
-#include <Core/IO/File.h>
-#include <Core/IO/FileStream.h>
+#include <Core/IO/StreamContainer.h>
 #include "Resource.h"
 #include "ResourceLoader.h"
 #include <Core/Debug.h>
@@ -17,6 +16,14 @@ namespace uut
 
 	ResourceCache::~ResourceCache()
 	{
+	}
+
+	void ResourceCache::AddContainer(const SharedPtr<StreamContainer>& container)
+	{
+		if (!container)
+			return;
+
+		_containers.Insert(0, container);
 	}
 
 	bool ResourceCache::AddResource(const SharedPtr<Resource>& resource, const Path& path)
@@ -58,19 +65,22 @@ namespace uut
 		if (it == _loaders.End())
 			return nullptr;
 
-		auto stream = DynamicCast<Stream>(File::OpenRead(path));
-		if (stream == nullptr)
-			return nullptr;
-
-		for (auto& loader : it->second)
+		for (auto& container : _containers)
 		{
-			resource = loader->Load(stream);
-			if (!resource)
+			auto stream = container->Open(path, FileMode::OpenRead);
+			if (stream == nullptr)
 				continue;
 
-			resource->_resourcePath = path;
-			_groups[type][path.GetHash()] = resource;
-			return resource;
+			for (auto& loader : it->second)
+			{
+				resource = loader->Load(stream);
+				if (!resource)
+					continue;
+
+				resource->_resourcePath = path;
+				_groups[type][path.GetHash()] = resource;
+				return resource;
+			}
 		}
 
 		if (!silent)

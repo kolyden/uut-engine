@@ -10,14 +10,16 @@
 
 namespace uut
 {
-	Type::Type(const char* name, const Type* base, REGFUNC regfunc)
+	Type::Type(const char* name, const Type* base, REGFUNC regfunc, const char* filename)
 		: _name(name)
-		, _hash(StringToHast(name))
+		, _namespace(GetNamespaceFromFile(filename))
+		, _fullname(CreateFullName(_namespace, _name))
+		, _hash(StringToHast(_fullname.c_str()))
 		, _base(nullptr)
 		, _regfunc(regfunc)
 	{
 		if (base != nullptr && base != this)
-			_base = base;
+			_base = base;		
 	}
 
 	Type::~Type() {}
@@ -25,6 +27,16 @@ namespace uut
 	const char* Type::GetName() const
 	{
 		return _name.c_str();
+	}
+
+	const char* Type::GetNamespace() const
+	{
+		return _namespace.c_str();
+	}
+
+	const char* Type::GetFullName() const
+	{
+		return _fullname.c_str();
 	}
 
 	size_t Type::GetHash() const
@@ -205,5 +217,58 @@ namespace uut
 	{
 		if (_regfunc != nullptr)
 			_regfunc(this);
+	}
+
+	std::string Type::GetNamespaceFromFile(const char* filename)
+	{
+		std::string name = filename;
+		size_t pos;
+		// replace all slash to backslash
+		while ((pos = name.find("/")) != std::string::npos)
+			name.replace(pos, 1, "\\");
+		// replace all double bakcslash to single backslash
+		while ((pos = name.find("\\\\")) != std::string::npos)
+			name.replace(pos, 2, "");
+
+		pos = name.find("uut\\");
+		if (pos != std::string::npos)
+		{
+			name.erase(0, pos + 4);
+			pos = name.find_last_of('\\');
+			if (pos != std::string::npos)
+			{
+				name.erase(pos);
+
+				std::vector<std::string> vec;
+				while ((pos = name.find('\\')) != std::string::npos)
+				{
+					vec.push_back(name.substr(0, pos));
+					name.erase(0, pos + 1);
+				}
+
+				vec.push_back(name);
+				name.clear();
+
+				for (auto& it : vec)
+				{
+					it[0] = ::toupper(it[0]);
+					if (!name.empty())
+						name += '.';
+
+					name += it;
+				}
+			}
+		}
+		else name.clear();
+
+		return name;
+	}
+
+
+	std::string Type::CreateFullName(const std::string& namesp, const std::string& name)
+	{
+		if (!namesp.empty())
+			return namesp + '.' + name;
+		return name;
 	}
 }

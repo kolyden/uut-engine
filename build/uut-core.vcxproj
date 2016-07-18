@@ -129,6 +129,7 @@
     <ClInclude Include="..\UUT\Core\IntPtr.h" />
     <ClInclude Include="..\UUT\Core\IO\BinaryReader.h" />
     <ClInclude Include="..\UUT\Core\IO\Directory.h" />
+    <ClInclude Include="..\UUT\Core\IO\DirectoryContainer.h" />
     <ClInclude Include="..\UUT\Core\IO\File.h" />
     <ClInclude Include="..\UUT\Core\IO\FileMode.h" />
     <ClInclude Include="..\UUT\Core\IO\FileStream.h" />
@@ -136,6 +137,7 @@
     <ClInclude Include="..\UUT\Core\IO\MemoryStream.h" />
     <ClInclude Include="..\UUT\Core\IO\Path.h" />
     <ClInclude Include="..\UUT\Core\IO\Stream.h" />
+    <ClInclude Include="..\UUT\Core\IO\StreamContainer.h" />
     <ClInclude Include="..\UUT\Core\IO\TextReader.h" />
     <ClInclude Include="..\UUT\Core\Math\Degree.h" />
     <ClInclude Include="..\UUT\Core\Math\Hash.h" />
@@ -258,12 +260,14 @@
     <ClCompile Include="..\UUT\Core\IntPtr.cpp" />
     <ClCompile Include="..\UUT\Core\IO\BinaryReader.cpp" />
     <ClCompile Include="..\UUT\Core\IO\Directory.cpp" />
+    <ClCompile Include="..\UUT\Core\IO\DirectoryContainer.cpp" />
     <ClCompile Include="..\UUT\Core\IO\File.cpp" />
     <ClCompile Include="..\UUT\Core\IO\FileStream.cpp" />
     <ClCompile Include="..\UUT\Core\IO\Input.cpp" />
     <ClCompile Include="..\UUT\Core\IO\MemoryStream.cpp" />
     <ClCompile Include="..\UUT\Core\IO\Path.cpp" />
     <ClCompile Include="..\UUT\Core\IO\Stream.cpp" />
+    <ClCompile Include="..\UUT\Core\IO\StreamContainer.cpp" />
     <ClCompile Include="..\UUT\Core\IO\TextReader.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Degree.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Hash.cpp" />
