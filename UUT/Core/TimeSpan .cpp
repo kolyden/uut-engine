@@ -1,4 +1,6 @@
 #include "TimeSpan .h"
+#include <cstdlib>
+#include "Math/Math.h"
 
 namespace uut
 {
@@ -31,27 +33,27 @@ namespace uut
 
 	int TimeSpan::GetDays() const
 	{
-		return _ticks / TicksPerDay;
+		return div(_ticks, TicksPerDay).quot;
 	}
 
 	int TimeSpan::GetHours() const
 	{
-		return (_ticks / TicksPerHour) % 24;
+		return div(_ticks, TicksPerHour).quot % 24;
 	}
 
 	int TimeSpan::GetMinutes() const
 	{
-		return (_ticks / TicksPerMinute) % 60;
+		return div(_ticks, TicksPerMinute).quot % 60;
 	}
 
 	int TimeSpan::GetSeconds() const
 	{
-		return (_ticks / TicksPerSecond) % 60;
+		return div(_ticks, TicksPerSecond).quot % 60;
 	}
 
 	int TimeSpan::GetMilliseconds() const
 	{
-		return (_ticks / TicksPerMilliseconds) % 1000;;
+		return div(_ticks, TicksPerMilliseconds).quot % 1000;;
 	}
 
 	int64_t TimeSpan::GetTicks() const
@@ -61,22 +63,22 @@ namespace uut
 
 	float TimeSpan::GetTotalDays() const
 	{
-		return static_cast<float>(_ticks) * 1.1574074074074074E-12;
+		return static_cast<float>(_ticks) * 1.1574074074074074E-12f;
 	}
 
 	float TimeSpan::GetTotalHours() const
 	{
-		return static_cast<float>(_ticks) * 2.7777777777777777E-11;
+		return static_cast<float>(_ticks) * 2.7777777777777777E-11f;
 	}
 
 	float TimeSpan::GetTotalMinutes() const
 	{
-		return static_cast<float>(_ticks) * 1.6666666666666667E-09;
+		return static_cast<float>(_ticks) * 1.6666666666666667E-09f;
 	}
 
 	float TimeSpan::GetTotalSeconds() const
 	{
-		return static_cast<float>(_ticks) * 1E-07;
+		return static_cast<float>(_ticks) * 1E-07f;
 	}
 
 	TimeSpan TimeSpan::Add(const TimeSpan& ts) const
@@ -100,6 +102,11 @@ namespace uut
 		return 0;
 	}
 
+	bool TimeSpan::EqualTo(const TimeSpan& ts) const
+	{
+		return _ticks == ts._ticks;
+	}
+
 	int TimeSpan::Compare(const TimeSpan& ts1, const TimeSpan ts2)
 	{
 		if (ts1._ticks > ts2._ticks)
@@ -109,6 +116,11 @@ namespace uut
 			return -1;
 
 		return 0;
+	}
+
+	bool TimeSpan::Equal(const TimeSpan& ts1, const TimeSpan ts2)
+	{
+		return ts1._ticks == ts2._ticks;
 	}
 
 	TimeSpan TimeSpan::FromDays(float days)
@@ -140,7 +152,7 @@ namespace uut
 	TimeSpan TimeSpan::Interval(float value, int scale)
 	{
 		const float num = value * static_cast<float>(scale) + (value >= 0.0f ? 0.5f : -0.5f);
-		return TimeSpan(num * 10000L);
+		return TimeSpan(Math::FloorToInt(num * 10000L));
 	}
 
 	int64_t TimeSpan::TimeToTicks(int hours, int minutes, int seconds)

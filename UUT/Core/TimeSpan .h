@@ -26,8 +26,17 @@ namespace uut
 		TimeSpan Add(const TimeSpan& ts) const;
 		TimeSpan Subtract(const TimeSpan& ts) const;
 		int CompareTo(const TimeSpan& ts) const;
+		bool EqualTo(const TimeSpan& ts) const;
 
 		static int Compare(const TimeSpan& ts1, const TimeSpan ts2);
+		static bool Equal(const TimeSpan& ts1, const TimeSpan ts2);
+
+		bool operator == (const TimeSpan& other) const { return  Equal(*this, other); }
+		bool operator != (const TimeSpan& other) const { return !Equal(*this, other); }
+		bool operator <= (const TimeSpan& other) const { return Compare(*this, other) <= 0; }
+		bool operator >= (const TimeSpan& other) const { return Compare(*this, other) >= 0; }
+		bool operator < (const TimeSpan& other) const { return Compare(*this, other) < 0; }
+		bool operator > (const TimeSpan& other) const { return Compare(*this, other) > 0; }
 
 		static TimeSpan FromDays(float days);
 		static TimeSpan FromHours(float days);

@@ -10,9 +10,9 @@
 
 namespace uut
 {
-	Type::Type(const char* name, const Type* base, REGFUNC regfunc, const char* filename)
-		: _name(name)
-		, _namespace(GetNamespaceFromFile(filename))
+	Type::Type(const char* typeName, const Type* base, REGFUNC regfunc)
+		: _name(GetNameFromTypeid(typeName))
+		, _namespace(GetNamespaceFromTypeid(typeName))
 		, _fullname(CreateFullName(_namespace, _name))
 		, _hash(StringToHast(_fullname.c_str()))
 		, _base(nullptr)
@@ -219,47 +219,41 @@ namespace uut
 			_regfunc(this);
 	}
 
-	std::string Type::GetNamespaceFromFile(const char* filename)
+	std::string Type::GetNameFromTypeid(const char* fullname)
 	{
-		std::string name = filename;
-		size_t pos;
-		// replace all slash to backslash
-		while ((pos = name.find("/")) != std::string::npos)
-			name.replace(pos, 1, "\\");
-		// replace all double bakcslash to single backslash
-		while ((pos = name.find("\\\\")) != std::string::npos)
-			name.replace(pos, 2, "");
-
-		pos = name.find("uut\\");
-		if (pos != std::string::npos)
+		const int count = strlen(fullname);
+		for (int i = count - 1; i >= 0; i--)
 		{
-			name.erase(0, pos + 4);
-			pos = name.find_last_of('\\');
-			if (pos != std::string::npos)
-			{
-				name.erase(pos);
-
-				std::vector<std::string> vec;
-				while ((pos = name.find('\\')) != std::string::npos)
-				{
-					vec.push_back(name.substr(0, pos));
-					name.erase(0, pos + 1);
-				}
-
-				vec.push_back(name);
-				name.clear();
-
-				for (auto& it : vec)
-				{
-					it[0] = ::toupper(it[0]);
-					if (!name.empty())
-						name += '.';
-
-					name += it;
-				}
-			}
+			if (fullname[i] == ':')
+				return &fullname[i + 1];
 		}
-		else name.clear();
+
+		return fullname;
+	}
+
+	std::string Type::GetNamespaceFromTypeid(const char* fullname)
+	{
+		size_t p1 = std::string::npos;
+		size_t p2 = std::string::npos;
+
+		for (size_t i = 0; fullname[i] != NULL; i++)
+		{
+			const char c = fullname[i];
+			if (c == ' ')
+				p1 = i;
+			else if (c == ':')
+				p2 = i;
+		}
+
+		if (p1 == std::string::npos || p2 == std::string::npos)
+			return fullname;
+
+		auto name = std::string(fullname + p1 + 1, p2 - p1);
+		while ((p1 = name.find("::")) != std::string::npos)
+			name.replace(p1, 2, ".");
+
+		if (name.back() == '.')
+			name.resize(name.size() - 1);
 
 		return name;
 	}

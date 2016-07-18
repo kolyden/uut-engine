@@ -1,6 +1,5 @@
 #include "main.h"
 #include <Core/Math/Math.h>
-#include <Core/Math/Rect.h>
 #include <IMGUI/imgui.h>
 #include <Core/Context.h>
 #include <Core/Reflection/PropertyInfo.h>
@@ -18,31 +17,33 @@
 #include <CES/EntityPool.h>
 #include <CES/Entity.h>
 #include <CES/EntityMatcher.h>
-#include <CES/EntityGroup.h>
 #include <Video/Color.h>
 
 namespace uut
 {
-	class TestAttribute : public Attribute
+	namespace Foo
 	{
-		UUT_OBJECT(TestAttribute, Attribute)
-	public:
-		explicit TestAttribute(const String& text) : _text(text) {}
-
-		const String& GetText() const { return _text; }
-
-		String ToString() override
+		class TestAttribute : public Attribute
 		{
-			return Super::ToString() + "(text:'" + _text + "')";
+			UUT_OBJECT(TestAttribute, Attribute)
+		public:
+			explicit TestAttribute(const String& text) : _text(text) {}
+
+			const String& GetText() const { return _text; }
+
+			String ToString() override
+			{
+				return Super::ToString() + "(text:'" + _text + "')";
+			}
+
+		protected:
+			String _text;
+		};
+
+		UUT_OBJECT_IMPLEMENT(TestAttribute)
+		{
+			internalType->AddAttribute(new AttributeUsage(AttributeTarget::All, false, false));
 		}
-
-	protected:
-		String _text;
-	};
-
-	UUT_OBJECT_IMPLEMENT(TestAttribute)
-	{
-		internalType->AddAttribute(new AttributeUsage(AttributeTarget::All, false, false));
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -73,7 +74,7 @@ namespace uut
 			"ValueC", Test::ValueC,
 			"ValueZ", Test::ValueZ);
  		EnumRegisterMemebers<Test>(internalType);
-		internalType->AddAttribute(new TestAttribute("hello"));
+		internalType->AddAttribute(new Foo::TestAttribute("hello"));
 	}
 
 	enum class Direction
@@ -92,7 +93,7 @@ namespace uut
 			"South", Direction::South,
 			"West", Direction::West);
 		EnumRegisterMemebers<Direction>(internalType);
-		internalType->AddAttribute(new TestAttribute("world"));
+		internalType->AddAttribute(new Foo::TestAttribute("world"));
 	}
 
 	namespace detail
@@ -193,6 +194,15 @@ namespace uut
 		}
 	};
 
+	namespace Test2
+	{
+		namespace Foo
+		{
+			class Bar
+			{};
+		}
+	}
+
 	////////////////////////////////////////////////////////////////////////////
 	SampleApp::SampleApp()
 	{
@@ -203,7 +213,7 @@ namespace uut
 	{
 		Context::RegisterType<TestFlags>();
 		UUT_REGISTER_ENUM(Direction);
-		UUT_REGISTER_OBJECT(TestAttribute);
+		UUT_REGISTER_OBJECT(Foo::TestAttribute);
 
 		Context::RegisterModule(new DebugGUI());
 		Context::RegisterModule(new Graphics());

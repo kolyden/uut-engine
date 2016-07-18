@@ -3,8 +3,9 @@
 
 namespace uut
 {
-	struct Version
+	class Version
 	{
+	public:
 		Version();
 		Version(uint16_t _major, uint16_t _minor);
 		Version(uint16_t _major, uint16_t _minor, uint16_t _build);

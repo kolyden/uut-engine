@@ -117,6 +117,7 @@
     <ClInclude Include="..\UUT\Core\Collections\List.h" />
     <ClInclude Include="..\UUT\Core\Context.h" />
     <ClInclude Include="..\UUT\Core\CorePlugin.h" />
+    <ClInclude Include="..\UUT\Core\DateTime.h" />
     <ClInclude Include="..\UUT\Core\Debug.h" />
     <ClInclude Include="..\UUT\Core\Delegate.h" />
     <ClInclude Include="..\UUT\Core\Double.h" />
@@ -250,6 +251,7 @@
     <ClCompile Include="..\UUT\Core\Char.cpp" />
     <ClCompile Include="..\UUT\Core\Context.cpp" />
     <ClCompile Include="..\UUT\Core\CorePlugin.cpp" />
+    <ClCompile Include="..\UUT\Core\DateTime.cpp" />
     <ClCompile Include="..\UUT\Core\Debug.cpp" />
     <ClCompile Include="..\UUT\Core\Double.cpp" />
     <ClCompile Include="..\UUT\Core\Engine.cpp" />
