@@ -77,5 +77,9 @@ namespace uut
 	protected:
 		SharedPtr<Window> _window;
 		IntVector2 _screenSize;
+
+		bool OnInit() override;
+		void OnDone() override;
+		SharedPtr<Texture2D> CreateMonoTexture(const Color32& color);
 	};
 }

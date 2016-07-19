@@ -5,8 +5,9 @@ namespace uut
 {
 	class Rect;
 
-	class IntRect
+	class IntRect : public ValueType
 	{
+		UUT_VALUETYPE(IntRect, ValueType)
 	public:
 		IntRect();
 		IntRect(int x, int y, int width, int height);

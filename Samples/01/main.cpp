@@ -18,6 +18,7 @@
 #include <CES/Entity.h>
 #include <CES/EntityMatcher.h>
 #include <Video/Color.h>
+#include <Video/Sprite.h>
 
 namespace uut
 {
@@ -65,7 +66,7 @@ namespace uut
 		ValueC,
 		ValueZ = 42,
 	};
-	UUT_ENUMFLAG(TestFlags, Test);
+	UUT_ENUMFLAG(TestFlags, Test)
 	UUT_ENUMFLAG_IMPLEMENT(TestFlags, Test)
 	{
 		RegisterValues(
@@ -141,7 +142,7 @@ namespace uut
 	};
 	UUT_VALUETYPE_IMPLEMENT(UIWidget) {}
 
-	UUT_COMPONENT(UIImage, SharedPtr<Texture2D>, texture)
+	UUT_COMPONENT(UIImage, SharedPtr<Sprite>, sprite)
 	UUT_COMPONENT(UIColor, Color32, color)
 
 	class UILabel : public Component
@@ -177,7 +178,8 @@ namespace uut
 
 				const auto r = ToScreenSpace(pos->rect);
 				Graphics::Instance()->DrawQuad(
-					r, 15, img ? img->texture : nullptr,
+					r, 15, img ? img->sprite->GetTexture() : nullptr,
+					img ? img->sprite->GetTextureRect() : Rect::Zero,
 					col ? col->color : Color32::White);
 
 				if (txt == nullptr || !txt->font || txt->text.IsEmpty())
@@ -203,6 +205,36 @@ namespace uut
 		}
 	}
 
+	template<class C>
+	static SharedPtr<C> LoadResource(const Path& path, const Dictionary<HashString, Variant>& params = Dictionary<HashString, Variant>::Empty)
+	{
+		static ModuleInstance<ResourceCache> cache;
+
+		const bool silent = params.Contains("silent");
+		return cache->Load<C>(path, silent);
+	}
+
+	template<>
+	static SharedPtr<Sprite> LoadResource<Sprite>(const Path& path, const Dictionary<HashString, Variant>& params)
+	{
+		static ModuleInstance<ResourceCache> cache;
+
+		const bool silent = params.Contains("silent");
+		auto tex = cache->Load<Texture2D>(path, silent);
+		if (tex == nullptr)
+			return nullptr;
+
+		auto it = params.Find("rect");
+		if (it != params.End())
+		{
+			IntRect rect;
+			if (it->second.TryGet<IntRect>(rect))
+				return Sprite::FromTexture(tex, rect);
+		}
+
+		return Sprite::FromTexture(tex, IntRect(0, 0, tex->GetSize()));
+	}
+
 	////////////////////////////////////////////////////////////////////////////
 	SampleApp::SampleApp()
 	{
@@ -220,7 +252,8 @@ namespace uut
 
 		Graphics::Instance()->SetProjection(Graphics::PM_2D);
 		ModuleInstance<ResourceCache> cache;
-		_tex = cache->Load<Texture2D>("rogueliketiles.png");
+		_tex = LoadResource<Texture2D>("rogueliketiles.png", { {"silent", nullptr} });
+			// cache->Load<Texture2D>("rogueliketiles.png");
 		_font = cache->Load<Font>("Consolas.fnt");
 
 		Variant var1(Vector2(12.111f, 45.6789f));
@@ -263,8 +296,7 @@ namespace uut
 		_pool->AddSystem(new UIImageRender());
 		_pool->CreateEntity()->
 			Add<UIWidget>(20, 20, 200, 50)->
-			Add<UIImage>(cache->Load<Texture2D>("brick_dark0.png"))->
-			Add<UIColor>(Color::Green);
+			Add<UIImage>(LoadResource<Sprite>("rogueliketiles.png", { {"rect", IntRect(0, 5 * 16, 32, 32)} }));
 		_pool->CreateEntity()->
 			Add<UIWidget>(20, 80, 200, 50)->
 			Add<UIColor>(Color::Red)->

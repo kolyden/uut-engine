@@ -5,6 +5,11 @@
 
 namespace uut
 {
+	UUT_VALUETYPE_IMPLEMENT(IntRect)
+	{}
+
+	const IntRect IntRect::Zero(0, 0, 0, 0);
+
 	IntRect::IntRect()
 	{
 	}
@@ -93,4 +98,6 @@ namespace uut
 	{
 		return IntRect(left, bottom, right - left, top - bottom);
 	}
+
+
 }

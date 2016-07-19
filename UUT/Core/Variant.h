@@ -29,6 +29,7 @@ namespace uut
 	{
 	public:
 		Variant();
+		Variant(nullptr_t);
 		Variant(const Type* type);
 
 		// FUNDAMENTAL

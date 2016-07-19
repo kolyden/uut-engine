@@ -47,5 +47,7 @@ namespace uut
 		Dictionary<const Type*, ResourceDict> _groups;
 
 		bool OnInit() override;
+
+		void InternalAddResource(const SharedPtr<Resource>& resource);
 	};
 }

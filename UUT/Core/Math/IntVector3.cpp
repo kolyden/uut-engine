@@ -4,6 +4,7 @@
 #include "IntVector2.h"
 #include <Core/Reflection/ConstructorInfo.h>
 #include <Core/Reflection/ConverterInfo.h>
+#include <Core/Math/Hash.h>
 
 namespace uut
 {
@@ -108,5 +109,10 @@ namespace uut
 	IntVector2 IntVector3::ToVector2() const
 	{
 		return IntVector2(x, y);
+	}
+
+	size_t IntVector3::GetHashCode() const
+	{
+		return Hash::Make<size_t>(x, y, z);
 	}
 }

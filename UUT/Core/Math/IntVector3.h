@@ -32,6 +32,7 @@ namespace uut
 		friend IntVector3 operator * (int s, const IntVector3& vec) { return IntVector3(vec.x*s, vec.y*s, vec.z*s); }
 
 		IntVector2 ToVector2() const;
+		size_t GetHashCode() const;
 
 		void Set(int i) { x = i; y = i; }
 		void Set(int ix, int iy) { x = ix; y = iy; }

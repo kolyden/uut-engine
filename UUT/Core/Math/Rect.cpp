@@ -5,6 +5,9 @@
 
 namespace uut
 {
+	const Rect Rect::Zero(0, 0, 0, 0);
+	const Rect Rect::One(0, 0, 1, 1);
+
 	Rect::Rect()
 	{
 	}

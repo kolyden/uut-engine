@@ -32,7 +32,7 @@ namespace uut
 			return false;
 
 		resource->_resourcePath = path;
-		_groups[resource->GetType()][path.GetHash()] = resource;
+		InternalAddResource(resource);
 		return true;
 	}
 
@@ -78,7 +78,7 @@ namespace uut
 					continue;
 
 				resource->_resourcePath = path;
-				_groups[type][path.GetHash()] = resource;
+				InternalAddResource(resource);
 				return resource;
 			}
 		}
@@ -123,5 +123,12 @@ namespace uut
 		}
 
 		return true;
+	}
+
+	void ResourceCache::InternalAddResource(const SharedPtr<Resource>& resource)
+	{
+		const size_t hash = resource->GetResourcePath().GetHash();
+		for (auto type = resource->GetType(); type != TypeOf<Resource>(); type = type->GetBaseType())
+			_groups[type][hash] = resource;
 	}
 }

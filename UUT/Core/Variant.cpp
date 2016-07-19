@@ -14,6 +14,11 @@ namespace uut
 	{
 	}
 
+	Variant::Variant(nullptr_t)
+		: _type(VariantType::Empty)
+		, _dataType(nullptr)
+	{}
+
 	Variant::Variant(const Type* type)
 		: _type(VariantType::Type)
 		, _dataType(type)
