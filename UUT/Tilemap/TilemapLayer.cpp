@@ -8,6 +8,7 @@ namespace uut
 
 	TilemapLayer::TilemapLayer()
 		: _active(true)
+		, _visible(true)
 	{		
 	}
 
@@ -29,6 +30,16 @@ namespace uut
 	bool TilemapLayer::IsActive() const
 	{
 		return _active;
+	}
+
+	void TilemapLayer::SetVisible(bool visible)
+	{
+		_visible = visible;
+	}
+
+	bool TilemapLayer::IsVisible() const
+	{
+		return _visible;
 	}
 
 	SharedPtr<Tilemap> TilemapLayer::GetTilemap() const

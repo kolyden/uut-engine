@@ -6,16 +6,17 @@
 
 namespace uut
 {
+	class BaseTest;
+
 	class TestbedApp : public Application
 	{
 	public:
 		TestbedApp();
 
 	protected:
-		static const int texSize = 402;
-
-		SharedPtr<DebugGUI> _gui;
-		SharedPtr<Graphics> _graphics;
+		ModuleInstance<DebugGUI> _gui;
+		ModuleInstance<Graphics> _graphics;
+		SharedPtr<BaseTest> _currentTest;
 
 		virtual void OnInit() override;
 		virtual void OnFrame() override;

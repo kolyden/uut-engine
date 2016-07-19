@@ -3,48 +3,35 @@
 
 namespace uut
 {
-	class Graphics;
-	class ObjectLayer;
+	class ObjectLayerItem;
 
-	class ObjectLayerItem
-	{
-	public:
-		ObjectLayerItem() : _zorder(0) {}
-		virtual ~ObjectLayerItem() {}
-
-		void SetPosition(const IntVector2& position) { _position = position; }
-
-		virtual void Update(float deltaTime) {}
-		virtual void Draw(Graphics* graphics) const {}
-		virtual bool IsBlocked() const { return true; }
-
-	protected:
-		IntVector2 _position;
-		int _zorder;
-		WeakPtr<ObjectLayer> _layer;
-
-		virtual void OnInit() {}
-
-		friend class ObjectLayer;
-	};
-
-	typedef List<SharedPtr<ObjectLayerItem>> ObjectLayerItemList;
-
-	////////////////////////////////////////////////////////////////////////////
 	class ObjectLayer : public TilemapLayer
 	{
 		UUT_OBJECT(ObjectLayer, TilemapLayer)
 	public:
+		typedef List<SharedPtr<ObjectLayerItem>> ObjectLayerItemList;
+
 		ObjectLayer();
 
-		void AddItem(const IntVector2& position, SharedPtr<ObjectLayerItem> item);
-		SharedPtr<ObjectLayerItem> GetItem(const IntVector2& position) const;
+		void AddItem(const IntVector2& position, const SharedPtr<ObjectLayerItem>& item);
 		const ObjectLayerItemList& GetItems() const;
 
-		void SetSize(const IntVector2& size) override;
-		void Update(float deltaTime) override;
+		const SharedPtr<ObjectLayerItem>& GetItemAt(const IntVector2& position) const;
+
+		template<class T, typename... Args,
+			class = typename std::enable_if<std::is_constructible<ObjectLayerItem, Args...>::value, void>::type,
+			class = typename std::enable_if<std::is_base_of<ObjectLayerItem, T>::value, void>::type>
+		SharedPtr<T> CreateItem(const IntVector2& position, Args&&... args)
+		{
+			auto item = MakeShared<T>(std::forward<Args>(args)...);
+			AddItem(position, item);
+			return item;
+		}
 
 	protected:
 		ObjectLayerItemList _items;
+
+		void OnUpdate(float deltaTime) override;
+		void OnRender() const override;
 	};
 }

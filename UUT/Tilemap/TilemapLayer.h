@@ -1,6 +1,7 @@
 #pragma once
 #include <Core/Object.h>
 #include <Core/Math/IntVector2.h>
+#include <Video/Vertex.h>
 
 namespace uut
 {
@@ -18,15 +19,20 @@ namespace uut
 		void SetActive(bool active);
 		bool IsActive() const;
 
-		SharedPtr<Tilemap> GetTilemap() const;
+		void SetVisible(bool visible);
+		bool IsVisible() const;
 
-		virtual void SetSize(const IntVector2& size) = 0;
-		virtual void Update(float deltaTime) = 0;
+		SharedPtr<Tilemap> GetTilemap() const;
 
 	protected:
 		WeakPtr<Tilemap> _tilemap;
 		String _name;
 		bool _active;
+		bool _visible;
+
+		virtual void OnSetSize(const IntVector2& size) {};
+		virtual void OnUpdate(float deltaTime) {}
+		virtual void OnRender() const {};
 
 		friend class Tilemap;
 	};

@@ -1,5 +1,6 @@
 #pragma once
 #include <Core/Object.h>
+#include <Core/Module.h>
 
 namespace uut
 {
@@ -16,8 +17,8 @@ namespace uut
 		virtual void Render() const;
 
 	protected:
-		SharedPtr<Graphics> _graphics;
-		WeakPtr<ResourceCache> _cache;
+		ModuleInstance<Graphics> _graphics;
+		ModuleInstance<ResourceCache> _cache;
 
 		virtual void OnUpdate(float deltaTime) {}
 		virtual void OnRender() const {}

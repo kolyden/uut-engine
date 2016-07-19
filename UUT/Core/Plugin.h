@@ -5,12 +5,11 @@
 
 namespace uut
 {
-
-
 	class Plugin
 	{
 	public:
 		Plugin(const HashString& name, const Version& version);
+		virtual ~Plugin() {}
 
 		const HashString& GetPluginName() const;
 		const Version& GetPluginVersion() const;

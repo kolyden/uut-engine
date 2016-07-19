@@ -37,9 +37,13 @@ namespace uut
 		StdShared& GetShared() { return _data; }
 		const StdShared& GetShared() const { return _data; }
 
+		static const SharedPtr<T> Empty;
+
 	protected:
 		StdShared _data;
 	};
+
+	template<class T> const SharedPtr<T> SharedPtr<T>::Empty;
 
 	//////////////////////////////////////////////////////////
 	template<class T>
@@ -107,8 +111,8 @@ namespace uut
 
 	template<class T, typename... Args,
 		class = typename std::enable_if<std::is_constructible<T, Args...>::value, void>::type>
-	static SharedPtr<T> MakeShared(Args... args)
+	static SharedPtr<T> MakeShared(Args&&... args)
 	{
-		return std::make_shared<T>(args...);
+		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
 }

@@ -10,10 +10,11 @@
 #include <Tilemap/Tileset.h>
 #include <Video/Graphics.h>
 #include <Resources/ResourceCache.h>
+#include <Tilemap/ObjectLayerItem.h>
 
 namespace uut
 {
-	enum Direction {North, East, South, West};
+	enum class Direction {North, East, South, West};
 	struct CellInfo
 	{
 		bool blocked;
@@ -23,12 +24,8 @@ namespace uut
 	{
 		UUT_OBJECT(CellInfoLayer, TilemapLayer)
 	public:
-
 		void SetBlocked(int x, int y, bool blocked) { Get(x, y).blocked = blocked; }
 		bool IsBlocked(int x, int y) const { return Get(x, y).blocked; }
-
-		void Update(float deltaTime) override {}
-		void DrawLayer(Graphics* graphics) const override {}
 	};
 
 	UUT_OBJECT_IMPLEMENT(CellInfoLayer)
@@ -37,37 +34,31 @@ namespace uut
 	////////////////////////////////////////////////////////////////////////////
 	class MapDoor : public ObjectLayerItem
 	{
+		UUT_OBJECT(MapDoor, ObjectLayerItem)
 	public:
-		MapDoor(TilesetLayer* layer, uint8_t doorClosed, uint8_t doorOpen, bool opened = false)
+		MapDoor(const SharedPtr<TilesetLayer>& layer, uint8_t doorClosed, uint8_t doorOpen, bool opened = false)
 			: _tilelayer(layer)
 			, _tileClosed(doorClosed)
 			, _tileOpened(doorOpen)
-			, _opened(opened)
-		{}
-
-		void SetOpened(bool opened)
 		{
-			if (_opened == opened)
+			_flags.SetValue(ObjectLayerFlag::Blocked, !opened);
+		}
+
+		void SetBlocked(bool blocked)
+		{
+			if (IsBlocked() == blocked)
 				return;
 
-			_opened = opened;
+			_flags.SetValue(ObjectLayerFlag::Blocked, blocked);
 			UpdateTile();
 		}
 
-		bool IsOpened() const
-		{
-			return _opened;
-		}
-
-		virtual void Update(float deltaTime) override {}
-		virtual void Draw(Graphics* graphics) const override {}
-		virtual bool IsBlocked() const override { return !IsOpened(); }
+		void SetOpened(bool opened) { SetBlocked(!opened); }
 
 	protected:
-		WeakPtr<TilesetLayer> _tilelayer;
+		SharedPtr<TilesetLayer> _tilelayer;
 		uint8_t _tileClosed;
 		uint8_t _tileOpened;
-		bool _opened;
 
 		virtual void OnInit() override
 		{
@@ -77,22 +68,30 @@ namespace uut
 		void UpdateTile()
 		{
 			_tilelayer->SetTile(_position.x, _position.y,
-				_opened ? _tileOpened : _tileClosed);
+				IsBlocked() ? _tileClosed : _tileOpened);
 		}
 	};
+	UUT_OBJECT_IMPLEMENT(MapDoor) {}
 
 	////////////////////////////////////////////////////////////////////////////
 	class Player : public ObjectLayerItem
 	{
+		UUT_OBJECT(Player, ObjectLayerItem)
 	public:
-		Player(Texture2D* tex, CellInfoLayer* passability)
-			: _texture(tex), _passability(passability), _moving(false)
+		Player(const SharedPtr<Texture2D>& tex, const SharedPtr<CellInfoLayer>& passability)
+			: _texture(tex)
+			, _passability(passability)
+			, _moving(false)
 		{
 		}
 
-		void Update(float deltaTime) override
+		void OnUpdate(float deltaTime) override
 		{
 			if (!_moving)
+				return;
+
+			auto layer = _layer.Lock();
+			if (!layer)
 				return;
 
 			const float moveTime = 0.1f;
@@ -106,7 +105,7 @@ namespace uut
 			else
 			{
 				const float t = 1.0f - _time / moveTime;
-				const auto& size = _layer->GetTilemap()->GetCellSize();
+				const auto& size = layer->GetTilemap()->GetCellSize();
 				switch (_moveDir)
 				{
 				case Direction::West: _offset = Vector2::Scale(size, Vector2(+t, 0)); break;
@@ -120,6 +119,10 @@ namespace uut
 		void Move(Direction dir)
 		{
 			if (_moving)
+				return;
+
+			auto layer = _layer.Lock();
+			if (!layer)
 				return;
 
 			static const Dictionary<Direction, IntVector2> dirOffset = {
@@ -137,12 +140,12 @@ namespace uut
 			if (_passability->IsBlocked(newPos.x, newPos.y))
 				return;
 
-			auto item = _layer->GetItem(newPos);
+			auto item = layer->GetItemAt(newPos);
 			if (item != nullptr)
 			{
 				if (item->IsBlocked())
 				{
-					auto door = dynamic_cast<MapDoor*>(item);
+					auto door = DynamicCast<MapDoor>(item);
 					if (door == nullptr)
 						return;
 
@@ -155,7 +158,7 @@ namespace uut
 			_moving = true;
 			_moveDir = dir;
 			_time = 0;
-			Update(0);
+			OnUpdate(0);
 		}
 
 		void Move(int dx, int dy)
@@ -163,9 +166,14 @@ namespace uut
 			SetPosition(_position + IntVector2(dx, dy));
 		}
 
-		void Draw(Graphics* graphics) const override
+		void OnRender() const override
 		{
-			auto tilemap = _layer->GetTilemap();
+			static ModuleInstance<Graphics> graphics;
+			auto layer = _layer.Lock();
+			if (!layer)
+				return;
+
+			auto tilemap = layer->GetTilemap();
 			auto& size = tilemap->GetSize();
 			auto& cellSize = tilemap->GetCellSize();
 
@@ -175,18 +183,19 @@ namespace uut
 
 	protected:
 		SharedPtr<Texture2D> _texture;
-		WeakPtr<CellInfoLayer> _passability;
+		SharedPtr<CellInfoLayer> _passability;
 		bool _moving;
 		Direction _moveDir;
 		float _time;
 		Vector2 _offset;
 	};
 
+	UUT_OBJECT_IMPLEMENT(Player) {}
+
 	////////////////////////////////////////////////////////////////////////////
 	UUT_OBJECT_IMPLEMENT(TestTilemap)
 	{
-		Attribute::AddAttribute<ClassName>(
-			new TestItemAttribute(TestCategory::Basic, "Tilemap"));
+		internalType->AddAttribute(new TestItemAttribute(TestCategory::Basic, "Tilemap"));
 	}
 
 	TestTilemap::TestTilemap()
@@ -194,10 +203,10 @@ namespace uut
 		_tilemap = new Tilemap();
 		_tilemap->SetSize(IntVector2(11));
 		_tilemap->SetCellSize(Vector2(32));
-		auto layer1 = _tilemap->AddLayer<TilesetLayer>("Tiles");
-		auto layer2 = _tilemap->AddLayer<TilesetLayer>("Objects");
-		auto layer3 = _tilemap->AddLayer<ObjectLayer>("Characters");
-		auto layer4 = _tilemap->AddLayer<CellInfoLayer>("Passability");
+		auto layer1 = _tilemap->CreateLayer<TilesetLayer>("Tiles");
+		auto layer2 = _tilemap->CreateLayer<TilesetLayer>("Objects");
+		auto layer3 = _tilemap->CreateLayer<ObjectLayer>("Characters");
+		auto layer4 = _tilemap->CreateLayer<CellInfoLayer>("Passability");
 
 		auto tileset = new Tileset();
 		tileset->SetTexture(_cache->Load<Texture2D>("rogueliketiles.png"));
@@ -263,6 +272,6 @@ namespace uut
 	void TestTilemap::OnRender() const
 	{
 		if (_tilemap)
-			_tilemap->Draw(_graphics);
+			_tilemap->Render();
 	}
 }

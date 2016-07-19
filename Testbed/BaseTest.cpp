@@ -10,8 +10,6 @@ namespace uut
 
 	BaseTest::BaseTest()
 	{
-		_cache = Context::FindModule<ResourceCache>();
-		_graphics = new Graphics();
 	}
 
 	void BaseTest::Update(float deltaTime)

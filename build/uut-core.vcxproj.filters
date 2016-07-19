@@ -639,18 +639,6 @@
     <ClInclude Include="..\UUT\Core\IntPtr.h">
       <Filter>UUT\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\TilemapRender.h">
-      <Filter>UUT\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\TilemapChunk.h">
-      <Filter>UUT\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\TilesetLayerRender.h">
-      <Filter>UUT\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\ObjectLayerRender.h">
-      <Filter>UUT\Tilemap</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Tilemap\BlockedLayer.h">
       <Filter>UUT\Tilemap</Filter>
     </ClInclude>
@@ -704,6 +692,15 @@
     </ClInclude>
     <ClInclude Include="..\UUT\Core\DateTime.h">
       <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\ObjectLayerItem.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\ObjectLayerFlags.h">
+      <Filter>UUT\Tilemap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Tilemap\TilemapPlugin.h">
+      <Filter>UUT\Tilemap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1019,18 +1016,6 @@
     <ClCompile Include="..\UUT\Core\IntPtr.cpp">
       <Filter>UUT\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\TilemapRender.cpp">
-      <Filter>UUT\Tilemap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\TilemapChunk.cpp">
-      <Filter>UUT\Tilemap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\TilesetLayerRender.cpp">
-      <Filter>UUT\Tilemap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\ObjectLayerRender.cpp">
-      <Filter>UUT\Tilemap</Filter>
-    </ClCompile>
     <ClCompile Include="..\UUT\Tilemap\BlockedLayer.cpp">
       <Filter>UUT\Tilemap</Filter>
     </ClCompile>
@@ -1072,6 +1057,15 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Core\DateTime.cpp">
       <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\ObjectLayerItem.cpp">
+      <Filter>UUT\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\ObjectLayerFlags.cpp">
+      <Filter>UUT\Tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Tilemap\TilemapPlugin.cpp">
+      <Filter>UUT\Tilemap</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

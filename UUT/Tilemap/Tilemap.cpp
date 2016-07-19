@@ -12,14 +12,14 @@ namespace uut
 	{
 	}
 
-	void Tilemap::AddLayer(SharedPtr<TilemapLayer> layer)
+	void Tilemap::AddLayer(const SharedPtr<TilemapLayer>& layer)
 	{
 		if (layer == nullptr || !layer->_tilemap.Expired())
 			return;
 
 		layer->_tilemap = GetSharedThis();
 		_layers << layer;
-		layer->SetSize(_size);
+		layer->OnSetSize(_size);
 	}
 
 	void Tilemap::SetSize(const IntVector2& size)
@@ -29,7 +29,7 @@ namespace uut
 
 		_size = size;
 		for (auto& it : _layers)
-			it->SetSize(_size);
+			it->OnSetSize(_size);
 	}
 
 	void Tilemap::SetCellSize(const Vector2& size)
@@ -53,7 +53,16 @@ namespace uut
 		for (auto& it : _layers)
 		{
 			if (it->IsActive())
-				it->Update(deltaTime);
+				it->OnUpdate(deltaTime);
+		}
+	}
+
+	void Tilemap::Render()
+	{
+		for (auto& it : _layers)
+		{
+			if (it->IsVisible())
+				it->OnRender();
 		}
 	}
 }

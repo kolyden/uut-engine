@@ -1,5 +1,7 @@
 #include "main.h"
 #include <Windows.h>
+#include "TestTilemap.h"
+#include <Core/Time.h>
 
 namespace uut
 {
@@ -10,24 +12,32 @@ namespace uut
 
 	void TestbedApp::OnInit()
 	{
-		_gui = new DebugGUI();
-		_graphics = new Graphics();
+		Context::RegisterModule(new Graphics());
+		Context::RegisterModule(new DebugGUI());
+
 		_graphics->SetProjection(Graphics::PM_2D);
+		_currentTest = new TestTilemap();
 	}
 
 	void TestbedApp::OnFrame()
 	{
 		_gui->NewFrame();
+		static ModuleInstance<Renderer> renderer;
 
-		_renderer->Clear(Color32(114, 144, 154));
-		if (_renderer->BeginScene())
+		if (_currentTest)
+			_currentTest->Update(Time::GetDeltaTime());
+
+		renderer->Clear(Color32(114, 144, 154));
+		if (renderer->BeginScene())
 		{
+			if (_currentTest)
+				_currentTest->Render();
 			_graphics->Flush();
 
 			_gui->SetupCamera();
 			_gui->Draw();
 
-			_renderer->EndScene();
+			renderer->EndScene();
 		}
 	}
 }

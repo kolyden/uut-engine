@@ -13,7 +13,7 @@ namespace uut
 	public:
 		Tilemap();
 
-		void AddLayer(SharedPtr<TilemapLayer> layer);
+		void AddLayer(const SharedPtr<TilemapLayer>& layer);
 
 		template<class C, std::enable_if_t<std::is_base_of<TilemapLayer, C>::value>* = nullptr>
 		C* CreateLayer(const String& name = String::Empty)
@@ -37,6 +37,7 @@ namespace uut
 		void Clear();
 
 		void Update(float deltaTime);
+		void Render();
 
 	protected:
 		IntVector2 _size;

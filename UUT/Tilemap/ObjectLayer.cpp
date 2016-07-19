@@ -1,4 +1,5 @@
 #include "ObjectLayer.h"
+#include "ObjectLayerItem.h"
 
 namespace uut
 {
@@ -9,7 +10,7 @@ namespace uut
 	{
 	}
 
-	void ObjectLayer::AddItem(const IntVector2& position, SharedPtr<ObjectLayerItem> item)
+	void ObjectLayer::AddItem(const IntVector2& position, const SharedPtr<ObjectLayerItem>& item)
 	{
 		if (!item)
 			return;
@@ -20,7 +21,7 @@ namespace uut
 		item->OnInit();
 	}
 
-	SharedPtr<ObjectLayerItem> ObjectLayer::GetItem(const IntVector2& position) const
+	const SharedPtr<ObjectLayerItem>& ObjectLayer::GetItemAt(const IntVector2& position) const
 	{
 		for (auto& item : _items)
 		{
@@ -28,21 +29,23 @@ namespace uut
 				return item;
 		}
 
-		return nullptr;
+		return SharedPtr<ObjectLayerItem>::Empty;
 	}
 
-	const ObjectLayerItemList& ObjectLayer::GetItems() const
+	const ObjectLayer::ObjectLayerItemList& ObjectLayer::GetItems() const
 	{
 		return _items;
 	}
 
-	void ObjectLayer::SetSize(const IntVector2& size)
-	{
-	}
-
-	void ObjectLayer::Update(float deltaTime)
+	void ObjectLayer::OnUpdate(float deltaTime)
 	{
 		for (auto& item : _items)
-			item->Update(deltaTime);
+			item->OnUpdate(deltaTime);
+	}
+
+	void ObjectLayer::OnRender() const
+	{
+		for (auto& item : _items)
+			item->OnRender();
 	}
 }

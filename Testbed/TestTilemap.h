@@ -14,7 +14,7 @@ namespace uut
 
 	protected:
 		SharedPtr<Tilemap> _tilemap;
-		WeakPtr<Player> _player;
+		SharedPtr<Player> _player;
 
 		virtual void OnUpdate(float deltaTime) override;
 		virtual void OnRender() const override;

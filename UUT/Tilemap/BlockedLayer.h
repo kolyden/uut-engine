@@ -10,7 +10,5 @@ namespace uut
 		BlockedLayer();
 
 		bool MakePath(const IntVector2& start, const IntVector2& end, List<IntVector2>& path);
-
-		void Update(float deltaTime) override {}
 	};
 }

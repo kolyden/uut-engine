@@ -23,8 +23,8 @@ namespace uut
 	public:
 		Tileset();
 
-		void SetTexture(SharedPtr<Texture2D> texture);
-		SharedPtr<Texture2D> GetTexture() const;
+		void SetTexture(const SharedPtr<Texture2D>& texture);
+		const SharedPtr<Texture2D>& GetTexture() const;
 
 		void SetItems(const List<TilesetItem>& items);
 		const List<TilesetItem>& GetItems() const;

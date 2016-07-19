@@ -20,19 +20,19 @@ namespace uut
 		static Ret Make(Args... args)
 		{
 			Ret hash = 2166136261;
-			_make<Ret>(hash, args...);
+			_MakeHash<Ret>(hash, args...);
 			return hash;
 		}
 
 	protected:
 		template<typename Ret, typename T>
-		static void _make(Ret& hash, T value)
+		static void _MakeHash(Ret& hash, T value)
 		{
 			hash = (hash * 16777619) ^ value;
 		}
 
 		template<typename Ret, typename T, typename... Args>
-		static void _make(Ret& hash, T value, Args... args)
+		static void _MakeHash(Ret& hash, T value, Args... args)
 		{
 			hash = (hash * 16777619) ^ value;
 			_MakeHash<Ret>(hash, args...);

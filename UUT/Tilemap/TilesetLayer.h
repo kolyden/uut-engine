@@ -18,8 +18,8 @@ namespace uut
 		void SetTransparent(bool transparent);
 		bool GetTransparent() const;
 
-		void SetTileset(SharedPtr<Tileset> tileset);
-		SharedPtr<Tileset> GetTileset() const;
+		void SetTileset(const SharedPtr<Tileset>& tileset);
+		const SharedPtr<Tileset>& GetTileset() const;
 
 		void SetTile(int x, int y, uint8_t tile);
 		uint8_t GetTile(int x, int y) const;
@@ -29,14 +29,14 @@ namespace uut
 		void Clear();
 		void ForEach(IterateFunc func);
 
-		virtual void SetSize(const IntVector2& size) override;
-		virtual void Update(float deltaTime) override;
-
 	protected:
 		SharedPtr<Tileset> _tileset;
 		List<uint8_t> _tiles;
 		IntVector2 _size;
 		bool _transparent;
+
+		virtual void OnSetSize(const IntVector2& size) override;
+		virtual void OnRender() const override;
 
 		int Pos2Index(int x, int y) const;
 		IntVector2 Index2Pos(int index) const;

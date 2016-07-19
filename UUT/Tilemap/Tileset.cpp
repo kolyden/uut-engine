@@ -11,7 +11,7 @@ namespace uut
 	{
 	}
 
-	void Tileset::SetTexture(SharedPtr<Texture2D> texture)
+	void Tileset::SetTexture(const SharedPtr<Texture2D>& texture)
 	{
 		if (_texture == texture)
 			return;
@@ -20,7 +20,7 @@ namespace uut
 		UpdateNormalizedRects();
 	}
 
-	SharedPtr<Texture2D> Tileset::GetTexture() const
+	const SharedPtr<Texture2D>& Tileset::GetTexture() const
 	{
 		return _texture;
 	}
@@ -62,14 +62,14 @@ namespace uut
 		if (!_texture)
 			return;
 
-		const Vector2 size = _texture->GetSize();
+		const IntVector2& size = _texture->GetSize();
 		for (auto& item : _items)
 		{
 			item.normalizedRect = Rect(
-				1.0f * item.textureRect.x / size.x,
-				1.0f * item.textureRect.y / size.y,
-				1.0f * item.textureRect.width / size.x,
-				1.0f * item.textureRect.height / size.y);
+				1.0f * item.textureRect.x / (size.x - 1),
+				1.0f * item.textureRect.y / (size.y - 1),
+				1.0f * item.textureRect.width / (size.x - 1),
+				1.0f * item.textureRect.height / (size.y - 1));
 		}
 	}
 }

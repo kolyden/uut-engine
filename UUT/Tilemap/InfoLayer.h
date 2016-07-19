@@ -17,7 +17,7 @@ namespace uut
 		T& Get(int x, int y) { return _data[PosToIndex(x, y)]; }
 		const T& Get(int x, int y) const { return _data[PosToIndex(x, y)]; }
 
-		void SetSize(const IntVector2& size) override
+		void OnSetSize(const IntVector2& size) override
 		{
 			_size = size;
 			_data.SetSize(_size.Area());

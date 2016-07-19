@@ -1,6 +1,7 @@
 #include "TilesetLayer.h"
 #include "Tileset.h"
 #include "Tilemap.h"
+#include <Video/Graphics.h>
 
 namespace uut
 {
@@ -23,12 +24,12 @@ namespace uut
 		return _transparent;
 	}
 
-	void TilesetLayer::SetTileset(SharedPtr<Tileset> tileset)
+	void TilesetLayer::SetTileset(const SharedPtr<Tileset>& tileset)
 	{
 		_tileset = tileset;
 	}
 
-	SharedPtr<Tileset> TilesetLayer::GetTileset() const
+	const SharedPtr<Tileset>& TilesetLayer::GetTileset() const
 	{
 		return _tileset;
 	}
@@ -69,46 +70,44 @@ namespace uut
 		}
 	}
 
-	void TilesetLayer::SetSize(const IntVector2& size)
+	////////////////////////////////////////////////////////////////////
+	void TilesetLayer::OnSetSize(const IntVector2& size)
 	{
 		_size = size;
 		_tiles.SetSize(_size.Area());
 		Clear();
 	}
 
-	void TilesetLayer::Update(float deltaTime)
+	void TilesetLayer::OnRender() const
 	{
+		if (!_tileset)
+			return;
+
+		auto tilemap = _tilemap.Lock();
+		if (!tilemap)
+			return;
+
+		ModuleInstance<Graphics> graphics;
+		const auto& cellSize = tilemap->GetCellSize();
+		graphics->SetMaterial(_transparent ? Graphics::MT_TRANSPARENT : Graphics::MT_OPAQUE);
+		auto tex = _tileset->GetTexture();
+		auto& items = _tileset->GetItems();
+		for (int y = 0; y < _size.y; y++)
+		{
+			for (int x = 0; x < _size.x; x++)
+			{
+				int index = Pos2Index(x, y);
+				auto tile = _tiles[index];
+				if (tile == EMPTY_TILE)
+					continue;
+				auto& item = items[tile];
+				graphics->DrawQuad(
+					Rect(cellSize.x*x, cellSize.y*(tilemap->GetSize().y - y - 1), cellSize.x, cellSize.y),
+					20, tex, item.normalizedRect);
+			}
+		}
 	}
 
-	//void TilesetLayer::DrawLayer(Graphics* graphics) const
-	//{
-	//	if (_tileset == nullptr)
-	//		return;
-
-	//	const auto& cellSize = _tilemap->GetCellSize();
-
-	//	graphics->SetMaterial(_transparent ? Graphics::MT_TRANSPARENT : Graphics::MT_OPAQUE);
-	//	auto tex = _tileset->GetTexture();
-	//	auto& items = _tileset->GetItems();
-
-	//	for (int y = 0; y < _size.y; y++)
-	//	{
-	//		for (int x = 0; x < _size.x; x++)
-	//		{
-	//			int index = Pos2Index(x, y);
-	//			auto tile = _tiles[index];
-	//			if (tile == EMPTY_TILE)
-	//				continue;
-
-	//			auto& item = items[tile];
-	//			graphics->DrawQuad(
-	//				Rect(cellSize.x*x, cellSize.y*(_tilemap->GetSize().y - y - 1), cellSize.x, cellSize.y),
-	//				20, tex, item.normalizedRect);
-	//		}
-	//	}
-	//}
-
-	////////////////////////////////////////////////////////////////////
 	int TilesetLayer::Pos2Index(int x, int y) const
 	{
 		return y*_size.x + x;

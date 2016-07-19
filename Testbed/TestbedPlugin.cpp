@@ -7,7 +7,7 @@
 namespace uut
 {
 	TestbedPlugin::TestbedPlugin()
-		: Plugin("Testbed", PluginVersion(0, 1))
+		: Plugin("Testbed", Version(0, 1))
 	{
 	}
 
