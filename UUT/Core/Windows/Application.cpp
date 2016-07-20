@@ -28,9 +28,9 @@ namespace uut
 		_window->SetSize(IntVector2(_windowSize));
 		_window->Create();
 
-		Context::RegisterModule(new Input());
-		Context::RegisterModule(new ResourceCache());
-		Context::RegisterModule(DX9Renderer::Create(_window));
+		Context::CreateModule<Input>();
+		Context::CreateModule<ResourceCache>();
+		Context::AddModule(DX9Renderer::Create(_window));
 
 		auto input = Context::FindModule<Input>();
 		auto renderer = Context::FindModule<Renderer>();

@@ -8,24 +8,24 @@
 
 namespace uut
 {
-	class MethodInfo : public MemberInfo
+	class IMethodInfo : public IMemberInfo
 	{
 	public:
 		typedef List<const Type*> ArgsTypes;
 
-		explicit MethodInfo(const String& name, MethodAttributes attributes);
+		IMethodInfo(const String& name, MethodAttributes attributes);
+
+		virtual MemberType GetMemberType() const override;
+		virtual const String& GetName() const override;
+
+		bool IsPrivate() const;
+		bool IsPublic() const;
+		bool IsStatic() const;
 
 		virtual const ArgsTypes& GetArgsTypes() const = 0;
 		virtual const Type* GetReturnType() const = 0;
 		virtual bool Call(const List<Variant>& args) const = 0;
 		virtual bool Call(const List<Variant>& args, Variant& result) const = 0;
-
-		virtual MemberType GetMemberType() const override { return MemberType::Method; }
-		virtual const String& GetName() const override { return _name; }
-
-		bool IsPrivate() const { return _attributes.HasFlag(MethodAttribute::Private); }
-		bool IsPublic() const { return _attributes.HasFlag(MethodAttribute::Public); }
-		bool IsStatic() const { return _attributes.HasFlag(MethodAttribute::Static); }
 
 	protected:
 		String _name;
@@ -34,7 +34,7 @@ namespace uut
 
 	//////////////////////////////////////////////////////////////////////////
 	template<typename Ret, typename... Args>
-	class StaticFunctionInfo : public MethodInfo
+	class StaticFunctionInfo : public IMethodInfo
 	{
 	public:
 		using FuncType = Ret(*)(Args...);
@@ -42,7 +42,7 @@ namespace uut
 		static const size_t ARGS_COUNT = sizeof...(Args);
 
 		StaticFunctionInfo(const String& name, FuncType function)
-			: MethodInfo(name, MethodAttribute::Static)
+			: IMethodInfo(name, MethodAttribute::Static)
 			, _function(function)
 		{}
 
@@ -89,15 +89,15 @@ namespace uut
 
 	//////////////////////////////////////////////////////////////////////////
 	template<class C, typename Ret, typename... Args>
-	class MethodInfoImpl : public MethodInfo
+	class MethodInfo : public IMethodInfo
 	{
 	public:
 		using FuncType = Ret(C::*)(Args...);
 		typedef std::tuple<typename TypeUnpack<Args>::type...> TUPLE;
 		static const size_t ARGS_COUNT = sizeof...(Args);
 
-		MethodInfoImpl(const String& name, FuncType function)
-			: MethodInfo(name, MethodAttribute::Public)
+		MethodInfo(const String& name, FuncType function)
+			: IMethodInfo(name, MethodAttribute::Public)
 			, _function(function)
 		{}
 
@@ -140,4 +140,5 @@ namespace uut
 		{
 			return _function(std::get<S>(params)...);
 		}
-	}; }
+	};
+ }

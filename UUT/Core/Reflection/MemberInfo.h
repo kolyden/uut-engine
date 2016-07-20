@@ -4,11 +4,11 @@
 
 namespace uut
 {
-	class MemberInfo
+	class IMemberInfo
 	{
 	public:
-		MemberInfo();
-		virtual ~MemberInfo();
+		IMemberInfo();
+		virtual ~IMemberInfo();
 
 		virtual MemberType GetMemberType() const = 0;
 		virtual const String& GetName() const = 0;

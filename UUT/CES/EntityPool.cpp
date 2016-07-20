@@ -12,10 +12,10 @@ namespace uut
 		return entity;
 	}
 
-	void EntityPool::Update()
+	void EntityPool::Update(float deltaTime)
 	{
 		for (auto& system : _systems)
-			system->Update();
+			system->Update(deltaTime);
 	}
 
 	void EntityPool::Render()

@@ -11,27 +11,27 @@ namespace uut
 		constexpr EnumFlagsImpl(int value) : EnumValueImpl<T>(static_cast<T>(value)) {}
 		constexpr EnumFlagsImpl(T value) : EnumValueImpl<T>(value) {}
 
-		void SetValue(T value, bool isSet)
+		void SetFlag(T value, bool isSet)
 		{
-			isSet ? SetValue(value) : ClearValue(value);
+			isSet ? SetFlag(value) : ClearFlag(value);
 		}
 
-		void SetValue(T value)
+		void SetFlag(T value)
 		{
 			EnumValueImpl<T>::_value = EnumValueImpl<T>::_value | static_cast<int>(value);
 		}
 
-		void ClearValue(T value)
+		void ClearFlag(T value)
 		{
 			EnumValueImpl<T>::_value = EnumValueImpl<T>::_value & ~static_cast<int>(value);
 		}
 
-		void ToggleValue(T value)
+		void ToggleFlag(T value)
 		{
-			HasValue(value) ? ClearValue(value) : SetValue(value);
+			HasFlag(value) ? ClearFlag(value) : SetFlag(value);
 		}
 
-		bool HasValue(T value) const
+		bool HasFlag(T value) const
 		{
 			return (EnumValueImpl<T>::_value & static_cast<int>(value)) == static_cast<int>(value);
 		}
@@ -41,7 +41,7 @@ namespace uut
 			String out;
 			for (T val : Enum<T>::GetValues())
 			{
-				if (!HasValue(val))
+				if (!HasFlag(val))
 					continue;
 
 				if (!out.IsEmpty())

@@ -59,7 +59,7 @@ namespace uut
 			if (it->GetMemberType() != MemberType::Constructor)
 				continue;
 
-			auto ctor = static_cast<const ConstructorInfo*>(it);
+			auto ctor = static_cast<const IConstructorInfo*>(it);
 			if (ctor->GetArgsTypes().Count() != 0)
 				continue;
 
@@ -132,17 +132,17 @@ namespace uut
 		return list;
 	}
 
-	void Type::AddMember(MemberInfo* member)
+	void Type::AddMember(IMemberInfo* member)
 	{
 		_members << member;
 	}
 
-	const List<const MemberInfo*>& Type::GetMembers() const
+	const List<const IMemberInfo*>& Type::GetMembers() const
 	{
 		return _members;
 	}
 
-	const MemberInfo* Type::FindMember(const String& name) const
+	const IMemberInfo* Type::FindMember(const String& name) const
 	{
 		if (name.IsEmpty())
 			return nullptr;
@@ -156,13 +156,13 @@ namespace uut
 		return nullptr;
 	}
 
-	List<const PropertyInfo*> Type::GetProperties() const
+	List<const IPropertyInfo*> Type::GetProperties() const
 	{
-		List<const PropertyInfo*> list;
+		List<const IPropertyInfo*> list;
 		for (uint i = 0; i < _members.Count(); i++)
 		{
 			if (_members[i]->GetMemberType() == MemberType::Property)
-				list << static_cast<const PropertyInfo*>(_members[i]);
+				list << static_cast<const IPropertyInfo*>(_members[i]);
 		}
 
 		return list;
@@ -195,7 +195,7 @@ namespace uut
 				if (info->GetMemberType() != MemberType::Converter)
 					continue;
 
-				auto converter = static_cast<const ConverterInfo*>(info);
+				auto converter = static_cast<const IConverterInfo*>(info);
 				if (converter->GetResultType() != resultType)
 					continue;
 

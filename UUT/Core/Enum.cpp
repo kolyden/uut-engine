@@ -10,7 +10,7 @@ namespace uut
 		UUT_REGISTER_CONVERTER_FUNC(int, GetValue);
 	}
 
-	void EnumValue::SetValue(int value)
+	void EnumValue::SetFlag(int value)
 	{
 		_value = value;
 	}

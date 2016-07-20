@@ -1,4 +1,5 @@
 #pragma once
+#include <Core/Enum.h>
 
 namespace uut
 {
@@ -6,8 +7,9 @@ namespace uut
 	{
 		Constructor,
 		Converter,
-// 		Event,
+		Event,
 		Method,
 		Property,
 	};
+	UUT_ENUM(MemberType)
 }

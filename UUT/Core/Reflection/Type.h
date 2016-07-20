@@ -7,8 +7,8 @@ namespace uut
 {
 	class Attribute;
 	class String;
-	class MemberInfo;
-	class PropertyInfo;
+	class IMemberInfo;
+	class IPropertyInfo;
 	class Object;
 	class ValueType;
 
@@ -55,10 +55,10 @@ namespace uut
 		{ return static_cast<const C*>(FindAttribute(TypeOf<C>())); }
 
 		// MEMBERS
-		void AddMember(MemberInfo* member);
-		const List<const MemberInfo*>& GetMembers() const;
-		const MemberInfo* FindMember(const String& name) const;
-		List<const PropertyInfo*> GetProperties() const;
+		void AddMember(IMemberInfo* member);
+		const List<const IMemberInfo*>& GetMembers() const;
+		const IMemberInfo* FindMember(const String& name) const;
+		List<const IPropertyInfo*> GetProperties() const;
 
 		const Type* GetBaseType() const;
 
@@ -83,7 +83,7 @@ namespace uut
 		const size_t _hash;
 		const Type* _base;
 		REGFUNC _regfunc;
-		List<const MemberInfo*> _members;
+		List<const IMemberInfo*> _members;
 		AttributeList _attributes;
 
 		void Register();

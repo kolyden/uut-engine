@@ -6,10 +6,10 @@
 
 namespace uut
 {
-	class PropertyInfo : public MemberInfo
+	class IPropertyInfo : public IMemberInfo
 	{
 	public:
-		explicit PropertyInfo(const String& name, FieldAttribute attributes);
+		explicit IPropertyInfo(const String& name, FieldAttribute attributes);
 
 		MemberType GetMemberType() const override;
 		const String& GetName() const override;
@@ -32,14 +32,14 @@ namespace uut
 
 	////////////////////////////////////////////////////////////////////////////
 	template<class C, typename T>
-	class PropertyInfoImpl : public PropertyInfo
+	class PropertyInfo : public IPropertyInfo
 	{
 	public:
 		typedef std::function<void(C*, T)> Setter;
 		typedef std::function<T(const C*)> Getter;
 
-		PropertyInfoImpl(const String& name, Getter getter, Setter setter)
-			: PropertyInfo(name, FieldAttribute::Public)
+		PropertyInfo(const String& name, Getter getter, Setter setter)
+			: IPropertyInfo(name, FieldAttribute::Public)
 			, _getter(getter)
 			, _setter(setter)
 		{			
@@ -68,14 +68,14 @@ namespace uut
 
 	////////////////////////////////////////////////////////////////////////////
 	template<typename T>
-	class StaticPropertyInfo : public PropertyInfo
+	class StaticPropertyInfo : public IPropertyInfo
 	{
 	public:
 		typedef std::function<void(T)> Setter;
 		typedef std::function<T()> Getter;
 
 		StaticPropertyInfo(const String& name, Getter getter, Setter setter)
-			: PropertyInfo(name, FieldAttribute::Public)
+			: IPropertyInfo(name, FieldAttribute::Public)
 			, _getter(getter)
 			, _setter(setter)
 		{

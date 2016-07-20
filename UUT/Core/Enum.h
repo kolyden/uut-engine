@@ -10,7 +10,7 @@ namespace uut
 	public:
 		explicit constexpr EnumValue(int value) : _value(value) {}
 
-		void SetValue(int value);
+		void SetFlag(int value);
 		int GetValue() const;
 
 	protected:

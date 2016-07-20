@@ -30,9 +30,9 @@ namespace uut
 			return false;
 
 		_inited = true;
-		Context::AddPlugin(new CorePlugin());
-		Context::AddPlugin(new VideoPlugin());
-		Context::AddPlugin(new DX9Plugin());
+		Context::CreatePlugin<CorePlugin>();
+		Context::CreatePlugin<VideoPlugin>();
+		Context::CreatePlugin<DX9Plugin>();
 
 		Context::Init();
 

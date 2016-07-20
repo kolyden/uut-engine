@@ -5,12 +5,12 @@
 
 namespace uut
 {
-	class ConstructorInfo : public MemberInfo
+	class IConstructorInfo : public IMemberInfo
 	{
 	public:
 		typedef List<const Type*> ArgsTypes;
 
-		MemberType GetMemberType() const override { return MemberType::Constructor; }
+		MemberType GetMemberType() const override;
 		const String& GetName() const override;
 
 		virtual const ArgsTypes& GetArgsTypes() const = 0;
@@ -18,25 +18,8 @@ namespace uut
 	};
 
 	//////////////////////////////////////////////////////////////////////////
-	template<class C>
-	class DefaultCtorInfo : public ConstructorInfo
-	{
-	public:
-		virtual const ArgsTypes& GetArgsTypes() const override
-		{
-			return ArgsTypes::Empty;
-		}
-
-		virtual bool Call(void* ptr, const List<Variant>& args = List<Variant>::Empty) const override
-		{
-			new (ptr) C();
-			return true;
-		}
-	};
-
-	//////////////////////////////////////////////////////////////////////////
 	template<class C, typename... Args>
-	class ConstructorInfoImpl : public ConstructorInfo
+	class ConstructorInfo : public IConstructorInfo
 	{
 	public:
 		typedef std::tuple<typename TypeUnpack<Args>::type...> TUPLE;
@@ -66,6 +49,23 @@ namespace uut
 		}
 	};
 
-#define UUT_REGISTER_CTOR_DEFAULT() internalType->AddMember(new DefaultCtorInfo<ClassName>());
-#define UUT_REGISTER_CTOR(...) internalType->AddMember(new ConstructorInfoImpl<ClassName, __VA_ARGS__>());
+	//////////////////////////////////////////////////////////////////////////
+	template<class C>
+	class ConstructorInfo<C> : public IConstructorInfo
+	{
+	public:
+		virtual const ArgsTypes& GetArgsTypes() const override
+		{
+			return ArgsTypes::Empty;
+		}
+
+		virtual bool Call(void* ptr, const List<Variant>& args = List<Variant>::Empty) const override
+		{
+			new (ptr) C();
+			return true;
+		}
+	};
+
+#define UUT_REGISTER_CTOR_DEFAULT() internalType->AddMember(new ConstructorInfo<ClassName>());
+#define UUT_REGISTER_CTOR(...) internalType->AddMember(new ConstructorInfo<ClassName, __VA_ARGS__>());
 }

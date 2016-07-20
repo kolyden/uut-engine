@@ -19,7 +19,7 @@ namespace uut
 		void SetFlags(const ObjectLayerFlags& flags);
 		const ObjectLayerFlags& GetFlags() const;
 
-		bool IsBlocked() const { return _flags.HasValue(ObjectLayerFlag::Blocked); }
+		bool IsBlocked() const { return _flags.HasFlag(ObjectLayerFlag::Blocked); }
 
 	protected:
 		IntVector2 _position;

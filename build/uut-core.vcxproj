@@ -298,6 +298,7 @@
     <ClCompile Include="..\UUT\Core\Reflection\FieldAttribute.cpp" />
     <ClCompile Include="..\UUT\Core\Reflection\MemberInfo.cpp" />
     <ClCompile Include="..\UUT\Core\Reflection\MemberType.cpp" />
+    <ClCompile Include="..\UUT\Core\Reflection\MethodAttributes.cpp" />
     <ClCompile Include="..\UUT\Core\Reflection\MethodInfo.cpp" />
     <ClCompile Include="..\UUT\Core\Reflection\PropertyInfo.cpp" />
     <ClCompile Include="..\UUT\Core\Reflection\Type.cpp" />

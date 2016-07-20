@@ -16,7 +16,7 @@ namespace uut
 		EntityPool* _pool;
 
 		virtual void Init() {}
-		virtual void Update() {}
+		virtual void Update(float deltaTime) {}
 		virtual void Render() {}
 
 		friend class EntityPool;

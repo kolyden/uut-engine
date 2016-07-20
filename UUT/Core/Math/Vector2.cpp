@@ -13,7 +13,7 @@ namespace uut
 		UUT_REGISTER_CONVERTER_DEFAULT(IntVector2);
 
 		internalType->AddMember(
-			new PropertyInfoImpl<Vector2, float>("length",
+			new PropertyInfo<Vector2, float>("length",
 				[](const Vector2* obj) -> float { return obj->Length(); }, nullptr));
 	}
 

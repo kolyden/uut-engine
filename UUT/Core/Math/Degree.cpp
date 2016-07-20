@@ -27,7 +27,12 @@ namespace uut
 		UUT_REGISTER_CONVERTER_FUNC(float, GetRadians);
 	}
 
-	const Degree Degree::Zero;
+	const Degree Degree::Zero(0);
+	const Degree Degree::Angle0(0);
+	const Degree Degree::Angle45(45);
+	const Degree Degree::Angle90(90);
+	const Degree Degree::Angle180(180);
+	const Degree Degree::Angle270(270);
 
 	Degree::Degree(const Radian& angle)
 		: _angle(angle.GetDegrees())

@@ -12,8 +12,8 @@ namespace uut
 
 	void TestbedApp::OnInit()
 	{
-		Context::RegisterModule(new Graphics());
-		Context::RegisterModule(new DebugGUI());
+		Context::CreateModule<Graphics>();
+		Context::CreateModule<DebugGUI>();
 
 		_graphics->SetProjection(Graphics::PM_2D);
 		_currentTest = new TestTilemap();

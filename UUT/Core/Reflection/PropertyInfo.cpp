@@ -2,33 +2,33 @@
 
 namespace uut
 {
-	PropertyInfo::PropertyInfo(const String& name, FieldAttribute attributes)
+	IPropertyInfo::IPropertyInfo(const String& name, FieldAttribute attributes)
 		: _name(name)
 		, _attributes(attributes)
 	{
 	}
 
-	MemberType PropertyInfo::GetMemberType() const
+	MemberType IPropertyInfo::GetMemberType() const
 	{
 		return MemberType::Property;
 	}
 
-	bool PropertyInfo::IsPublic() const
+	bool IPropertyInfo::IsPublic() const
 	{
 		return _attributes == FieldAttribute::Public;
 	}
 
-	bool PropertyInfo::IsPrivate() const
+	bool IPropertyInfo::IsPrivate() const
 	{
 		return _attributes == FieldAttribute::Private;
 	}
 
-	bool PropertyInfo::IsStatic() const
+	bool IPropertyInfo::IsStatic() const
 	{
 		return _attributes == FieldAttribute::Static;
 	}
 
-	const String& PropertyInfo::GetName() const
+	const String& IPropertyInfo::GetName() const
 	{
 		return _name;
 	}

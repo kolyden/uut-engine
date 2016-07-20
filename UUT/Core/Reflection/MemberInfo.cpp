@@ -2,11 +2,11 @@
 
 namespace uut
 {
-	MemberInfo::MemberInfo()
+	IMemberInfo::IMemberInfo()
 	{
 	}
 
-	MemberInfo::~MemberInfo()
+	IMemberInfo::~IMemberInfo()
 	{
 	}
 }

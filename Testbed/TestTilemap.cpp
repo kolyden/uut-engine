@@ -41,7 +41,7 @@ namespace uut
 			, _tileClosed(doorClosed)
 			, _tileOpened(doorOpen)
 		{
-			_flags.SetValue(ObjectLayerFlag::Blocked, !opened);
+			_flags.SetFlag(ObjectLayerFlag::Blocked, !opened);
 		}
 
 		void SetBlocked(bool blocked)
@@ -49,7 +49,7 @@ namespace uut
 			if (IsBlocked() == blocked)
 				return;
 
-			_flags.SetValue(ObjectLayerFlag::Blocked, blocked);
+			_flags.SetFlag(ObjectLayerFlag::Blocked, blocked);
 			UpdateTile();
 		}
 

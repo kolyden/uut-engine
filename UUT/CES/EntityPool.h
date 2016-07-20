@@ -20,7 +20,7 @@ namespace uut
 		void AddSystem(const SharedPtr<EntitySystem>& system);
 		SharedPtr<EntityGroup> AddGroup(const EntityMatcher& matcher);
 
-		void Update();
+		void Update(float deltaTime);
 		void Render();
 
 		List<SharedPtr<Entity>> GetEntities(const EntityMatcher& matcher) const;

@@ -1,8 +1,9 @@
 #include "HashString.h"
-#include <algorithm>
 
 namespace uut
 {
+	const HashString HashString::Empty;
+
 	HashString::HashString()
 		: _hash(0)
 	{
@@ -70,7 +71,7 @@ namespace uut
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	int HashString::CalcHash(const std::string& str)
+	size_t HashString::CalcHash(const std::string& str)
 	{
 		static std::hash<std::string> hashfn;
 

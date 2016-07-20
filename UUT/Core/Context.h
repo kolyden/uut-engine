@@ -39,6 +39,15 @@ namespace uut
 		//static void RemovePlugin()
 		static const PluginList& GetPlugins() { return _plugins; }
 
+		template<class C, typename... Args,
+			class = typename std::enable_if<std::is_base_of<Plugin, C>::value, void>::type,
+			class = typename std::enable_if<std::is_constructible<C, Args...>::value, void>::type>
+		static void CreatePlugin(Args&&... args)
+		{
+			auto plugin = MakeShared<C>(std::forward<Args>(args)...);
+			AddPlugin(plugin);
+		}
+
 		// TYPES
 		static bool RegisterType(Type* type);
 		static const Type* FindType(const HashString& name);
@@ -53,11 +62,21 @@ namespace uut
 		template<class C> static bool RegisterType() { return RegisterType(C::_GetTypeInternal()); }
 
 		// MODULES
-		static void RegisterModule(const SharedPtr<Module>& module);
+		static void AddModule(const SharedPtr<Module>& module);
 		static Module* FindModule(const Type* type);
 		static Module* FindModule(const HashString& name);
 		template<class C>static C* FindModule()
 		{ return dynamic_cast<C*>(FindModule(TypeOf<C>())); }
+
+		template<class C, typename... Args,
+			class = typename std::enable_if<std::is_base_of<Module, C>::value, void>::type,
+			class = typename std::enable_if<std::is_constructible<C, Args...>::value, void>::type>
+		static C* CreateModule(Args&&... args)
+		{
+			auto module = MakeShared<C>(std::forward<Args>(args)...);
+			AddModule(module);
+			return module;
+		}
 
 		// ATTRIBUTES
 		static const AttributeList& GetAttributes(const Type* type);

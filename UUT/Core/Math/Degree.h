@@ -60,6 +60,11 @@ namespace uut
 		bool operator>  (const Degree& d) const { return _angle > d._angle; }
 
 		static const Degree Zero;
+		static const Degree Angle0;
+		static const Degree Angle45;
+		static const Degree Angle90;
+		static const Degree Angle180;
+		static const Degree Angle270;
 
 	protected:
 		float _angle;

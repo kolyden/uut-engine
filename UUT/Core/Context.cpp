@@ -144,7 +144,7 @@ namespace uut
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	void Context::RegisterModule(const SharedPtr<Module>& module)
+	void Context::AddModule(const SharedPtr<Module>& module)
 	{
 		if (module == nullptr)
 			return;
