@@ -702,6 +702,9 @@
     <ClInclude Include="..\UUT\Tilemap\TilemapPlugin.h">
       <Filter>UUT\Tilemap</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Video\TextureAtlas.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1069,6 +1072,9 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Reflection\MethodAttributes.cpp">
       <Filter>UUT\Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\TextureAtlas.cpp">
+      <Filter>UUT\Video</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

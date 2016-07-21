@@ -18,6 +18,7 @@
 #include "Loaders/BitmapFontLoader.h"
 #include "Font.h"
 #include "BitmapFont.h"
+#include "TextureAtlas.h"
 
 namespace uut
 {
@@ -39,6 +40,7 @@ namespace uut
 		UUT_REGISTER_OBJECT(Texture);
 		UUT_REGISTER_OBJECT(Texture2D);
 		UUT_REGISTER_OBJECT(Sprite);
+		UUT_REGISTER_OBJECT(TextureAtlas);
 
 		UUT_REGISTER_OBJECT(Camera);
 		UUT_REGISTER_OBJECT(FreeCamera);

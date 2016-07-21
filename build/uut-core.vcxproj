@@ -226,6 +226,7 @@
     <ClInclude Include="..\UUT\Video\Sprite.h" />
     <ClInclude Include="..\UUT\Video\Texture.h" />
     <ClInclude Include="..\UUT\Video\Texture2D.h" />
+    <ClInclude Include="..\UUT\Video\TextureAtlas.h" />
     <ClInclude Include="..\UUT\Video\Topology.h" />
     <ClInclude Include="..\UUT\Video\Vertex.h" />
     <ClInclude Include="..\UUT\Video\VertexBuffer.h" />
@@ -351,6 +352,7 @@
     <ClCompile Include="..\UUT\Video\Sprite.cpp" />
     <ClCompile Include="..\UUT\Video\Texture.cpp" />
     <ClCompile Include="..\UUT\Video\Texture2D.cpp" />
+    <ClCompile Include="..\UUT\Video\TextureAtlas.cpp" />
     <ClCompile Include="..\UUT\Video\Vertex.cpp" />
     <ClCompile Include="..\UUT\Video\VertexBuffer.cpp" />
     <ClCompile Include="..\UUT\Video\VertexDeclaration.cpp" />
