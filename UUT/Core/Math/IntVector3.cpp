@@ -24,6 +24,9 @@ namespace uut
 	const IntVector3 IntVector3::Down(0, -1, 0);
 	const IntVector3 IntVector3::Forward(0, 0, 1);
 	const IntVector3 IntVector3::Back(0, 0, -1);
+	const IntVector3 IntVector3::AxisX(1, 0, 0);
+	const IntVector3 IntVector3::AxisY(0, 1, 0);
+	const IntVector3 IntVector3::AxisZ(0, 0, 1);
 
 	IntVector3::IntVector3()
 	{

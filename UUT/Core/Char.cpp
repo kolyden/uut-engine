@@ -9,4 +9,17 @@ namespace uut
 		UUT_REGISTER_CONVERTER_DEFAULT(unsigned);
 // 		UUT_REGISTER_CONVERTER_DEFAULT(wchar_t);
 	}
+
+	const List<char> Char::WhiteSpaces = { ' ', '\n', '\t' };
+
+	bool Char::IsWhiteSpace(char c)
+	{
+		for (auto& it : WhiteSpaces)
+		{
+			if (c == it)
+				return true;
+		}
+
+		return false;
+	}
 }

@@ -330,9 +330,6 @@
     <ClInclude Include="..\UUT\Video\FreeCamera.h">
       <Filter>UUT\Video</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\Video\Geometry.h">
-      <Filter>UUT\Video</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Video\Graphics.h">
       <Filter>UUT\Video</Filter>
     </ClInclude>
@@ -705,6 +702,12 @@
     <ClInclude Include="..\UUT\Video\TextureAtlas.h">
       <Filter>UUT\Video</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Video\Mesh.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Material.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -932,9 +935,6 @@
     <ClCompile Include="..\UUT\Video\FreeCamera.cpp">
       <Filter>UUT\Video</Filter>
     </ClCompile>
-    <ClCompile Include="..\UUT\Video\Geometry.cpp">
-      <Filter>UUT\Video</Filter>
-    </ClCompile>
     <ClCompile Include="..\UUT\Video\Graphics.cpp">
       <Filter>UUT\Video</Filter>
     </ClCompile>
@@ -1074,6 +1074,12 @@
       <Filter>UUT\Core\Reflection</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Video\TextureAtlas.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Mesh.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Material.cpp">
       <Filter>UUT\Video</Filter>
     </ClCompile>
   </ItemGroup>

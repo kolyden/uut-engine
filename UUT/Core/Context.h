@@ -100,5 +100,6 @@ namespace uut
 		static void Done();
 
 		friend class Engine;
+		friend class Application;
 	};
 }

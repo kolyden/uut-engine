@@ -5,16 +5,19 @@
 #include <Core/Math/Vector2.h>
 #include <Video/Color.h>
 #include <Video/Color32.h>
+#include <Video/Vertex.h>
 
 namespace uut
 {
+	class Matrix4;
+
 	// hardware? vertex and index buffer
-	class Geometry : public Object
+	class Mesh : public Object
 	{
-		UUT_OBJECT(Geometry, Object)
+		UUT_OBJECT(Mesh, Object)
 	public:
-		Geometry();
-		virtual ~Geometry();
+		Mesh();
+		virtual ~Mesh();
 
 // 		void Fill(const List<Vertex>& verts, const List<uint32_t>& indexes);
 // 		void Apply();
@@ -41,6 +44,9 @@ namespace uut
 		List<Vector2>& GetUV() { return _uv; }
 		List<Color32>& GetColors32() { return _colors; }
 		List<uint32_t>& GetIndexes() { return _indexes; }
+
+		void AddGeometry(const SharedPtr<Mesh>& other);
+		void AddGeometry(const SharedPtr<Mesh>& other, const Matrix4& transform);
 
 // 		void AddQuad(const rect2f& rect, const Vector3& tex0, const Vector3& tex1, const DWORD color);
 // 		void AddQuad(const rect2f& rect, const rect2f& tex, const DWORD color);

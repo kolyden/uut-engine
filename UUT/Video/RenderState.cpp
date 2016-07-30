@@ -46,6 +46,9 @@ namespace uut
 	{
 	}
 
+	const BlendingState BlendingState::Texture{ BlendOperation::Add, BlendFactor::SrcAlpha, BlendFactor::InvSrcAlpha };
+	const BlendingState BlendingState::Alpha{ BlendOperation::Add, BlendFactor::One, BlendFactor::One };
+
 	RenderState::RenderState()
 		: zbuffer(ZBufferMode::ZBuffer)
 		, zwriteEnable(false)

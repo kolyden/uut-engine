@@ -18,6 +18,7 @@ namespace uut
 	class Texture2D;
 	class VertexBuffer;
 	class IndexBuffer;
+	class Material;
 
 	enum RenderTransform
 	{
@@ -69,6 +70,7 @@ namespace uut
 		virtual bool Clear(const Color32& color = Color32::White, float z = 1.0f, uint32_t stencil = 0) = 0;
 		virtual bool Present() = 0;
 
+		virtual SharedPtr<Material> CreateMaterial();
 		virtual SharedPtr<Texture2D> CreateTexture(const IntVector2& size, TextureAccess access = TextureAccess::Streaming) = 0;
 		virtual SharedPtr<VertexBuffer> CreateVertexBuffer(uint32_t size) = 0;
 		virtual SharedPtr<IndexBuffer> CreateIndexBuffer(uint32_t size, bool use32 = false) = 0;

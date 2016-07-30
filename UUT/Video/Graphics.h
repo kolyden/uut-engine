@@ -7,8 +7,9 @@
 
 namespace uut
 {
+	class Material;
 	class Font;
-	class Geometry;
+	class Mesh;
 	class Rect;
 	class Vector3;
 	struct Vertex;
@@ -32,6 +33,7 @@ namespace uut
 		{
 			MT_OPAQUE,
 			MT_TRANSPARENT,
+			MT_CUSTOM,
 		};
 
 		Graphics();
@@ -39,6 +41,8 @@ namespace uut
 
 		void SetProjection(ProjectionMode mode);
 		void SetMaterial(MaterialType type);
+		void SetMaterial(const SharedPtr<Material>& material);
+		void SetFillMode(FillMode mode);
 
 		void DrawPoint(const Vector3& point, const Color32& color = Color32::White);
 		void DrawLine(const Vector3& p0, const Vector3& p1, const Color32& color = Color32::White);
@@ -55,7 +59,7 @@ namespace uut
 		void DrawWireCube(const Vector3& center, float side, const Color32& color = Color32::White);
 		void DrawCube(const Vector3& center, float side, const Color32& color = Color32::White, const SharedPtr<Texture2D>& texture = nullptr);
 
-		void DrawGeometry(const Matrix4& transform, Geometry* geometry, const SharedPtr<Texture2D>& texture = nullptr);
+		void DrawGeometry(const Matrix4& transform, const SharedPtr<Mesh>& geometry, const SharedPtr<Texture2D>& texture = nullptr);
 
 		void DrawPrimitive(Topology topology, const List<Vertex>& vertexes, const SharedPtr<Texture2D>& texture = nullptr);
 		void DrawIndexedPrimitive(Topology topology, const List<Vertex>& vertexes, const List<uint16_t>& indexes, const SharedPtr<Texture2D>& texture = nullptr);
@@ -67,6 +71,9 @@ namespace uut
 	protected:
 		SharedPtr<VertexBuffer> _vbuf;
 		SharedPtr<VertexDeclaration> _vdec;
+		SharedPtr<Material> _opaqueMat;
+		SharedPtr<Material> _transparentMat;
+		SharedPtr<Material> _customMat;
 
 		int _vbufCount;
 
@@ -79,6 +86,7 @@ namespace uut
 
 		ProjectionMode _currentPM, _nextPM;
 		MaterialType _currentMT, _nextMT;
+		FillMode _currentFM, _nextFM;
 
 		void TestBatch(Topology topology, const SharedPtr<Texture2D>& tex, int vrtCount);
 		void DrawAll();

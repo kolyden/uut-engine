@@ -3,7 +3,7 @@
 #include "Core/Context.h"
 #include "BufferObject.h"
 #include "FreeCamera.h"
-#include "Geometry.h"
+#include "Mesh.h"
 #include "Image.h"
 #include "IndexBuffer.h"
 #include "Sprite.h"
@@ -44,7 +44,7 @@ namespace uut
 
 		UUT_REGISTER_OBJECT(Camera);
 		UUT_REGISTER_OBJECT(FreeCamera);
-		UUT_REGISTER_OBJECT(Geometry);
+		UUT_REGISTER_OBJECT(Mesh);
 
 		// Fonts
 		UUT_REGISTER_OBJECT(Font);

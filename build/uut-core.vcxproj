@@ -214,7 +214,8 @@
     <ClInclude Include="..\UUT\Video\DX9\DX9VertexDeclaration.h" />
     <ClInclude Include="..\UUT\Video\Font.h" />
     <ClInclude Include="..\UUT\Video\FreeCamera.h" />
-    <ClInclude Include="..\UUT\Video\Geometry.h" />
+    <ClInclude Include="..\UUT\Video\Material.h" />
+    <ClInclude Include="..\UUT\Video\Mesh.h" />
     <ClInclude Include="..\UUT\Video\Graphics.h" />
     <ClInclude Include="..\UUT\Video\Image.h" />
     <ClInclude Include="..\UUT\Video\ImageEffects\Plasma.h" />
@@ -340,7 +341,8 @@
     <ClCompile Include="..\UUT\Video\DX9\DX9VertexDeclaration.cpp" />
     <ClCompile Include="..\UUT\Video\Font.cpp" />
     <ClCompile Include="..\UUT\Video\FreeCamera.cpp" />
-    <ClCompile Include="..\UUT\Video\Geometry.cpp" />
+    <ClCompile Include="..\UUT\Video\Material.cpp" />
+    <ClCompile Include="..\UUT\Video\Mesh.cpp" />
     <ClCompile Include="..\UUT\Video\Graphics.cpp" />
     <ClCompile Include="..\UUT\Video\Image.cpp" />
     <ClCompile Include="..\UUT\Video\ImageEffects\Plasma.cpp" />

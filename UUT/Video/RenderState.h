@@ -180,6 +180,48 @@ namespace uut
 		InvFactor,
 	};
 
+	struct ZBufferState
+	{
+		ZBufferMode mode = ZBufferMode::ZBuffer;
+		bool writeEnable = false;
+		CompareFunc func = CompareFunc::LessEqual;
+	};
+
+	struct AlphaState
+	{
+		bool blend = false;
+		bool test = false;
+		uint8_t ref = 0;
+		CompareFunc func = CompareFunc::Always;
+	};
+
+	struct BlendingState
+	{
+		BlendOperation operation;
+		BlendFactor source;
+		BlendFactor dest;
+
+		static const BlendingState Texture;
+		static const BlendingState Alpha;
+	};
+
+	struct LightningState
+	{
+		bool enabled = false;
+		Color32 ambientColor = Color32::White;
+	};
+
+	struct FogState
+	{
+		bool enabled = false;
+		Color32 color = Color32::White;
+		FogMode mode = FogMode::None;
+		float density = 1;
+		float start = 0;
+		float end = 1;
+		bool rangeEnabled = false;
+	};
+
 	struct RenderState
 	{
 		RenderState();

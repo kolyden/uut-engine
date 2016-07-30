@@ -22,7 +22,7 @@ namespace uut
 		void SetTextureRect(const Rect& rect);
 		const Rect& GetTextureRect() const;
 
-		static SharedPtr<Sprite> FromTexture(const SharedPtr<Texture2D>& texture, const IntRect& rect);
+		static SharedPtr<Sprite> Create(const SharedPtr<Texture2D>& texture, const IntRect& rect);
 
 	protected:
 		SharedPtr<Texture2D> _texture;

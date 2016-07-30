@@ -14,6 +14,9 @@ namespace uut
 		void SetTexture(const SharedPtr<Texture2D>& texture);
 		const SharedPtr<Texture2D>& GetTexture() const;
 
+		void SetPixelRects(const List<IntRect>& rects);
+		const List<IntRect>& GetPixelRects() const;
+
 		void SetRects(const List<Rect>& rects);
 		const List<Rect>& GetRects() const;
 
@@ -22,6 +25,7 @@ namespace uut
 
 	protected:
 		SharedPtr<Texture2D> _texture;
+		List<IntRect> _pixelRects;
 		List<Rect> _rects;
 	};
 }

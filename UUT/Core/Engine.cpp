@@ -1,9 +1,5 @@
 #include "Engine.h"
 #include "Time.h"
-#include "Context.h"
-#include "CorePlugin.h"
-#include "Video/VideoPlugin.h"
-#include "Video/DX9/DX9Plugin.h"
 
 namespace uut
 {
@@ -30,11 +26,6 @@ namespace uut
 			return false;
 
 		_inited = true;
-		Context::CreatePlugin<CorePlugin>();
-		Context::CreatePlugin<VideoPlugin>();
-		Context::CreatePlugin<DX9Plugin>();
-
-		Context::Init();
 
 		Time::Initialize();
 		return true;

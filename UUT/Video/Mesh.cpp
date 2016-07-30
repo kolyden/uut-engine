@@ -1,20 +1,21 @@
-#include "Geometry.h"
+#include "Mesh.h"
+#include <Core/Math/Matrix4.h>
 
 namespace uut
 {
-	UUT_OBJECT_IMPLEMENT(Geometry)
+	UUT_OBJECT_IMPLEMENT(Mesh)
 	{}
 
-	Geometry::~Geometry()
+	Mesh::~Mesh()
 	{
 	}
 
-	Geometry::Geometry()
+	Mesh::Mesh()
 		: _changed(false)
 	{
 	}
 
-// 	void Geometry::Fill(const List<Vertex>& verts, const List<uint32_t>& indexes)
+// 	void Mesh::Fill(const List<Vertex>& verts, const List<uint32_t>& indexes)
 // 	{
 // 		const int count = verts.Count();
 // 
@@ -26,7 +27,7 @@ namespace uut
 // 		{
 // 			_vertices[i] = verts[i].pos;
 // 			_uv[i] = verts[i].tex;
-// 			_colors[i] = verts[i].col;
+// 			_colors[i] = Color32(verts[i].color);
 // 		}
 // 
 // 		_indexes = indexes;
@@ -41,7 +42,7 @@ namespace uut
 // 		_changed = false;
 // 	}
 
-	void Geometry::Clear()
+	void Mesh::Clear()
 	{
 		_changed = true;
 		_vertices.Clear();
@@ -50,7 +51,7 @@ namespace uut
 		_indexes.Clear();
 	}
 
-	void Geometry::SetVertices(const List<Vector3>& vertices)
+	void Mesh::SetVertices(const List<Vector3>& vertices)
 	{
 		if (_vertices.IsEmpty() && vertices.IsEmpty())
 			return;
@@ -59,12 +60,12 @@ namespace uut
 		_changed = true;
 	}
 
-	const List<Vector3>& Geometry::GetVertices() const
+	const List<Vector3>& Mesh::GetVertices() const
 	{
 		return _vertices;
 	}
 
-	void Geometry::SetUV(const List<Vector2>& uv)
+	void Mesh::SetUV(const List<Vector2>& uv)
 	{
 		if (_uv.IsEmpty() && uv.IsEmpty())
 			return;
@@ -73,12 +74,12 @@ namespace uut
 		_changed = true;
 	}
 
-	const List<Vector2>& Geometry::GetUV() const
+	const List<Vector2>& Mesh::GetUV() const
 	{
 		return _uv;
 	}
 
-	void Geometry::SetColors(const List<Color>& colors)
+	void Mesh::SetColors(const List<Color>& colors)
 	{
 		if (_colors.IsEmpty() && colors.IsEmpty())
 			return;
@@ -90,7 +91,7 @@ namespace uut
 		_changed = true;
 	}
 
-	List<Color> Geometry::GetColors() const
+	List<Color> Mesh::GetColors() const
 	{
 		List<Color> arr;
 		const int count = _colors.Count();
@@ -101,7 +102,7 @@ namespace uut
 		return arr;
 	}
 
-	void Geometry::SetColors32(const List<Color32>& colors)
+	void Mesh::SetColors32(const List<Color32>& colors)
 	{
 		if (_colors.IsEmpty() && colors.IsEmpty())
 			return;
@@ -110,12 +111,12 @@ namespace uut
 		_changed = true;
 	}
 
-	const List<Color32>& Geometry::GetColors32() const
+	const List<Color32>& Mesh::GetColors32() const
 	{
 		return _colors;
 	}
 
-	void Geometry::SetIndexes(const List<uint32_t>& indexes)
+	void Mesh::SetIndexes(const List<uint32_t>& indexes)
 	{
 		if (_indexes.IsEmpty() && indexes.IsEmpty())
 			return;
@@ -124,12 +125,42 @@ namespace uut
 		_changed = true;
 	}
 
-	const List<uint32_t>& Geometry::GetIndexes() const
+	const List<uint32_t>& Mesh::GetIndexes() const
 	{
 		return _indexes;
 	}
 
-// 	void Geometry::SetVertexes(const List<Vertex2>& vertexes)
+	void Mesh::AddGeometry(const SharedPtr<Mesh>& other)
+	{
+		if (!other)
+			return;
+
+		const int offset = _vertices.Count();
+		_vertices += other->_vertices;
+		_uv += other->_uv;
+		_colors += other->_colors;
+
+		for (auto& index : other->_indexes)
+			_indexes << offset + index;
+	}
+
+	void Mesh::AddGeometry(const SharedPtr<Mesh>& other, const Matrix4& transform)
+	{
+		if (!other)
+			return;
+
+		const int offset = _vertices.Count();
+		_uv += other->_uv;
+		_colors += other->_colors;
+
+		for (auto& vert : other->_vertices)
+			_vertices << transform.VectorTransform(vert);
+
+		for (auto& index : other->_indexes)
+			_indexes << offset + index;
+	}
+
+	// 	void Geometry::SetVertexes(const List<Vertex2>& vertexes)
 // 	{
 // 		if (_vertices.IsEmpty() && vertexes.IsEmpty())
 // 			return;

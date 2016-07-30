@@ -1,5 +1,6 @@
 #include "String.h"
 #include "Math/Math.h"
+#include "Char.h"
 
 namespace uut
 {
@@ -210,6 +211,57 @@ namespace uut
 			count++;
 		}
 		return count;
+	}
+
+	void String::TrimStart()
+	{
+		TrimStart(Char::WhiteSpaces);
+	}
+
+	void String::TrimStart(const List<char>& trimChars)
+	{
+		for (size_t i = 0; i < _data.size(); i++)
+		{
+			if (trimChars.Contains(_data[i]))
+				continue;
+
+			if (i > 0)
+				_data = _data.substr(i);
+			return;
+		}
+
+		_data.clear();
+	}
+
+	void String::TrimEnd()
+	{
+		TrimEnd(Char::WhiteSpaces);
+	}
+
+	void String::TrimEnd(const List<char>& trimChars)
+	{
+		for (int i = _data.size() - 1; i >= 0; i--)
+		{
+			if (trimChars.Contains(_data[i]))
+				continue;
+
+			if (i < _data.size() - 1)
+				_data = _data.substr(0, i);
+			return;
+		}
+
+		_data.clear();
+	}
+
+	void String::Trim()
+	{
+		Trim(Char::WhiteSpaces);
+	}
+
+	void String::Trim(const List<char>& trimChars)
+	{
+		TrimEnd(trimChars);
+		TrimStart(trimChars);
 	}
 
 	int String::Split(char c, List<String>& out) const

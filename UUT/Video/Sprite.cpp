@@ -41,7 +41,7 @@ namespace uut
 		return _textureRect;
 	}
 
-	SharedPtr<Sprite> Sprite::FromTexture(const SharedPtr<Texture2D>& texture, const IntRect& rect)
+	SharedPtr<Sprite> Sprite::Create(const SharedPtr<Texture2D>& texture, const IntRect& rect)
 	{
 		if (texture == nullptr)
 			return nullptr;

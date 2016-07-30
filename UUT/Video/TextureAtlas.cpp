@@ -9,12 +9,51 @@ namespace uut
 
 	void TextureAtlas::SetTexture(const SharedPtr<Texture2D>& texture)
 	{
+		if (_texture == texture)
+			return;
+
 		_texture = texture;
+		if (!_texture)
+		{
+			_rects.Clear();
+			_pixelRects.Clear();
+		}
 	}
 
 	const SharedPtr<Texture2D>& TextureAtlas::GetTexture() const
 	{
 		return _texture;
+	}
+
+	void TextureAtlas::SetPixelRects(const List<IntRect>& rects)
+	{
+		if (!_texture)
+			return;
+
+		if (rects.IsEmpty())
+		{
+			_pixelRects.Clear();
+			_rects.Clear();
+			return;
+		}
+
+		auto& size = _texture->GetSize();
+		const float invW = 1.0f / (size.x - 1);
+		const float invH = 1.0f / (size.y - 1);
+
+		_rects.SetSize(rects.Count());
+		for (size_t i = 0; i < rects.Count(); i++)
+		{
+			auto& r = rects[i];
+			_rects[i] = Rect(invW*r.x, invH*r.y, invW*r.width, invH*r.height);
+		}
+
+		_pixelRects = rects;
+	}
+
+	const List<IntRect>& TextureAtlas::GetPixelRects() const
+	{
+		return _pixelRects;
 	}
 
 	void TextureAtlas::SetRects(const List<Rect>& rects)
@@ -34,18 +73,8 @@ namespace uut
 
 		auto atlas = MakeShared<TextureAtlas>();
 		atlas->SetTexture(texture);
-		auto& size = texture->GetSize();
-		const float invW = 1.0f / (size.x - 1);
-		const float invH = 1.0f / (size.y - 1);
+		atlas->SetPixelRects(rects);
 
-		List<Rect> list;
-		list.SetSize(rects.Count());
-		for (size_t i = 0; i < rects.Count(); i++)
-		{
-			auto& r = rects[i];
-			list[i] = Rect(invW*r.x, invH*r.y, invW*r.width, invH*r.height);
-		}
-		atlas->SetRects(list);
 		return atlas;
 	}
 
@@ -63,24 +92,18 @@ namespace uut
 
 		auto atlas = MakeShared<TextureAtlas>();
 		atlas->SetTexture(texture);
-		const float invW = 1.0f / size.x;
-		const float invH = 1.0f / size.y;
 
 		if (count == 0)
 			count = countX*countY;
 
-		List<Rect> list;
+		List<IntRect> list;
 
 		int i = 0;
 		for (int y = 0; y < countY; y++)
 		{
 			for (int x = 0; x < countX; x++)
 			{
-				const int offsetX = x * width;
-				const int offsetY = y * width;
-				list.Add(Rect(
-					invW*offsetX, invH*offsetY,
-					invW*width, invH*height));
+				list.Add(Rect(x * width, y * width, width, height));
 
 				if (i == count)
 					break;
@@ -89,7 +112,7 @@ namespace uut
 			if (i == count)
 				break;
 		}
-		atlas->SetRects(list);
+		atlas->SetPixelRects(list);
 		return atlas;
 	}
 }

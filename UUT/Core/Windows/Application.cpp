@@ -1,10 +1,11 @@
 #include "Application.h"
+#include <Core/Context.h>
 #include <Core/Timer.h>
-#include <Video/DX9/DX9Renderer.h>
-#include <Video/Loaders/Texture2DLoader.h>
-#include <Video/Loaders/BitmapFontLoader.h>
+#include <Core/CorePlugin.h>
 #include <Core/IO/DirectoryContainer.h>
-#include <Core/IO/Directory.h>
+#include <Video/DX9/DX9Renderer.h>
+#include <Video/DX9/DX9Plugin.h>
+#include <Video/VideoPlugin.h>
 
 namespace uut
 {
@@ -22,6 +23,14 @@ namespace uut
 	{
 		_engine = new Engine();
 		_engine->Initialize();
+
+		Context::CreatePlugin<CorePlugin>();
+		Context::CreatePlugin<VideoPlugin>();
+		Context::CreatePlugin<DX9Plugin>();
+
+		OnRegister();
+
+		Context::Init();
 
 		_window = new Window();
 		_window->SetTitle("Sample 01");

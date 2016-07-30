@@ -50,6 +50,15 @@ namespace uut
 		int Replace(char oldChar, char newChar);
 		int Replace(const String& oldValue, const String& newValue);
 
+		void TrimStart();
+		void TrimStart(const List<char>& trimChars);
+
+		void TrimEnd();
+		void TrimEnd(const List<char>& trimChars);
+
+		void Trim();
+		void Trim(const List<char>& trimChars);
+
 		int Split(char c, List<String>& out) const;
 		List<String> Split(char c) const;
 
@@ -61,6 +70,7 @@ namespace uut
 
 		uint Count() const { return _data.size(); }
 		bool IsEmpty() const { return _data.empty(); }
+		void Clear() { _data.clear(); }
 
 		operator const char*() const { return _data.c_str(); }
 		const char* GetData() const { return _data.c_str(); }

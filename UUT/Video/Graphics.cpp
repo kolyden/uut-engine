@@ -4,9 +4,10 @@
 #include "Renderer.h"
 #include "Vertex.h"
 #include "VertexBuffer.h"
-#include "Geometry.h"
+#include "Mesh.h"
 #include "Font.h"
 #include <Core/Reflection/ConstructorInfo.h>
+#include "Material.h"
 
 namespace uut
 {
@@ -24,13 +25,24 @@ namespace uut
 		, _nextPM(PM_NONE)
 		, _currentMT(MT_OPAQUE)
 		, _nextMT(MT_OPAQUE)
+		, _currentFM(FillMode::Solid)
+		, _nextFM(FillMode::Solid)
 	{
-		auto renderer = Renderer::Instance();
+		ModuleInstance<Renderer> renderer;
 		_vbuf = renderer->CreateVertexBuffer(Vertex::SIZE*_vbufCount);
 		_vdec = renderer->CreateVertexDeclaration(Vertex::DECLARE);
 
+		_opaqueMat = renderer->CreateMaterial();
+		_opaqueMat->SetTextureStage(RenderTextureStageState::Opaque);
+
+		_transparentMat = renderer->CreateMaterial();
+		_transparentMat->SetAlphaBlend(true);
+		_transparentMat->SetAlphaTest(true);
+		_transparentMat->SetTextureStage(RenderTextureStageState::Transparent);
+
 		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
 
+		_renderState.fillMode = _currentFM;
 		_renderState.zwriteEnable = true;
 		_renderState.alphaRef = 1;
 		_renderState.alphaFunc = CompareFunc::GreaterEqual;
@@ -53,6 +65,20 @@ namespace uut
 	void Graphics::SetMaterial(MaterialType type)
 	{
 		_nextMT = type;
+	}
+
+	void Graphics::SetMaterial(const SharedPtr<Material>& material)
+	{
+		if (!material)
+			return;
+
+		_nextMT = MT_CUSTOM;
+		_customMat = material;
+	}
+
+	void Graphics::SetFillMode(FillMode mode)
+	{
+		_nextFM = mode;
 	}
 
 	void Graphics::DrawPoint(const Vector3& point, const Color32& color /* = Color32::WHITE */)
@@ -326,9 +352,9 @@ namespace uut
 			texture);
 	}
 
-	void Graphics::DrawGeometry(const Matrix4& transform, Geometry* geometry, const SharedPtr<Texture2D>& texture)
+	void Graphics::DrawGeometry(const Matrix4& transform, const SharedPtr<Mesh>& geometry, const SharedPtr<Texture2D>& texture)
 	{
-		if (geometry == nullptr)
+		if (!geometry)
 			return;
 
 		auto& vertices = geometry->GetVertices();
@@ -408,7 +434,8 @@ namespace uut
 		if (_topology == topology && _texture == tex &&
 			_vdxIndex + vrtCount < _vbufCount &&
 			_currentMT == _nextMT &&
-			_currentPM == _nextPM)
+			_currentPM == _nextPM &&
+			_currentFM == _nextFM)
 			return;
 
 		if (_vdxIndex > 0)
@@ -427,6 +454,12 @@ namespace uut
 		{
 			_currentPM = _nextPM;
 			UpdateProjection();
+		}
+
+		if (_currentFM != _nextFM)
+		{
+			_currentFM = _nextFM;
+			_renderState.fillMode = _currentFM;
 		}
 	}
 
@@ -462,7 +495,8 @@ namespace uut
 		}
 
 		_vdxIndex = 0;
-
+		_texture = nullptr;
+		_customMat = nullptr;
 		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
 	}
 
@@ -484,19 +518,19 @@ namespace uut
 
 	void Graphics::UpdateMaterial()
 	{
+		Material* mat = nullptr;
 		switch (_currentMT)
 		{
-		case MT_OPAQUE:
-			_renderState.alphaBlend = false;
-			_renderState.alphaTest = false;
-			_renderState.textureStage[0] = RenderTextureStageState::Opaque;
-			break;
-
-		case MT_TRANSPARENT:
-			_renderState.alphaBlend = true;
-			_renderState.alphaTest = true;
-			_renderState.textureStage[0] = RenderTextureStageState::Transparent;
-			break;
+		case MT_OPAQUE: mat = _opaqueMat; break;
+		case MT_TRANSPARENT: mat = _transparentMat; break;
+		case MT_CUSTOM: mat = _customMat; break;
 		}
+
+		if (mat == nullptr)
+			return;
+
+		_renderState.alphaBlend = mat->IsAlphaBlend();
+		_renderState.alphaTest = mat->IsAlphaTest();
+		_renderState.textureStage[0] = mat->GetTextureStage();
 	}
 }

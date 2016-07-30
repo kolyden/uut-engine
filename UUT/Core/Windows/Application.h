@@ -22,6 +22,7 @@ namespace uut
 		SharedPtr<Window> _window;
 		IntVector2 _windowSize;
 
+		virtual void OnRegister() {}
 		virtual void OnInit() {}
 		virtual void OnFrame() {}
 

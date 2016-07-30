@@ -7,7 +7,7 @@ namespace uut
 	class IntRect;
 	class Vector2;
 	class Rect;
-	class Geometry;
+	class Mesh;
 
 	class Font : public Resource
 	{
