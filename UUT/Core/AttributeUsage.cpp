@@ -15,7 +15,7 @@ namespace uut
 
 	UUT_OBJECT_IMPLEMENT(AttributeUsage)
 	{
-		internalType->AddAttribute(new AttributeUsage(AttributeTarget::Attribute, false, true));
+		internalType->AddAttribute(MakeShared<AttributeUsage>(AttributeTarget::Attribute, false, true));
 	}
 
 	AttributeUsage::AttributeUsage(AttributeTargets targets, bool allowMultiple /*= false*/, bool inherited /*= true*/)

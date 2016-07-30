@@ -23,8 +23,8 @@ namespace uut
 		void SetSize(const IntVector2& size);
 		const IntVector2& GetSize() const;
 
-		void SetIcon(Image* icon);
-		Image* GetIcon() const;
+		void SetIcon(const SharedPtr<Image>& icon);
+		const SharedPtr<Image>& GetIcon() const;
 
 		bool IsMouseFocused() const;
 

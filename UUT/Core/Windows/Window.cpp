@@ -90,7 +90,7 @@ namespace uut
 		return _size;
 	}
 
-	void Window::SetIcon(Image* icon)
+	void Window::SetIcon(const SharedPtr<Image>& icon)
 	{
 		if (_icon == icon || (icon != nullptr && !icon->IsCreated()))
 			return;
@@ -100,7 +100,7 @@ namespace uut
 			SDL_SetWindowIcon(_data, reinterpret_cast<SDL_Surface*>(_icon->GetInternalHandle()));
 	}
 
-	Image* Window::GetIcon() const
+	const SharedPtr<Image>& Window::GetIcon() const
 	{
 		return _icon;
 	}

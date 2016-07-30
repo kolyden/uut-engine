@@ -21,7 +21,7 @@ namespace uut
 
 	void Application::Run()
 	{
-		_engine = new Engine();
+		_engine = MakeShared<Engine>();
 		_engine->Initialize();
 
 		Context::CreatePlugin<CorePlugin>();
@@ -32,7 +32,7 @@ namespace uut
 
 		Context::Init();
 
-		_window = new Window();
+		_window = MakeShared<Window>();
 		_window->SetTitle("Sample 01");
 		_window->SetSize(IntVector2(_windowSize));
 		_window->Create();

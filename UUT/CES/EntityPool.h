@@ -20,6 +20,16 @@ namespace uut
 		void AddSystem(const SharedPtr<EntitySystem>& system);
 		SharedPtr<EntityGroup> AddGroup(const EntityMatcher& matcher);
 
+		template<class T, typename... Args,
+			class = typename std::enable_if<std::is_base_of<EntitySystem, T>::value, void>::type,
+			class = typename std::enable_if<std::is_constructible<T, Args...>::value, void>::type>
+		SharedPtr<T> CreateSystem(Args&&... args)
+		{
+			auto system = MakeShared<T>(std::forward<Args>(args)...);
+			AddSystem(system);
+			return system;
+		}
+
 		void Update(float deltaTime);
 		void Render();
 

@@ -13,7 +13,7 @@ namespace uut
 
 		constexpr SharedPtr() noexcept {}
 		constexpr SharedPtr(nullptr_t) noexcept {}
-		SharedPtr(T* ptr) : _data(ptr) {}
+		explicit SharedPtr(T* ptr) : _data(ptr) {}
 		SharedPtr(const StdShared& ptr) : _data(ptr) {}
 		SharedPtr(StdShared&& ptr) : _data(ptr) {}
 
@@ -27,6 +27,8 @@ namespace uut
 // 		operator SharedPtr<U>() const { return std::static_pointer_cast<U>(_data); }
 
 		T* Get() const { return _data.get(); }
+
+		void Reset() { _data.reset(); }
 
 		template<typename... Args>
 		static SharedPtr<T> Make(Args&&... args)

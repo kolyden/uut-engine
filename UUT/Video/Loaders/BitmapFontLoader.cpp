@@ -12,7 +12,7 @@ namespace uut
 {
 	UUT_OBJECT_IMPLEMENT(BitmapFontLoader)
 	{
-		internalType->AddAttribute(new ResourceLoaderAttribute());
+		internalType->AddAttribute(MakeShared<ResourceLoaderAttribute>());
 		UUT_REGISTER_CTOR_DEFAULT()
 	}
 

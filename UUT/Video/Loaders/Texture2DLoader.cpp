@@ -33,7 +33,7 @@ namespace uut
 	///////////////////////////////////////////////////////////////////////////
 	UUT_OBJECT_IMPLEMENT(Texture2DLoader)
 	{
-		internalType->AddAttribute(new ResourceLoaderAttribute());
+		internalType->AddAttribute(MakeShared<ResourceLoaderAttribute>());
 		UUT_REGISTER_CTOR_DEFAULT();
 	}
 

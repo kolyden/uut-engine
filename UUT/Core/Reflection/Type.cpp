@@ -65,8 +65,7 @@ namespace uut
 
 			auto buf = new char[GetSize()];
 			ctor->Call(buf);
-			auto obj = reinterpret_cast<Object*>(buf);
-			return obj;
+			return SharedPtr<Object>(reinterpret_cast<Object*>(buf));
 		}
 
 		return nullptr;
