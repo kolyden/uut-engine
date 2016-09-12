@@ -134,25 +134,6 @@ namespace uut
 		ImGui::Render();
 	}
 
-	bool DebugGUI::Button(const String& title)
-	{
-		return ImGui::Button(title);
-	}
-
-	void DebugGUI::Label(const String& text)
-	{
-		ImGui::Text(text);
-	}
-
-	float DebugGUI::FloatSlider(float value, float minValue, float maxValue)
-	{
-		float f = value;
-		if (ImGui::SliderFloat("", &f, minValue, maxValue))
-			return f;
-
-		return value;
-	}
-
 	///////////////////////////////////////////////////////////////////////////
 	void DebugGUI::RenderDrawLists(ImDrawData* draw_data)
 	{

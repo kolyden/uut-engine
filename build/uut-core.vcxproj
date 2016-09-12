@@ -186,6 +186,7 @@
     <ClInclude Include="..\UUT\Core\Windows\Application.h" />
     <ClInclude Include="..\UUT\Core\Windows\Window.h" />
     <ClInclude Include="..\UUT\GUI\DebugGUI.h" />
+    <ClInclude Include="..\UUT\GUI\GUI.h" />
     <ClInclude Include="..\UUT\Resources\Resource.h" />
     <ClInclude Include="..\UUT\Resources\ResourceCache.h" />
     <ClInclude Include="..\UUT\Resources\ResourceLoader.h" />
@@ -315,6 +316,7 @@
     <ClCompile Include="..\UUT\Core\Windows\Application.cpp" />
     <ClCompile Include="..\UUT\Core\Windows\Window.cpp" />
     <ClCompile Include="..\UUT\GUI\DebugGUI.cpp" />
+    <ClCompile Include="..\UUT\GUI\GUI.cpp" />
     <ClCompile Include="..\UUT\Resources\Resource.cpp" />
     <ClCompile Include="..\UUT\Resources\ResourceCache.cpp" />
     <ClCompile Include="..\UUT\Resources\ResourceLoader.cpp" />

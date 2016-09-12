@@ -26,10 +26,6 @@ namespace uut
 		void SetupCamera();
 		void Draw() const;
 
-		bool Button(const String& title);
-		void Label(const String& text);
-		float FloatSlider(float value, float minValue, float maxValue);
-
 	protected:
 		Timer _timer;
 		SharedPtr<VertexBuffer> _vb;

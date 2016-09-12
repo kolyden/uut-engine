@@ -20,6 +20,7 @@
 #include <Video/Color.h>
 #include <Video/Sprite.h>
 #include <Core/Time.h>
+#include <GUI/GUI.h>
 
 namespace uut
 {
@@ -318,41 +319,37 @@ namespace uut
 	{
 		for (unsigned i = 0; i < args.Count(); i++)
 		{
+			GUI::BeginHorizontal();
 			auto it = args[i];
 			if (i > 0)
-			{
-				ImGui::SameLine();
-				ImGui::Text(",");
-			}
+				GUI::Text(",");
 
-			ImGui::SameLine();
-			ImGui::Text(it->GetName());
+			GUI::Text(it->GetName());
+			GUI::EndHorizontal();
 		}
 	}
 
 	static void DrawAttributes(const Type* type)
 	{
 		for (auto& attribute : type->GetAttributes())
-		{
-			ImGui::Text("attr: %s", attribute->ToString().GetData());
-		}
+			GUI::Text(String::Format("attr: %s", attribute->ToString().GetData()));
 	}
 
 	static void DrawMembers(const Type* type, bool showCtor)
 	{
 		for (auto info : type->GetMembers())
 		{
+			GUI::BeginHorizontal();
 			switch (info->GetMemberType())
 			{
 			case MemberType::Property:
 			{
-				ImGui::Text("prop: %s", info->GetName().GetData());
+				GUI::Text(String::Format("prop: %s", info->GetName().GetData()));
 				auto prop = static_cast<const IPropertyInfo*>(info);
 				if (prop->IsStatic())
 				{
 					auto value = prop->GetValue(nullptr).Get<int>();
-					ImGui::SameLine();
-					ImGui::Text(" = %d", value);
+					GUI::Text(String::Format(" = %d", value));
 				}
 			}
 			break;
@@ -360,36 +357,35 @@ namespace uut
 			case MemberType::Constructor:
 				if (showCtor)
 				{
-					ImGui::Text("Constructor (");
+					GUI::Text("Constructor (");
 					auto ctor = (const IConstructorInfo*)info;
 					DrawArgList(ctor->GetArgsTypes());
-					ImGui::SameLine();
-					ImGui::Text(")");
+					GUI::Text(")");
 				}
 				break;
 
 			case MemberType::Method:
 				{
 					auto method = (const IMethodInfo*)info;
-					ImGui::Text("method: %s %s(",
+					GUI::Text(String::Format("method: %s %s(",
 						ArgTypeToString(method->GetReturnType()),
-						info->GetName().GetData());
+						info->GetName().GetData()));
 					DrawArgList(method->GetArgsTypes());
-					ImGui::SameLine();
-					ImGui::Text(")");
+					GUI::Text(")");
 				}
 				break;
 
 			case MemberType::Converter:
 			{
 				auto converter = (const IConverterInfo*)info;
-				ImGui::Text("Convert to %s", converter->GetResultType()->GetName());
+				GUI::Text(String::Format("Convert to %s", converter->GetResultType()->GetName()));
 			}
 			break;
 
 			default:
-				ImGui::Text(info->GetName());
+				GUI::Text(info->GetName());
 			}
+			GUI::EndHorizontal();
 		}
 	}
 
@@ -402,22 +398,25 @@ namespace uut
 		ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiSetCond_FirstUseEver);
 		if (ImGui::Begin("Context"))
 		{
-			ImGui::Checkbox("Show Test Window", &show_test_window);
+			show_test_window = GUI::Toggle("Show Test Window", show_test_window);
 
-			ImGui::Separator();
-			if (ImGui::CollapsingHeader("Plugins"))
+			GUI::Separator();
+			static bool pluginFoldout = true;
+			pluginFoldout = GUI::Foldout("Plugins", pluginFoldout);
+			if (pluginFoldout)
 			{
-				ImGui::ListBoxHeader("##plugins");
+				GUI::BeginListBox("##plugins");
 				auto plugins = Context::GetPlugins();
 				for (auto& it : plugins)
-				{
-					ImGui::Selectable(it->ToString());
-				}
-				ImGui::ListBoxFooter();
+					GUI::Selectable(it->ToString());
+				GUI::EndListBox();
 			}
 
-			ImGui::Separator();
-			if (ImGui::CollapsingHeader("Types", nullptr, true, true))
+			GUI::Separator();
+			static bool typesFoldout = true;
+
+			typesFoldout = GUI::Foldout("Types", typesFoldout);
+			if (typesFoldout)
 			{
 				static const Type* current = nullptr;
 
@@ -434,40 +433,44 @@ namespace uut
 
 				filter.Draw();
 				ImGui::PushItemWidth(150);
-				ImGui::ListBoxHeader("##types");
+				GUI::BeginHorizontal();
+				GUI::BeginListBox("##types");
 				for (auto type : typeList)
 				{
 					const auto typeName = type->GetName();
 					if (!filter.PassFilter(typeName))
 						continue;
 
-					if (ImGui::Selectable(typeName, type == current))
+					GUI::BeginHorizontal();
+					if (GUI::Selectable(typeName, type == current))
 						current = type;
-					ImGui::SameLine();
-					ImGui::Text("(%d)", type->GetSize());
+					GUI::Text(String::Format("(%d)", type->GetSize()));
+					GUI::EndHorizontal();
 				}
-				ImGui::ListBoxFooter();
+				GUI::EndListBox();
 				ImGui::PopItemWidth();
 
 				if (current != nullptr)
 				{
-					ImGui::SameLine();
-					ImGui::BeginGroup();
-
-					ImGui::Text(current->GetFullName());
+// 					ImGui::SameLine();
+// 					ImGui::BeginGroup();
+					GUI::BeginVertical();
+					GUI::Text(current->GetFullName());
 					
 					for (auto baseType = current->GetBaseType(); baseType != nullptr; baseType = baseType->GetBaseType())
-						ImGui::Text(baseType->GetName());
+						GUI::Text(baseType->GetName());
 
-					ImGui::Separator();
+					GUI::Separator();
 					DrawMembers(current, true);
 					DrawAttributes(current);
 
-					ImGui::Separator();
+					GUI::Separator();
 					for (auto baseType = current->GetBaseType(); baseType != nullptr; baseType = baseType->GetBaseType())
 						DrawMembers(baseType, false);
-					ImGui::EndGroup();
-				}				
+// 					ImGui::EndGroup();
+					GUI::EndVertical();
+				}
+				GUI::EndHorizontal();
 			}
 		}
 		ImGui::End();

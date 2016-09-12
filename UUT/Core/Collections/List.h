@@ -44,6 +44,12 @@ namespace uut
 		List<T>& operator << (const T& data) { Add(data); return *this; }
 		List<T>& operator << (const List<T>& arr) { Append(arr); return *this; }
 
+		T& First() { return _data.front(); }
+		const T& First() const { return _data.front(); }
+
+		T& Last() { return _data.back(); }
+		const T& Last() const { return _data.back(); }
+
 		T& operator[] (uint index) { return _data[index]; }
 		const T& operator[] (uint index) const { return _data[index]; }
 

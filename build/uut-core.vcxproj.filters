@@ -708,6 +708,9 @@
     <ClInclude Include="..\UUT\Video\Material.h">
       <Filter>UUT\Video</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\GUI\GUI.h">
+      <Filter>UUT\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1081,6 +1084,9 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Video\Material.cpp">
       <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\GUI\GUI.cpp">
+      <Filter>UUT\GUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
