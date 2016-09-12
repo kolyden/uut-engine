@@ -8,7 +8,7 @@ namespace uut
 
 	class BitmapFontLoader : public ResourceLoaderImpl<Font>
 	{
-		UUT_OBJECT(BitmapFontLoader, ResourceLoader)
+		UUT_OBJECT(uut, BitmapFontLoader, ResourceLoader)
 	public:
 		BitmapFontLoader();
 

@@ -8,7 +8,7 @@ namespace uut
 
 	class Window : public Object
 	{
-		UUT_OBJECT(Window, Object)
+		UUT_OBJECT(uut, Window, Object)
 	public:
 		Window();
 		virtual ~Window();

@@ -14,7 +14,7 @@ namespace uut
 	// hardware? vertex and index buffer
 	class Mesh : public Object
 	{
-		UUT_OBJECT(Mesh, Object)
+		UUT_OBJECT(uut, Mesh, Object)
 	public:
 		Mesh();
 		virtual ~Mesh();

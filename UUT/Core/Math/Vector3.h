@@ -7,7 +7,7 @@ namespace uut
 
 	class Vector3 : public ValueType
 	{
-		UUT_VALUETYPE(Vector3, ValueType)
+		UUT_VALUETYPE(uut, Vector3, ValueType)
 	public:
 		Vector3();
 		explicit Vector3(float f);

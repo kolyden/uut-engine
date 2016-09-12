@@ -14,11 +14,11 @@ namespace uut
 		Attribute = 16,
 		All = Method | Class | Property | Event | Attribute,
 	};
-	UUT_ENUMFLAG(AttributeTargets, AttributeTarget)
+	UUT_ENUMFLAG(uut, AttributeTargets, AttributeTarget)
 
 	class AttributeUsage : public Attribute
 	{
-		UUT_OBJECT(AttributeUsage, Attribute)
+		UUT_OBJECT(uut, AttributeUsage, Attribute)
 	public:
 		explicit AttributeUsage(AttributeTargets targets, bool allowMultiple = false, bool inherited = true);
 

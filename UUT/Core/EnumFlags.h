@@ -54,9 +54,9 @@ namespace uut
 		}
 	};
 
-#define UUT_ENUMFLAG(name, type) \
+#define UUT_ENUMFLAG(library, name, type) \
 	class name : public EnumFlagsImpl<type> { \
-		UUT_VALUETYPE(name, EnumValue) \
+		UUT_VALUETYPE(library, name, EnumValue) \
 	public: \
 		constexpr name() : EnumFlagsImpl<type>() {} \
 		constexpr name(type value) : EnumFlagsImpl<type>(value) {} \

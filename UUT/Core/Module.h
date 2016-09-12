@@ -4,8 +4,8 @@
 
 namespace uut
 {
-#define UUT_MODULE(typeName, parentType) \
-	UUT_OBJECT(typeName, parentType) \
+#define UUT_MODULE(library, typeName, parentType) \
+	UUT_OBJECT(library, typeName, parentType) \
 	public: \
 	static ClassName* Instance() { return Context::FindModule<ClassName>(); }; \
 	protected:
@@ -15,7 +15,7 @@ namespace uut
 
 	class Module : public Object
 	{
-		UUT_OBJECT(Module, Object)
+		UUT_OBJECT(uut, Module, Object)
 	public:
 		Module();
 		virtual ~Module();

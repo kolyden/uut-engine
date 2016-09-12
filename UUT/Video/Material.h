@@ -9,7 +9,7 @@ namespace uut
 
 	class Material : public Resource
 	{
-		UUT_OBJECT(Material, Resource)
+		UUT_OBJECT(uut, Material, Resource)
 	public:
 		Material();
 

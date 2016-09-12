@@ -6,7 +6,7 @@ namespace uut
 {
 	class DX9IndexBuffer : public IndexBuffer
 	{
-		UUT_OBJECT(DX9IndexBuffer, IndexBuffer)
+		UUT_OBJECT(uut, DX9IndexBuffer, IndexBuffer)
 	public:
 		DX9IndexBuffer();
 		virtual ~DX9IndexBuffer();

@@ -7,7 +7,7 @@ namespace uut
 {
 	class Input : public Module
 	{
-		UUT_MODULE(Input, Module)
+		UUT_MODULE(uut, Input, Module)
 	public:
 		Input();
 		virtual ~Input();

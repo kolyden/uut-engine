@@ -16,7 +16,7 @@ namespace uut
 
 	class ResourceCache : public Module
 	{
-		UUT_MODULE(ResourceCache, Module)
+		UUT_MODULE(uut, ResourceCache, Module)
 	public:
 		typedef Dictionary<size_t, SharedPtr<Resource>> ResourceDict;
 

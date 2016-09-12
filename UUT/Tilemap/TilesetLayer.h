@@ -8,7 +8,7 @@ namespace uut
 
 	class TilesetLayer : public TilemapLayer
 	{
-		UUT_OBJECT(TilesetLayer, TilemapLayer)
+		UUT_OBJECT(uut, TilesetLayer, TilemapLayer)
 	public:
 		static const uint8_t EMPTY_TILE = 255;
 		using IterateFunc = std::function<void(int x, int y, uint8_t& tile)>;

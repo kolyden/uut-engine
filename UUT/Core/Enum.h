@@ -1,12 +1,13 @@
 #pragma once
 #include <Core/String.h>
 #include <Core/ValueType.h>
+#include <Core/Collections/Dictionary.h>
 
 namespace uut
 {
 	class EnumValue : public ValueType
 	{
-		UUT_VALUETYPE(EnumValue, ValueType)
+		UUT_VALUETYPE(uut, EnumValue, ValueType)
 	public:
 		explicit constexpr EnumValue(int value) : _value(value) {}
 
@@ -142,9 +143,9 @@ namespace uut
 		struct Enum {};
 	}
 
-#define UUT_ENUM(type) \
+#define UUT_ENUM(library, type) \
 	class type##Enum : public EnumValueImpl<type> { \
-		UUT_BASETYPE(type##Enum, EnumValue) \
+		UUT_BASETYPE(library, type##Enum, EnumValue) \
 	public: \
 		constexpr type##Enum() : EnumValueImpl<type>() {} \
 		constexpr type##Enum(type value) : EnumValueImpl<type>(value) {} \

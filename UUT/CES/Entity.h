@@ -34,7 +34,7 @@ namespace uut
 
 	class Entity : public Object
 	{
-		UUT_OBJECT(Entity, Object)
+		UUT_OBJECT(uut, Entity, Object)
 	public:
 		template<class C, typename... Args,
 			class = typename std::enable_if<std::is_base_of<Component, C>::value, void>::type>

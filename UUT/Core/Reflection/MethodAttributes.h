@@ -10,5 +10,5 @@ namespace uut
 		Public = 2,
 		Static = 4,
 	};
-	UUT_ENUMFLAG(MethodAttributes, MethodAttribute)
+	UUT_ENUMFLAG(uut, MethodAttributes, MethodAttribute)
 }

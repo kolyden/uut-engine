@@ -5,7 +5,7 @@ namespace uut
 {
 	class DirectoryContainer : public StreamContainer
 	{
-		UUT_OBJECT(DirectoryContainer, StreamContainer)
+		UUT_OBJECT(uut, DirectoryContainer, StreamContainer)
 	public:
 		explicit DirectoryContainer(const Path& directory);
 

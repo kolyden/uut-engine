@@ -8,7 +8,7 @@ namespace uut
 
 	class BinaryReader : public Object
 	{
-		UUT_OBJECT(BinaryReader, Object)
+		UUT_OBJECT(uut, BinaryReader, Object)
 	public:
 		BinaryReader();
 		explicit BinaryReader(const SharedPtr<Stream>& source);

@@ -36,7 +36,7 @@ namespace uut
 
 	class VertexDeclaration : public Object
 	{
-		UUT_OBJECT(VertexDeclaration, Object)
+		UUT_OBJECT(uut, VertexDeclaration, Object)
 	public:
 		VertexDeclaration();
 		virtual ~VertexDeclaration();

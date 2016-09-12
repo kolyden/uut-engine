@@ -7,7 +7,7 @@ namespace uut
 
 	class TextReader : public Object
 	{
-		UUT_OBJECT(TextReader, Object)
+		UUT_OBJECT(uut, TextReader, Object)
 	public:
 		explicit TextReader(const SharedPtr<Stream>& source);
 		virtual ~TextReader();

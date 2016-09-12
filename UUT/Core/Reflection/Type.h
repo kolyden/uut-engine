@@ -1,7 +1,6 @@
 #pragma once
 #include <Core/Collections/List.h>
 #include <Core/Ptr.h>
-#include <Core/Collections/Dictionary.h>
 
 namespace uut
 {
@@ -27,11 +26,11 @@ namespace uut
 		typedef List<SharedPtr<Attribute>> AttributeList;
 		using REGFUNC = void(*)(Type*);
 
-		Type(const char* typeName, const Type* base, REGFUNC regfunc);
+		Type(const char* library, const char* name, const Type* base, REGFUNC regfunc);
 		virtual ~Type();
 
 		const char* GetName() const;
-		const char* GetNamespace() const;
+		const char* GetLibrary() const;
 		const char* GetFullName() const;
 
 		size_t GetHash() const;
@@ -50,6 +49,14 @@ namespace uut
 		size_t FindAttributes(const Type* type, List<const Attribute*>& list) const;
 		List<const Attribute*> FindAttributes(const Type* type) const;
 		const AttributeList& GetAttributes() const { return _attributes; }
+
+		template<class C, typename... Args,  
+			class = typename std::enable_if<std::is_constructible<C, Args...>::value, void>::type>
+		bool AddAttribute(Args&&... args)
+		{
+			auto attr = MakeShared<C>(std::forward<Args>(args)...);
+			return AddAttribute(attr);
+		}
 
 		template<class C> const C* FindAttribute() const
 		{ return static_cast<const C*>(FindAttribute(TypeOf<C>())); }
@@ -77,7 +84,7 @@ namespace uut
 
 	protected:
 		std::string _name;
-		std::string _namespace;
+		std::string _library;
 		std::string _fullname;
 
 		const size_t _hash;
@@ -88,10 +95,6 @@ namespace uut
 
 		void Register();
 
-		static std::string GetNameFromTypeid(const char* fullname);
-		static std::string GetNamespaceFromTypeid(const char* fullname);
-		static std::string CreateFullName(const std::string& namesp, const std::string& name);
-
 		friend class Context;
 	};
 
@@ -99,12 +102,13 @@ namespace uut
 	class TypeImpl : public Type
 	{
 	public:
-		explicit TypeImpl(REGFUNC regfunc)
-			: Type(typeid(C).name(), CtorGetBaseType(), regfunc)
+		explicit TypeImpl(const char* library, const char* name, REGFUNC regfunc)
+			: Type(library, name, CtorGetBaseType(), regfunc)
 		{
 		}
 
 		size_t GetSize() const override { return sizeof(C); }
+
 		void PlacementDtor(void* ptr) const override
 		{
 			static_cast<C*>(ptr)->~C();
@@ -132,7 +136,7 @@ namespace uut
 		return T::Default;
 	}
 
-#define UUT_BASETYPE(typeName, parentType) \
+#define UUT_BASETYPE(library, typeName, parentType) \
 	public: \
 	typedef typeName ClassName; \
 	typedef parentType Super; \
@@ -140,11 +144,12 @@ namespace uut
 	private: \
 	static Type* _GetTypeInternal(); \
 	static void _RegisterInternal(Type* internalType); \
+	static const char* _LibraryName() { return #library; } \
 	friend class Context;
 
 #define UUT_BASETYPE_IMPLEMENT(type) \
 	Type* type::_GetTypeInternal() \
-	{ static TypeImpl<type> type(&type::_RegisterInternal); return &type; } \
+	{ static TypeImpl<type> type(_LibraryName(), #type, &type::_RegisterInternal); return &type; } \
 	void type::_RegisterInternal(Type* internalType)
 
 #define UUT_REGISTER_TYPE(type) Context::RegisterType<type>()

@@ -8,7 +8,7 @@ namespace uut
 
 	class Texture2DLoader : public ResourceLoaderImpl<Texture2D>
 	{
-		UUT_OBJECT(Texture2DLoader, ResourceLoader)
+		UUT_OBJECT(uut, Texture2DLoader, ResourceLoader)
 	public:
 		explicit Texture2DLoader();
 

@@ -9,7 +9,7 @@ namespace uut
 
 	class Tilemap : public Resource
 	{
-		UUT_OBJECT(Tilemap, Resource)
+		UUT_OBJECT(uut, Tilemap, Resource)
 	public:
 		Tilemap();
 

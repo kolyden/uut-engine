@@ -20,7 +20,7 @@ namespace uut
 
 	class Graphics : public Module
 	{
-		UUT_MODULE(Graphics, Module)
+		UUT_MODULE(uut, Graphics, Module)
 	public:
 		enum ProjectionMode
 		{

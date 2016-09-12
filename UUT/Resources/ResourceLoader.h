@@ -8,7 +8,7 @@ namespace uut
 
 	class ResourceLoader : public Object
 	{
-		UUT_OBJECT(ResourceLoader, Object)
+		UUT_OBJECT(uut, ResourceLoader, Object)
 	public:
 		ResourceLoader();
 		virtual ~ResourceLoader();

@@ -7,7 +7,7 @@ namespace uut
 
 	class IntRect : public ValueType
 	{
-		UUT_VALUETYPE(IntRect, ValueType)
+		UUT_VALUETYPE(uut, IntRect, ValueType)
 	public:
 		IntRect();
 		IntRect(int x, int y, int width, int height);

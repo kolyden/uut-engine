@@ -17,7 +17,7 @@ namespace uut
 
 	class DebugGUI : public Module
 	{
-		UUT_MODULE(DebugGUI, Module)
+		UUT_MODULE(uut, DebugGUI, Module)
 	public:
 		DebugGUI();
 

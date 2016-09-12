@@ -7,7 +7,7 @@ namespace uut
 
 	class Radian : public ValueType
 	{
-		UUT_VALUETYPE(Radian, ValueType)
+		UUT_VALUETYPE(uut, Radian, ValueType)
 	public:
 		explicit constexpr Radian(float angle = 0.0f) : _angle(angle) {}
 		Radian(const Degree& angle);

@@ -6,7 +6,7 @@ namespace uut
 {
 	class Image : public Object
 	{
-		UUT_OBJECT(Image, Object)
+		UUT_OBJECT(uut, Image, Object)
 	public:
 		Image();
 		virtual ~Image();

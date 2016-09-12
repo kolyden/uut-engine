@@ -9,7 +9,7 @@ namespace uut
 
 	class ObjectLayerItem : public Object
 	{
-		UUT_OBJECT(ObjectLayerItem, Object)
+		UUT_OBJECT(uut, ObjectLayerItem, Object)
 	public:
 		ObjectLayerItem();
 

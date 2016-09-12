@@ -10,7 +10,7 @@ namespace uut
 
 	class Camera : public Object
 	{
-		UUT_OBJECT(Camera, Object)
+		UUT_OBJECT(uut, Camera, Object)
 	public:
 		Camera();
 		virtual ~Camera();

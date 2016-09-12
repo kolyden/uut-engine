@@ -13,7 +13,7 @@ namespace uut
 
 	class Texture : public Resource
 	{
-		UUT_OBJECT(Texture, Resource)
+		UUT_OBJECT(uut, Texture, Resource)
 	public:
 		Texture();
 		virtual ~Texture();

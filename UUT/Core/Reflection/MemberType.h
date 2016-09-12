@@ -11,5 +11,5 @@ namespace uut
 		Method,
 		Property,
 	};
-	UUT_ENUM(MemberType)
+	UUT_ENUM(uut, MemberType)
 }

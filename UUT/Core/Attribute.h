@@ -8,7 +8,7 @@ namespace uut
 
 	class Attribute : public Object
 	{
-		UUT_OBJECT(Attribute, Object)
+		UUT_OBJECT(uut, Attribute, Object)
 	public:
 		typedef List<const Attribute*> AttributeList;
 		typedef Dictionary<const Type*, AttributeList> AttributesTypes;

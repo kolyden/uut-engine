@@ -6,7 +6,7 @@ namespace uut
 {
 	class DX9VertexBuffer : public VertexBuffer
 	{
-		UUT_OBJECT(DX9VertexBuffer, VertexBuffer)
+		UUT_OBJECT(uut, DX9VertexBuffer, VertexBuffer)
 	public:
 		DX9VertexBuffer();
 		virtual ~DX9VertexBuffer();

@@ -29,7 +29,7 @@ namespace uut
 
 	class BitmapFont : public Font
 	{
-		UUT_OBJECT(BitmapFont, Font)
+		UUT_OBJECT(uut, BitmapFont, Font)
 	public:
 		BitmapFont();
 

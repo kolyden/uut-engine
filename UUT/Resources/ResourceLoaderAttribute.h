@@ -5,7 +5,7 @@ namespace uut
 {
 	class ResourceLoaderAttribute : public Attribute
 	{
-		UUT_OBJECT(ResourceLoaderAttribute, Attribute)
+		UUT_OBJECT(uut, ResourceLoaderAttribute, Attribute)
 	public:
 	};
 }

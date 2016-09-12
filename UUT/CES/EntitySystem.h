@@ -7,7 +7,7 @@ namespace uut
 
 	class EntitySystem : public Object
 	{
-		UUT_OBJECT(EntitySystem, Object)
+		UUT_OBJECT(uut, EntitySystem, Object)
 	public:
 		EntitySystem() : _pool(nullptr) {}
 		virtual ~EntitySystem() {}

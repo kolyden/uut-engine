@@ -9,7 +9,7 @@ namespace uut
 
 	class TilemapLayer : public Object
 	{
-		UUT_OBJECT(TilemapLayer, Object)
+		UUT_OBJECT(uut, TilemapLayer, Object)
 	public:
 		TilemapLayer();
 

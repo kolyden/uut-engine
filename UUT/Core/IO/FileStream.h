@@ -7,7 +7,7 @@ namespace uut
 {
 	class FileStream : public Stream
 	{
-		UUT_OBJECT(FileStream, Stream)
+		UUT_OBJECT(uut, FileStream, Stream)
 	public:
 		FileStream();
 		virtual ~FileStream();

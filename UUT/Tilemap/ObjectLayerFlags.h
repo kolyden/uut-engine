@@ -10,5 +10,5 @@ namespace uut
 		Visibled = 2,
 		Blocked = 4,
 	};
-	UUT_ENUMFLAG(ObjectLayerFlags, ObjectLayerFlag)
+	UUT_ENUMFLAG(uut, ObjectLayerFlags, ObjectLayerFlag)
 }

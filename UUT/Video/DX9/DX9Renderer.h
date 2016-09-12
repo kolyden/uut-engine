@@ -8,7 +8,7 @@ namespace uut
 {
 	class DX9Renderer : public Renderer
 	{
-		UUT_MODULE(DX9Renderer, Renderer)
+		UUT_MODULE(uut, DX9Renderer, Renderer)
 	public:
 		DX9Renderer();
 		virtual ~DX9Renderer();

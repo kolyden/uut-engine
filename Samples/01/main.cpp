@@ -19,6 +19,7 @@
 #include <CES/EntityMatcher.h>
 #include <Video/Color.h>
 #include <Video/Sprite.h>
+#include <Core/Time.h>
 
 namespace uut
 {
@@ -26,7 +27,7 @@ namespace uut
 	{
 		class TestAttribute : public Attribute
 		{
-			UUT_OBJECT(TestAttribute, Attribute)
+			UUT_OBJECT(uut, TestAttribute, Attribute)
 		public:
 			explicit TestAttribute(const String& text) : _text(text) {}
 
@@ -43,7 +44,7 @@ namespace uut
 
 		UUT_OBJECT_IMPLEMENT(TestAttribute)
 		{
-			internalType->AddAttribute(new AttributeUsage(AttributeTarget::All, false, false));
+			internalType->AddAttribute<AttributeUsage>(AttributeTarget::All, false, false);
 		}
 	}
 
@@ -66,7 +67,7 @@ namespace uut
 		ValueC,
 		ValueZ = 42,
 	};
-	UUT_ENUMFLAG(TestFlags, Test)
+	UUT_ENUMFLAG(uut, TestFlags, Test)
 	UUT_ENUMFLAG_IMPLEMENT(TestFlags, Test)
 	{
 		RegisterValues(
@@ -75,7 +76,7 @@ namespace uut
 			"ValueC", Test::ValueC,
 			"ValueZ", Test::ValueZ);
  		EnumRegisterMemebers<Test>(internalType);
-		internalType->AddAttribute(new Foo::TestAttribute("hello"));
+		internalType->AddAttribute<Foo::TestAttribute>("hello");
 	}
 
 	enum class Direction
@@ -85,7 +86,7 @@ namespace uut
 		South,
 		West,
 	};
-	UUT_ENUM(Direction);
+	UUT_ENUM(uut, Direction);
 	UUT_ENUM_IMPLEMENT(Direction)
 	{
 		RegisterValues(
@@ -94,7 +95,7 @@ namespace uut
 			"South", Direction::South,
 			"West", Direction::West);
 		EnumRegisterMemebers<Direction>(internalType);
-		internalType->AddAttribute(new Foo::TestAttribute("world"));
+		internalType->AddAttribute<Foo::TestAttribute>("world");
 	}
 
 	namespace detail
@@ -118,10 +119,10 @@ namespace uut
 
 	////////////////////////////////////////////////////////////////////////////
 
-#define UUT_COMPONENT(name, dataType, dataName) \
+#define UUT_COMPONENT(library, name, dataType, dataName) \
 	class name : public Component \
 	{ \
-		UUT_VALUETYPE(name, Component) \
+		UUT_VALUETYPE(library, name, Component) \
 	public: \
 		dataType dataName; \
 		void Reset(const dataType& value) \
@@ -131,7 +132,7 @@ namespace uut
 
 	class UIWidget : public Component
 	{
-		UUT_VALUETYPE(UIWidget, Component)
+		UUT_VALUETYPE(uut, UIWidget, Component)
 	public:
 		IntRect rect;
 
@@ -142,12 +143,12 @@ namespace uut
 	};
 	UUT_VALUETYPE_IMPLEMENT(UIWidget) {}
 
-	UUT_COMPONENT(UIImage, SharedPtr<Sprite>, sprite)
-	UUT_COMPONENT(UIColor, Color32, color)
+	UUT_COMPONENT(uut, UIImage, SharedPtr<Sprite>, sprite)
+	UUT_COMPONENT(uut, UIColor, Color32, color)
 
 	class UILabel : public Component
 	{
-		UUT_VALUETYPE(UILabel, Component)
+		UUT_VALUETYPE(uut, UILabel, Component)
 	public:
 		SharedPtr<Font> font;
 		String text;
@@ -229,10 +230,10 @@ namespace uut
 		{
 			IntRect rect;
 			if (it->second.TryGet<IntRect>(rect))
-				return Sprite::FromTexture(tex, rect);
+				return Sprite::Create(tex, rect);
 		}
 
-		return Sprite::FromTexture(tex, IntRect(0, 0, tex->GetSize()));
+		return Sprite::Create(tex, IntRect(0, 0, tex->GetSize()));
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -247,8 +248,8 @@ namespace uut
 		UUT_REGISTER_ENUM(Direction);
 		UUT_REGISTER_OBJECT(Foo::TestAttribute);
 
-		Context::RegisterModule(new DebugGUI());
-		Context::RegisterModule(new Graphics());
+		Context::CreateModule<DebugGUI>();
+		Context::CreateModule<Graphics>();
 
 		Graphics::Instance()->SetProjection(Graphics::PM_2D);
 		ModuleInstance<ResourceCache> cache;
@@ -292,8 +293,8 @@ namespace uut
 
 // 		auto str = StringFormat("Object type = ", typeof<Test>(), " and value = ");
 		////////////////////////////////////////////////////////////////////////////
-		_pool = new EntityPool();
-		_pool->AddSystem(new UIImageRender());
+		_pool = MakeShared<EntityPool>();
+		_pool->CreateSystem<UIImageRender>();
 		_pool->CreateEntity()->
 			Add<UIWidget>(20, 20, 200, 50)->
 			Add<UIImage>(LoadResource<Sprite>("rogueliketiles.png", { {"rect", IntRect(0, 5 * 16, 32, 32)} }));
@@ -346,7 +347,7 @@ namespace uut
 			case MemberType::Property:
 			{
 				ImGui::Text("prop: %s", info->GetName().GetData());
-				auto prop = static_cast<const PropertyInfo*>(info);
+				auto prop = static_cast<const IPropertyInfo*>(info);
 				if (prop->IsStatic())
 				{
 					auto value = prop->GetValue(nullptr).Get<int>();
@@ -360,7 +361,7 @@ namespace uut
 				if (showCtor)
 				{
 					ImGui::Text("Constructor (");
-					auto ctor = (const ConstructorInfo*)info;
+					auto ctor = (const IConstructorInfo*)info;
 					DrawArgList(ctor->GetArgsTypes());
 					ImGui::SameLine();
 					ImGui::Text(")");
@@ -369,7 +370,7 @@ namespace uut
 
 			case MemberType::Method:
 				{
-					auto method = (const MethodInfo*)info;
+					auto method = (const IMethodInfo*)info;
 					ImGui::Text("method: %s %s(",
 						ArgTypeToString(method->GetReturnType()),
 						info->GetName().GetData());
@@ -381,7 +382,7 @@ namespace uut
 
 			case MemberType::Converter:
 			{
-				auto converter = (const ConverterInfo*)info;
+				auto converter = (const IConverterInfo*)info;
 				ImGui::Text("Convert to %s", converter->GetResultType()->GetName());
 			}
 			break;
@@ -482,7 +483,7 @@ namespace uut
 		auto graphics = Graphics::Instance();
 		auto gui = DebugGUI::Instance();
 
-		_pool->Update();
+		_pool->Update(Time::GetDeltaTime());
 
 		renderer->Clear(Color32(114, 144, 154));
 		if (renderer->BeginScene())

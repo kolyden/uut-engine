@@ -11,7 +11,7 @@ namespace uut
 
 	class Font : public Resource
 	{
-		UUT_OBJECT(Font, Resource)
+		UUT_OBJECT(uut, Font, Resource)
 	public:
 		Font();
 

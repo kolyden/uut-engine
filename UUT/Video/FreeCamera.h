@@ -9,7 +9,7 @@ namespace uut
 
 	class FreeCamera : public Camera
 	{
-		UUT_OBJECT(FreeCamera, Camera)
+		UUT_OBJECT(uut, FreeCamera, Camera)
 	public:
 		FreeCamera();
 		virtual ~FreeCamera();

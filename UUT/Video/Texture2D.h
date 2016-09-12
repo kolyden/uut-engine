@@ -5,7 +5,7 @@ namespace uut
 {
 	class Texture2D : public Texture
 	{
-		UUT_OBJECT(Texture2D, Texture);
+		UUT_OBJECT(uut, Texture2D, Texture);
 	public:
 		Texture2D();
 		virtual ~Texture2D();

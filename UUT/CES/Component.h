@@ -6,7 +6,7 @@ namespace uut
 {
 	class Component : public ValueType
 	{
-		UUT_VALUETYPE(Component, ValueType)
+		UUT_VALUETYPE(uut, Component, ValueType)
 	public:
 	};
 }

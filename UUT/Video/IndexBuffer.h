@@ -5,7 +5,7 @@ namespace uut
 {
 	class IndexBuffer : public BufferObject
 	{
-		UUT_OBJECT(IndexBuffer, BufferObject)
+		UUT_OBJECT(uut, IndexBuffer, BufferObject)
 	public:
 		IndexBuffer();
 		virtual ~IndexBuffer();

@@ -9,7 +9,7 @@ namespace uut
 
 	class Plasma : public Object
 	{
-		UUT_OBJECT(Plasma, Object)
+		UUT_OBJECT(uut, Plasma, Object)
 	public:
 		explicit Plasma(const IntVector2& size);
 		virtual ~Plasma();

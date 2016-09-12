@@ -3,8 +3,8 @@
 
 namespace uut
 {
-#define UUT_VALUETYPE(typeName, parentType) \
-	UUT_BASETYPE(typeName, parentType)
+#define UUT_VALUETYPE(library, typeName, parentType) \
+	UUT_BASETYPE(library, typeName, parentType)
 
 #define UUT_VALUETYPE_IMPLEMENT(type) \
 	UUT_BASETYPE_IMPLEMENT(type)
@@ -13,7 +13,7 @@ namespace uut
 	// No virtual allowed!
 	class ValueType : public BaseObject
 	{
-		UUT_VALUETYPE(ValueType, BaseObject)
+		UUT_VALUETYPE(uut, ValueType, BaseObject)
 	public:
 		constexpr ValueType() {};
 	};

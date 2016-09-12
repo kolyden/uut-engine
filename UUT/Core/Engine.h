@@ -5,7 +5,7 @@ namespace uut
 {
 	class Engine : public Object
 	{
-		UUT_OBJECT(Engine, Object)
+		UUT_OBJECT(uut, Engine, Object)
 	public:
 		Engine();
 		virtual ~Engine();

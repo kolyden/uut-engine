@@ -6,7 +6,7 @@ namespace uut
 {
 	class DX9VertexDeclaration : public VertexDeclaration
 	{
-		UUT_OBJECT(DX9VertexDeclaration, VertexDeclaration)
+		UUT_OBJECT(uut, DX9VertexDeclaration, VertexDeclaration)
 	public:
 		DX9VertexDeclaration();
 		virtual ~DX9VertexDeclaration();

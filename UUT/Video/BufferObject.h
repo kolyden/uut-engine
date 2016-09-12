@@ -5,7 +5,7 @@ namespace uut
 {
 	class BufferObject : public Object
 	{
-		UUT_OBJECT(BufferObject, Object)
+		UUT_OBJECT(uut, BufferObject, Object)
 	public:
 		BufferObject();
 		virtual ~BufferObject();

@@ -13,7 +13,7 @@ namespace uut
 
 	class String : public ValueType
 	{
-		UUT_VALUETYPE(String, ValueType)
+		UUT_VALUETYPE(uut, String, ValueType)
 	public:
 		typedef std::string DataType;
 		typedef DataType::iterator Iterator;

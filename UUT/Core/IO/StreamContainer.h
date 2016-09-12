@@ -9,7 +9,7 @@ namespace uut
 
 	class StreamContainer : public Object
 	{
-		UUT_OBJECT(StreamContainer, Object)
+		UUT_OBJECT(uut, StreamContainer, Object)
 	public:
 		virtual SharedPtr<Stream> Open(const Path& path, FileMode mode) = 0;
 		virtual bool Exist(const Path& path) const = 0;

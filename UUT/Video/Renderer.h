@@ -36,7 +36,7 @@ namespace uut
 
 	class Renderer : public Module
 	{
-		UUT_MODULE(Renderer, Module)
+		UUT_MODULE(uut, Renderer, Module)
 	public:
 		Renderer();
 		virtual ~Renderer();

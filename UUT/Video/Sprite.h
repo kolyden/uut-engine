@@ -9,7 +9,7 @@ namespace uut
 
 	class Sprite : public Resource
 	{
-		UUT_OBJECT(Sprite, Resource)
+		UUT_OBJECT(uut, Sprite, Resource)
 	public:
 		Sprite();
 

@@ -7,7 +7,7 @@ namespace uut
 
 	class ObjectLayer : public TilemapLayer
 	{
-		UUT_OBJECT(ObjectLayer, TilemapLayer)
+		UUT_OBJECT(uut, ObjectLayer, TilemapLayer)
 	public:
 		typedef List<SharedPtr<ObjectLayerItem>> ObjectLayerItemList;
 

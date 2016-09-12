@@ -61,9 +61,9 @@ namespace uut
 	Numeric<type>& operator/= (type value) { _value /= value; return *this; }
 
 
-#define UUT_NUMERIC(name, type) \
+#define UUT_NUMERIC(library, name, type) \
 	class name : public ValueType, public Numeric<type> \
-	{ UUT_VALUETYPE(name, ValueType) \
+	{ UUT_VALUETYPE(library, name, ValueType) \
 	public: constexpr name() {} \
 	constexpr name(type value) : Numeric(value) {} \
 	UUT_NUMERIC_OPERATORS(type) \
@@ -75,12 +75,12 @@ namespace uut
 	const name name::Zero(0); \
 	UUT_VALUETYPE_IMPLEMENT(name)
 
-	UUT_NUMERIC(Int8, int8_t)
-	UUT_NUMERIC(UInt8, uint8_t)
-	UUT_NUMERIC(Int16, int16_t)
-	UUT_NUMERIC(UInt16, uint16_t)
-	UUT_NUMERIC(Int32, int32_t)
-	UUT_NUMERIC(UInt32, uint32_t)
-	UUT_NUMERIC(Int64, int64_t)
-	UUT_NUMERIC(UInt64, uint64_t)
+	UUT_NUMERIC(uut, Int8, int8_t)
+	UUT_NUMERIC(uut, UInt8, uint8_t)
+	UUT_NUMERIC(uut, Int16, int16_t)
+	UUT_NUMERIC(uut, UInt16, uint16_t)
+	UUT_NUMERIC(uut, Int32, int32_t)
+	UUT_NUMERIC(uut, UInt32, uint32_t)
+	UUT_NUMERIC(uut, Int64, int64_t)
+	UUT_NUMERIC(uut, UInt64, uint64_t)
 }

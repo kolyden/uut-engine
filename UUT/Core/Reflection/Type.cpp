@@ -10,10 +10,10 @@
 
 namespace uut
 {
-	Type::Type(const char* typeName, const Type* base, REGFUNC regfunc)
-		: _name(GetNameFromTypeid(typeName))
-		, _namespace(GetNamespaceFromTypeid(typeName))
-		, _fullname(CreateFullName(_namespace, _name))
+	Type::Type(const char* library, const char* name, const Type* base, REGFUNC regfunc)
+		: _name(name)
+		, _library(library)
+		, _fullname(_library + "::" + _name)
 		, _hash(StringToHast(_fullname.c_str()))
 		, _base(nullptr)
 		, _regfunc(regfunc)
@@ -29,9 +29,9 @@ namespace uut
 		return _name.c_str();
 	}
 
-	const char* Type::GetNamespace() const
+	const char* Type::GetLibrary() const
 	{
-		return _namespace.c_str();
+		return _library.c_str();
 	}
 
 	const char* Type::GetFullName() const
@@ -216,52 +216,5 @@ namespace uut
 	{
 		if (_regfunc != nullptr)
 			_regfunc(this);
-	}
-
-	std::string Type::GetNameFromTypeid(const char* fullname)
-	{
-		const int count = strlen(fullname);
-		for (int i = count - 1; i >= 0; i--)
-		{
-			if (fullname[i] == ':')
-				return &fullname[i + 1];
-		}
-
-		return fullname;
-	}
-
-	std::string Type::GetNamespaceFromTypeid(const char* fullname)
-	{
-		size_t p1 = std::string::npos;
-		size_t p2 = std::string::npos;
-
-		for (size_t i = 0; fullname[i] != NULL; i++)
-		{
-			const char c = fullname[i];
-			if (c == ' ')
-				p1 = i;
-			else if (c == ':')
-				p2 = i;
-		}
-
-		if (p1 == std::string::npos || p2 == std::string::npos)
-			return fullname;
-
-		auto name = std::string(fullname + p1 + 1, p2 - p1);
-		while ((p1 = name.find("::")) != std::string::npos)
-			name.replace(p1, 2, ".");
-
-		if (name.back() == '.')
-			name.resize(name.size() - 1);
-
-		return name;
-	}
-
-
-	std::string Type::CreateFullName(const std::string& namesp, const std::string& name)
-	{
-		if (!namesp.empty())
-			return namesp + '.' + name;
-		return name;
 	}
 }

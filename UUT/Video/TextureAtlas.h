@@ -8,7 +8,7 @@ namespace uut
 
 	class TextureAtlas : public Resource
 	{
-		UUT_OBJECT(TextureAtlas, Resource)
+		UUT_OBJECT(uut, TextureAtlas, Resource)
 	public:
 
 		void SetTexture(const SharedPtr<Texture2D>& texture);

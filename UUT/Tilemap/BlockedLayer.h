@@ -5,7 +5,7 @@ namespace uut
 {
 	class BlockedLayer : public InfoLayer<uint8_t>
 	{
-		UUT_OBJECT(BlockedLayer, TilemapLayer)
+		UUT_OBJECT(uut, BlockedLayer, TilemapLayer)
 	public:
 		BlockedLayer();
 

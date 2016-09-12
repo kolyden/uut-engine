@@ -5,7 +5,7 @@ namespace uut
 {
 	class Nullable : public ValueType
 	{
-		UUT_VALUETYPE(Nullable, ValueType)
+		UUT_VALUETYPE(uut, Nullable, ValueType)
 	public:
 		Nullable() : _dataType(nullptr) {}
 

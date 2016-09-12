@@ -15,7 +15,7 @@ namespace uut
 
 	class Stream : public Object
 	{
-		UUT_OBJECT(Stream, Object)
+		UUT_OBJECT(uut, Stream, Object)
 	public:
 		Stream();
 		virtual ~Stream();

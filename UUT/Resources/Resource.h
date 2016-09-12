@@ -6,7 +6,7 @@ namespace uut
 {
 	class Resource : public Object
 	{
-		UUT_OBJECT(Resource, Object)
+		UUT_OBJECT(uut, Resource, Object)
 	public:
 		Resource();
 		virtual ~Resource();

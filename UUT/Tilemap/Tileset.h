@@ -19,7 +19,7 @@ namespace uut
 
 	class Tileset : public Resource
 	{
-		UUT_OBJECT(Tileset, Resource)
+		UUT_OBJECT(uut, Tileset, Resource)
 	public:
 		Tileset();
 
