@@ -2,7 +2,7 @@
 
 namespace uut
 {
-	UUT_ENUMFLAG_IMPLEMENT(MethodAttributes, MethodAttribute)
+	UUT_ENUMFLAG_IMPLEMENT(MethodAttributes)
 	{
 		RegisterValues(
 			"Private", MethodAttribute::Private,

@@ -69,9 +69,6 @@
     <ClInclude Include="..\UUT\Core\Attribute.h">
       <Filter>UUT\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\Core\AttributeUsage.h">
-      <Filter>UUT\Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Core\BaseObject.h">
       <Filter>UUT\Core</Filter>
     </ClInclude>
@@ -711,12 +708,12 @@
     <ClInclude Include="..\UUT\GUI\GUI.h">
       <Filter>UUT\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Core\Reflection\Assembly.h">
+      <Filter>UUT\Core\Reflection</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
-      <Filter>UUT\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Core\AttributeUsage.cpp">
       <Filter>UUT\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\BaseObject.cpp">
@@ -1087,6 +1084,9 @@
     </ClCompile>
     <ClCompile Include="..\UUT\GUI\GUI.cpp">
       <Filter>UUT\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Reflection\Assembly.cpp">
+      <Filter>UUT\Core\Reflection</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

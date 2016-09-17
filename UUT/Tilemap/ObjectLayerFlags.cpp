@@ -2,7 +2,7 @@
 
 namespace uut
 {
-	UUT_ENUMFLAG_IMPLEMENT(ObjectLayerFlags, ObjectLayerFlag)
+	UUT_ENUMFLAG_IMPLEMENT(ObjectLayerFlags)
 	{
 		RegisterValues(
 			"Enabled", ObjectLayerFlag::Enabled,

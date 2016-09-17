@@ -108,10 +108,10 @@ namespace uut
 		if (!Super::OnInit())
 			return false;
 
-		auto list = Attribute::GetAttributes<ResourceLoaderAttribute>();
+		auto list = Context::GetAttributes<ResourceLoaderAttribute>();
 		for (auto it : list)
 		{
-			auto type = Context::GetAttributeAttach(it);
+			auto type = it.first;
 			if (!type->IsDerived<ResourceLoader>())
 				continue;
 

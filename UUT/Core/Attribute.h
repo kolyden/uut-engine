@@ -1,26 +1,43 @@
 #pragma once
 #include <Core/Object.h>
 #include <Core/Collections/Dictionary.h>
+#include <Core/EnumFlags.h>
 
 namespace uut
 {
-	class AttributeUsage;
+#define UUT_ATTRIBUTE_USAGE(targets, allowMultiple) \
+	public: \
+		const AttributeUsage& GetUsage() const override { return GetUsageStatic(); } \
+		static const AttributeUsage& GetUsageStatic() { static AttributeUsage usage(targets, allowMultiple); return usage; } \
+	private: \
+
+	enum class AttributeTarget
+	{
+		None = 0,
+		Method = 1,
+		Class = 2,
+		Property = 4,
+		Event = 8,
+		Attribute = 16,
+		All = Method | Class | Property | Event | Attribute,
+	};
+	UUT_ENUMFLAG(uut, AttributeTargets, AttributeTarget)
+
+	struct AttributeUsage
+	{
+		AttributeTargets targets;
+		bool allowMultiple;
+
+		constexpr AttributeUsage(AttributeTargets _targets, bool _allowMultiple)
+			: targets(_targets)
+			, allowMultiple(_allowMultiple)
+		{}
+	};
 
 	class Attribute : public Object
 	{
 		UUT_OBJECT(uut, Attribute, Object)
 	public:
-		typedef List<const Attribute*> AttributeList;
-		typedef Dictionary<const Type*, AttributeList> AttributesTypes;
-
-		Attribute();
-		virtual ~Attribute();
-
-		const Type* GetAttachedType() const;
-
-		static const AttributeList& GetAttributes(const Type* type);
-
-		template<class C> static const AttributeList& GetAttributes()
-		{ return GetAttributes(TypeOf<C>()); }
+		virtual const AttributeUsage& GetUsage() const = 0;
 	};
 }

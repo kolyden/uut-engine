@@ -61,6 +61,7 @@ namespace uut
 		constexpr name() : EnumFlagsImpl<type>() {} \
 		constexpr name(type value) : EnumFlagsImpl<type>(value) {} \
 		constexpr name(int value) : EnumFlagsImpl<type>(value) {} \
+		static const char* GetEnumName() { return #type; } \
 		name& operator = (type value) { _value = (int)value; return *this; } \
 		name& operator |= (type value) { _value |= (int)value; return *this; } \
 	}; \
@@ -72,10 +73,10 @@ namespace uut
 		return name(static_cast<int>(a) | static_cast<int>(b)); \
 	}
 
-#define UUT_ENUMFLAG_IMPLEMENT(name, type) \
-	const char* Enum<type>::Name = #type; \
-	const bool Enum<type>::IsFlag = true; \
-	template<> Dictionary<type, String> Enum<type>::Names; \
-	List<type> Enum<type>::Values; \
+#define UUT_ENUMFLAG_IMPLEMENT(name) \
+	const char* Enum<name::EnumType>::Name = name::GetEnumName(); \
+	const bool Enum<name::EnumType>::IsFlag = true; \
+	template<> Dictionary<name::EnumType, String> Enum<name::EnumType>::Names; \
+	List<name::EnumType> Enum<name::EnumType>::Values; \
 	UUT_VALUETYPE_IMPLEMENT(name)
 }

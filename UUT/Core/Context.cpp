@@ -4,7 +4,6 @@
 #include "Plugin.h"
 #include "Module.h"
 #include "Attribute.h"
-#include "AttributeUsage.h"
 
 namespace uut
 {
@@ -15,8 +14,8 @@ namespace uut
 	Context::DerivedDict Context::_derived;
 	Context::ModuleDict Context::_modules;
 	Context::ModuleInstMap Context::_moduleInst;
+	Context::AttributePool Context::_attributesPool;
 	Context::AttributeTypes Context::_attributeTypes;
-	Context::AttributeAttach Context::_attributeAttach;
 
 	SharedPtr<Object> Context::CreateObject(const Type* type)
 	{
@@ -72,15 +71,15 @@ namespace uut
 
 		const Type* parentType = type->GetBaseType();
 		if (parentType != nullptr && !_types.Contains(parentType->GetHash()))
+		{
+			Debug::LogError("Parent type '%s' not registered", parentType->GetFullName());
 			return false;
+		}
 // 		if (parentType != type)
 // 			RegisterType(parentType);
 
 		_types.Add(type->GetHash(), type);
 		_constTypes.Add(type->GetHash(), type);
-
-		for (; parentType != nullptr; parentType = parentType->GetBaseType())
-			_derived[parentType].Add(type);
 
 		type->Register();
 		if (parentType != nullptr)
@@ -88,21 +87,22 @@ namespace uut
 			for (auto& attr : parentType->GetAttributes())
 			{
 				auto attrType = attr->GetType();
-				auto attrUsage = attrType->FindAttribute<AttributeUsage>();
-				if (attrUsage == nullptr || !attrUsage->IsInherited())
-					continue;
-				if (!attrUsage->IsAllowMultiple() && type->FindAttribute(attrType) != nullptr)
+				auto& attrUsage = attr->GetUsage();
+			if (!attrUsage.allowMultiple && type->FindAttribute(attrType) != nullptr)
 					continue;
 
-				type->AddAttribute(attr);
+				type->AddAttribute2(attr);
 			}
 		}
 
-		for (auto& attr : type->GetAttributes())
+		for (const Attribute* attr : type->GetAttributes())
 		{
-			_attributeTypes[attr->GetType()] << attr;
-			_attributeAttach[attr] = type;
+			const Type* attrType = attr->GetType();
+			_attributeTypes[attrType] << std::make_pair(type, attr);
 		}
+
+		for (; parentType != nullptr; parentType = parentType->GetBaseType())
+			_derived[parentType].Add(type);
 
 		return true;
 	}
@@ -190,15 +190,6 @@ namespace uut
 
 		auto it = _attributeTypes.Find(type);
 		return it != _attributeTypes.End() ? it->second : AttributeList::Empty;
-	}
-
-	const Type* Context::GetAttributeAttach(const Attribute* attr)
-	{
-		if (attr == nullptr)
-			return nullptr;
-
-		auto it = _attributeAttach.Find(attr);
-		return it != _attributeAttach.End() ? it->second : nullptr;
 	}
 
 	//////////////////////////////////////////////////////////////////////////////

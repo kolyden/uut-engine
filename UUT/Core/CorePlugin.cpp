@@ -11,7 +11,6 @@
 #include "Resources/ResourceCache.h"
 #include "Windows/Window.h"
 #include "Attribute.h"
-#include "AttributeUsage.h"
 #include "Boolean.h"
 #include "Char.h"
 #include "Numeric.h"
@@ -67,7 +66,6 @@ namespace uut
 		UUT_REGISTER_OBJECT(Object);
 		UUT_REGISTER_OBJECT(Attribute);
 		UUT_REGISTER_OBJECT(AttributeTargets);
-		UUT_REGISTER_OBJECT(AttributeUsage);
 		UUT_REGISTER_OBJECT(Engine);
 		UUT_REGISTER_OBJECT(Module);
 

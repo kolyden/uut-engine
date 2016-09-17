@@ -3,39 +3,47 @@
 
 namespace uut
 {
+	typedef size_t HashValue;
+
 	template<typename T>
-	static size_t GetHashCode(const T& value)
+	static HashValue GetHashCode(const T& value)
 	{
 		static std::hash<T> hash_fn;
 		return hash_fn(value);
 	}
 
 #define UUT_DEFINE_HASH(type, hash) \
-	template<> static size_t GetHashCode<type>(const type& value) \
+	template<> static HashValue GetHashCode<type>(const type& value) \
 	{ return hash; }
 
 	struct Hash
 	{
-		template<typename Ret, typename... Args>
-		static Ret Make(Args... args)
+		template<typename... Args>
+		static HashValue Make(Args... args)
 		{
-			Ret hash = 2166136261;
-			_MakeHash<Ret>(hash, args...);
+			HashValue hash = 2166136261;
+			_MakeHash(hash, args...);
 			return hash;
 		}
 
-	protected:
-		template<typename Ret, typename T>
-		static void _MakeHash(Ret& hash, T value)
+		template<>
+		static HashValue Make()
 		{
-			hash = (hash * 16777619) ^ value;
+			return 0;
 		}
 
-		template<typename Ret, typename T, typename... Args>
-		static void _MakeHash(Ret& hash, T value, Args... args)
+	protected:
+		template<typename T>
+		static void _MakeHash(HashValue& hash, T value)
 		{
-			hash = (hash * 16777619) ^ value;
-			_MakeHash<Ret>(hash, args...);
+			hash = (hash * 16777619) ^ GetHashCode(value);
+		}
+
+		template<typename T, typename... Args>
+		static void _MakeHash(HashValue& hash, T value, Args... args)
+		{
+			hash = (hash * 16777619) ^ GetHashCode(value);
+			_MakeHash(hash, args...);
 		}
 	};
 }

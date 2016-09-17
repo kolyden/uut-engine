@@ -13,7 +13,6 @@
 #include <Windows.h>
 #include <Video/BitmapFont.h>
 #include <Core/Attribute.h>
-#include <Core/AttributeUsage.h>
 #include <CES/EntityPool.h>
 #include <CES/Entity.h>
 #include <CES/EntityMatcher.h>
@@ -29,6 +28,7 @@ namespace uut
 		class TestAttribute : public Attribute
 		{
 			UUT_OBJECT(uut, TestAttribute, Attribute)
+			UUT_ATTRIBUTE_USAGE(AttributeTarget::Class, false)
 		public:
 			explicit TestAttribute(const String& text) : _text(text) {}
 
@@ -45,7 +45,6 @@ namespace uut
 
 		UUT_OBJECT_IMPLEMENT(TestAttribute)
 		{
-			internalType->AddAttribute<AttributeUsage>(AttributeTarget::All, false, false);
 		}
 	}
 
@@ -69,7 +68,7 @@ namespace uut
 		ValueZ = 42,
 	};
 	UUT_ENUMFLAG(uut, TestFlags, Test)
-	UUT_ENUMFLAG_IMPLEMENT(TestFlags, Test)
+	UUT_ENUMFLAG_IMPLEMENT(TestFlags)
 	{
 		RegisterValues(
 			"ValueA", Test::ValueA,
@@ -332,7 +331,7 @@ namespace uut
 	static void DrawAttributes(const Type* type)
 	{
 		for (auto& attribute : type->GetAttributes())
-			GUI::Text(String::Format("attr: %s", attribute->ToString().GetData()));
+			GUI::Text(String::Format("attr: %s", attribute->GetType()->GetFullName()));
 	}
 
 	static void DrawMembers(const Type* type, bool showCtor)
@@ -427,7 +426,7 @@ namespace uut
 				{
 					typeList = Context::GetTypes().GetValues();
 					typeList.Sort([](const Type* a, const Type* b) -> int {
-						return String::Compare(a->GetName(), b->GetName(), StringComparison::OrdinalIgnoreCase);
+						return String::Compare(a->GetFullName(), b->GetFullName(), StringComparison::OrdinalIgnoreCase);
 					});
 				}
 
@@ -437,7 +436,7 @@ namespace uut
 				GUI::BeginListBox("##types");
 				for (auto type : typeList)
 				{
-					const auto typeName = type->GetName();
+					const char* typeName = type->GetFullName();
 					if (!filter.PassFilter(typeName))
 						continue;
 
@@ -452,13 +451,11 @@ namespace uut
 
 				if (current != nullptr)
 				{
-// 					ImGui::SameLine();
-// 					ImGui::BeginGroup();
 					GUI::BeginVertical();
 					GUI::Text(current->GetFullName());
 					
 					for (auto baseType = current->GetBaseType(); baseType != nullptr; baseType = baseType->GetBaseType())
-						GUI::Text(baseType->GetName());
+						GUI::Text(baseType->GetFullName());
 
 					GUI::Separator();
 					DrawMembers(current, true);
@@ -467,7 +464,6 @@ namespace uut
 					GUI::Separator();
 					for (auto baseType = current->GetBaseType(); baseType != nullptr; baseType = baseType->GetBaseType())
 						DrawMembers(baseType, false);
-// 					ImGui::EndGroup();
 					GUI::EndVertical();
 				}
 				GUI::EndHorizontal();

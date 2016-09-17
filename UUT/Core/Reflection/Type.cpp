@@ -5,7 +5,6 @@
 #include <Core/Attribute.h>
 #include "ConverterInfo.h"
 #include <Core/Debug.h>
-#include <Core/AttributeUsage.h>
 #include "ConstructorInfo.h"
 
 namespace uut
@@ -71,25 +70,21 @@ namespace uut
 		return nullptr;
 	}
 
-	bool Type::AddAttribute(const SharedPtr<Attribute>& attr)
+	bool Type::AddAttribute2(const Attribute* attr)
 	{
-		if (!attr)
+		if (attr == nullptr)
 			return false;
 
 		auto attrType = attr->GetType();
-		auto attrUsage = attrType->FindAttribute<AttributeUsage>();
-		if (attrUsage != nullptr)
+		auto& attrUsage = attr->GetUsage();
+		// TODO: test targets
+		if (!attrUsage.allowMultiple && FindAttribute(attrType) != nullptr)
 		{
-			// TODO: test targets
-
-			if (!attrUsage->IsAllowMultiple() && FindAttribute(attrType) != nullptr)
-			{
-				Debug::LogWarning("Multiple attributes of %s not allowed", attrType->GetName());
-				return false;
-			}
+			Debug::LogWarning("Multiple attributes of %s not allowed", attrType->GetName());
+			return false;
 		}
 
-		_attributes << attr;
+	_attributes << attr;
 		return true;
 	}
 
@@ -124,7 +119,7 @@ namespace uut
 		return count;
 	}
 
-	List<const Attribute*> Type::FindAttributes(const Type* type) const
+	Type::AttributeList Type::FindAttributes(const Type* type) const
 	{
 		List<const Attribute*> list;
 		FindAttributes(type, list);

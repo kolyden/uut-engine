@@ -23,7 +23,7 @@ namespace uut
 	class Type
 	{
 	public:
-		typedef List<SharedPtr<Attribute>> AttributeList;
+		typedef List<const Attribute*> AttributeList;
 		using REGFUNC = void(*)(Type*);
 
 		Type(const char* library, const char* name, const Type* base, REGFUNC regfunc);
@@ -44,18 +44,18 @@ namespace uut
 		template<class C> SharedPtr<C> CreateObject() const { return DynamicCast<C>(CreateObject()); }
 
 		// ATTRIBUTES
-		bool AddAttribute(const SharedPtr<Attribute>& attr);
+		bool AddAttribute2(const Attribute* attr);
 		const Attribute* FindAttribute(const Type* type) const;
 		size_t FindAttributes(const Type* type, List<const Attribute*>& list) const;
-		List<const Attribute*> FindAttributes(const Type* type) const;
+		AttributeList FindAttributes(const Type* type) const;
 		const AttributeList& GetAttributes() const { return _attributes; }
 
 		template<class C, typename... Args,  
 			class = typename std::enable_if<std::is_constructible<C, Args...>::value, void>::type>
 		bool AddAttribute(Args&&... args)
 		{
-			auto attr = MakeShared<C>(std::forward<Args>(args)...);
-			return AddAttribute(attr);
+			auto attr = Context::CreateAttribute<C>(args...);
+			return AddAttribute2(attr);
 		}
 
 		template<class C> const C* FindAttribute() const
