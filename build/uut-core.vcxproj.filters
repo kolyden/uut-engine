@@ -61,6 +61,9 @@
     <Filter Include="UUT\CES">
       <UniqueIdentifier>{54481c06-1877-4b56-bf5e-214a9127d13f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UUT\SDL">
+      <UniqueIdentifier>{fc223e81-da9f-429c-9860-ccbd8fa19273}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\UUT\Core\Assert.h">
@@ -711,6 +714,21 @@
     <ClInclude Include="..\UUT\Core\Reflection\Assembly.h">
       <Filter>UUT\Core\Reflection</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\Keycode.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\InputSystem.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\SDL\SDLInput.h">
+      <Filter>UUT\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\SDL\SDLPlugin.h">
+      <Filter>UUT\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\Scancode.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1087,6 +1105,21 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Reflection\Assembly.cpp">
       <Filter>UUT\Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\Keycode.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\InputSystem.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\SDL\SDLInput.cpp">
+      <Filter>UUT\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\SDL\SDLPlugin.cpp">
+      <Filter>UUT\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\Scancode.cpp">
+      <Filter>UUT\Core\IO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -134,8 +134,11 @@
     <ClInclude Include="..\UUT\Core\IO\FileMode.h" />
     <ClInclude Include="..\UUT\Core\IO\FileStream.h" />
     <ClInclude Include="..\UUT\Core\IO\Input.h" />
+    <ClInclude Include="..\UUT\Core\IO\InputSystem.h" />
+    <ClInclude Include="..\UUT\Core\IO\Keycode.h" />
     <ClInclude Include="..\UUT\Core\IO\MemoryStream.h" />
     <ClInclude Include="..\UUT\Core\IO\Path.h" />
+    <ClInclude Include="..\UUT\Core\IO\Scancode.h" />
     <ClInclude Include="..\UUT\Core\IO\Stream.h" />
     <ClInclude Include="..\UUT\Core\IO\StreamContainer.h" />
     <ClInclude Include="..\UUT\Core\IO\TextReader.h" />
@@ -191,6 +194,8 @@
     <ClInclude Include="..\UUT\Resources\ResourceCache.h" />
     <ClInclude Include="..\UUT\Resources\ResourceLoader.h" />
     <ClInclude Include="..\UUT\Resources\ResourceLoaderAttribute.h" />
+    <ClInclude Include="..\UUT\SDL\SDLInput.h" />
+    <ClInclude Include="..\UUT\SDL\SDLPlugin.h" />
     <ClInclude Include="..\UUT\Tilemap\BlockedLayer.h" />
     <ClInclude Include="..\UUT\Tilemap\InfoLayer.h" />
     <ClInclude Include="..\UUT\Tilemap\ObjectLayer.h" />
@@ -267,8 +272,11 @@
     <ClCompile Include="..\UUT\Core\IO\File.cpp" />
     <ClCompile Include="..\UUT\Core\IO\FileStream.cpp" />
     <ClCompile Include="..\UUT\Core\IO\Input.cpp" />
+    <ClCompile Include="..\UUT\Core\IO\InputSystem.cpp" />
+    <ClCompile Include="..\UUT\Core\IO\Keycode.cpp" />
     <ClCompile Include="..\UUT\Core\IO\MemoryStream.cpp" />
     <ClCompile Include="..\UUT\Core\IO\Path.cpp" />
+    <ClCompile Include="..\UUT\Core\IO\Scancode.cpp" />
     <ClCompile Include="..\UUT\Core\IO\Stream.cpp" />
     <ClCompile Include="..\UUT\Core\IO\StreamContainer.cpp" />
     <ClCompile Include="..\UUT\Core\IO\TextReader.cpp" />
@@ -321,6 +329,8 @@
     <ClCompile Include="..\UUT\Resources\ResourceCache.cpp" />
     <ClCompile Include="..\UUT\Resources\ResourceLoader.cpp" />
     <ClCompile Include="..\UUT\Resources\ResourceLoaderAttribute.cpp" />
+    <ClCompile Include="..\UUT\SDL\SDLInput.cpp" />
+    <ClCompile Include="..\UUT\SDL\SDLPlugin.cpp" />
     <ClCompile Include="..\UUT\Tilemap\BlockedLayer.cpp" />
     <ClCompile Include="..\UUT\Tilemap\ObjectLayer.cpp" />
     <ClCompile Include="..\UUT\Tilemap\ObjectLayerFlags.cpp" />

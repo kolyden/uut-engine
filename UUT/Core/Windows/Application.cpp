@@ -6,6 +6,7 @@
 #include <Video/DX9/DX9Renderer.h>
 #include <Video/DX9/DX9Plugin.h>
 #include <Video/VideoPlugin.h>
+#include <SDL/SDLInput.h>
 
 namespace uut
 {
@@ -24,7 +25,6 @@ namespace uut
 		_engine = MakeShared<Engine>();
 		_engine->Initialize();
 
-		Context::CreatePlugin<CorePlugin>();
 		Context::CreatePlugin<VideoPlugin>();
 		Context::CreatePlugin<DX9Plugin>();
 
@@ -37,11 +37,10 @@ namespace uut
 		_window->SetSize(IntVector2(_windowSize));
 		_window->Create();
 
-		Context::CreateModule<Input>();
+		Context::CreateModule<SDLInput>();
 		Context::CreateModule<ResourceCache>();
 		Context::AddModule(DX9Renderer::Create(_window));
 
-		auto input = Context::FindModule<Input>();
 		auto renderer = Context::FindModule<Renderer>();
 		if (renderer == nullptr)
 			return;
@@ -63,7 +62,6 @@ namespace uut
 		while (!_engine->IsExiting())
 		{
 			_engine->RunFrame();
-			input->UpdateState();
 
 			OnFrame();
 			renderer->Present();

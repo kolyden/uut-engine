@@ -5,7 +5,7 @@
 #include "IO/FileStream.h"
 #include "IO/MemoryStream.h"
 #include "IO/TextReader.h"
-#include "IO/Input.h"
+#include "IO/InputSystem.h"
 #include "Resources/Resource.h"
 #include "Resources/ResourceLoader.h"
 #include "Resources/ResourceCache.h"
@@ -89,7 +89,7 @@ namespace uut
 		UUT_REGISTER_OBJECT(StreamContainer);
 		UUT_REGISTER_OBJECT(DirectoryContainer);
 
-		UUT_REGISTER_MODULE(Input);
+		UUT_REGISTER_MODULE(InputSystem);
 
 		// RESOURCES
 		UUT_REGISTER_OBJECT(Resource);

@@ -114,6 +114,10 @@ namespace uut
 		io.MousePos.y = static_cast<float>(Input::GetMousePos().y);
 		io.MouseDown[0] = Input::IsMouseButton(0);
 		io.MouseDown[1] = Input::IsMouseButton(1);
+		io.MouseWheel = Input::GetMouseDelta();
+
+		for (int i = 0; i < 512; i++)
+			io.KeysDown[i] = Input::IsKey((Scancode)i);
 
 		_matProj = Matrix4::OrthoOffCenter(
 			0, size.x, 0, size.y, 0.1f, 100.0f);

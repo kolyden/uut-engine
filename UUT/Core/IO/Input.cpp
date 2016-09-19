@@ -1,78 +1,35 @@
 #include "Input.h"
-#include "SDL2/SDL.h"
-#include <Core/Numeric.h>
-#include <Core/Math/Math.h>
+#include <Core/IO/InputSystem.h>
 
 namespace uut
 {
-	UUT_MODULE_IMPLEMENT(Input)
-	{}
-
-	static Input* g_this = nullptr;
-
-	Input::Input()
-		: _mousePos(0)
-		, _kbMod(0)
-	{
-		g_this = this;
-		_mouseButton[0] = false;
-		_mouseButton[1] = false;
-		_mouseButton[2] = false;
-
-		_prevKbState.Clear();
-		_kbState.Clear();
-	}
-
-	Input::~Input()
-	{		
-	}
-	
 	bool Input::IsMouseButton(int button)
 	{
-		return g_this ? g_this->_mouseButton[button] : false;
+		return InputSystem::Instance()->IsMouseButton(button);
 	}
 
-	const IntVector2& Input::GetMousePos()
+	const uut::IntVector2& Input::GetMousePos()
 	{
-		return g_this? g_this->_mousePos : IntVector2::Zero;
+		return InputSystem::Instance()->GetMousePos();
 	}
 
-	bool Input::IsKey(int key)
+	float Input::GetMouseDelta()
 	{
-		return g_this && g_this->_kbState[key] > 0;
+		return InputSystem::Instance()->GetMouseDelta();
 	}
 
-	bool Input::IsKeyDown(int key)
+	bool Input::IsKey(Scancode key)
 	{
-		if (g_this == nullptr)
-			return false;
-
-		return g_this->_prevKbState[key] == 0 && g_this->_kbState[key] > 0;
+		return InputSystem::Instance()->IsKey(key);
 	}
 
-	bool Input::IsKeyUp(int key)
+	bool Input::IsKeyDown(Scancode key)
 	{
-		if (g_this == nullptr)
-			return false;
-
-		return g_this->_prevKbState[key] > 0 && g_this->_kbState[key] == 0;
+		return InputSystem::Instance()->IsKeyDown(key);
 	}
 
-	void Input::UpdateState()
+	bool Input::IsKeyUp(Scancode key)
 	{
-		const int buttons = SDL_GetMouseState(&_mousePos.x, &_mousePos.y);
-		_mouseButton[0] = (buttons & SDL_BUTTON_LMASK) == SDL_BUTTON_LMASK;
-		_mouseButton[1] = (buttons & SDL_BUTTON_RMASK) == SDL_BUTTON_RMASK;
-		_mouseButton[2] = (buttons & SDL_BUTTON_MMASK) == SDL_BUTTON_MMASK;
-
-		for (int i = 0; i < KEYS_COUNT; i++)
-			_prevKbState[i] = _kbState[i];
-
-		int keysCount;
-		auto state = SDL_GetKeyboardState(&keysCount);
-		const int count = Math::Min(keysCount, KEYS_COUNT);
-		for (int i = 0; i < count; i++)
-			_kbState[i] = state[i];
-		_kbMod = SDL_GetModState();
+		return InputSystem::Instance()->IsKeyUp(key);
 	}
 }
