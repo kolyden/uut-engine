@@ -64,6 +64,9 @@
     <Filter Include="UUT\SDL">
       <UniqueIdentifier>{fc223e81-da9f-429c-9860-ccbd8fa19273}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UUT\Quake1">
+      <UniqueIdentifier>{1364aa19-5bf1-4e09-aea8-c0c3b4e683e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\UUT\Core\Assert.h">
@@ -729,6 +732,15 @@
     <ClInclude Include="..\UUT\Core\IO\Scancode.h">
       <Filter>UUT\Core\IO</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Quake1\Quake1Plugin.h">
+      <Filter>UUT\Quake1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Quake1\Quake1ModelLoader.h">
+      <Filter>UUT\Quake1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Quake1\Quake1Model.h">
+      <Filter>UUT\Quake1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1120,6 +1132,15 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Core\IO\Scancode.cpp">
       <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Quake1\Quake1Plugin.cpp">
+      <Filter>UUT\Quake1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Quake1\Quake1ModelLoader.cpp">
+      <Filter>UUT\Quake1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Quake1\Quake1Model.cpp">
+      <Filter>UUT\Quake1</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

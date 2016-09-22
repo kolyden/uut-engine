@@ -42,6 +42,7 @@ namespace uut
 
 		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
 
+		_renderState.cullMode = CullMode::Disabled;
 		_renderState.fillMode = _currentFM;
 		_renderState.zwriteEnable = true;
 		_renderState.alphaRef = 1;

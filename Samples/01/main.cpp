@@ -1,5 +1,6 @@
 #include "main.h"
 #include <Core/Math/Math.h>
+#include <Core/Math/Quaternion.h>
 #include <IMGUI/imgui.h>
 #include <Core/Context.h>
 #include <Core/Reflection/PropertyInfo.h>
@@ -18,8 +19,13 @@
 #include <CES/EntityMatcher.h>
 #include <Video/Color.h>
 #include <Video/Sprite.h>
+#include <Video/Mesh.h>
 #include <Core/Time.h>
 #include <GUI/GUI.h>
+#include <Video/FreeCamera.h>
+#include <Quake1/Quake1Plugin.h>
+#include <Quake1/Quake1ModelLoader.h>
+#include <Quake1/Quake1Model.h>
 
 namespace uut
 {
@@ -90,94 +96,6 @@ namespace uut
 	}
 
 	////////////////////////////////////////////////////////////////////////////
-
-#define UUT_COMPONENT(library, name, dataType, dataName) \
-	class name : public Component \
-	{ \
-		UUT_VALUETYPE(library, name, Component) \
-	public: \
-		dataType dataName; \
-		void Reset(const dataType& value) \
-		{ dataName = value; } \
-	}; \
-	UUT_VALUETYPE_IMPLEMENT(name) {} \
-
-	class UIWidget : public Component
-	{
-		UUT_VALUETYPE(uut, UIWidget, Component)
-	public:
-		IntRect rect;
-
-		void Reset(int x, int y, int w, int h)
-		{
-			rect = IntRect(x, y, w, h);
-		}
-	};
-	UUT_VALUETYPE_IMPLEMENT(UIWidget) {}
-
-	UUT_COMPONENT(uut, UIImage, SharedPtr<Sprite>, sprite)
-	UUT_COMPONENT(uut, UIColor, Color32, color)
-
-	class UILabel : public Component
-	{
-		UUT_VALUETYPE(uut, UILabel, Component)
-	public:
-		SharedPtr<Font> font;
-		String text;
-
-		void Reset(const SharedPtr<Font>& fnt, const String& txt)
-		{
-			font = fnt;
-			text = txt;
-		}
-	};
-	UUT_VALUETYPE_IMPLEMENT(UILabel) {}
-
-	class UIImageRender : public EntitySystem
-	{
-	protected:
-		void Render() override
-		{
-			static const EntityMatcher matcher =
-				EntityMatcher::AllOf<UIWidget>() |
-				EntityMatcher::AnyOf<UIImage, UIColor, UILabel>();
-
-			for (auto& ent : _pool->GetEntities(matcher))
-			{
-				auto pos = ent->Get<UIWidget>();
-				auto img = ent->Get<UIImage>();
-				auto col = ent->Get<UIColor>();
-				auto txt = ent->Get<UILabel>();
-
-				const auto r = ToScreenSpace(pos->rect);
-				Graphics::Instance()->DrawQuad(
-					r, 15, img ? img->sprite->GetTexture() : nullptr,
-					img ? img->sprite->GetTextureRect() : Rect::Zero,
-					col ? col->color : Color32::White);
-
-				if (txt == nullptr || !txt->font || txt->text.IsEmpty())
-					continue;
-
-				Graphics::Instance()->PrintText(IntVector2(r.x, r.y),
-					15, txt->text, txt->font, Color32::White);
-			}
-		}
-
-		static IntRect ToScreenSpace(const IntRect& r)
-		{
-			return IntRect(r.x, 600 - r.y - r.height, r.width, r.height);
-		}
-	};
-
-	namespace Test2
-	{
-		namespace Foo
-		{
-			class Bar
-			{};
-		}
-	}
-
 	template<class C>
 	static SharedPtr<C> LoadResource(const Path& path, const Dictionary<HashString, Variant>& params = Dictionary<HashString, Variant>::Empty)
 	{
@@ -224,9 +142,14 @@ namespace uut
 
 		Graphics::Instance()->SetProjection(Graphics::PM_2D);
 		ModuleInstance<ResourceCache> cache;
+		cache->AddLoader(SharedPtr<Quake1ModelLoader>::Make());
 		_tex = LoadResource<Texture2D>("rogueliketiles.png", { {"silent", nullptr} });
 			// cache->Load<Texture2D>("rogueliketiles.png");
 		_font = cache->Load<Font>("Consolas.fnt");
+		_model = cache->Load<Quake1Model>("armor.mdl");
+
+		_camera = SharedPtr<FreeCamera>::Make();
+		_camera->SetPosition(Vector3(8.5f, 10, -50));
 
 		Variant var1(Vector2(12.111f, 45.6789f));
 		Variant var2(_font);
@@ -260,19 +183,6 @@ namespace uut
 		auto vars = var9.Get<String>(); UUT_ASSERT(vars == "256");
 
 		auto fstr = var3.Get<String>();
-// 		auto flagStr = var5.Get<String>();
-
-// 		auto str = StringFormat("Object type = ", typeof<Test>(), " and value = ");
-		////////////////////////////////////////////////////////////////////////////
-		_pool = MakeShared<EntityPool>();
-		_pool->CreateSystem<UIImageRender>();
-		_pool->CreateEntity()->
-			Add<UIWidget>(20, 20, 200, 50)->
-			Add<UIImage>(LoadResource<Sprite>("rogueliketiles.png", { {"rect", IntRect(0, 5 * 16, 32, 32)} }));
-		_pool->CreateEntity()->
-			Add<UIWidget>(20, 80, 200, 50)->
-			Add<UIColor>(Color::Red)->
-			Add<UILabel>(_font, "Label");
 	}
 
 	static bool show_test_window = false;
@@ -360,6 +270,7 @@ namespace uut
 		///////////////////////////////////////////////////////////////
 		ImGui::SetNextWindowPos(ImVec2(350, 50), ImGuiSetCond_FirstUseEver);
 		ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiSetCond_FirstUseEver);
+		ImGui::SetNextWindowCollapsed(true, ImGuiSetCond_FirstUseEver);
 		if (ImGui::Begin("Context"))
 		{
 			show_test_window = GUI::Toggle("Show Test Window", show_test_window);
@@ -441,12 +352,30 @@ namespace uut
 			ImGui::ShowTestWindow(&show_test_window);
 		}
 
+		float moveSpeed = 50.0f;
+		Radian rotateSpeed = Math::PI / 2;
+		if (Input::IsKey(Scancode::Space))
+		{
+			moveSpeed *= 4;
+			rotateSpeed *= 2;
+		}
+		if (Input::IsKey(Scancode::A))
+			_camera->MoveRight(-moveSpeed * Time::GetDeltaTime());
+		if (Input::IsKey(Scancode::D))
+			_camera->MoveRight(+moveSpeed * Time::GetDeltaTime());
+		if (Input::IsKey(Scancode::S))
+			_camera->MoveForward(-moveSpeed * Time::GetDeltaTime());
+		if (Input::IsKey(Scancode::W))
+			_camera->MoveForward(+moveSpeed * Time::GetDeltaTime());
+		if (Input::IsKey(Scancode::Q))
+			_camera->MoveUp(-moveSpeed * Time::GetDeltaTime());
+		if (Input::IsKey(Scancode::E))
+			_camera->MoveUp(+moveSpeed * Time::GetDeltaTime());
+
 		///////////////////////////////////////////////////////////////
 		auto renderer = Renderer::Instance();
 		auto graphics = Graphics::Instance();
 		auto gui = DebugGUI::Instance();
-
-		_pool->Update(Time::GetDeltaTime());
 
 		renderer->Clear(Color32(114, 144, 154));
 		if (renderer->BeginScene())
@@ -454,13 +383,56 @@ namespace uut
 // 			_plasma->Apply(_texture,
 // 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10));
 // 			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
-			graphics->SetMaterial(Graphics::MT_TRANSPARENT);
+			graphics->SetMaterial(Graphics::MT_OPAQUE);
+			graphics->SetProjection(Graphics::PM_3D);
+			graphics->Flush();
+
+			Matrix4 oldMat = renderer->GetTransform(RT_VIEW);
+			auto& cameraMat = _camera->UpdateViewMatrix();
+			renderer->SetTransform(RT_VIEW, cameraMat);
+
+			graphics->DrawLine(Vector3::Zero, Vector3::AxisX * 100, Color32::Red);
+			graphics->DrawLine(Vector3::Zero, Vector3::AxisY * 100, Color32::Green);
+			graphics->DrawLine(Vector3::Zero, Vector3::AxisZ * 100, Color32::Blue);
+
+			if (_model)
+			{
+				static int index = 0;
+
+				const Vector3 pos = Vector3(20, 0, 30);
+				graphics->DrawLine(pos, pos + Vector3::AxisY * 10, Color32::Magenta);
+
+				static const Matrix4 mat = Matrix4::Transformation(pos, Quaternion::Identity, Vector3(10));
+				auto& frames = _model->GetFrames();
+				if (frames.Count() > 0)
+					graphics->DrawGeometry(mat, frames[index]);
+
+				index = (index + 1) % frames.Count();
+			}
+
+			graphics->Flush();
+			renderer->SetTransform(RT_VIEW, oldMat);
+
 			graphics->SetProjection(Graphics::PM_2D);
+			graphics->SetMaterial(Graphics::MT_TRANSPARENT);
+
 			if (_font)
 				graphics->PrintText(Vector2(10, 10), 15, "qwertyuiopasdfghjklzxcvbnm", _font, Color32::Black);
-			if (_tex)
-				graphics->DrawQuad(IntRect(10, 30, _tex->GetWidth() * 2, _tex->GetHeight() * 2), 15, _tex);
-			_pool->Render();
+// 			if (_tex)
+// 				graphics->DrawQuad(IntRect(10, 30, _tex->GetWidth() * 2, _tex->GetHeight() * 2), 15, _tex);
+			if (_model)
+			{
+				graphics->SetMaterial(Graphics::MT_OPAQUE);
+				const List<SharedPtr<Texture2D>>& skins = _model->GetSkins();
+				int x = 0;
+				for (size_t i = 0; i < skins.Count(); i++)
+				{
+					x += 10;
+					auto& tex = skins[i];
+					graphics->DrawQuad(Rect(Vector2(x, 50), tex->GetSize()), 15, tex);
+					x += tex->GetSize().x;
+				}
+			}
 			graphics->Flush();
 
 			gui->SetupCamera();

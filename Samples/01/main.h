@@ -10,6 +10,8 @@ namespace uut
 	class EntityPool;
 	class Tilemap;
 	class Player;
+	class FreeCamera;
+	class Quake1Model;
 
 	class SampleApp : public Application
 	{
@@ -21,7 +23,8 @@ namespace uut
 
 		SharedPtr<Font> _font;
 		SharedPtr<Texture2D> _tex;
-		SharedPtr<EntityPool> _pool;
+		SharedPtr<FreeCamera> _camera;
+		SharedPtr<Quake1Model> _model;
 
 		virtual void OnInit() override;
 		virtual void OnFrame() override;

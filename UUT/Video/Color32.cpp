@@ -6,6 +6,7 @@
 namespace uut
 {
 	const Color32 Color32::Clear(0, 0, 0, 0);
+	const Color32 Color32::Transparent(255, 255, 255, 0);
 	const Color32 Color32::White(255, 255, 255);
 	const Color32 Color32::Black(0, 0, 0);
 	const Color32 Color32::Red(255, 0, 0);

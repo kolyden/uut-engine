@@ -1,5 +1,5 @@
 #pragma once
-#include <Core/Object.h>
+#include <Resources/Resource.h>
 #include <Core/Collections/List.h>
 #include <Core/Math/Vector3.h>
 #include <Core/Math/Vector2.h>
@@ -12,9 +12,9 @@ namespace uut
 	class Matrix4;
 
 	// hardware? vertex and index buffer
-	class Mesh : public Object
+	class Mesh : public Resource
 	{
-		UUT_OBJECT(uut, Mesh, Object)
+		UUT_OBJECT(uut, Mesh, Resource)
 	public:
 		Mesh();
 		virtual ~Mesh();

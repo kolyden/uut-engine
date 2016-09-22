@@ -211,6 +211,7 @@ namespace uut
 
 		T* GetData() { return _data.data(); }
 		const T* GetData() const { return _data.data(); }
+		size_t GetDataSize() const { return _data.size() * sizeof(T); }
 
 		void Swap(List<T>& list) { std::swap(_data, list._data); }
 		void Swap(uint index1, uint index2) { std::swap(_data[index1], _data[index2]); }
