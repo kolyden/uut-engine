@@ -2,7 +2,7 @@
 #include <Core/Object.h>
 #include <Core/Collections/Dictionary.h>
 #include <Core/EnumFlags.h>
-
+/*
 namespace uut
 {
 #define UUT_ATTRIBUTE_USAGE(targets, allowMultiple) \
@@ -40,4 +40,4 @@ namespace uut
 	public:
 		virtual const AttributeUsage& GetUsage() const = 0;
 	};
-}
+}*/

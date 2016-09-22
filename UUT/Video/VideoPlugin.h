@@ -10,6 +10,5 @@ namespace uut
 
 	protected:
 		void OnRegister() override;
-		void OnUnregister() override;
 	};
 }

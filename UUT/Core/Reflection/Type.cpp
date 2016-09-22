@@ -70,62 +70,6 @@ namespace uut
 		return nullptr;
 	}
 
-	bool Type::AddAttribute2(const Attribute* attr)
-	{
-		if (attr == nullptr)
-			return false;
-
-		auto attrType = attr->GetType();
-		auto& attrUsage = attr->GetUsage();
-		// TODO: test targets
-		if (!attrUsage.allowMultiple && FindAttribute(attrType) != nullptr)
-		{
-			Debug::LogWarning("Multiple attributes of %s not allowed", attrType->GetName());
-			return false;
-		}
-
-	_attributes << attr;
-		return true;
-	}
-
-	const Attribute* Type::FindAttribute(const Type* type) const
-	{
-		if (type == nullptr)
-			return nullptr;
-
-		for (auto& attr : _attributes)
-		{
-			if (attr->GetType()->IsDerived(type))
-				return attr;
-		}
-
-		return nullptr;
-	}
-
-	size_t Type::FindAttributes(const Type* type, List<const Attribute*>& list) const
-	{
-		if (type == nullptr)
-			return 0;
-
-		size_t count = 0;
-		for (auto& attr : _attributes)
-		{
-			if (attr->GetType()->IsDerived(type))
-			{
-				count++;
-				list << attr;
-			}
-		}
-		return count;
-	}
-
-	Type::AttributeList Type::FindAttributes(const Type* type) const
-	{
-		List<const Attribute*> list;
-		FindAttributes(type, list);
-		return list;
-	}
-
 	void Type::AddMember(IMemberInfo* member)
 	{
 		_members << member;

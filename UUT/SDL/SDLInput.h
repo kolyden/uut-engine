@@ -30,8 +30,8 @@ namespace uut
 
 		IntVector2 _mousePos;
 		float _mouseDelta;
-		Array<uint8_t, KEYS_COUNT> _prevKbState;
-		Array<uint8_t, KEYS_COUNT> _kbState;
+		Array<bool, KEYS_COUNT> _prevKbState;
+		Array<bool, KEYS_COUNT> _kbState;
 
 		int _kbMod;
 		bool _mouseButton[3];

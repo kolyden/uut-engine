@@ -46,7 +46,7 @@ namespace uut
 		Dictionary<const Type*, List<SharedPtr<ResourceLoader>>> _loaders;
 		Dictionary<const Type*, ResourceDict> _groups;
 
-		bool OnInit() override;
+// 		bool OnInit() override;
 
 		void InternalAddResource(const SharedPtr<Resource>& resource);
 	};

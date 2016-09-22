@@ -4,7 +4,6 @@
 
 namespace uut
 {
-	class Attribute;
 	class String;
 	class IMemberInfo;
 	class IPropertyInfo;
@@ -23,7 +22,6 @@ namespace uut
 	class Type
 	{
 	public:
-		typedef List<const Attribute*> AttributeList;
 		using REGFUNC = void(*)(Type*);
 
 		Type(const char* library, const char* name, const Type* base, REGFUNC regfunc);
@@ -42,24 +40,6 @@ namespace uut
 
 		SharedPtr<Object> CreateObject() const;
 		template<class C> SharedPtr<C> CreateObject() const { return DynamicCast<C>(CreateObject()); }
-
-		// ATTRIBUTES
-		bool AddAttribute2(const Attribute* attr);
-		const Attribute* FindAttribute(const Type* type) const;
-		size_t FindAttributes(const Type* type, List<const Attribute*>& list) const;
-		AttributeList FindAttributes(const Type* type) const;
-		const AttributeList& GetAttributes() const { return _attributes; }
-
-		template<class C, typename... Args,  
-			class = typename std::enable_if<std::is_constructible<C, Args...>::value, void>::type>
-		bool AddAttribute(Args&&... args)
-		{
-			auto attr = Context::CreateAttribute<C>(args...);
-			return AddAttribute2(attr);
-		}
-
-		template<class C> const C* FindAttribute() const
-		{ return static_cast<const C*>(FindAttribute(TypeOf<C>())); }
 
 		// MEMBERS
 		void AddMember(IMemberInfo* member);
@@ -91,7 +71,6 @@ namespace uut
 		const Type* _base;
 		REGFUNC _regfunc;
 		List<const IMemberInfo*> _members;
-		AttributeList _attributes;
 
 		void Register();
 

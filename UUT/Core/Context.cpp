@@ -14,8 +14,8 @@ namespace uut
 	Context::DerivedDict Context::_derived;
 	Context::ModuleDict Context::_modules;
 	Context::ModuleInstMap Context::_moduleInst;
-	Context::AttributePool Context::_attributesPool;
-	Context::AttributeTypes Context::_attributeTypes;
+// 	Context::AttributePool Context::_attributesPool;
+// 	Context::AttributeTypes Context::_attributeTypes;
 
 	SharedPtr<Object> Context::CreateObject(const Type* type)
 	{
@@ -82,24 +82,24 @@ namespace uut
 		_constTypes.Add(type->GetHash(), type);
 
 		type->Register();
-		if (parentType != nullptr)
-		{
-			for (auto& attr : parentType->GetAttributes())
-			{
-				auto attrType = attr->GetType();
-				auto& attrUsage = attr->GetUsage();
-			if (!attrUsage.allowMultiple && type->FindAttribute(attrType) != nullptr)
-					continue;
+// 		if (parentType != nullptr)
+// 		{
+// 			for (auto& attr : parentType->GetAttributes())
+// 			{
+// 				auto attrType = attr->GetType();
+// 				auto& attrUsage = attr->GetUsage();
+// 			if (!attrUsage.allowMultiple && type->FindAttribute(attrType) != nullptr)
+// 					continue;
+// 
+// 				type->AddAttribute2(attr);
+// 			}
+// 		}
 
-				type->AddAttribute2(attr);
-			}
-		}
-
-		for (const Attribute* attr : type->GetAttributes())
-		{
-			const Type* attrType = attr->GetType();
-			_attributeTypes[attrType] << std::make_pair(type, attr);
-		}
+// 		for (const Attribute* attr : type->GetAttributes())
+// 		{
+// 			const Type* attrType = attr->GetType();
+// 			_attributeTypes[attrType] << std::make_pair(type, attr);
+// 		}
 
 		for (; parentType != nullptr; parentType = parentType->GetBaseType())
 			_derived[parentType].Add(type);
@@ -183,14 +183,14 @@ namespace uut
 		return FindModule(FindType(name));
 	}
 
-	const Context::AttributeList& Context::GetAttributes(const Type* type)
-	{
-		if (type == nullptr)
-			return AttributeList::Empty;
-
-		auto it = _attributeTypes.Find(type);
-		return it != _attributeTypes.End() ? it->second : AttributeList::Empty;
-	}
+// 	const Context::AttributeList& Context::GetAttributes(const Type* type)
+// 	{
+// 		if (type == nullptr)
+// 			return AttributeList::Empty;
+// 
+// 		auto it = _attributeTypes.Find(type);
+// 		return it != _attributeTypes.End() ? it->second : AttributeList::Empty;
+// 	}
 
 	//////////////////////////////////////////////////////////////////////////////
 	void Context::Init()

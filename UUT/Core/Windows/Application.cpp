@@ -7,6 +7,8 @@
 #include <Video/DX9/DX9Plugin.h>
 #include <Video/VideoPlugin.h>
 #include <SDL/SDLInput.h>
+#include <Video/Loaders/BitmapFontLoader.h>
+#include <Video/Loaders/Texture2DLoader.h>
 
 namespace uut
 {
@@ -47,8 +49,8 @@ namespace uut
 
 		auto cache = Context::FindModule<ResourceCache>();
 		cache->AddContainer(MakeShared<DirectoryContainer>(""));
-// 		cache->AddLoader(new Texture2DLoader());
-// 		cache->AddLoader(new BitmapFontLoader());
+		cache->AddLoader(SharedPtr<Texture2DLoader>::Make());
+		cache->AddLoader(SharedPtr<BitmapFontLoader>::Make());
 		renderer->ResetStates();
 		OnInit();
 

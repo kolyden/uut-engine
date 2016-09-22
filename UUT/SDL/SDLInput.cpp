@@ -1,5 +1,6 @@
 #include "SDLInput.h"
 #include <Core/Numeric.h>
+#include <Core/Boolean.h>
 
 namespace uut
 {

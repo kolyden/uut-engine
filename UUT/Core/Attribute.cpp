@@ -2,7 +2,7 @@
 #include <Core/Reflection/Type.h>
 #include "Debug.h"
 #include "Context.h"
-
+/*
 namespace uut
 {
 	UUT_ENUMFLAG_IMPLEMENT(AttributeTargets)
@@ -19,4 +19,4 @@ namespace uut
 	UUT_OBJECT_IMPLEMENT(Attribute)
 	{
 	}
-}
+}*/

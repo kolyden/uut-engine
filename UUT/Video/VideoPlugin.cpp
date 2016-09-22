@@ -59,8 +59,4 @@ namespace uut
 		UUT_REGISTER_MODULE(Renderer);
 		UUT_REGISTER_MODULE(Graphics);
 	}
-
-	void VideoPlugin::OnUnregister()
-	{
-	}
 }

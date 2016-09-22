@@ -23,32 +23,6 @@
 
 namespace uut
 {
-	namespace Foo
-	{
-		class TestAttribute : public Attribute
-		{
-			UUT_OBJECT(uut, TestAttribute, Attribute)
-			UUT_ATTRIBUTE_USAGE(AttributeTarget::Class, false)
-		public:
-			explicit TestAttribute(const String& text) : _text(text) {}
-
-			const String& GetText() const { return _text; }
-
-			String ToString() override
-			{
-				return Super::ToString() + "(text:'" + _text + "')";
-			}
-
-		protected:
-			String _text;
-		};
-
-		UUT_OBJECT_IMPLEMENT(TestAttribute)
-		{
-		}
-	}
-
-	////////////////////////////////////////////////////////////////////////////
 	template<class T>
 	static void EnumRegisterMemebers(Type* type)
 	{
@@ -76,7 +50,6 @@ namespace uut
 			"ValueC", Test::ValueC,
 			"ValueZ", Test::ValueZ);
  		EnumRegisterMemebers<Test>(internalType);
-		internalType->AddAttribute<Foo::TestAttribute>("hello");
 	}
 
 	enum class Direction
@@ -95,7 +68,6 @@ namespace uut
 			"South", Direction::South,
 			"West", Direction::West);
 		EnumRegisterMemebers<Direction>(internalType);
-		internalType->AddAttribute<Foo::TestAttribute>("world");
 	}
 
 	namespace detail
@@ -246,7 +218,6 @@ namespace uut
 	{
 		Context::RegisterType<TestFlags>();
 		UUT_REGISTER_ENUM(Direction);
-		UUT_REGISTER_OBJECT(Foo::TestAttribute);
 
 		Context::CreateModule<DebugGUI>();
 		Context::CreateModule<Graphics>();
@@ -326,12 +297,6 @@ namespace uut
 			GUI::Text(it->GetName());
 			GUI::EndHorizontal();
 		}
-	}
-
-	static void DrawAttributes(const Type* type)
-	{
-		for (auto& attribute : type->GetAttributes())
-			GUI::Text(String::Format("attr: %s", attribute->GetType()->GetFullName()));
 	}
 
 	static void DrawMembers(const Type* type, bool showCtor)
@@ -459,7 +424,6 @@ namespace uut
 
 					GUI::Separator();
 					DrawMembers(current, true);
-					DrawAttributes(current);
 
 					GUI::Separator();
 					for (auto baseType = current->GetBaseType(); baseType != nullptr; baseType = baseType->GetBaseType())

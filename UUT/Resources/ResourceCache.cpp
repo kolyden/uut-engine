@@ -103,27 +103,27 @@ namespace uut
 		_loaders[loader->GetResourceType()] << loader;
 	}
 
-	bool ResourceCache::OnInit()
-	{
-		if (!Super::OnInit())
-			return false;
-
-		auto list = Context::GetAttributes<ResourceLoaderAttribute>();
-		for (auto it : list)
-		{
-			auto type = it.first;
-			if (!type->IsDerived<ResourceLoader>())
-				continue;
-
-			auto loader = type->CreateObject<ResourceLoader>();
-			if (!loader)
-				continue;
-
-			AddLoader(loader);
-		}
-
-		return true;
-	}
+// 	bool ResourceCache::OnInit()
+// 	{
+// 		if (!Super::OnInit())
+// 			return false;
+// 
+// 		auto list = Context::GetAttributes<ResourceLoaderAttribute>();
+// 		for (auto it : list)
+// 		{
+// 			auto type = it.first;
+// 			if (!type->IsDerived<ResourceLoader>())
+// 				continue;
+// 
+// 			auto loader = type->CreateObject<ResourceLoader>();
+// 			if (!loader)
+// 				continue;
+// 
+// 			AddLoader(loader);
+// 		}
+// 
+// 		return true;
+// 	}
 
 	void ResourceCache::InternalAddResource(const SharedPtr<Resource>& resource)
 	{

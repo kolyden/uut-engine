@@ -1,6 +1,6 @@
 #pragma once
 #include <Core/Attribute.h>
-
+/*
 namespace uut
 {
 	class ResourceLoaderAttribute : public Attribute
@@ -9,4 +9,4 @@ namespace uut
 		UUT_ATTRIBUTE_USAGE(AttributeTarget::Class, false)
 	public:
 	};
-}
+}*/

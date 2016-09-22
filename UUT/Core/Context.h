@@ -13,7 +13,7 @@ namespace uut
 	class Type;
 	class Object;
 	class Module;
-	class Attribute;
+// 	class Attribute;
 
 	class Context
 	{
@@ -26,9 +26,9 @@ namespace uut
 		typedef Dictionary<HashString, SharedPtr<Module>> ModuleDict;
 		typedef Dictionary<const Type*, Module*> ModuleInstMap;
 
-		typedef List<std::pair<const Type*, const Attribute*>> AttributeList;
-		typedef Dictionary<const Type*, Dictionary<HashValue, Attribute*>> AttributePool;
-		typedef Dictionary<const Type*, AttributeList> AttributeTypes;
+// 		typedef List<std::pair<const Type*, const Attribute*>> AttributeList;
+// 		typedef Dictionary<const Type*, Dictionary<HashValue, Attribute*>> AttributePool;
+// 		typedef Dictionary<const Type*, AttributeList> AttributeTypes;
 
 		// OBJECT CREATION
 		static SharedPtr<Object> CreateObject(const Type* type);
@@ -80,31 +80,30 @@ namespace uut
 		}
 
 		// ATTRIBUTES
-		static const Context::AttributeList& GetAttributes(const Type* type);
+// 		static const Context::AttributeList& GetAttributes(const Type* type);
 
-		template<class C, typename... Args,
-			class = typename std::enable_if<std::is_base_of<Attribute, C>::value, void>::type,
-			class = typename std::enable_if<std::is_constructible<C, Args...>::value, void>::type>
-		static const Attribute* CreateAttribute(Args... args)
-		{
-			const size_t hash = Hash::Make(args...);
-			const Type* type = C::GetTypeStatic();
-			auto it = _attributesPool.Find(type);
-			if (it != _attributesPool.End())
-			{
-				auto jt = it->second.Find(hash);
-				if (jt != it->second.End())
-					return jt->second;
-			}
+// 		template<class C, typename... Args,
+// 			class = typename std::enable_if<std::is_base_of<Attribute, C>::value, void>::type,
+// 			class = typename std::enable_if<std::is_constructible<C, Args...>::value, void>::type>
+// 		static const Attribute* CreateAttribute(Args... args)
+// 		{
+// 			const size_t hash = Hash::Make(args...);
+// 			const Type* type = C::GetTypeStatic();
+// 			auto it = _attributesPool.Find(type);
+// 			if (it != _attributesPool.End())
+// 			{
+// 				auto jt = it->second.Find(hash);
+// 				if (jt != it->second.End())
+// 					return jt->second;
+// 			}
+// 
+// 			auto attr = new C(args...);
+// 			_attributesPool[type][hash] = attr;
+// 			return attr;
+// 		}
 
-			auto attr = new C(args...);
-			_attributesPool[type][hash] = attr;
-			return attr;
-		}
-
-
-		template<class C> static const Context::AttributeList& GetAttributes()
-		{ return GetAttributes(C::GetTypeStatic()); }
+// 		template<class C> static const Context::AttributeList& GetAttributes()
+// 		{ return GetAttributes(C::GetTypeStatic()); }
 
 	protected:
 		static bool _inited;
@@ -114,8 +113,8 @@ namespace uut
 		static DerivedDict _derived;
 		static ModuleDict _modules;
 		static ModuleInstMap _moduleInst;
-		static AttributePool _attributesPool;
-		static AttributeTypes _attributeTypes;
+// 		static AttributePool _attributesPool;
+// 		static AttributeTypes _attributeTypes;
 
 		static void Init();
 		static void Done();

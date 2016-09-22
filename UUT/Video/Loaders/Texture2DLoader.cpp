@@ -4,7 +4,6 @@
 #include <Core/IO/Stream.h>
 #include <Video/Renderer.h>
 #include <Video/Texture2D.h>
-#include <Resources/ResourceLoaderAttribute.h>
 #include <Core/Reflection/ConstructorInfo.h>
 
 namespace uut
@@ -33,7 +32,6 @@ namespace uut
 	///////////////////////////////////////////////////////////////////////////
 	UUT_OBJECT_IMPLEMENT(Texture2DLoader)
 	{
-		internalType->AddAttribute<ResourceLoaderAttribute>();
 		UUT_REGISTER_CTOR_DEFAULT();
 	}
 
