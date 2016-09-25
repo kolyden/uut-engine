@@ -1,7 +1,11 @@
 #pragma once
 #include <Core/IO/InputSystem.h>
-#include <SDL2/SDL_events.h>
 #include <Core/Collections/Array.h>
+
+struct SDL_KeyboardEvent;
+struct SDL_MouseButtonEvent;
+struct SDL_MouseMotionEvent;
+struct SDL_MouseWheelEvent;
 
 namespace uut
 {

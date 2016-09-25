@@ -1,6 +1,7 @@
 #include "SDLInput.h"
 #include <Core/Numeric.h>
 #include <Core/Boolean.h>
+#include <SDL2/SDL_events.h>
 
 namespace uut
 {

@@ -59,7 +59,7 @@ namespace uut
 		void DrawWireCube(const Vector3& center, float side, const Color32& color = Color32::White);
 		void DrawCube(const Vector3& center, float side, const Color32& color = Color32::White, const SharedPtr<Texture2D>& texture = nullptr);
 
-		void DrawGeometry(const Matrix4& transform, const SharedPtr<Mesh>& geometry, const SharedPtr<Texture2D>& texture = nullptr);
+		void DrawMesh(const Matrix4& transform, const SharedPtr<Mesh>& mesh, const SharedPtr<Texture2D>& texture = nullptr);
 
 		void DrawPrimitive(Topology topology, const List<Vertex>& vertexes, const SharedPtr<Texture2D>& texture = nullptr);
 		void DrawIndexedPrimitive(Topology topology, const List<Vertex>& vertexes, const List<uint16_t>& indexes, const SharedPtr<Texture2D>& texture = nullptr);

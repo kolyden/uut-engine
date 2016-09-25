@@ -353,15 +353,15 @@ namespace uut
 			texture);
 	}
 
-	void Graphics::DrawGeometry(const Matrix4& transform, const SharedPtr<Mesh>& geometry, const SharedPtr<Texture2D>& texture)
+	void Graphics::DrawMesh(const Matrix4& transform, const SharedPtr<Mesh>& mesh, const SharedPtr<Texture2D>& texture)
 	{
-		if (!geometry)
+		if (mesh == nullptr)
 			return;
 
-		auto& vertices = geometry->GetVertices();
-		auto& uvs = geometry->GetUV();
-		auto& colors = geometry->GetColors32();
-		auto& indexes = geometry->GetIndexes();
+		auto& vertices = mesh->GetVertices();
+		auto& uvs = mesh->GetUV();
+		auto& colors = mesh->GetColors32();
+		auto& indexes = mesh->GetIndexes();
 		const uint count = indexes.Count();
 
 		TestBatch(Topology::TrinagleList, texture, count);

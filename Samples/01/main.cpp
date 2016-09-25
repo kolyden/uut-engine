@@ -425,7 +425,7 @@ namespace uut
 				auto& frames = _model->GetFrames();
 				auto it = _model->GetAnimations().Find(anim[index]);
 				if (it != _model->GetAnimations().End())
-					graphics->DrawGeometry(mat, frames[it->second], _model->GetSkins()[0]);
+					graphics->DrawMesh(mat, frames[it->second], _model->GetSkins()[0]);
 
 				time += Time::GetDeltaTime();
 				while (time >= frameTime)
