@@ -42,7 +42,7 @@ namespace uut
 
 		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
 
-		_renderState.cullMode = CullMode::Disabled;
+// 		_renderState.cullMode = CullMode::Disabled;
 		_renderState.fillMode = _currentFM;
 		_renderState.zwriteEnable = true;
 		_renderState.alphaRef = 1;
@@ -368,12 +368,11 @@ namespace uut
 
 		for (uint i = 0; i < count; i++)
 		{
-			const uint offset = _vdxIndex + i;
 			const uint32_t index = indexes[i];
-
-			_vertices[offset].pos = transform.VectorTransform(vertices[index]);
-			_vertices[offset].tex = uvs[index];
-			_vertices[offset].color = colors[index].ToInt();
+			_vertices[_vdxIndex].pos = transform.VectorTransform(vertices[index]);
+			_vertices[_vdxIndex].tex = uvs[index];
+			_vertices[_vdxIndex].color = colors[index].ToInt();
+			_vdxIndex++;
 		}
 	}
 

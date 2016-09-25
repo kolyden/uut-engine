@@ -1,5 +1,7 @@
 #pragma once
 #include "Vector3.h"
+#include "Radian.h"
+#include "Degree.h"
 
 namespace uut
 {

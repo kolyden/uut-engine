@@ -372,6 +372,16 @@ namespace uut
 		if (Input::IsKey(Scancode::E))
 			_camera->MoveUp(+moveSpeed * Time::GetDeltaTime());
 
+		if (Input::IsKey(Scancode::Left))
+			_camera->Yaw(-rotateSpeed*Time::GetDeltaTime());
+		if (Input::IsKey(Scancode::Right))
+			_camera->Yaw(+rotateSpeed*Time::GetDeltaTime());
+
+		if (Input::IsKey(Scancode::Up))
+			_camera->Pitch(-rotateSpeed*Time::GetDeltaTime());
+		if (Input::IsKey(Scancode::Down))
+			_camera->Pitch(+rotateSpeed*Time::GetDeltaTime());
+
 		///////////////////////////////////////////////////////////////
 		auto renderer = Renderer::Instance();
 		auto graphics = Graphics::Instance();
@@ -397,17 +407,16 @@ namespace uut
 
 			if (_model)
 			{
-				static int index = 0;
-
 				const Vector3 pos = Vector3(20, 0, 30);
 				graphics->DrawLine(pos, pos + Vector3::AxisY * 10, Color32::Magenta);
 
-				static const Matrix4 mat = Matrix4::Transformation(pos, Quaternion::Identity, Vector3(10));
+				static const auto rot = Quaternion::RotationAxis(Vector3::AxisX, -Degree::Angle90) *
+					Quaternion::RotationAxis(Vector3::AxisY, Degree::Angle90);
+
+				static const Matrix4 mat = Matrix4::Transformation(pos, Quaternion::Identity, Vector3::One);
 				auto& frames = _model->GetFrames();
 				if (frames.Count() > 0)
-					graphics->DrawGeometry(mat, frames[index]);
-
-				index = (index + 1) % frames.Count();
+					graphics->DrawGeometry(mat, frames[0], _model->GetSkins()[0]);
 			}
 
 			graphics->Flush();

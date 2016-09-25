@@ -1,6 +1,7 @@
 #include "Quake1ModelLoader.h"
 #include <Core/IO/BinaryReader.h>
 #include <Core/IO/Stream.h>
+#include <Core/Math/Quaternion.h>
 #include <Video/Renderer.h>
 #include <Video/Mesh.h>
 #include <Video/Texture2D.h>
@@ -348,11 +349,11 @@ namespace uut
 					for (int x = 0; x < header.skinwidth; x++)
 					{
 						const uint8_t index = data[x + y*header.skinwidth];
-						const uint32_t offset = x + y * pitch;
+						const uint32_t offset = x * 4 + y * pitch;
 						uint32_t* target = (uint32_t*)(bytes + offset);
-						if (index < 0xFF)
+// 						if (index != 0xFF)
 							target[0] = g_palette[index].ToInt();
-						else target[0] = Color32::Transparent.ToInt();
+// 						else target[0] = Color32::Transparent.ToInt();
 					}
 				}
 				skin->Unlock();
@@ -388,6 +389,10 @@ namespace uut
 			List<Color32> colors;
 			List<size_t> indexes;
 
+			static const auto rot = Quaternion::RotationAxis(Vector3::AxisX, -Degree::Angle90) *
+				Quaternion::RotationAxis(Vector3::AxisY, Degree::Angle90);
+			static const Matrix4 mat = Matrix4::RotationQuaternion(rot);
+
 			for (int i = 0; i < header.num_tris; i++)
 			{
 				for (int j = 0; j < 3; j++)
@@ -400,9 +405,9 @@ namespace uut
 					if (!mdl_tri[i].facesfront && mdl_tex[mdl_tri[i].vertex[j]].onseam)
 						s += 0.5f*header.skinwidth;
 
-					s = (s + 0.5f) / header.skinwidth;
-					t = (t + 0.5f) / header.skinwidth;
-					uv.Add(Vector2(s, t));
+					const float tx = (s + 0.5f) / header.skinwidth;
+					const float ty = (t + 0.5f) / header.skinheight;
+					uv.Add(Vector2(tx, ty));
 
 					const Vector3 normal = g_normals[pvert->normalIndex];
 
@@ -411,7 +416,7 @@ namespace uut
 					const float z = (header.scale[2] * pvert->v[2]) + header.translate[2];
 
 					indexes.Add(vertices.Count());
-					vertices.Add(Vector3(x, -y, z));
+					vertices.Add(mat.VectorTransform(Vector3(x, -y, z)));
 				}
 
 				colors.Add(3, Color32::White);
