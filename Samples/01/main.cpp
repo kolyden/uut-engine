@@ -146,7 +146,7 @@ namespace uut
 		_tex = LoadResource<Texture2D>("rogueliketiles.png", { {"silent", nullptr} });
 			// cache->Load<Texture2D>("rogueliketiles.png");
 		_font = cache->Load<Font>("Consolas.fnt");
-		_model = cache->Load<Quake1Model>("armor.mdl");
+		_model = cache->Load<Quake1Model>("player.mdl");
 
 		_camera = SharedPtr<FreeCamera>::Make();
 		_camera->SetPosition(Vector3(8.5f, 10, -50));
@@ -391,7 +391,7 @@ namespace uut
 		if (renderer->BeginScene())
 		{
 // 			_plasma->Apply(_texture,
-// 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10));
+// 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10))
 // 			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
 			graphics->SetMaterial(Graphics::MT_OPAQUE);
 			graphics->SetProjection(Graphics::PM_3D);
@@ -406,7 +406,15 @@ namespace uut
 			graphics->DrawLine(Vector3::Zero, Vector3::AxisZ * 100, Color32::Blue);
 
 			if (_model)
-			{
+			{				
+				static const List<HashString> anim = {
+					"axstnd1", "axstnd2", "axstnd3", "axstnd4", "axstnd5", "axstnd6", "axstnd7",
+					"axstnd8", "axstnd9", "axstnd10", "axstnd11", "axstnd12"
+				};
+				static const float frameTime = 0.15f;
+				static int index = 0;
+				static float time = 0;
+
 				const Vector3 pos = Vector3(20, 0, 30);
 				graphics->DrawLine(pos, pos + Vector3::AxisY * 10, Color32::Magenta);
 
@@ -415,8 +423,16 @@ namespace uut
 
 				static const Matrix4 mat = Matrix4::Transformation(pos, Quaternion::Identity, Vector3::One);
 				auto& frames = _model->GetFrames();
-				if (frames.Count() > 0)
-					graphics->DrawGeometry(mat, frames[0], _model->GetSkins()[0]);
+				auto it = _model->GetAnimations().Find(anim[index]);
+				if (it != _model->GetAnimations().End())
+					graphics->DrawGeometry(mat, frames[it->second], _model->GetSkins()[0]);
+
+				time += Time::GetDeltaTime();
+				while (time >= frameTime)
+				{
+					time -= frameTime;
+					index = (index + 1) % anim.Count();
+				}
 			}
 
 			graphics->Flush();

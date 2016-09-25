@@ -1,5 +1,6 @@
 #pragma once
-#include "Resources\Resource.h"
+#include "Resources/Resource.h"
+#include <Core/Collections/Dictionary.h>
 
 namespace uut
 {
@@ -13,10 +14,12 @@ namespace uut
 
 		const List<SharedPtr<Texture2D>>& GetSkins() const { return _skins; }
 		const List<SharedPtr<Mesh>>& GetFrames() const { return _frames; }
+		const Dictionary<HashString, uint>& GetAnimations() const { return _animations; }
 
 	protected:
 		List<SharedPtr<Texture2D>> _skins;
 		List<SharedPtr<Mesh>> _frames;
+		Dictionary<HashString, uint> _animations;
 
 		friend class Quake1ModelLoader;
 	};

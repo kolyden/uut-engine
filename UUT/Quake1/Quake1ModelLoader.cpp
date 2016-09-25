@@ -1,4 +1,5 @@
 #include "Quake1ModelLoader.h"
+#include <Core/Debug.h>
 #include <Core/IO/BinaryReader.h>
 #include <Core/IO/Stream.h>
 #include <Core/Math/Quaternion.h>
@@ -332,7 +333,8 @@ namespace uut
 			case 1:
 				count = reader->ReadUint32();
 				reader->SkipBytes(sizeof(float) * count);
-				reader->SkipBytes(header.skinwidth * header.skinheight * count);
+				reader->ReadBytes(data.GetDataSize(), data.GetData());
+				reader->SkipBytes(header.skinwidth * header.skinheight * (count - 1));
 				break;
 
 			default:
@@ -375,19 +377,40 @@ namespace uut
 		// Frames
 		List<mdl_vertex_t> mdl_vert;
 		mdl_vert.SetSize(header.num_verts);
+		List<Vector3> vertices;
+		List<Vector2> uv;
+		List<Color32> colors;
+		List<size_t> indexes;
+
+		vertices.SetSize(header.num_tris * 3);
+		uv.SetSize(header.num_tris * 3);
+		colors.SetSize(header.num_tris * 3);
+		indexes.SetSize(header.num_tris * 3);
+
+		for (int i = 0; i < header.num_tris * 3; i++)
+		{
+			indexes[i] = i;
+			colors[i] = Color32::White;
+		}
+
 		for (int i = 0; i < header.num_frames; i++)
 		{
 			mdl_simpleframe_t frame;
+
 			const int32_t type = reader->ReadInt32();
-			reader->ReadBytes(sizeof(mdl_simpleframe_t), &frame);
-			reader->ReadBytes(mdl_vert.GetDataSize(), mdl_vert.GetData());
+			if (type == 0)
+			{
+				reader->ReadBytes(sizeof(mdl_simpleframe_t), &frame);
+				reader->ReadBytes(mdl_vert.GetDataSize(), mdl_vert.GetData());
+				model->_animations.Add(frame.name, model->_frames.Count());
+			}
+			else
+			{
+				Debug::LogWarning("Can't load Quake 1 MDL with group frames");
+				return nullptr;
+			}
 
 			auto mesh = SharedPtr<Mesh>::Make();
-
-			List<Vector3> vertices;
-			List<Vector2> uv;
-			List<Color32> colors;
-			List<size_t> indexes;
 
 			static const auto rot = Quaternion::RotationAxis(Vector3::AxisX, -Degree::Angle90) *
 				Quaternion::RotationAxis(Vector3::AxisY, Degree::Angle90);
@@ -397,6 +420,8 @@ namespace uut
 			{
 				for (int j = 0; j < 3; j++)
 				{
+					const int index = i * 3 + j;
+
 					const mdl_vertex_t* pvert = &mdl_vert[mdl_tri[i].vertex[j]];
 
 					float s = mdl_tex[mdl_tri[i].vertex[j]].s;
@@ -407,19 +432,15 @@ namespace uut
 
 					const float tx = (s + 0.5f) / header.skinwidth;
 					const float ty = (t + 0.5f) / header.skinheight;
-					uv.Add(Vector2(tx, ty));
+					uv[index] = Vector2(tx, ty);
 
 					const Vector3 normal = g_normals[pvert->normalIndex];
 
 					const float x = (header.scale[0] * pvert->v[0]) + header.translate[0];
 					const float y = (header.scale[1] * pvert->v[1]) + header.translate[1];
 					const float z = (header.scale[2] * pvert->v[2]) + header.translate[2];
-
-					indexes.Add(vertices.Count());
-					vertices.Add(mat.VectorTransform(Vector3(x, -y, z)));
+					vertices[index] = mat.VectorTransform(Vector3(x, -y, z));
 				}
-
-				colors.Add(3, Color32::White);
 			}
 
 			mesh->SetVertices(vertices);
@@ -431,10 +452,5 @@ namespace uut
 		}
 
 		return model;
-	}
-
-	const Type* Quake1ModelLoader::GetResourceType() const
-	{
-		return Quake1Model::GetTypeStatic();
 	}
 }
