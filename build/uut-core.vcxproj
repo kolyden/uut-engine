@@ -190,6 +190,10 @@
     <ClInclude Include="..\UUT\Core\Windows\Window.h" />
     <ClInclude Include="..\UUT\GUI\DebugGUI.h" />
     <ClInclude Include="..\UUT\GUI\GUI.h" />
+    <ClInclude Include="..\UUT\Quake1\BSPLevel.h" />
+    <ClInclude Include="..\UUT\Quake1\BSPLevelLoader.h" />
+    <ClInclude Include="..\UUT\Quake1\Constants.h" />
+    <ClInclude Include="..\UUT\Quake1\Q1Utils.h" />
     <ClInclude Include="..\UUT\Quake1\Quake1Model.h" />
     <ClInclude Include="..\UUT\Quake1\Quake1ModelLoader.h" />
     <ClInclude Include="..\UUT\Quake1\Quake1Plugin.h" />
@@ -328,6 +332,9 @@
     <ClCompile Include="..\UUT\Core\Windows\Window.cpp" />
     <ClCompile Include="..\UUT\GUI\DebugGUI.cpp" />
     <ClCompile Include="..\UUT\GUI\GUI.cpp" />
+    <ClCompile Include="..\UUT\Quake1\BSPLevel.cpp" />
+    <ClCompile Include="..\UUT\Quake1\BSPLevelLoader.cpp" />
+    <ClCompile Include="..\UUT\Quake1\Q1Utils.cpp" />
     <ClCompile Include="..\UUT\Quake1\Quake1Model.cpp" />
     <ClCompile Include="..\UUT\Quake1\Quake1ModelLoader.cpp" />
     <ClCompile Include="..\UUT\Quake1\Quake1Plugin.cpp" />

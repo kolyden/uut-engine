@@ -741,6 +741,18 @@
     <ClInclude Include="..\UUT\Quake1\Quake1Model.h">
       <Filter>UUT\Quake1</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Quake1\BSPLevel.h">
+      <Filter>UUT\Quake1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Quake1\BSPLevelLoader.h">
+      <Filter>UUT\Quake1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Quake1\Constants.h">
+      <Filter>UUT\Quake1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Quake1\Q1Utils.h">
+      <Filter>UUT\Quake1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1140,6 +1152,15 @@
       <Filter>UUT\Quake1</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Quake1\Quake1Model.cpp">
+      <Filter>UUT\Quake1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Quake1\BSPLevel.cpp">
+      <Filter>UUT\Quake1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Quake1\BSPLevelLoader.cpp">
+      <Filter>UUT\Quake1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Quake1\Q1Utils.cpp">
       <Filter>UUT\Quake1</Filter>
     </ClCompile>
   </ItemGroup>

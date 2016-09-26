@@ -26,6 +26,8 @@
 #include <Quake1/Quake1Plugin.h>
 #include <Quake1/Quake1ModelLoader.h>
 #include <Quake1/Quake1Model.h>
+#include <Quake1/BSPLevel.h>
+#include <Quake1/BSPLevelLoader.h>
 
 namespace uut
 {
@@ -143,10 +145,13 @@ namespace uut
 		Graphics::Instance()->SetProjection(Graphics::PM_2D);
 		ModuleInstance<ResourceCache> cache;
 		cache->AddLoader(SharedPtr<Quake1ModelLoader>::Make());
+		cache->AddLoader(SharedPtr<BSPLevelLoader>::Make());
+
 		_tex = LoadResource<Texture2D>("rogueliketiles.png", { {"silent", nullptr} });
 			// cache->Load<Texture2D>("rogueliketiles.png");
 		_font = cache->Load<Font>("Consolas.fnt");
-		_model = cache->Load<Quake1Model>("player.mdl");
+// 		_model = cache->Load<Quake1Model>("player.mdl");
+		_level = cache->Load<BSPLevel>("start.bsp");
 
 		_camera = SharedPtr<FreeCamera>::Make();
 		_camera->SetPosition(Vector3(8.5f, 10, -50));
@@ -343,6 +348,24 @@ namespace uut
 				}
 				GUI::EndHorizontal();
 			}
+
+			static bool texturesFoldout = false;
+			texturesFoldout = GUI::Foldout("Textures", texturesFoldout);
+			if (texturesFoldout)
+			{
+				GUI::BeginListBox("##textures");
+				if (_level)
+				{
+					for (auto& it : _level->GetTextures())
+					{
+						GUI::BeginHorizontal();
+						GUI::Image(it.second, it.second->GetSize());
+						GUI::Text(it.first.GetData());
+						GUI::EndHorizontal();
+					}
+				}
+				GUI::EndListBox();
+			}
 		}
 		ImGui::End();
 
@@ -433,6 +456,12 @@ namespace uut
 					time -= frameTime;
 					index = (index + 1) % anim.Count();
 				}
+			}
+
+			if (_level && _level->GetModels().Count() > 0)
+			{
+				static const Matrix4 mat = Matrix4::Scaling(Vector3(0.5f));
+				graphics->DrawMesh(mat, _level->GetModels()[0]);
 			}
 
 			graphics->Flush();

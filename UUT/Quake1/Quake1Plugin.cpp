@@ -2,6 +2,8 @@
 #include <Core/Context.h>
 #include "Quake1ModelLoader.h"
 #include "Quake1Model.h"
+#include "BSPLevel.h"
+#include "BSPLevelLoader.h"
 
 namespace uut
 {
@@ -14,5 +16,7 @@ namespace uut
 	{
 		UUT_REGISTER_OBJECT(Quake1ModelLoader);
 		UUT_REGISTER_OBJECT(Quake1Model);
+		UUT_REGISTER_OBJECT(BSPLevel);
+		UUT_REGISTER_OBJECT(BSPLevelLoader);
 	}
 }

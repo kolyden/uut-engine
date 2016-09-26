@@ -81,7 +81,7 @@ namespace uut
 			//memcpy((unsigned char *)pBits + pitch * y, pixels + (width * bytes_per_pixel) * y, (width * bytes_per_pixel));
 		_fontTex->Unlock();
 
-		io.Fonts->TexID = static_cast<void*>(&_fontTex);
+		io.Fonts->TexID = _fontTex.Get();
 
 		_renderState.cullMode = CullMode::Disabled;
 		_renderState.lightning = false;
@@ -202,8 +202,8 @@ namespace uut
 				else
 				{
 					//const RECT r = { (LONG)pcmd->ClipRect.x, (LONG)pcmd->ClipRect.y, (LONG)pcmd->ClipRect.z, (LONG)pcmd->ClipRect.w };
-					auto texPtr = static_cast<SharedPtr<Texture2D>*>(pcmd->TextureId);
-					renderer->SetTexture(0, texPtr != nullptr ? *texPtr : nullptr);
+					auto texPtr = static_cast<Texture2D*>(pcmd->TextureId);
+					renderer->SetTexture(0, texPtr != nullptr ? texPtr->GetSharedThis() : nullptr);
 					renderer->SetScissorRect(
 						IntRect::FromLBRT((int)pcmd->ClipRect.x, (int)pcmd->ClipRect.w, (int)pcmd->ClipRect.z, (int)pcmd->ClipRect.y));
 					renderer->DrawIndexedPrimitive(Topology::TrinagleList,

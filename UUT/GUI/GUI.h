@@ -1,5 +1,6 @@
 #pragma once
 #include "DebugGUI.h"
+#include <Core/Math/Vector2.h>
 
 namespace uut
 {
@@ -7,6 +8,7 @@ namespace uut
 	{
 	public:
 		static void Text(const String& text);
+		static void Image(const SPtr<Texture2D>& texture, const Vector2& size);
 		static void Separator();
 
 		static bool Button(const String& title);

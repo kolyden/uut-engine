@@ -46,6 +46,13 @@ namespace uut
 		EndItem();
 	}
 
+	void GUI::Image(const SPtr<Texture2D>& texture, const Vector2& size)
+	{
+		StartItem();
+		ImGui::Image(texture.Get(), ImVec2(size.x, size.y));
+		EndItem();
+	}
+
 	void GUI::Separator()
 	{
 		ImGui::Separator();

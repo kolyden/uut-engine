@@ -12,6 +12,7 @@ namespace uut
 	class Player;
 	class FreeCamera;
 	class Quake1Model;
+	class BSPLevel;
 
 	class SampleApp : public Application
 	{
@@ -25,6 +26,7 @@ namespace uut
 		SharedPtr<Texture2D> _tex;
 		SharedPtr<FreeCamera> _camera;
 		SharedPtr<Quake1Model> _model;
+		SharedPtr<BSPLevel> _level;
 
 		virtual void OnInit() override;
 		virtual void OnFrame() override;

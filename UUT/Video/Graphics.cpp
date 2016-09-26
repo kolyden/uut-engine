@@ -17,7 +17,7 @@ namespace uut
 	}
 
 	Graphics::Graphics()
-		: _vbufCount(5000)
+		: _vbufCount(50000)
 		, _topology(Topology::TrinagleList)
 		, _vertices(nullptr)
 		, _vdxIndex(0)
@@ -42,7 +42,7 @@ namespace uut
 
 		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
 
-// 		_renderState.cullMode = CullMode::Disabled;
+		_renderState.cullMode = CullMode::Disabled;
 		_renderState.fillMode = _currentFM;
 		_renderState.zwriteEnable = true;
 		_renderState.alphaRef = 1;
