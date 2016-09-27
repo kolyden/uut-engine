@@ -753,6 +753,9 @@
     <ClInclude Include="..\UUT\Quake1\Q1Utils.h">
       <Filter>UUT\Quake1</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Quake1\BSP.h">
+      <Filter>UUT\Quake1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1161,6 +1164,9 @@
       <Filter>UUT\Quake1</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Quake1\Q1Utils.cpp">
+      <Filter>UUT\Quake1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Quake1\BSP.cpp">
       <Filter>UUT\Quake1</Filter>
     </ClCompile>
   </ItemGroup>

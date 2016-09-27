@@ -190,6 +190,7 @@
     <ClInclude Include="..\UUT\Core\Windows\Window.h" />
     <ClInclude Include="..\UUT\GUI\DebugGUI.h" />
     <ClInclude Include="..\UUT\GUI\GUI.h" />
+    <ClInclude Include="..\UUT\Quake1\BSP.h" />
     <ClInclude Include="..\UUT\Quake1\BSPLevel.h" />
     <ClInclude Include="..\UUT\Quake1\BSPLevelLoader.h" />
     <ClInclude Include="..\UUT\Quake1\Constants.h" />
@@ -332,6 +333,7 @@
     <ClCompile Include="..\UUT\Core\Windows\Window.cpp" />
     <ClCompile Include="..\UUT\GUI\DebugGUI.cpp" />
     <ClCompile Include="..\UUT\GUI\GUI.cpp" />
+    <ClCompile Include="..\UUT\Quake1\BSP.cpp" />
     <ClCompile Include="..\UUT\Quake1\BSPLevel.cpp" />
     <ClCompile Include="..\UUT\Quake1\BSPLevelLoader.cpp" />
     <ClCompile Include="..\UUT\Quake1\Q1Utils.cpp" />

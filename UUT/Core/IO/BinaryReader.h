@@ -33,6 +33,12 @@ namespace uut
 
 		bool IsEOF() const;
 
+		template<typename T>
+		bool Read(T& value) const
+		{
+			return (ReadBytes(sizeof(T), &value) == sizeof(T));
+		}
+
 	protected:
 		SharedPtr<Stream> _source;
 	};

@@ -150,7 +150,7 @@ namespace uut
 		_tex = LoadResource<Texture2D>("rogueliketiles.png", { {"silent", nullptr} });
 			// cache->Load<Texture2D>("rogueliketiles.png");
 		_font = cache->Load<Font>("Consolas.fnt");
-// 		_model = cache->Load<Quake1Model>("player.mdl");
+		_model = cache->Load<Quake1Model>("player.mdl");
 		_level = cache->Load<BSPLevel>("start.bsp");
 
 		_camera = SharedPtr<FreeCamera>::Make();
@@ -458,10 +458,10 @@ namespace uut
 				}
 			}
 
-			if (_level && _level->GetModels().Count() > 0)
+			if (_level && _level->GetMeshes().Count() > 0)
 			{
 				static const Matrix4 mat = Matrix4::Scaling(Vector3(0.5f));
-				graphics->DrawMesh(mat, _level->GetModels()[0]);
+				graphics->DrawMesh(mat, _level->GetMeshes()[0]);
 			}
 
 			graphics->Flush();
