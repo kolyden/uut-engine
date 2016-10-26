@@ -25,8 +25,9 @@ namespace uut
 	const Vector2 Vector2::Down(0, -1);
 
 	Vector2::Vector2(const IntVector2& vec)
-		: x(static_cast<float>(vec.x))
-		, y(static_cast<float>(vec.y))
+		: Vector2Base<float>(
+			static_cast<float>(vec.x),
+			static_cast<float>(vec.y))
 	{
 	}
 
@@ -100,12 +101,7 @@ namespace uut
 
 	float Vector2::Length() const
 	{
-		return Math::Sqrt(x*x + y*y);
-	}
-
-	float Vector2::LengthSq() const
-	{
-		return x*x + y*y;
+		return Math::Sqrt(LengthSq());
 	}
 
 	Vector2& Vector2::Normalize()

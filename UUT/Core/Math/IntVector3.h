@@ -1,22 +1,21 @@
 #pragma once
-#include <Core/ValueType.h>
+#include "Templates/Vector3Base.h"
+#include "IntVector2.h"
 
 namespace uut
 {
-	class IntVector2;
+	class Vector3;
 
-	class IntVector3 : public ValueType
+	class IntVector3 : public Vector3Base<int>
 	{
 		UUT_VALUETYPE(uut, IntVector3, ValueType)
 	public:
-		IntVector3();
-		explicit IntVector3(int val);
-		IntVector3(int ix, int iy);
-		IntVector3(int ix, int iy, int iz);
-		IntVector3(const IntVector2& vec);
-
-		operator int* () { return m; }
-		operator const int* () const { return m; }
+		constexpr IntVector3() : Vector3Base<int>(0, 0, 0) {}
+		explicit constexpr IntVector3(int val) : Vector3Base<int>(val, val, val) {}
+		constexpr IntVector3(int ix, int iy) : Vector3Base<int>(ix, iy, 0) {}
+		constexpr IntVector3(int ix, int iy, int iz) : Vector3Base<int>(ix, iy, iz) {}
+		constexpr IntVector3(const IntVector2& vec) : Vector3Base<int>(vec.x, vec.y, 0) {}
+		IntVector3(const Vector3& vec);
 
 		IntVector3& operator += (const IntVector3& vec);
 		IntVector3& operator -= (const IntVector3& vec);
@@ -31,12 +30,10 @@ namespace uut
 
 		friend IntVector3 operator * (int s, const IntVector3& vec) { return IntVector3(vec.x*s, vec.y*s, vec.z*s); }
 
-		IntVector2 ToVector2() const;
 		size_t GetHashCode() const;
 
 		void Set(int i) { x = i; y = i; }
 		void Set(int ix, int iy) { x = ix; y = iy; }
-		int Area() const { return x*y; }
 
 		bool operator == (const IntVector3& vec) const { return x == vec.x && y == vec.y; }
 		bool operator != (const IntVector3& vec) const { return x != vec.x || y != vec.y; }
@@ -53,18 +50,8 @@ namespace uut
 		static const IntVector3 AxisX;  // ( 1,  0,  0)
 		static const IntVector3 AxisY;  // ( 0,  1,  0)
 		static const IntVector3 AxisZ;  // ( 0,  0,  1)
-
-		union
-		{
-			int m[3];
-			struct
-			{
-				int x;
-				int y;
-				int z;
-			};
-		};
 	};
 
+	static_assert(sizeof(IntVector3) == sizeof(int) * 3, "Invalid IntVector3 size");
 	UUT_DEFAULT(IntVector3, IntVector3::Zero)
 }

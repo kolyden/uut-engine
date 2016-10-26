@@ -1,22 +1,21 @@
 #pragma once
-#include <Core/ValueType.h>
+#include "Templates/Vector3Base.h"
+#include "Vector2.h"
 
 namespace uut
 {
-	class Vector2;
+	class IntVector3;
 
-	class Vector3 : public ValueType
+	class Vector3 : public Vector3Base<float>
 	{
 		UUT_VALUETYPE(uut, Vector3, ValueType)
 	public:
-		Vector3();
-		explicit Vector3(float f);
-		Vector3(float fx, float fy);
-		Vector3(float fx, float fy, float fz);
-		Vector3(const Vector2& v);
-
-		operator float* () { return m; }
-		operator const float* () const { return m; }
+		constexpr Vector3() : Vector3Base<float>(0, 0, 0) {}
+		explicit constexpr Vector3(float val) : Vector3Base<float>(val, val, val) {}
+		constexpr Vector3(float fx, float fy) : Vector3Base<float>(fx, fy, 0) {}
+		constexpr Vector3(float fx, float fy, float fz) : Vector3Base<float>(fx, fy, fz) {}
+		constexpr Vector3(const Vector2& v) : Vector3Base<float>(v.x, v.y, 0) {}
+		Vector3(const IntVector3& vec);
 	
 		Vector3& operator += (const Vector3& v);
 		Vector3& operator -= (const Vector3& v);
@@ -33,10 +32,7 @@ namespace uut
 
 		friend Vector3 operator *(float s, const Vector3& vec);
 
-		Vector2 ToVector2() const;
-
 		float Length() const;
-		float LengthSqr() const;
 
 		Vector3& Normalize();
 		Vector3 Normalized() const;
@@ -67,18 +63,8 @@ namespace uut
 		static const Vector3 Down;   // ( 0, -1,  0)
 		static const Vector3 Forward;// ( 0,  0,  1)
 		static const Vector3 Back;   // ( 0,  0, -1)
-
-		union
-		{
-			float m[3];
-			struct
-			{
-				float x;
-				float y;
-				float z;
-			};
-		};
 	};
 
+	static_assert(sizeof(Vector3) == sizeof(float) * 3, "Invalid Vector3 size");
 	UUT_DEFAULT(Vector3, Vector3::Zero)
 }

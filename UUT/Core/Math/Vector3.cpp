@@ -1,5 +1,6 @@
 #include "Vector3.h"
 #include "Vector2.h"
+#include "IntVector3.h"
 #include <algorithm>
 #include "Math.h"
 #include <Core/Reflection/ConstructorInfo.h>
@@ -12,7 +13,6 @@ namespace uut
 		UUT_REGISTER_CTOR(float, float);
 		UUT_REGISTER_CTOR(float, float, float);
 		UUT_REGISTER_CTOR(Vector2);
-		UUT_REGISTER_CONVERTER_FUNC(Vector2, ToVector2);
 	}
 
 	const Vector3 Vector3::Zero(0, 0, 0);
@@ -27,27 +27,11 @@ namespace uut
 	const Vector3 Vector3::Forward(0, 0, 1);
 	const Vector3 Vector3::Back(0, 0, -1);
 
-	Vector3::Vector3()
-	{
-	}
-
-	Vector3::Vector3(float f)
-		: x(f), y(f), z(f)
-	{
-	}
-
-	Vector3::Vector3(float fx, float fy)
-		: x(fx), y(fy), z(0)
-	{
-	}
-
-	Vector3::Vector3(float fx, float fy, float fz)
-		: x(fx), y(fy), z(fz)
-	{
-	}
-
-	Vector3::Vector3(const Vector2& v)
-		: x(v.x), y(v.y), z(0)
+	Vector3::Vector3(const IntVector3& vec)
+		: Vector3Base<float>(
+			1.0f * vec.x,
+			1.0f * vec.y,
+			1.0f * vec.z)
 	{
 	}
 
@@ -118,19 +102,9 @@ namespace uut
 		return Vector3(vec.x*s, vec.y*s, vec.z*s);
 	}
 
-	Vector2 Vector3::ToVector2() const
-	{
-		return Vector2(x, y);
-	}
-
 	float Vector3::Length() const
 	{
 		return sqrt(x*x + y*y + z*z);
-	}
-
-	float Vector3::LengthSqr() const
-	{
-		return (x*x + y*y + z*z);
 	}
 
 	Vector3& Vector3::Normalize()

@@ -1,22 +1,19 @@
 #pragma once
-#include <Core/ValueType.h>
+#include "Templates/Vector2Base.h"
 
 namespace uut
 {
 	class Vector2;
 
-	class IntVector2 : public ValueType
+	class IntVector2 : public Vector2Base<int>
 	{
 		UUT_VALUETYPE(uut, IntVector2, ValueType)
 	public:
-		IntVector2();
-		IntVector2(int ix, int iy);
-		explicit IntVector2(int val);
-		IntVector2(const IntVector2& vec);
+		constexpr IntVector2() : Vector2Base<int>(0, 0) {}
+		constexpr IntVector2(int ix, int iy) : Vector2Base<int>(ix, iy) {}
+		explicit constexpr IntVector2(int val) : Vector2Base<int>(val, val) {}
+		constexpr IntVector2(const IntVector2& vec) : Vector2Base<int>(vec.x, vec.y) {}
 		IntVector2(const Vector2& vec);
-
-		operator int* () { return m; }
-		operator const int* () const { return m; }
 
 		IntVector2& operator += (const IntVector2& vec);
 		IntVector2& operator -= (const IntVector2& vec);
@@ -33,7 +30,6 @@ namespace uut
 
 		void Set(int i) { x = i; y = i; }
 		void Set(int ix, int iy) { x = ix; y = iy; }
-		int Area() const { return x*y; }
 
 		IntVector2& operator = (const IntVector2& vec);
 		IntVector2& operator = (IntVector2&& vec);
@@ -49,15 +45,8 @@ namespace uut
 		static const IntVector2 Right;// ( 1,  0)
 		static const IntVector2 Up;   // ( 0,  1)
 		static const IntVector2 Down; // ( 0, -1)
-
-		union
-		{
-			int m[2];
-			struct
-			{
-				int x;
-				int y;
-			};
-		};
 	};
+
+	static_assert(sizeof(IntVector2) == sizeof(int) * 2, "Invalid IntVector2 size");
+	UUT_DEFAULT(IntVector2, IntVector2::Zero)
 }

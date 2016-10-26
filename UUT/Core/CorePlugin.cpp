@@ -24,10 +24,12 @@
 #include "Debug.h"
 #include "Math/Vector3.h"
 #include "Math/IntVector3.h"
+#include "Math/Vector4.h"
 #include "IO/BinaryReader.h"
 #include "IntPtr.h"
 #include "IO/StreamContainer.h"
 #include "IO/DirectoryContainer.h"
+#include "Math/Rect.h"
 #include "Math/IntRect.h"
 
 namespace uut
@@ -76,6 +78,8 @@ namespace uut
 		UUT_REGISTER_OBJECT(Radian);
 		UUT_REGISTER_OBJECT(Vector3);
 		UUT_REGISTER_OBJECT(IntVector3);
+		UUT_REGISTER_OBJECT(Vector4);
+		UUT_REGISTER_OBJECT(Rect);
 		UUT_REGISTER_OBJECT(IntRect);
 
 		// IO

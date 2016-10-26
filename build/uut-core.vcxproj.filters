@@ -67,6 +67,9 @@
     <Filter Include="UUT\Quake1">
       <UniqueIdentifier>{1364aa19-5bf1-4e09-aea8-c0c3b4e683e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UUT\Core\Math\Templates">
+      <UniqueIdentifier>{dd310f13-1266-4b18-a844-adaf271c8291}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\UUT\Core\Assert.h">
@@ -755,6 +758,18 @@
     </ClInclude>
     <ClInclude Include="..\UUT\Quake1\BSP.h">
       <Filter>UUT\Quake1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Templates\Vector3Base.h">
+      <Filter>UUT\Core\Math\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Templates\RectBase.h">
+      <Filter>UUT\Core\Math\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Templates\Vector2Base.h">
+      <Filter>UUT\Core\Math\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Templates\RangeBase.h">
+      <Filter>UUT\Core\Math\Templates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

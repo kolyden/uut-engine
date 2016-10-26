@@ -1,9 +1,11 @@
 #pragma once
+#include <Core/ValueType.h>
 
 namespace uut
 {
-	class Vector4
+	class Vector4 : public ValueType
 	{
+		UUT_VALUETYPE(uut, Vector4, ValueType)
 	public:
 		Vector4();
 		Vector4(float x, float y, float z, float w);
@@ -39,4 +41,7 @@ namespace uut
 			};
 		};
 	};
+
+	static_assert(sizeof(Vector4) == sizeof(float) * 4, "Invalid Vector4 size");
+	UUT_DEFAULT(Vector4, Vector4::Zero)
 }

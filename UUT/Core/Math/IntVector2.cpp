@@ -12,7 +12,6 @@ namespace uut
 		UUT_REGISTER_CTOR(Vector2);
 		UUT_REGISTER_CONVERTER_DEFAULT(Vector2);
 	}
-
 	const IntVector2 IntVector2::Default(0, 0);
 	const IntVector2 IntVector2::Zero(0, 0);
 	const IntVector2 IntVector2::One(1, 1);
@@ -21,29 +20,10 @@ namespace uut
 	const IntVector2 IntVector2::Up(0, 1);
 	const IntVector2 IntVector2::Down(0, -1);
 
-	IntVector2::IntVector2()
-	{
-	}
-
-	IntVector2::IntVector2(int ix, int iy)
-		: x(ix), y(iy)
-	{
-	}
-
-	IntVector2::IntVector2(int val)
-		: x(val), y(val)
-	{
-	}
-
-	IntVector2::IntVector2(const IntVector2& vec)
-		: x(vec.x)
-		, y(vec.y)
-	{
-	}
-
 	IntVector2::IntVector2(const Vector2& vec)
-		: x(Math::RoundToInt(vec.x))
-		, y(Math::RoundToInt(vec.y))
+		: Vector2Base<int>(
+			Math::RoundToInt(vec.x),
+			Math::RoundToInt(vec.y))
 	{
 	}
 

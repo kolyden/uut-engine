@@ -5,44 +5,14 @@
 
 namespace uut
 {
+	UUT_VALUETYPE_IMPLEMENT(Rect)
+	{}
+
 	const Rect Rect::Zero(0, 0, 0, 0);
 	const Rect Rect::One(0, 0, 1, 1);
 
-	Rect::Rect()
-	{
-	}
-
-	Rect::Rect(const Vector2& pos, const Vector2& size)
-		: x(pos.x), y(pos.y)
-		, width(size.x)
-		, height(size.y)
-	{
-	}
-
-	Rect::Rect(float _x, float _y, float _width, float _height)
-		: x(_x), y(_y)
-		, width(_width)
-		, height(_height)
-	{
-	}
-
-	Rect::Rect(const Rect& rect)
-		: x(rect.x), y(rect.y)
-		, width(rect.width)
-		, height(rect.height)
-	{
-	}
-
-	Rect::Rect(Rect&& rect)
-	{
-		std::swap_ranges(data, data + 4, rect.data);
-	}
-
 	Rect::Rect(const IntRect& rect)
-		: x(1.0f*rect.x)
-		, y(1.0f*rect.y)
-		, width(1.0f*rect.width)
-		, height(1.0f*rect.height)
+		: RectBase<float>(1.0f*rect.x, 1.0f*rect.y, 1.0f*rect.width, 1.0f*rect.height)
 	{
 	}
 

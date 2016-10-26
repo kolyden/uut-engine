@@ -155,6 +155,10 @@
     <ClInclude Include="..\UUT\Core\Math\Random.h" />
     <ClInclude Include="..\UUT\Core\Math\Ray3.h" />
     <ClInclude Include="..\UUT\Core\Math\Rect.h" />
+    <ClInclude Include="..\UUT\Core\Math\Templates\RangeBase.h" />
+    <ClInclude Include="..\UUT\Core\Math\Templates\RectBase.h" />
+    <ClInclude Include="..\UUT\Core\Math\Templates\Vector2Base.h" />
+    <ClInclude Include="..\UUT\Core\Math\Templates\Vector3Base.h" />
     <ClInclude Include="..\UUT\Core\Math\Vector2.h" />
     <ClInclude Include="..\UUT\Core\Math\Vector3.h" />
     <ClInclude Include="..\UUT\Core\Math\Vector4.h" />
