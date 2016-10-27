@@ -345,6 +345,21 @@ namespace uut
 			return ret;
 		}
 
+		static List<T> MakeRange(int count, std::function<T(int index)> action)
+		{
+			return Make(0, count, action);
+		}
+
+		static List<T> MakeRange(int start, int count, std::function<T(int index)> action)
+		{
+			List<T> list;
+			list.SetSize(count);
+			for (int i = 0; i < count; i++)
+				list[i] = action(start + i);
+
+			return list;
+		}
+
 		static const List<T> Empty;
 
 		template<typename ... Args>

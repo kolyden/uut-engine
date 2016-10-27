@@ -21,7 +21,7 @@ namespace uut
 		static Color32 FromRGBA(uint32_t argb);
 		static Color32 FromABGR(uint32_t abgr);
 
-		static const Color32 Clear;  // (  0,   0,   0, 255)
+		static const Color32 Clear;        // (  0,   0,   0, 255)
 		static const Color32 Transparent;  // (  255,   255,   255, 255)
 
 		static const Color32 White;  // (255, 255, 255, 255)
@@ -39,6 +39,7 @@ namespace uut
 
 		union
 		{
+			uint32_t bgra;
 			uint8_t data[4];
 			struct
 			{

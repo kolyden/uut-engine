@@ -268,6 +268,16 @@ namespace uut
 		}
 	}
 
+	static List<HashString> MakeRange(const String& prefix, int start, int end)
+	{
+		List<HashString> list;
+		list.SetReserve(end - start + 1);
+		for (int i = start; i <= end; i++)
+			list.Add(String::Format("%s%d", prefix.GetData(), i).GetData());
+
+		return list;
+	}
+
 	void SampleApp::OnFrame()
 	{
 		DebugGUI::Instance()->NewFrame();
@@ -430,10 +440,9 @@ namespace uut
 
 			if (_model)
 			{				
-				static const List<HashString> anim = {
-					"axstnd1", "axstnd2", "axstnd3", "axstnd4", "axstnd5", "axstnd6", "axstnd7",
-					"axstnd8", "axstnd9", "axstnd10", "axstnd11", "axstnd12"
-				};
+				static const List<HashString> anim = List<HashString>::MakeRange(1, 12,
+					[](int index) -> HashString { return String::Format("axstnd%d", index).GetData(); });
+
 				static const float frameTime = 0.15f;
 				static int index = 0;
 				static float time = 0;
