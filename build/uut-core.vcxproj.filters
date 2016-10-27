@@ -771,6 +771,12 @@
     <ClInclude Include="..\UUT\Core\Math\Templates\RangeBase.h">
       <Filter>UUT\Core\Math\Templates</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Range.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\IntRange.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1183,6 +1189,12 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Quake1\BSP.cpp">
       <Filter>UUT\Quake1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Range.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\IntRange.cpp">
+      <Filter>UUT\Core\Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

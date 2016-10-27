@@ -27,7 +27,7 @@ namespace uut
 		static const char* Name;
 		static const bool IsFlag;
 
-		static size_t Count() { return Values.size(); }
+		static size_t Count() { return Values.Count(); }
 		static const Dictionary<T, String>& GetNames() { return Names; }
 		static const List<T>& GetValues() { return Values; }
 
