@@ -70,6 +70,9 @@
     <Filter Include="UUT\Core\Math\Templates">
       <UniqueIdentifier>{dd310f13-1266-4b18-a844-adaf271c8291}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UUT\Core\Input">
+      <UniqueIdentifier>{8bb61ce6-ffae-43aa-ab3f-c90970ac499e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\UUT\Core\Assert.h">
@@ -777,6 +780,18 @@
     <ClInclude Include="..\UUT\Core\Math\IntRange.h">
       <Filter>UUT\Core\Math</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Core\Input\ActionBinding.h">
+      <Filter>UUT\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Input\ActionMap.h">
+      <Filter>UUT\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Input\InputAction.h">
+      <Filter>UUT\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Input\InputDevice.h">
+      <Filter>UUT\Core\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1195,6 +1210,18 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Math\IntRange.cpp">
       <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Input\ActionBinding.cpp">
+      <Filter>UUT\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Input\ActionMap.cpp">
+      <Filter>UUT\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Input\InputAction.cpp">
+      <Filter>UUT\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Input\InputDevice.cpp">
+      <Filter>UUT\Core\Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

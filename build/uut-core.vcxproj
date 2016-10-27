@@ -126,6 +126,10 @@
     <ClInclude Include="..\UUT\Core\Fundamental.h" />
     <ClInclude Include="..\UUT\Core\HashString.h" />
     <ClInclude Include="..\UUT\Core\IEquatable.h" />
+    <ClInclude Include="..\UUT\Core\Input\ActionBinding.h" />
+    <ClInclude Include="..\UUT\Core\Input\ActionMap.h" />
+    <ClInclude Include="..\UUT\Core\Input\InputAction.h" />
+    <ClInclude Include="..\UUT\Core\Input\InputDevice.h" />
     <ClInclude Include="..\UUT\Core\IntPtr.h" />
     <ClInclude Include="..\UUT\Core\IO\BinaryReader.h" />
     <ClInclude Include="..\UUT\Core\IO\Directory.h" />
@@ -279,6 +283,10 @@
     <ClCompile Include="..\UUT\Core\EnumFlags.cpp" />
     <ClCompile Include="..\UUT\Core\Fundamental.cpp" />
     <ClCompile Include="..\UUT\Core\HashString.cpp" />
+    <ClCompile Include="..\UUT\Core\Input\ActionBinding.cpp" />
+    <ClCompile Include="..\UUT\Core\Input\ActionMap.cpp" />
+    <ClCompile Include="..\UUT\Core\Input\InputAction.cpp" />
+    <ClCompile Include="..\UUT\Core\Input\InputDevice.cpp" />
     <ClCompile Include="..\UUT\Core\IntPtr.cpp" />
     <ClCompile Include="..\UUT\Core\IO\BinaryReader.cpp" />
     <ClCompile Include="..\UUT\Core\IO\Directory.cpp" />
