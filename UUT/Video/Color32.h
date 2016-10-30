@@ -1,15 +1,20 @@
 #pragma once
-#include <cstdint>
+#include <Core/ValueType.h>
+#include "Templates/ColorBase.h"
 
 namespace uut
 {
 	class Color;
 
 	class Color32
+		: public ValueType
+		, public ColorBase<uint8_t>
 	{
+		UUT_VALUETYPE(uut, Color32, ValueType)
 	public:
-		Color32();
-		Color32(int r, int g, int b, int a = 255);
+		constexpr Color32() : ColorBase<uint8_t>(255, 255, 255, 255) {}
+		constexpr Color32(int _r, int _g, int _b, int _a = 255)
+			: ColorBase<uint8_t>(_r, _g, _b, _a) {}
 		Color32(const Color& color);
 		explicit Color32(uint32_t argb);
 
@@ -34,20 +39,7 @@ namespace uut
 		static const Color32 Magenta;// (255,   0, 255, 255)
 		static const Color32 Cyan;   // (  0, 255, 255, 255)
 
-		static const Color32 Gray;   // (128, 128, 128, 255)
+		static const Color32 Grey;   // (128, 128, 128, 255)
 		static const Color32 Silver; // (192, 192, 192, 255)
-
-		union
-		{
-			uint32_t bgra;
-			uint8_t data[4];
-			struct
-			{
-				uint8_t a;
-				uint8_t r;
-				uint8_t g;
-				uint8_t b;
-			};
-		};
 	};
 }

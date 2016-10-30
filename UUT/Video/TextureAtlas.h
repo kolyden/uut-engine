@@ -21,7 +21,7 @@ namespace uut
 		const List<Rect>& GetRects() const;
 
 		static SharedPtr<TextureAtlas> Create(const SharedPtr<Texture2D>& texture, const List<IntRect>& rects);
-		static SharedPtr<TextureAtlas> Create(const SharedPtr<Texture2D>& texture, uint width, uint height, uint count = 0);
+		static SharedPtr<TextureAtlas> Create(const SharedPtr<Texture2D>& texture, int width, int height, uint count = 0);
 
 	protected:
 		SharedPtr<Texture2D> _texture;

@@ -5,6 +5,9 @@
 
 namespace uut
 {
+	UUT_VALUETYPE_IMPLEMENT(Color)
+	{}
+
 	static const float invInt = 1.0f / 255.0f;
 
 	const Color Color::Clear(0, 0, 0, 0);

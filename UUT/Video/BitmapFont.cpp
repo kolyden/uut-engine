@@ -1,6 +1,7 @@
 #include "BitmapFont.h"
 #include <Core/Math/Vector2.h>
 #include <Core/Math/IntRect.h>
+#include <Core/Math/Math.h>
 #include "Texture2D.h"
 
 namespace uut
@@ -47,8 +48,8 @@ namespace uut
 		page = glyph->page;
 
 		rect = IntRect(
-			pos.x + glyph->offsetX,
-			pos.y + _info.lineHeight - glyph->offsetY - glyph->h,
+			Math::RoundToInt(pos.x + glyph->offsetX),
+			Math::RoundToInt(pos.y + _info.lineHeight - glyph->offsetY - glyph->h),
 			glyph->w, glyph->h);
 
 

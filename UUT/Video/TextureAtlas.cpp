@@ -78,9 +78,9 @@ namespace uut
 		return atlas;
 	}
 
-	SharedPtr<TextureAtlas> TextureAtlas::Create(const SharedPtr<Texture2D>& texture, uint width, uint height, uint count)
+	SharedPtr<TextureAtlas> TextureAtlas::Create(const SharedPtr<Texture2D>& texture, int width, int height, uint count)
 	{
-		if (texture == nullptr || width == 0 || height == 0)
+		if (texture == nullptr || width <= 0 || height <= 0)
 			return nullptr;
 
 		auto& size = texture->GetSize();
@@ -103,7 +103,7 @@ namespace uut
 		{
 			for (int x = 0; x < countX; x++)
 			{
-				list.Add(Rect(x * width, y * width, width, height));
+				list.Add(IntRect(x * width, y * width, width, height));
 
 				if (i == count)
 					break;

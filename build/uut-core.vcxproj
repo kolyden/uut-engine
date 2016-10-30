@@ -249,6 +249,7 @@
     <ClInclude Include="..\UUT\Video\Renderer.h" />
     <ClInclude Include="..\UUT\Video\RenderState.h" />
     <ClInclude Include="..\UUT\Video\Sprite.h" />
+    <ClInclude Include="..\UUT\Video\Templates\ColorBase.h" />
     <ClInclude Include="..\UUT\Video\Texture.h" />
     <ClInclude Include="..\UUT\Video\Texture2D.h" />
     <ClInclude Include="..\UUT\Video\TextureAtlas.h" />

@@ -12,6 +12,7 @@ namespace uut
 		UUT_REGISTER_CTOR(Vector2);
 		UUT_REGISTER_CONVERTER_DEFAULT(Vector2);
 	}
+
 	const IntVector2 IntVector2::Default(0, 0);
 	const IntVector2 IntVector2::Zero(0, 0);
 	const IntVector2 IntVector2::One(1, 1);
@@ -21,10 +22,15 @@ namespace uut
 	const IntVector2 IntVector2::Down(0, -1);
 
 	IntVector2::IntVector2(const Vector2& vec)
-		: Vector2Base<int>(
+		: Vector2Data<int>(
 			Math::RoundToInt(vec.x),
 			Math::RoundToInt(vec.y))
 	{
+	}
+
+	float IntVector2::Length() const
+	{
+		return Math::Sqrt(LengthSq());
 	}
 
 	IntVector2& IntVector2::operator+=(const IntVector2& vec)
@@ -85,5 +91,17 @@ namespace uut
 		std::swap(x, vec.x);
 		std::swap(y, vec.y);
 		return *this;
+	}
+
+	IntVector2 IntVector2::Lerp(const IntVector2& a, const IntVector2& b, float s)
+	{
+		return IntVector2(
+			Math::RoundToInt((1 - s) * (a.x) + s * (b.x)),
+			Math::RoundToInt((1 - s) * (a.y) + s * (b.y)));
+	}
+
+	float IntVector2::Distance(const IntVector2& a, const IntVector2& b)
+	{
+		return Math::Sqrt(DistanceSq(a, b));
 	}
 }

@@ -492,7 +492,7 @@ namespace uut
 				{
 					x += 10;
 					auto& tex = skins[i];
-					graphics->DrawQuad(Rect(Vector2(x, 50), tex->GetSize()), 15, tex);
+					graphics->DrawQuad(IntRect(IntVector2(x, 50), tex->GetSize()), 15, tex);
 					x += tex->GetSize().x;
 				}
 			}

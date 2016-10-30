@@ -171,8 +171,8 @@ namespace uut
 
 					const mdl_vertex_t* pvert = &mdl_vert[mdl_tri[i].vertex[j]];
 
-					float s = mdl_tex[mdl_tri[i].vertex[j]].s;
-					float t = mdl_tex[mdl_tri[i].vertex[j]].t;
+					float s = 1.0f * mdl_tex[mdl_tri[i].vertex[j]].s;
+					float t = 1.0f * mdl_tex[mdl_tri[i].vertex[j]].t;
 
 					if (!mdl_tri[i].facesfront && mdl_tex[mdl_tri[i].vertex[j]].onseam)
 						s += 0.5f*header.skinwidth;

@@ -39,6 +39,7 @@ namespace uut
 		static Radian Atan2(float y, float x);
 
 		static float Sqrt(float f);
+		static float Sqrt(int i);
 		static Radian Sqrt(const Radian& f);
 		static Degree Sqrt(const Degree& f);
 

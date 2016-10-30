@@ -63,6 +63,8 @@ namespace uut
 
 	float Math::Sqrt(float f) { return ::sqrt(f); }
 
+	float Math::Sqrt(int i) { return ::sqrt(1.0f * i); }
+
 	Radian Math::Sqrt(const Radian& f)
 	{
 		return Radian(std::sqrtf(f.GetRadians()));

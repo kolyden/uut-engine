@@ -5,6 +5,9 @@
 
 namespace uut
 {
+	UUT_VALUETYPE_IMPLEMENT(Color32)
+	{}
+
 	const Color32 Color32::Clear(0, 0, 0, 0);
 	const Color32 Color32::Transparent(255, 255, 255, 0);
 	const Color32 Color32::White(255, 255, 255);
@@ -15,32 +18,24 @@ namespace uut
 	const Color32 Color32::Yellow(255, 255, 0, 255);
 	const Color32 Color32::Magenta(255, 0, 255, 255);
 	const Color32 Color32::Cyan(0, 255, 255, 255);
-	const Color32 Color32::Gray(128, 128, 128, 255);
+	const Color32 Color32::Grey(128, 128, 128, 255);
 	const Color32 Color32::Silver(192, 192, 192, 255);
 
-	Color32::Color32()
-		: a(255), r(255), g(255), b(255)
-	{
-	}
-
-	Color32::Color32(int _r, int _g, int _b, int _a /*= 255*/)
-		: a(_a), r(_r), g(_g), b(_b)
-	{
-	}
-
 	Color32::Color32(const Color& color)
-		: a(Math::RoundToInt(color.a * 255))
-		, r(Math::RoundToInt(color.r * 255))
-		, g(Math::RoundToInt(color.g * 255))
-		, b(Math::RoundToInt(color.b * 255))
+		: ColorBase<uint8_t>(
+			Math::RoundToInt(color.a * 255),
+			Math::RoundToInt(color.r * 255),
+			Math::RoundToInt(color.g * 255),
+			Math::RoundToInt(color.b * 255))
 	{
 	}
 
 	Color32::Color32(uint32_t argb)
-		: a(argb >> 24)
-		, r((argb >> 16) & 0xFF)
-		, g((argb >> 8) & 0xFF)
-		, b(argb & 0xFF)
+		: ColorBase<uint8_t>(
+			(argb >> 16) & 0xFF,
+			(argb >> 8) & 0xFF,
+			argb & 0xFF,
+			argb >> 24)
 	{
 	}
 

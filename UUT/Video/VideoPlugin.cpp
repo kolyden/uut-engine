@@ -35,6 +35,9 @@ namespace uut
 		UUT_REGISTER_OBJECT(IndexBuffer);
 		UUT_REGISTER_OBJECT(VertexDeclaration);
 
+		UUT_REGISTER_OBJECT(Color);
+		UUT_REGISTER_OBJECT(Color32);
+
 		// Textures
 		UUT_REGISTER_OBJECT(Image);
 		UUT_REGISTER_OBJECT(Texture);

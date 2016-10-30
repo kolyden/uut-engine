@@ -1,12 +1,13 @@
 #pragma once
-#include <cstdint>
+#include <Core/ValueType.h>
 
 namespace uut
 {
 	class Color32;
 
-	class Color
+	class Color : public ValueType
 	{
+		UUT_VALUETYPE(uut, Color, ValueType)
 	public:
 		Color();
 		Color(float fr, float fg, float fb, float fa = 1.0f);

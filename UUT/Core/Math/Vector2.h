@@ -5,14 +5,22 @@ namespace uut
 {
 	class IntVector2;
 
-	class Vector2 : public Vector2Base<float>
+	class Vector2
+		: public ValueType
+		, public Vector2Data<float>
+		, public Vector2Logic<float, Vector2>
 	{
 		UUT_VALUETYPE(uut, Vector2, ValueType)
 	public:
-		constexpr Vector2() : Vector2Base<float>(0, 0) {}
-		constexpr Vector2(float fx, float fy) : Vector2Base<float>(fx, fy) {}
-		explicit constexpr Vector2(float val) : Vector2Base<float>(val, val) {}
+		constexpr Vector2() : Vector2Data<float>(0, 0) {}
+		constexpr Vector2(float fx, float fy) : Vector2Data<float>(fx, fy) {}
+		explicit constexpr Vector2(float val) : Vector2Data<float>(val, val) {}
 		Vector2(const IntVector2& vec);
+
+		float Length() const;
+
+		Vector2& Normalize();
+		Vector2 Normalized() const;
 
 		Vector2& operator += (const Vector2& vec);
 		Vector2& operator -= (const Vector2& vec);
@@ -27,28 +35,12 @@ namespace uut
 		Vector2 operator * (float s) const;
 		Vector2 operator / (float s) const;
 
-		friend Vector2 operator * (float s, const Vector2& vec) { return Vector2(vec.x*s, vec.y*s); }
-
 		bool operator == (const Vector2& vec) const;
 		bool operator != (const Vector2& vec) const;
-
-		float Length() const;
-
-		Vector2& Normalize();
-		Vector2 Normalized() const;
-
-		static Vector2 Add(const Vector2& v1, const Vector2& v2);
-		static Vector2 Sub(const Vector2& v1, const Vector2& v2);
 
 		static float CCW(const Vector2& v1, const Vector2& v2);
 		static float Dot(const Vector2& v1, const Vector2& v2);
 		static Vector2 Lerp(const Vector2& a, const Vector2& b, float s);
-
-		static Vector2 Maximize(const Vector2& a, const Vector2& b);
-		static Vector2 Minimize(const Vector2& a, const Vector2& b);
-
-		static Vector2 Scale(const Vector2& vec, float s);
-		static Vector2 Scale(const Vector2& vec, const Vector2& scale);
 
 		static float Distance(const Vector2& a, const Vector2& b);
 

@@ -73,6 +73,9 @@
     <Filter Include="UUT\Core\Input">
       <UniqueIdentifier>{8bb61ce6-ffae-43aa-ab3f-c90970ac499e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UUT\Video\Templates">
+      <UniqueIdentifier>{b16cb81d-3f2b-4a07-a470-11db3aaf40a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\UUT\Core\Assert.h">
@@ -791,6 +794,9 @@
     </ClInclude>
     <ClInclude Include="..\UUT\Core\Input\InputDevice.h">
       <Filter>UUT\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\Templates\ColorBase.h">
+      <Filter>UUT\Video\Templates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
