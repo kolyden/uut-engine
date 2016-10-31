@@ -6,6 +6,7 @@
 #include "IO/MemoryStream.h"
 #include "IO/TextReader.h"
 #include "IO/InputSystem.h"
+#include <Core/IO/JSONFile.h>
 #include "Resources/Resource.h"
 #include "Resources/ResourceLoader.h"
 #include "Resources/ResourceCache.h"
@@ -97,6 +98,10 @@ namespace uut
 		UUT_REGISTER_OBJECT(Resource);
 		UUT_REGISTER_OBJECT(ResourceLoader);
 		UUT_REGISTER_MODULE(ResourceCache);
+
+		// JSON
+		UUT_REGISTER_OBJECT(JsonFile);
+		UUT_REGISTER_OBJECT(JsonFileLoader);
 
 		// WINDOWS
 		UUT_REGISTER_OBJECT(Window);

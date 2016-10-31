@@ -19,6 +19,8 @@ namespace uut
 
 		bool IsEOF() const;
 
+		static SharedPtr<TextReader> FromStream(const SharedPtr<Stream>& source);
+
 	protected:
 		SharedPtr<Stream> _source;
 	};

@@ -77,4 +77,12 @@ namespace uut
 	{
 		return _source ? _source->IsEOF() : true;
 	}
+
+	SharedPtr<TextReader> TextReader::FromStream(const SharedPtr<Stream>& source)
+	{
+		if (!source)
+			return nullptr;
+
+		return SharedPtr<TextReader>::Make(source);
+	}
 }

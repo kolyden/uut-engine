@@ -28,6 +28,7 @@
 #include <Quake1/Quake1Model.h>
 #include <Quake1/BSPLevel.h>
 #include <Quake1/BSPLevelLoader.h>
+#include <Core/IO/JSONFile.h>
 
 namespace uut
 {
@@ -146,6 +147,7 @@ namespace uut
 		ModuleInstance<ResourceCache> cache;
 		cache->AddLoader(SharedPtr<Quake1ModelLoader>::Make());
 		cache->AddLoader(SharedPtr<BSPLevelLoader>::Make());
+		cache->AddLoader(SharedPtr<JsonFileLoader>::Make());
 
 		_tex = LoadResource<Texture2D>("rogueliketiles.png", { {"silent", nullptr} });
 			// cache->Load<Texture2D>("rogueliketiles.png");
@@ -155,6 +157,17 @@ namespace uut
 
 		_camera = SharedPtr<FreeCamera>::Make();
 		_camera->SetPosition(Vector3(8.5f, 10, -50));
+
+		auto json = cache->Load<JsonFile>("test.json");
+		if (json)
+		{
+			auto root = json->GetRoot();
+			float f = root["pi"].ToFloat();
+			String str = root["name"].ToString();
+
+			int a = 0;
+			a++;
+		}
 
 		Variant var1(Vector2(12.111f, 45.6789f));
 		Variant var2(_font);

@@ -1,16 +1,11 @@
 #pragma once
 #include <Core/ValueType.h>
 #include <Core/Collections/List.h>
+#include "StringComparison.h"
 #include <string>
 
 namespace uut
 {
-	enum class StringComparison
-	{
-		Ordinal,
-		OrdinalIgnoreCase,
-	};
-
 	class String : public ValueType
 	{
 		UUT_VALUETYPE(uut, String, ValueType)
@@ -103,7 +98,6 @@ namespace uut
 
 		static const String Empty;
 
-		static int CompareChar(char a, char b, StringComparison comparisonType = StringComparison::Ordinal);
 		static int Compare(const String& a, const String& b, StringComparison comparisonType = StringComparison::Ordinal);
 
 	protected:

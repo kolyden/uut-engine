@@ -56,7 +56,7 @@ namespace uut
 		const int start = strCount - endsCount;
 		for (int i = start; i < strCount; i++)
 		{
-			if (CompareChar(_data[i], ends[i - start], comparisonType) != 0)
+			if (Char::Compare(_data[i], ends[i - start], comparisonType) != 0)
 				return false;
 		}
 
@@ -76,7 +76,7 @@ namespace uut
 
 		for (int i = 0; i < strCount; i++)
 		{
-			if (CompareChar(_data[i], value, comparisonType) == 0)
+			if (Char::Compare(_data[i], value, comparisonType) == 0)
 				return i;
 		}
 
@@ -105,7 +105,7 @@ namespace uut
 			bool found = true;
 			for (int j = 0; j < valCount; j++)
 			{
-				if (CompareChar(_data[i + j], value[j], comparisonType) == 0)
+				if (Char::Compare(_data[i + j], value[j], comparisonType) == 0)
 					continue;
 
 				found = false;
@@ -137,7 +137,7 @@ namespace uut
 
 		for (int i = strCount - 1; i >= 0; i--)
 		{
-			if (CompareChar(_data[i], value, comparisonType) == 0)
+			if (Char::Compare(_data[i], value, comparisonType) == 0)
 				return i;
 		}
 
@@ -161,7 +161,7 @@ namespace uut
 			bool found = true;
 			for (int j = 0; j < valCount; j++)
 			{
-				if (CompareChar(_data[i + j], value[j], comparisonType) == 0)
+				if (Char::Compare(_data[i + j], value[j], comparisonType) == 0)
 					continue;
 
 				found = false;
@@ -190,7 +190,7 @@ namespace uut
 		int count = 0;
 		for (uint i = 0; i < Count(); i++)
 		{
-			if (CompareChar(_data[i], oldChar) != 0)
+			if (Char::Compare(_data[i], oldChar) != 0)
 				continue;
 
 			_data[i] = newChar;
@@ -393,20 +393,6 @@ namespace uut
 		return buf;
 	}
 
-	int String::CompareChar(char a, char b, StringComparison comparisonType)
-	{
-		switch (comparisonType)
-		{
-		case StringComparison::Ordinal: return Math::Compare(a, b);
-		case StringComparison::OrdinalIgnoreCase:
-			if (tolower(a) > tolower(b)) return +1;
-			if (tolower(a) < tolower(b)) return -1;
-			return 0;
-		}
-
-		return 0;
-	}
-
 	int String::Compare(const String& a, const String& b, StringComparison comparisonType)
 	{
 		const int lng_a = a.Count();
@@ -415,7 +401,7 @@ namespace uut
 
 		for (int i = 0; i < lng; i++)
 		{
-			const int ret = CompareChar(a[i], b[i], comparisonType);
+			const int ret = Char::Compare(a[i], b[i], comparisonType);
 			if (ret != 0)
 				return ret;
 		}

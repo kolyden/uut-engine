@@ -1,4 +1,5 @@
 #pragma once
+#include <Core/EnumFlags.h>
 
 namespace uut
 {
@@ -9,4 +10,5 @@ namespace uut
 		Static,
 		NotSerialized,
 	};
+	UUT_ENUMFLAG(uut, FieldAttributes, FieldAttribute)
 }

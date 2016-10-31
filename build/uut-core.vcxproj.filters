@@ -76,6 +76,18 @@
     <Filter Include="UUT\Video\Templates">
       <UniqueIdentifier>{b16cb81d-3f2b-4a07-a470-11db3aaf40a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Extern\JSON">
+      <UniqueIdentifier>{c9e044ad-4070-4460-8cdf-dce4596881de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\JSON\_internal">
+      <UniqueIdentifier>{c209575b-e1d7-41b4-91be-a20b65a6eb32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\JSON\_internal\Dependencies">
+      <UniqueIdentifier>{e4f05c3a-b592-49cb-a108-f98a4a9c6379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\JSON\_internal\Source">
+      <UniqueIdentifier>{f8b777d7-2c0b-47df-aa43-3b1d6f6d15a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\UUT\Core\Assert.h">
@@ -798,6 +810,90 @@
     <ClInclude Include="..\UUT\Video\Templates\ColorBase.h">
       <Filter>UUT\Video\Templates</Filter>
     </ClInclude>
+    <ClInclude Include="..\Extern\JSON\JSONOptions.h">
+      <Filter>Extern\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\libjson.h">
+      <Filter>Extern\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\JSONFile.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\StringComparison.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Dependencies\libbase64++\libbase64++.h">
+      <Filter>Extern\JSON\_internal\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Dependencies\mempool++\mempool.h">
+      <Filter>Extern\JSON\_internal\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\internalJSONNode.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONAllocator.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONChildren.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONDebug.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONDefs\GNU_C.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONDefs\Strings_Defs.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONDefs\Unknown_C.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONDefs\Visual_C.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONDefs.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONGlobals.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONMemory.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONMemoryPool.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONNode.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONPreparse.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONSharedString.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONSingleton.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONStats.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONStream.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONValidator.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSONWorker.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\JSON_Base64.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\_internal\Source\NumberToString.h">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1228,6 +1324,51 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Input\InputDevice.cpp">
       <Filter>UUT\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\JSONFile.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\internalJSONNode.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\JSONAllocator.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\JSONChildren.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\JSONDebug.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\JSONIterators.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\JSONMemory.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\JSONNode.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\JSONNode_Mutex.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\JSONPreparse.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\JSONStream.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\JSONValidator.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\JSONWorker.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\JSONWriter.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\JSON\_internal\Source\libjson.cpp">
+      <Filter>Extern\JSON\_internal\Source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

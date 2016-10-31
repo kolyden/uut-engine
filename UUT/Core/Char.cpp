@@ -1,5 +1,6 @@
 #include "Char.h"
-#include "Reflection/ConverterInfo.h"
+#include <Core/Math/Math.h>
+#include <Core/Reflection/ConverterInfo.h>
 
 namespace uut
 {
@@ -11,6 +12,20 @@ namespace uut
 	}
 
 	const List<char> Char::WhiteSpaces = { ' ', '\n', '\t' };
+
+	int Char::Compare(char a, char b, StringComparison comparisonType /*= StringComparison::Ordinal*/)
+	{
+		switch (comparisonType)
+		{
+		case StringComparison::Ordinal: return Math::Compare(a, b);
+		case StringComparison::OrdinalIgnoreCase:
+			if (tolower(a) > tolower(b)) return +1;
+			if (tolower(a) < tolower(b)) return -1;
+			return 0;
+		}
+
+		return 0;
+	}
 
 	bool Char::IsWhiteSpace(char c)
 	{
