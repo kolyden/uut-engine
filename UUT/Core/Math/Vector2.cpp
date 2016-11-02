@@ -12,6 +12,9 @@ namespace uut
 		UUT_REGISTER_CTOR(IntVector2);
 		UUT_REGISTER_CONVERTER_DEFAULT(IntVector2);
 
+		UUT_REGISTER_PROPERTY("x", float, x);
+		UUT_REGISTER_PROPERTY("y", float, y);
+
 		internalType->AddMember(
 			new PropertyInfo<Vector2, float>("length",
 				[](const Vector2* obj) -> float { return obj->Length(); }, nullptr));

@@ -95,6 +95,7 @@ namespace uut
 		template<class C>SharedPtr<C> GetObject() const { return StaticCast<C>(GetObject(TypeOf<C>())); }
 
 		const Type* GetType() const { return _dataType; }
+		VariantType GetVariantType() const { return _type; }
 
 		// TYPE
 		template<class C, std::enable_if_t<std::is_base_of<Type, 

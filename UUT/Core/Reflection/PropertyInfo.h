@@ -9,12 +9,12 @@ namespace uut
 	class IPropertyInfo : public IMemberInfo
 	{
 	public:
-		explicit IPropertyInfo(const String& name, FieldAttribute attributes);
+		explicit IPropertyInfo(const String& name, FieldAttributes attributes);
 
 		MemberType GetMemberType() const override;
 		const String& GetName() const override;
 
-		FieldAttribute GetAttributes() const { return _attributes; }
+		FieldAttributes GetAttributes() const { return _attributes; }
 
 		bool IsPublic() const;
 		bool IsPrivate() const;
@@ -27,7 +27,7 @@ namespace uut
 
 	protected:
 		String _name;
-		FieldAttribute _attributes;
+		FieldAttributes _attributes;
 	};
 
 	////////////////////////////////////////////////////////////////////////////
@@ -102,4 +102,41 @@ namespace uut
 		Getter _getter;
 		Setter _setter;
 	};
+
+	//////////////////////////////////////////////////////////////////////////
+	template<class C, typename T>
+	class VariableProperty : public IPropertyInfo
+	{
+	public:
+		VariableProperty(const String& name, T C::*var)
+			: IPropertyInfo(name, FieldAttribute::Public)
+			, _variable(var)
+		{}
+
+		virtual bool CanSet() const override
+		{
+			return true;
+		}
+
+		bool SetValue(BaseObject& object, const Variant& value) override
+		{
+			T data;
+			if (!value.TryGet(data))
+				return false;
+
+			(((C*)&object)->*_variable) = data;
+			return true;
+		}
+
+		Variant GetValue(const BaseObject* object) const override
+		{
+			return (((const C*)object)->*_variable);
+		}
+
+	protected:
+		T C::* _variable;
+	};
+
+#define UUT_REGISTER_PROPERTY(name, type, varname) \
+		internalType->AddMember(new VariableProperty<ClassName, type>(name, &ClassName::varname));
 }

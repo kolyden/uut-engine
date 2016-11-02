@@ -8,6 +8,7 @@ namespace uut
 	class StreamContainer;
 	class Resource;
 	class ResourceLoader;
+	class ResourceSaver;
 
 	struct ResourceGroup
 	{
@@ -28,9 +29,11 @@ namespace uut
 		
 		SharedPtr<Resource> Find(const Type* type, const Path& path) const;
 		SharedPtr<Resource> Load(const Type* type, const Path& path, bool silent = false);
+		bool Save(const SharedPtr<Resource>& resource, const Path& path, bool silent = false);
 		const ResourceDict& GetResources(const Type* type) const;
 
 		void AddLoader(const SharedPtr<ResourceLoader>& loader);
+		void AddSaver(const SharedPtr<ResourceSaver>& saver);
 
 		template<class C, class = typename std::enable_if<std::is_base_of<Resource, C>::value, void>::type>
 		SharedPtr<C> Find(const Path& path) const { return StaticCast<C>(Find(TypeOf<C>(), path)); }
@@ -44,6 +47,7 @@ namespace uut
 	protected:
 		List<SharedPtr<StreamContainer>> _containers;
 		Dictionary<const Type*, List<SharedPtr<ResourceLoader>>> _loaders;
+		Dictionary<const Type*, List<SharedPtr<ResourceSaver>>> _savers;
 		Dictionary<const Type*, ResourceDict> _groups;
 
 // 		bool OnInit() override;

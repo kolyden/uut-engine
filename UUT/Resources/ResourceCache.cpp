@@ -2,6 +2,7 @@
 #include <Core/IO/StreamContainer.h>
 #include "Resource.h"
 #include "ResourceLoader.h"
+#include "ResourceSaver.h"
 #include <Core/Debug.h>
 #include "ResourceLoaderAttribute.h"
 
@@ -89,6 +90,44 @@ namespace uut
 		return nullptr;
 	}
 
+	bool ResourceCache::Save(const SharedPtr<Resource>& resource, const Path& path, bool silent /*= false*/)
+	{
+		if (!resource || path.IsEmpty())
+			return false;
+
+		if (_containers.IsEmpty())
+		{
+			if (!silent)
+				Debug::LogWarning("Can save resource, no container added");
+			return false;
+		}
+
+		const Type* type = resource->GetType();
+		auto jt = _savers.Find(type);
+		if (jt == _savers.End())
+		{
+			if (!silent)
+				Debug::LogWarning("Can save resource: no saver for %s", type->GetFullName());
+
+			return false;
+		}
+
+		for (auto it = _containers.RBegin(); it != _containers.REnd(); ++it)
+		{
+			auto stream = (*it)->Open(path, FileMode::Create);
+			if (!stream)
+				continue;
+
+			for (auto& saver : jt->second)
+			{
+				if (saver->Save(resource, stream))
+					return true;
+			}
+		}
+
+		return false;
+	}
+
 	const ResourceCache::ResourceDict& ResourceCache::GetResources(const Type* type) const
 	{
 		auto it = _groups.Find(type);
@@ -101,6 +140,12 @@ namespace uut
 			return;
 
 		_loaders[loader->GetResourceType()] << loader;
+	}
+
+	void ResourceCache::AddSaver(const SharedPtr<ResourceSaver>& saver)
+	{
+		if (saver)
+			_savers[saver->GetResourceType()] << saver;
 	}
 
 // 	bool ResourceCache::OnInit()

@@ -2,7 +2,7 @@
 
 namespace uut
 {
-	IPropertyInfo::IPropertyInfo(const String& name, FieldAttribute attributes)
+	IPropertyInfo::IPropertyInfo(const String& name, FieldAttributes attributes)
 		: _name(name)
 		, _attributes(attributes)
 	{
