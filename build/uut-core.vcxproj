@@ -24,6 +24,7 @@
     <ClInclude Include="..\Extern\ImGui\imconfig.h" />
     <ClInclude Include="..\Extern\ImGui\imgui.h" />
     <ClInclude Include="..\Extern\ImGui\imgui_internal.h" />
+    <ClInclude Include="..\Extern\JSON\json.hpp" />
     <ClInclude Include="..\Extern\JSON\JSONOptions.h" />
     <ClInclude Include="..\Extern\JSON\libjson.h" />
     <ClInclude Include="..\Extern\JSON\_internal\Dependencies\libbase64++\libbase64++.h" />
@@ -50,6 +51,8 @@
     <ClInclude Include="..\Extern\JSON\_internal\Source\JSONWorker.h" />
     <ClInclude Include="..\Extern\JSON\_internal\Source\JSON_Base64.h" />
     <ClInclude Include="..\Extern\JSON\_internal\Source\NumberToString.h" />
+    <ClInclude Include="..\Extern\LibYAML\yaml.h" />
+    <ClInclude Include="..\Extern\LibYAML\yaml_private.h" />
     <ClInclude Include="..\Extern\SDL2\begin_code.h" />
     <ClInclude Include="..\Extern\SDL2\close_code.h" />
     <ClInclude Include="..\Extern\SDL2\SDL.h" />
@@ -166,6 +169,7 @@
     <ClInclude Include="..\UUT\Core\IO\Input.h" />
     <ClInclude Include="..\UUT\Core\IO\InputSystem.h" />
     <ClInclude Include="..\UUT\Core\IO\JSONFile.h" />
+    <ClInclude Include="..\UUT\Core\IO\JsonSerializer.h" />
     <ClInclude Include="..\UUT\Core\IO\Keycode.h" />
     <ClInclude Include="..\UUT\Core\IO\MemoryStream.h" />
     <ClInclude Include="..\UUT\Core\IO\Path.h" />
@@ -173,6 +177,9 @@
     <ClInclude Include="..\UUT\Core\IO\Stream.h" />
     <ClInclude Include="..\UUT\Core\IO\StreamContainer.h" />
     <ClInclude Include="..\UUT\Core\IO\TextReader.h" />
+    <ClInclude Include="..\UUT\Core\IO\YamlFile.h" />
+    <ClInclude Include="..\UUT\Core\IO\YamlNode.h" />
+    <ClInclude Include="..\UUT\Core\IO\YamlSerializer.h" />
     <ClInclude Include="..\UUT\Core\Math\Degree.h" />
     <ClInclude Include="..\UUT\Core\Math\Hash.h" />
     <ClInclude Include="..\UUT\Core\Math\IntRange.h" />
@@ -236,10 +243,13 @@
     <ClInclude Include="..\UUT\Quake1\Quake1Model.h" />
     <ClInclude Include="..\UUT\Quake1\Quake1ModelLoader.h" />
     <ClInclude Include="..\UUT\Quake1\Quake1Plugin.h" />
+    <ClInclude Include="..\UUT\Resources\DataObject.h" />
+    <ClInclude Include="..\UUT\Resources\Loaders\DataObjectLoader.h" />
     <ClInclude Include="..\UUT\Resources\Resource.h" />
     <ClInclude Include="..\UUT\Resources\ResourceCache.h" />
     <ClInclude Include="..\UUT\Resources\ResourceLoader.h" />
     <ClInclude Include="..\UUT\Resources\ResourceLoaderAttribute.h" />
+    <ClInclude Include="..\UUT\Resources\ResourceSaver.h" />
     <ClInclude Include="..\UUT\SDL\SDLInput.h" />
     <ClInclude Include="..\UUT\SDL\SDLPlugin.h" />
     <ClInclude Include="..\UUT\Tilemap\BlockedLayer.h" />
@@ -306,6 +316,14 @@
     <ClCompile Include="..\Extern\JSON\_internal\Source\JSONWorker.cpp" />
     <ClCompile Include="..\Extern\JSON\_internal\Source\JSONWriter.cpp" />
     <ClCompile Include="..\Extern\JSON\_internal\Source\libjson.cpp" />
+    <ClCompile Include="..\Extern\LibYAML\api.c" />
+    <ClCompile Include="..\Extern\LibYAML\dumper.c" />
+    <ClCompile Include="..\Extern\LibYAML\emitter.c" />
+    <ClCompile Include="..\Extern\LibYAML\loader.c" />
+    <ClCompile Include="..\Extern\LibYAML\parser.c" />
+    <ClCompile Include="..\Extern\LibYAML\reader.c" />
+    <ClCompile Include="..\Extern\LibYAML\scanner.c" />
+    <ClCompile Include="..\Extern\LibYAML\writer.c" />
     <ClCompile Include="..\UUT\CES\Component.cpp" />
     <ClCompile Include="..\UUT\CES\Entity.cpp" />
     <ClCompile Include="..\UUT\CES\EntityGroup.cpp" />
@@ -339,6 +357,7 @@
     <ClCompile Include="..\UUT\Core\IO\Input.cpp" />
     <ClCompile Include="..\UUT\Core\IO\InputSystem.cpp" />
     <ClCompile Include="..\UUT\Core\IO\JSONFile.cpp" />
+    <ClCompile Include="..\UUT\Core\IO\JsonSerializer.cpp" />
     <ClCompile Include="..\UUT\Core\IO\Keycode.cpp" />
     <ClCompile Include="..\UUT\Core\IO\MemoryStream.cpp" />
     <ClCompile Include="..\UUT\Core\IO\Path.cpp" />
@@ -346,6 +365,9 @@
     <ClCompile Include="..\UUT\Core\IO\Stream.cpp" />
     <ClCompile Include="..\UUT\Core\IO\StreamContainer.cpp" />
     <ClCompile Include="..\UUT\Core\IO\TextReader.cpp" />
+    <ClCompile Include="..\UUT\Core\IO\YamlFile.cpp" />
+    <ClCompile Include="..\UUT\Core\IO\YamlNode.cpp" />
+    <ClCompile Include="..\UUT\Core\IO\YamlSerializer.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Degree.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Hash.cpp" />
     <ClCompile Include="..\UUT\Core\Math\IntRange.cpp" />
@@ -400,10 +422,13 @@
     <ClCompile Include="..\UUT\Quake1\Quake1Model.cpp" />
     <ClCompile Include="..\UUT\Quake1\Quake1ModelLoader.cpp" />
     <ClCompile Include="..\UUT\Quake1\Quake1Plugin.cpp" />
+    <ClCompile Include="..\UUT\Resources\DataObject.cpp" />
+    <ClCompile Include="..\UUT\Resources\Loaders\DataObjectLoader.cpp" />
     <ClCompile Include="..\UUT\Resources\Resource.cpp" />
     <ClCompile Include="..\UUT\Resources\ResourceCache.cpp" />
     <ClCompile Include="..\UUT\Resources\ResourceLoader.cpp" />
     <ClCompile Include="..\UUT\Resources\ResourceLoaderAttribute.cpp" />
+    <ClCompile Include="..\UUT\Resources\ResourceSaver.cpp" />
     <ClCompile Include="..\UUT\SDL\SDLInput.cpp" />
     <ClCompile Include="..\UUT\SDL\SDLPlugin.cpp" />
     <ClCompile Include="..\UUT\Tilemap\BlockedLayer.cpp" />

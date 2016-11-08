@@ -40,6 +40,14 @@ namespace uut
 		_type = VariantType::Empty;
 	}
 
+	const ValueType* Variant::GetStruct() const
+	{
+		if (!IsValueType())
+			return nullptr;
+
+		return reinterpret_cast<const ValueType*>(_data.data());
+	}
+
 	const ValueType* Variant::GetStruct(const Type* type) const
 	{
 		if (type == nullptr || !IsValueType())

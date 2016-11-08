@@ -29,6 +29,8 @@
 #include <Quake1/BSPLevel.h>
 #include <Quake1/BSPLevelLoader.h>
 #include <Core/IO/JSONFile.h>
+#include <Core/IO/YamlFile.h>
+#include <Core/IO/YamlSerializer.h>
 
 namespace uut
 {
@@ -148,6 +150,9 @@ namespace uut
 		cache->AddLoader(SharedPtr<Quake1ModelLoader>::Make());
 		cache->AddLoader(SharedPtr<BSPLevelLoader>::Make());
 		cache->AddLoader(SharedPtr<JsonFileLoader>::Make());
+		cache->AddLoader(SharedPtr<YamlFileLoader>::Make());
+
+		cache->AddSaver(SharedPtr<YamlFileSaver>::Make());
 
 		_tex = LoadResource<Texture2D>("rogueliketiles.png", { {"silent", nullptr} });
 			// cache->Load<Texture2D>("rogueliketiles.png");
@@ -167,6 +172,16 @@ namespace uut
 
 			int a = 0;
 			a++;
+		}
+
+		auto yaml = SharedPtr<YamlFile>::Make();
+		if (yaml)
+		{
+			auto root = yaml->AddMapping();
+			root.AppendMapping("i", 12345);
+			root.AppendMapping("f", 12.345f);
+			root.AppendMapping("vec", Vector2(12, 42));
+			cache->Save(yaml, "test.yaml");
 		}
 
 		Variant var1(Vector2(12.111f, 45.6789f));

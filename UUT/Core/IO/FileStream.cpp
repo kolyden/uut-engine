@@ -153,7 +153,7 @@ namespace uut
 		auto file = MakeShared<FileStream>();
 		file->_handle = handle;
 		file->_path = path;
-		file->_fileMode = FileMode::OpenRead;
+		file->_fileMode = mode;
 		return file;
 	}
 }

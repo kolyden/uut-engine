@@ -87,6 +87,7 @@ namespace uut
 		bool IsValueType() const { return _type == VariantType::Struct || IsEnum() || IsNumeric(); }
 		bool IsObject() const { return _type == VariantType::Object; }
 
+		const ValueType* GetStruct() const;
 		const ValueType* GetStruct(const Type* type) const;
 		template<class C>const C* GetStruct() const { return static_cast<const C*>(GetStruct(TypeOf<C>())); }
 
@@ -159,7 +160,7 @@ namespace uut
 		bool TryGet(C& value) const
 		{
 			auto data = GetStruct<typename detail::Fundamental<C>::TYPE>();
-			if (data == nullptr)
+			if (data != nullptr)
 			{
 				value = *data;
 				return true;

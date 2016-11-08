@@ -88,6 +88,12 @@
     <Filter Include="Extern\JSON\_internal\Source">
       <UniqueIdentifier>{f8b777d7-2c0b-47df-aa43-3b1d6f6d15a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UUT\Resources\Loaders">
+      <UniqueIdentifier>{9d490bad-1284-450c-b5a4-07aa4c53c53f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\LibYAML">
+      <UniqueIdentifier>{c061528c-55b8-442b-93d1-68b3cb01ab6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\UUT\Core\Assert.h">
@@ -894,6 +900,36 @@
     <ClInclude Include="..\Extern\JSON\_internal\Source\NumberToString.h">
       <Filter>Extern\JSON\_internal\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Resources\DataObject.h">
+      <Filter>UUT\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Resources\Loaders\DataObjectLoader.h">
+      <Filter>UUT\Resources\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Resources\ResourceSaver.h">
+      <Filter>UUT\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\JSON\json.hpp">
+      <Filter>Extern\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\JsonSerializer.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\LibYAML\yaml.h">
+      <Filter>Extern\LibYAML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Extern\LibYAML\yaml_private.h">
+      <Filter>Extern\LibYAML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\YamlFile.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\YamlNode.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\IO\YamlSerializer.h">
+      <Filter>UUT\Core\IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1369,6 +1405,51 @@
     </ClCompile>
     <ClCompile Include="..\Extern\JSON\_internal\Source\libjson.cpp">
       <Filter>Extern\JSON\_internal\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Resources\DataObject.cpp">
+      <Filter>UUT\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Resources\Loaders\DataObjectLoader.cpp">
+      <Filter>UUT\Resources\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Resources\ResourceSaver.cpp">
+      <Filter>UUT\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\JsonSerializer.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\LibYAML\api.c">
+      <Filter>Extern\LibYAML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\LibYAML\dumper.c">
+      <Filter>Extern\LibYAML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\LibYAML\emitter.c">
+      <Filter>Extern\LibYAML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\LibYAML\loader.c">
+      <Filter>Extern\LibYAML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\LibYAML\parser.c">
+      <Filter>Extern\LibYAML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\LibYAML\reader.c">
+      <Filter>Extern\LibYAML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\LibYAML\scanner.c">
+      <Filter>Extern\LibYAML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\LibYAML\writer.c">
+      <Filter>Extern\LibYAML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\YamlFile.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\YamlNode.cpp">
+      <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\IO\YamlSerializer.cpp">
+      <Filter>UUT\Core\IO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

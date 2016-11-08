@@ -7,6 +7,7 @@
 #include "IO/TextReader.h"
 #include "IO/InputSystem.h"
 #include <Core/IO/JSONFile.h>
+#include <Core/IO/YamlFile.h>
 #include "Resources/Resource.h"
 #include "Resources/ResourceLoader.h"
 #include "Resources/ResourceCache.h"
@@ -97,11 +98,18 @@ namespace uut
 		// RESOURCES
 		UUT_REGISTER_OBJECT(Resource);
 		UUT_REGISTER_OBJECT(ResourceLoader);
+		UUT_REGISTER_OBJECT(ResourceSaver);
 		UUT_REGISTER_MODULE(ResourceCache);
 
 		// JSON
 		UUT_REGISTER_OBJECT(JsonFile);
 		UUT_REGISTER_OBJECT(JsonFileLoader);
+
+		// YAML
+		UUT_REGISTER_OBJECT(YamlNode);
+		UUT_REGISTER_OBJECT(YamlFile);
+		UUT_REGISTER_OBJECT(YamlFileLoader);
+		UUT_REGISTER_OBJECT(YamlFileSaver);
 
 		// WINDOWS
 		UUT_REGISTER_OBJECT(Window);
