@@ -930,6 +930,9 @@
     <ClInclude Include="..\UUT\Core\IO\YamlSerializer.h">
       <Filter>UUT\Core\IO</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Core\Number.h">
+      <Filter>UUT\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1450,6 +1453,9 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Core\IO\YamlSerializer.cpp">
       <Filter>UUT\Core\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Number.cpp">
+      <Filter>UUT\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

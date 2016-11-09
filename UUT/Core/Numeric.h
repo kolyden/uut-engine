@@ -1,6 +1,7 @@
 #pragma once
 #include <Core/Fundamental.h>
 #include <limits>
+#include "Number.h"
 #include "String.h"
 
 namespace uut
@@ -18,7 +19,8 @@ namespace uut
 // 			return *this;
 // 		}
 
-		String ToString() const { return std::to_string(FundamentalValue<T>::GetValue()); }
+		String ToString() const { return Number::ToString(FundamentalValue<T>::GetValue()); }
+		static T Parse(const String& value) { return Number::ToNumeric<T>(value); }
 
 		static const T MaxValue;
 		static const T MinValue;

@@ -121,7 +121,7 @@ namespace uut
 
 	int YamlNode::ToInt() const
 	{
-		return atoi(Scalar());
+		return Int32::Parse(Scalar());
 	}
 
 	float YamlNode::ToFloat() const

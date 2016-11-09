@@ -204,6 +204,7 @@
     <ClInclude Include="..\UUT\Core\Math\Vector4.h" />
     <ClInclude Include="..\UUT\Core\Module.h" />
     <ClInclude Include="..\UUT\Core\Nullable.h" />
+    <ClInclude Include="..\UUT\Core\Number.h" />
     <ClInclude Include="..\UUT\Core\Numeric.h" />
     <ClInclude Include="..\UUT\Core\Object.h" />
     <ClInclude Include="..\UUT\Core\ObjectFactory.h" />
@@ -388,6 +389,7 @@
     <ClCompile Include="..\UUT\Core\Math\Vector4.cpp" />
     <ClCompile Include="..\UUT\Core\Module.cpp" />
     <ClCompile Include="..\UUT\Core\Nullable.cpp" />
+    <ClCompile Include="..\UUT\Core\Number.cpp" />
     <ClCompile Include="..\UUT\Core\Numeric.cpp" />
     <ClCompile Include="..\UUT\Core\Object.cpp" />
     <ClCompile Include="..\UUT\Core\ObjectFactory.cpp" />
