@@ -933,6 +933,12 @@
     <ClInclude Include="..\UUT\Core\Number.h">
       <Filter>UUT\Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Video\Geometry.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\GUI\ContextGUI.h">
+      <Filter>UUT\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1456,6 +1462,9 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Number.cpp">
       <Filter>UUT\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\GUI\ContextGUI.cpp">
+      <Filter>UUT\GUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

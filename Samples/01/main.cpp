@@ -1,16 +1,11 @@
 #include "main.h"
 #include <Core/Math/Math.h>
 #include <Core/Math/Quaternion.h>
-#include <IMGUI/imgui.h>
 #include <Core/Context.h>
-#include <Core/Reflection/PropertyInfo.h>
-#include <Core/Plugin.h>
 #include <Core/Variant.h>
 #include <Core/Enum.h>
 #include <Core/EnumFlags.h>
-#include <Core/Reflection/MethodInfo.h>
-#include <Core/Reflection/ConstructorInfo.h>
-#include <Core/Reflection/ConverterInfo.h>
+#include <Core/Reflection/PropertyInfo.h>
 #include <Windows.h>
 #include <Video/BitmapFont.h>
 #include <Core/Attribute.h>
@@ -22,6 +17,7 @@
 #include <Video/Mesh.h>
 #include <Core/Time.h>
 #include <GUI/GUI.h>
+#include <GUI/ContextGUI.h>
 #include <Video/FreeCamera.h>
 #include <Quake1/Quake1Plugin.h>
 #include <Quake1/Quake1ModelLoader.h>
@@ -31,6 +27,7 @@
 #include <Core/IO/JSONFile.h>
 #include <Core/IO/YamlFile.h>
 #include <Core/IO/YamlSerializer.h>
+#include <IMGUI/imgui.h>
 
 namespace uut
 {
@@ -55,6 +52,7 @@ namespace uut
 	UUT_ENUMFLAG(uut, TestFlags, Test)
 	UUT_ENUMFLAG_IMPLEMENT(TestFlags)
 	{
+		
 		RegisterValues(
 			"ValueA", Test::ValueA,
 			"ValueB", Test::ValueB,
@@ -220,82 +218,6 @@ namespace uut
 
 	static bool show_test_window = false;
 
-	static String ArgTypeToString(const Type* type)
-	{
-		if (type == nullptr)
-			return "void";
-
-		return type->GetName();
-	}
-
-	static void DrawArgList(const List<const Type*>& args)
-	{
-		for (unsigned i = 0; i < args.Count(); i++)
-		{
-			GUI::BeginHorizontal();
-			auto it = args[i];
-			if (i > 0)
-				GUI::Text(",");
-
-			GUI::Text(it->GetName());
-			GUI::EndHorizontal();
-		}
-	}
-
-	static void DrawMembers(const Type* type, bool showCtor)
-	{
-		for (auto info : type->GetMembers())
-		{
-			GUI::BeginHorizontal();
-			switch (info->GetMemberType())
-			{
-			case MemberType::Property:
-			{
-				GUI::Text(String::Format("prop: %s", info->GetName().GetData()));
-				auto prop = static_cast<const IPropertyInfo*>(info);
-				if (prop->IsStatic())
-				{
-					auto value = prop->GetValue(nullptr).Get<int>();
-					GUI::Text(String::Format(" = %d", value));
-				}
-			}
-			break;
-
-			case MemberType::Constructor:
-				if (showCtor)
-				{
-					GUI::Text("Constructor (");
-					auto ctor = (const IConstructorInfo*)info;
-					DrawArgList(ctor->GetArgsTypes());
-					GUI::Text(")");
-				}
-				break;
-
-			case MemberType::Method:
-				{
-					auto method = (const IMethodInfo*)info;
-					GUI::Text(String::Format("method: %s %s(",
-						ArgTypeToString(method->GetReturnType()),
-						info->GetName().GetData()));
-					DrawArgList(method->GetArgsTypes());
-					GUI::Text(")");
-				}
-				break;
-
-			case MemberType::Converter:
-			{
-				auto converter = (const IConverterInfo*)info;
-				GUI::Text(String::Format("Convert to %s", converter->GetResultType()->GetName()));
-			}
-			break;
-
-			default:
-				GUI::Text(info->GetName());
-			}
-			GUI::EndHorizontal();
-		}
-	}
-
 	static List<HashString> MakeRange(const String& prefix, int start, int end)
 	{
 		List<HashString> list;
@@ -311,83 +233,17 @@ namespace uut
 		DebugGUI::Instance()->NewFrame();
 
 		///////////////////////////////////////////////////////////////
+		ContextGUI::Draw();
+
 		ImGui::SetNextWindowPos(ImVec2(350, 50), ImGuiSetCond_FirstUseEver);
 		ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiSetCond_FirstUseEver);
 		ImGui::SetNextWindowCollapsed(true, ImGuiSetCond_FirstUseEver);
-		if (ImGui::Begin("Context"))
+		if (ImGui::Begin("Textures"))
 		{
 			show_test_window = GUI::Toggle("Show Test Window", show_test_window);
 
-			GUI::Separator();
-			static bool pluginFoldout = true;
-			pluginFoldout = GUI::Foldout("Plugins", pluginFoldout);
-			if (pluginFoldout)
-			{
-				GUI::BeginListBox("##plugins");
-				auto plugins = Context::GetPlugins();
-				for (auto& it : plugins)
-					GUI::Selectable(it->ToString());
-				GUI::EndListBox();
-			}
-
-			GUI::Separator();
-			static bool typesFoldout = true;
-
-			typesFoldout = GUI::Foldout("Types", typesFoldout);
-			if (typesFoldout)
-			{
-				static const Type* current = nullptr;
-
-				static ImGuiTextFilter filter;
-
-				static List<const Type*> typeList;
-				if (typeList.IsEmpty())
-				{
-					typeList = Context::GetTypes().GetValues();
-					typeList.Sort([](const Type* a, const Type* b) -> int {
-						return String::Compare(a->GetFullName(), b->GetFullName(), StringComparison::OrdinalIgnoreCase);
-					});
-				}
-
-				filter.Draw();
-				ImGui::PushItemWidth(150);
-				GUI::BeginHorizontal();
-				GUI::BeginListBox("##types");
-				for (auto type : typeList)
-				{
-					const char* typeName = type->GetFullName();
-					if (!filter.PassFilter(typeName))
-						continue;
-
-					GUI::BeginHorizontal();
-					if (GUI::Selectable(typeName, type == current))
-						current = type;
-					GUI::Text(String::Format("(%d)", type->GetSize()));
-					GUI::EndHorizontal();
-				}
-				GUI::EndListBox();
-				ImGui::PopItemWidth();
-
-				if (current != nullptr)
-				{
-					GUI::BeginVertical();
-					GUI::Text(current->GetFullName());
-					
-					for (auto baseType = current->GetBaseType(); baseType != nullptr; baseType = baseType->GetBaseType())
-						GUI::Text(baseType->GetFullName());
-
-					GUI::Separator();
-					DrawMembers(current, true);
-
-					GUI::Separator();
-					for (auto baseType = current->GetBaseType(); baseType != nullptr; baseType = baseType->GetBaseType())
-						DrawMembers(baseType, false);
-					GUI::EndVertical();
-				}
-				GUI::EndHorizontal();
-			}
-
-			static bool texturesFoldout = false;
+			static bool texturesFoldout = true;
+			ImGui::PushItemWidth(-1);
 			texturesFoldout = GUI::Foldout("Textures", texturesFoldout);
 			if (texturesFoldout)
 			{
@@ -404,6 +260,7 @@ namespace uut
 				}
 				GUI::EndListBox();
 			}
+			ImGui::PopItemWidth();
 		}
 		ImGui::End();
 
