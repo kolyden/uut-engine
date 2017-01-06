@@ -8,10 +8,9 @@
 #include "SDL2/SDL_syswm.h"
 #include <Core/Debug.h>
 
-#include <d3dx9.h>
-#include <DxErr.h>
+#include <d3d9.h>
 //#pragma comment(lib, "d3dx9.lib")
-#pragma comment(lib, "dxerr.lib")
+//#pragma comment(lib, "dxerr.lib")
 
 namespace uut
 {
@@ -491,9 +490,13 @@ namespace uut
 	{
 		if (ret != D3D_OK)
 		{
-			Debug::LogError("D3D9: %s - %s",
+			char* buf;
+			::FormatMessageA(ret, NULL, ret, 0, (LPSTR)&buf, 0, NULL);
+			Debug::LogError("D3D9 Error Code %d - \"%s\"", ret, buf);
+			::LocalFree(buf);
+			/*Debug::LogError("D3D9: %s - %s",
 				DXGetErrorStringA(ret),
-				DXGetErrorDescriptionA(ret));
+				DXGetErrorDescriptionA(ret));*/
 			return false;
 		}
 
