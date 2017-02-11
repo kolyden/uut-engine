@@ -305,7 +305,7 @@ namespace uut
 		auto graphics = Graphics::Instance();
 		auto gui = DebugGUI::Instance();
 
-		renderer->Clear(Color32(114, 144, 154));
+		//renderer->Clear(Color32(114, 144, 154));
 		if (renderer->BeginScene())
 		{
 // 			_plasma->Apply(_texture,
@@ -313,7 +313,7 @@ namespace uut
 // 			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
 			graphics->SetMaterial(Graphics::MT_OPAQUE);
 			graphics->SetProjection(Graphics::PM_3D);
-			graphics->Flush();
+			graphics->BeginRecord();
 
 			Matrix4 oldMat = renderer->GetTransform(RT_VIEW);
 			auto& cameraMat = _camera->UpdateViewMatrix();
@@ -358,7 +358,6 @@ namespace uut
 				graphics->DrawMesh(mat, _level->GetMeshes()[0]);
 			}
 
-			graphics->Flush();
 			renderer->SetTransform(RT_VIEW, oldMat);
 
 			graphics->SetProjection(Graphics::PM_2D);
@@ -381,7 +380,8 @@ namespace uut
 					x += tex->GetSize().x;
 				}
 			}
-			graphics->Flush();
+			graphics->EndRecord();
+			graphics->Draw();
 
 			gui->SetupCamera();
 			gui->Draw();

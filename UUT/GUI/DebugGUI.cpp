@@ -5,6 +5,8 @@
 #include <Video/Vertex.h>
 #include <Video/VertexBuffer.h>
 #include <Video/IndexBuffer.h>
+#include <Video/CommandList.h>
+#include <Video/RenderState.h>
 #include <IMGUI/imgui.h>
 #include <SDL2/SDL.h>
 #include <Core/Reflection/ConstructorInfo.h>
@@ -62,7 +64,6 @@ namespace uut
 		io.RenderDrawListsFn = &StaticRenderDrawLists;
 
 		auto renderer = Renderer::Instance();
-		_vd = renderer->CreateVertexDeclaration(g_declare);
 		_timer.Start();
 
 		unsigned char* pixels;
@@ -83,22 +84,27 @@ namespace uut
 
 		io.Fonts->TexID = _fontTex.Get();
 
-		_renderState.cullMode = CullMode::Disabled;
-		_renderState.lightning = false;
-		_renderState.zbuffer = ZBufferMode::Disable;
-		_renderState.zwriteEnable = false;
-		_renderState.alphaBlend = true;
-		_renderState.blendOp = BlendOperation::Add;
-		_renderState.alphaTest = false;
-		_renderState.srcBlend = BlendFactor::SrcAlpha;
-		_renderState.destBlend = BlendFactor::InvSrcAlpha;
-		_renderState.scissorTest = true;
+		RenderStateDesc desc;
+		desc.cullMode = CullMode::Disabled;
+		desc.lightning = false;
+		desc.zbuffer = ZBufferMode::Disable;
+		desc.zwriteEnable = false;
+		desc.alphaBlend = true;
+		desc.blendOp = BlendOperation::Add;
+		desc.alphaTest = false;
+		desc.srcBlend = BlendFactor::SrcAlpha;
+		desc.destBlend = BlendFactor::InvSrcAlpha;
+		desc.scissorTest = true;
+		desc.inputLayout = g_declare;
 
-		_renderState.textureStage[0].alphaOp = TextureOperation::Modulate;
-		_renderState.textureStage[0].alphaArg1 = TextureArgument::Texture;
-		_renderState.textureStage[0].alphaArg2 = TextureArgument::Diffuse;
-		_renderState.sampler[0].minFilter = TextureFilter::Linear;
-		_renderState.sampler[0].magFilter = TextureFilter::Linear;
+		desc.textureStage[0].alphaOp = TextureOperation::Modulate;
+		desc.textureStage[0].alphaArg1 = TextureArgument::Texture;
+		desc.textureStage[0].alphaArg2 = TextureArgument::Diffuse;
+		desc.sampler[0].minFilter = TextureFilter::Linear;
+		desc.sampler[0].magFilter = TextureFilter::Linear;
+
+		_pipeline = renderer->CreateRenderState(desc);
+		_commandList = renderer->CreateCommandList();
 	}
 
 	void DebugGUI::NewFrame()
@@ -181,10 +187,9 @@ namespace uut
 		_vb->Unlock();
 		_ib->Unlock();
 
-		renderer->SetState(_renderState);
-		renderer->SetVertexBuffer(_vb, sizeof(UIVertex));
-		renderer->SetIndexBuffer(_ib);
-		renderer->SetVertexDeclaration(_vd);
+		_commandList->Reset(_pipeline);
+		_commandList->SetVertexBuffer(_vb, sizeof(UIVertex));
+		_commandList->SetIndexBuffer(_ib);
 
 		// Render command lists
 		int vtx_offset = 0;
@@ -203,21 +208,18 @@ namespace uut
 				{
 					//const RECT r = { (LONG)pcmd->ClipRect.x, (LONG)pcmd->ClipRect.y, (LONG)pcmd->ClipRect.z, (LONG)pcmd->ClipRect.w };
 					auto texPtr = static_cast<Texture2D*>(pcmd->TextureId);
-					renderer->SetTexture(0, texPtr != nullptr ? texPtr->GetSharedThis() : nullptr);
-					renderer->SetScissorRect(
-						IntRect::FromLBRT((int)pcmd->ClipRect.x, (int)pcmd->ClipRect.w, (int)pcmd->ClipRect.z, (int)pcmd->ClipRect.y));
-					renderer->DrawIndexedPrimitive(Topology::TrinagleList,
-						vtx_offset, 0, cmd_list->VtxBuffer.size(), idx_offset, pcmd->ElemCount / 3);
+					_commandList->SetTexture(0, texPtr != nullptr ? texPtr->GetSharedThis() : nullptr);
+// 					renderer->SetScissorRect(
+// 						IntRect::FromLBRT((int)pcmd->ClipRect.x, (int)pcmd->ClipRect.w, (int)pcmd->ClipRect.z, (int)pcmd->ClipRect.y));
+					_commandList->DrawIndexedPrimitive(vtx_offset, 0,
+						cmd_list->VtxBuffer.size(), idx_offset, pcmd->ElemCount / 3);
 				}
 				idx_offset += pcmd->ElemCount;
 			}
 			vtx_offset += cmd_list->VtxBuffer.size();
 		}
 
-		renderer->SetVertexBuffer(nullptr, 0);
-		renderer->SetIndexBuffer(nullptr);
-		renderer->SetVertexDeclaration(nullptr);
-		renderer->SetTexture(0, nullptr);
+		_commandList->Close();
 	}
 
 	void DebugGUI::StaticRenderDrawLists(ImDrawData* draw_data)

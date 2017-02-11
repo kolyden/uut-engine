@@ -7,7 +7,8 @@
 
 namespace uut
 {
-	class Material;
+	class RenderState;
+	class CommandList;
 	class Font;
 	class Mesh;
 	class Rect;
@@ -16,7 +17,6 @@ namespace uut
 	class Renderer;
 	class Texture2D;
 	class VertexBuffer;
-	class VertexDeclaration;
 
 	class Graphics : public Module
 	{
@@ -33,7 +33,6 @@ namespace uut
 		{
 			MT_OPAQUE,
 			MT_TRANSPARENT,
-			MT_CUSTOM,
 		};
 
 		Graphics();
@@ -41,7 +40,6 @@ namespace uut
 
 		void SetProjection(ProjectionMode mode);
 		void SetMaterial(MaterialType type);
-		void SetMaterial(const SharedPtr<Material>& material);
 		void SetFillMode(FillMode mode);
 
 		void DrawPoint(const Vector3& point, const Color32& color = Color32::White);
@@ -66,31 +64,40 @@ namespace uut
 
 		void PrintText(const Vector2& position, float z, const String& text, Font* font, const Color32& color = Color32::White);
 
-		void Flush();
+		void BeginRecord();
+		void EndRecord();
+
+		void Draw();
 
 	protected:
-		SharedPtr<VertexBuffer> _vbuf;
-		SharedPtr<VertexDeclaration> _vdec;
-		SharedPtr<Material> _opaqueMat;
-		SharedPtr<Material> _transparentMat;
-		SharedPtr<Material> _customMat;
+		struct Material
+		{
+			MaterialType type;
+			SharedPtr<RenderState> renderState;
+			SharedPtr<CommandList> commandList;
+			SharedPtr<VertexBuffer> vbuffer;
+			SharedPtr<Texture2D> texture;
 
-		int _vbufCount;
+			Vertex* vertices = nullptr;
+			uint vdxIndex = 0;
+			uint offset = 0;
 
-		Topology _topology;
-		SharedPtr<Texture2D> _texture;
-		Vertex* _vertices;
-		int _vdxIndex;
-		RenderState _renderState;
+			void Reset();
+		};
+
+		uint _vbufCount;
+
+		List<SharedPtr<Material>> _materialList;
+		MaterialType _materialType;
+		FillMode _fillMode;
+
 		Matrix4 _matProj;
 
 		ProjectionMode _currentPM, _nextPM;
-		MaterialType _currentMT, _nextMT;
-		FillMode _currentFM, _nextFM;
 
-		void TestBatch(Topology topology, const SharedPtr<Texture2D>& tex, int vrtCount);
-		void DrawAll();
+		SharedPtr<Material> GetMaterial(MaterialType type, Topology topology = Topology::TrinagleList, FillMode fillMode = FillMode::Solid);
+
+		bool TestBatch(const SharedPtr<Material>& material, const SharedPtr<Texture2D>& tex, int vrtCount);
 		void UpdateProjection();
-		void UpdateMaterial();
 	};
 }

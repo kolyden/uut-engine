@@ -6,6 +6,8 @@
 
 namespace uut
 {
+	class DX9RenderState;
+
 	class DX9Renderer : public Renderer
 	{
 		UUT_MODULE(uut, DX9Renderer, Renderer)
@@ -13,14 +15,13 @@ namespace uut
 		DX9Renderer();
 		virtual ~DX9Renderer();
 
-		virtual void ResetStates() override;
-		virtual void SetState(const RenderState& state, bool force) override;
-		virtual void SetScissorRect(const IntRect& rect) override;
+		virtual SharedPtr<RenderState> CreateRenderState(const RenderStateDesc& desc) override;
+// 		virtual void SetScissorRect(const IntRect& rect) override;
 
 		virtual const RendererStatistics& GetStatistics() const override;
 
-		virtual void SetViewport(const Viewport& viewport) override;
-		virtual const Viewport& GetViewport() const override;
+// 		virtual void SetViewport(const Viewport& viewport) override;
+// 		virtual const Viewport& GetViewport() const override;
 
 		virtual bool SetTransform(RenderTransform type, const Matrix4& mat) override;
 		virtual const Matrix4& GetTransform(RenderTransform type) const override;
@@ -28,35 +29,36 @@ namespace uut
 		virtual bool BeginScene() override;
 		virtual void EndScene() override;
 
-		virtual bool SetTexture(int stage, const SharedPtr<Texture2D>& texture) override;
-		virtual bool SetVertexBuffer(const SharedPtr<VertexBuffer>& buffer, uint16_t stride, uint32_t offset) override;
-		virtual bool SetIndexBuffer(const SharedPtr<IndexBuffer>& buffer) override;
-		virtual bool SetVertexDeclaration(const SharedPtr<VertexDeclaration>& declare) override;
+		virtual void Execute(const SharedPtr<CommandList>& commandList) override;
 
-		virtual bool DrawPrimitive(Topology topology, uint32_t primitiveCount, uint32_t offset) override;
-		virtual bool DrawIndexedPrimitive(Topology topology, int baseVertexIndex, uint32_t minVertexIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount) override;
+// 		virtual bool SetTexture(int stage, const SharedPtr<Texture2D>& texture) override;
+// 		virtual bool SetVertexBuffer(const SharedPtr<VertexBuffer>& buffer, uint16_t stride, uint32_t offset) override;
+// 		virtual bool SetIndexBuffer(const SharedPtr<IndexBuffer>& buffer) override;
 
-		virtual bool Clear(const Color32& color, float z, uint32_t stencil) override;
+// 		virtual bool DrawPrimitive(Topology topology, uint32_t primitiveCount, uint32_t offset) override;
+// 		virtual bool DrawIndexedPrimitive(Topology topology, int baseVertexIndex, uint32_t minVertexIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount) override;
+
 		virtual bool Present() override;
 
 		virtual SharedPtr<Texture2D> CreateTexture(const IntVector2& size, TextureAccess access) override;
 		virtual SharedPtr<VertexBuffer> CreateVertexBuffer(uint32_t size) override;
 		virtual SharedPtr<IndexBuffer> CreateIndexBuffer(uint32_t size, bool use32) override;
-		virtual SharedPtr<VertexDeclaration> CreateVertexDeclaration(const List<VertexElement>& elements) override;
+		virtual SharedPtr<CommandList> CreateCommandList() override;
 
 		static SharedPtr<DX9Renderer> Create(const SharedPtr<Window>& window);
 
 	protected:
 		LPDIRECT3D9 _d3d;
 		LPDIRECT3DDEVICE9 _d3ddev;
-		RenderState _state;
+		SharedPtr<DX9RenderState> _state;
 		RendererStatistics _statistics;
-		Viewport _viewport;
 		Matrix4 _matView;
 		Matrix4 _matWorld;
 		Matrix4 _matProj;
 
 		static bool TestReturnCode(HRESULT ret);
+
+		void SetState(const SharedPtr<DX9RenderState>& state);
 
 		static D3DTRANSFORMSTATETYPE Convert(RenderTransform type);
 		static D3DPRIMITIVETYPE Convert(Topology topology);

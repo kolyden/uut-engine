@@ -51,7 +51,7 @@ namespace uut
 		cache->AddContainer(MakeShared<DirectoryContainer>(""));
 		cache->AddLoader(SharedPtr<Texture2DLoader>::Make());
 		cache->AddLoader(SharedPtr<BitmapFontLoader>::Make());
-		renderer->ResetStates();
+		//renderer->ResetStates();
 		OnInit();
 
 		Timer timer;

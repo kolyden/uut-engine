@@ -11,9 +11,10 @@ namespace uut
 	class Input;
 	class Renderer;
 	class VertexBuffer;
-	class VertexDeclaration;
 	class IndexBuffer;
 	class Texture2D;
+	class RenderState;
+	class CommandList;
 
 	class DebugGUI : public Module
 	{
@@ -28,12 +29,12 @@ namespace uut
 
 	protected:
 		Timer _timer;
+		SharedPtr<RenderState> _pipeline;
+		SharedPtr<CommandList> _commandList;
 		SharedPtr<VertexBuffer> _vb;
-		SharedPtr<VertexDeclaration> _vd;
 		SharedPtr<IndexBuffer> _ib;
 		SharedPtr<Texture2D> _fontTex;
 		Matrix4 _matProj;
-		RenderState _renderState;
 
 		int _vbSize;
 		int _ibSize;

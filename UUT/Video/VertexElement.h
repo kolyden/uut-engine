@@ -1,5 +1,4 @@
 #pragma once
-#include "Core/Object.h"
 #include <Core/Collections/List.h>
 
 namespace uut
@@ -32,20 +31,5 @@ namespace uut
 
 		VertexElement();
 		VertexElement(DeclareType _type, UsageType _usage, uint16_t _offset = 0);
-	};
-
-	class VertexDeclaration : public Object
-	{
-		UUT_OBJECT(uut, VertexDeclaration, Object)
-	public:
-		VertexDeclaration();
-		virtual ~VertexDeclaration();
-
-		virtual uintptr_t GetInternalHandle() const = 0;
-
-		const List<VertexElement>& GetElements() const { return _elements; }
-
-	protected:
-		List<VertexElement> _elements;
 	};
 }

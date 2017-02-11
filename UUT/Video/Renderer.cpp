@@ -1,7 +1,6 @@
 #include "Renderer.h"
 #include "Core/Windows/Window.h"
 #include <Resources/ResourceCache.h>
-#include "Material.h"
 
 namespace uut
 {
@@ -15,11 +14,6 @@ namespace uut
 
 	Renderer::~Renderer()
 	{
-	}
-
-	SharedPtr<Material> Renderer::CreateMaterial()
-	{
-		return MakeShared<Material>();
 	}
 
 	//////////////////////////////////////////////////////////////////////////////

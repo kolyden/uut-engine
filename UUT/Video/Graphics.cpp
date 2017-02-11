@@ -1,13 +1,13 @@
 #include "Graphics.h"
 #include <Core/Math/Rect.h>
 #include <Core/Math/Math.h>
+#include <Core/Reflection/ConstructorInfo.h>
 #include "Renderer.h"
 #include "Vertex.h"
 #include "VertexBuffer.h"
 #include "Mesh.h"
 #include "Font.h"
-#include <Core/Reflection/ConstructorInfo.h>
-#include "Material.h"
+#include "CommandList.h"
 
 namespace uut
 {
@@ -18,39 +18,11 @@ namespace uut
 
 	Graphics::Graphics()
 		: _vbufCount(50000)
-		, _topology(Topology::TrinagleList)
-		, _vertices(nullptr)
-		, _vdxIndex(0)
 		, _currentPM(PM_NONE)
 		, _nextPM(PM_NONE)
-		, _currentMT(MT_OPAQUE)
-		, _nextMT(MT_OPAQUE)
-		, _currentFM(FillMode::Solid)
-		, _nextFM(FillMode::Solid)
+		, _materialType(MT_OPAQUE)
+		, _fillMode(FillMode::Solid)
 	{
-		ModuleInstance<Renderer> renderer;
-		_vbuf = renderer->CreateVertexBuffer(Vertex::SIZE*_vbufCount);
-		_vdec = renderer->CreateVertexDeclaration(Vertex::DECLARE);
-
-		_opaqueMat = renderer->CreateMaterial();
-		_opaqueMat->SetTextureStage(RenderTextureStageState::Opaque);
-
-		_transparentMat = renderer->CreateMaterial();
-		_transparentMat->SetAlphaBlend(true);
-		_transparentMat->SetAlphaTest(true);
-		_transparentMat->SetTextureStage(RenderTextureStageState::Transparent);
-
-		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
-
-		_renderState.cullMode = CullMode::Disabled;
-		_renderState.fillMode = _currentFM;
-		_renderState.zwriteEnable = true;
-		_renderState.alphaRef = 1;
-		_renderState.alphaFunc = CompareFunc::GreaterEqual;
-// 		_renderState.sampler[0].minFilter = TextureFilter::Linear;
-// 		_renderState.sampler[0].magFilter = TextureFilter::Linear;
-
-		UpdateMaterial();
 		UpdateProjection();
 	}
 
@@ -65,43 +37,38 @@ namespace uut
 
 	void Graphics::SetMaterial(MaterialType type)
 	{
-		_nextMT = type;
-	}
-
-	void Graphics::SetMaterial(const SharedPtr<Material>& material)
-	{
-		if (!material)
-			return;
-
-		_nextMT = MT_CUSTOM;
-		_customMat = material;
+		_materialType = type;
 	}
 
 	void Graphics::SetFillMode(FillMode mode)
 	{
-		_nextFM = mode;
+		_fillMode = mode;
 	}
 
 	void Graphics::DrawPoint(const Vector3& point, const Color32& color /* = Color32::WHITE */)
 	{
-		TestBatch(Topology::PointList, nullptr, 1);
+		auto mat = GetMaterial(_materialType, Topology::PointList, _fillMode);
+		if (!TestBatch(mat, nullptr, 1))
+			return;
 
-		_vertices[_vdxIndex].pos = point;
-		_vertices[_vdxIndex].color = color.ToInt();
-		_vdxIndex++;
+		mat->vertices[mat->vdxIndex].pos = point;
+		mat->vertices[mat->vdxIndex].color = color.ToInt();
+		mat->vdxIndex++;
 	}
 
 	void Graphics::DrawLine(const Vector3& p0, const Vector3& p1, const Color32& color /* = Color32::WHITE */)
 	{
-		TestBatch(Topology::LineList, nullptr, 2);
+		auto mat = GetMaterial(_materialType, Topology::LineList, _fillMode);
+		if (!TestBatch(mat, nullptr, 2))
+			return;
 
-		_vertices[_vdxIndex].pos = p0;
-		_vertices[_vdxIndex].color = color.ToInt();
-		_vdxIndex++;
+		mat->vertices[mat->vdxIndex].pos = p0;
+		mat->vertices[mat->vdxIndex].color = color.ToInt();
+		mat->vdxIndex++;
 
-		_vertices[_vdxIndex].pos = p1;
-		_vertices[_vdxIndex].color = color.ToInt();
-		_vdxIndex++;
+		mat->vertices[mat->vdxIndex].pos = p1;
+		mat->vertices[mat->vdxIndex].color = color.ToInt();
+		mat->vdxIndex++;
 	}
 
 	void Graphics::DrawPolyLine(const List<Vector3>& points, const Color32& color)
@@ -109,58 +76,66 @@ namespace uut
 		if (points.Count() < 2)
 			return;
 
-		TestBatch(Topology::LineList, nullptr, (points.Count() - 1) * 2);
+		auto mat = GetMaterial(_materialType, Topology::LineList, _fillMode);
+		if (!TestBatch(mat, nullptr, (points.Count() - 1) * 2))
+			return;
 
 		const uint32_t col = color.ToInt();
 		for (uint i = 1; i < points.Count(); i++)
 		{
-			_vertices[_vdxIndex].pos = points[i - 1];
-			_vertices[_vdxIndex].color = col;
-			_vdxIndex++;
+			mat->vertices[mat->vdxIndex].pos = points[i - 1];
+			mat->vertices[mat->vdxIndex].color = col;
+			mat->vdxIndex++;
 
-			_vertices[_vdxIndex].pos = points[i];
-			_vertices[_vdxIndex].color = col;
-			_vdxIndex++;
+			mat->vertices[mat->vdxIndex].pos = points[i];
+			mat->vertices[mat->vdxIndex].color = col;
+			mat->vdxIndex++;
 		}
 	}
 
 	void Graphics::DrawSolidTriangle(const Vector3& p0, const Vector3& p1, const Vector3& p2, const Color32& color /*= Color32::WHITE*/)
 	{
-		TestBatch(Topology::TrinagleList, nullptr, 3);
+		auto mat = GetMaterial(_materialType, Topology::TrinagleList, _fillMode);
+		if (!TestBatch(mat, nullptr, 3))
+			return;
 
-		_vertices[_vdxIndex].pos = p0;
-		_vertices[_vdxIndex].color = color.ToInt();
-		_vdxIndex++;
+		mat->vertices[mat->vdxIndex].pos = p0;
+		mat->vertices[mat->vdxIndex].color = color.ToInt();
+		mat->vdxIndex++;
 
-		_vertices[_vdxIndex].pos = p1;
-		_vertices[_vdxIndex].color = color.ToInt();
-		_vdxIndex++;
+		mat->vertices[mat->vdxIndex].pos = p1;
+		mat->vertices[mat->vdxIndex].color = color.ToInt();
+		mat->vdxIndex++;
 
-		_vertices[_vdxIndex].pos = p2;
-		_vertices[_vdxIndex].color = color.ToInt();
-		_vdxIndex++;
+		mat->vertices[mat->vdxIndex].pos = p2;
+		mat->vertices[mat->vdxIndex].color = color.ToInt();
+		mat->vdxIndex++;
 	}
 
 	void Graphics::DrawTrinagle(const Vertex& v0, const Vertex& v1, const Vertex& v2, const SharedPtr<Texture2D>& texture /*= nullptr*/)
 	{
-		TestBatch(Topology::TrinagleList, texture, 3);
+		auto mat = GetMaterial(_materialType, Topology::TrinagleList, _fillMode);
+		if (!TestBatch(mat, texture, 3))
+			return;
 
-		_vertices[_vdxIndex++] = v0;
-		_vertices[_vdxIndex++] = v1;
-		_vertices[_vdxIndex++] = v2;
+		mat->vertices[mat->vdxIndex++] = v0;
+		mat->vertices[mat->vdxIndex++] = v1;
+		mat->vertices[mat->vdxIndex++] = v2;
 	}
 
 	void Graphics::DrawQuad(const Vertex& v0, const Vertex& v1, const Vertex& v2, const Vertex& v3, const SharedPtr<Texture2D>& texture /*= nullptr*/)
 	{
-		TestBatch(Topology::TrinagleList, texture, 6);
+		auto mat = GetMaterial(_materialType, Topology::TrinagleList, _fillMode);
+		if (!TestBatch(mat, texture, 6))
+			return;
 
-		_vertices[_vdxIndex++] = v0;
-		_vertices[_vdxIndex++] = v1;
-		_vertices[_vdxIndex++] = v2;
+		mat->vertices[mat->vdxIndex++] = v0;
+		mat->vertices[mat->vdxIndex++] = v1;
+		mat->vertices[mat->vdxIndex++] = v2;
 
-		_vertices[_vdxIndex++] = v3;
-		_vertices[_vdxIndex++] = v0;
-		_vertices[_vdxIndex++] = v2;
+		mat->vertices[mat->vdxIndex++] = v3;
+		mat->vertices[mat->vdxIndex++] = v0;
+		mat->vertices[mat->vdxIndex++] = v2;
 	}
 
 	void Graphics::DrawQuad(const Rect& rect, float z /* = 0.0f */, const SharedPtr<Texture2D>& texture /* = nullptr */, const Color32& color /* = Color32::WHITE */)
@@ -364,15 +339,17 @@ namespace uut
 		auto& indexes = mesh->GetIndexes();
 		const uint count = indexes.Count();
 
-		TestBatch(Topology::TrinagleList, texture, count);
+		auto mat = GetMaterial(_materialType, Topology::TrinagleList, _fillMode);
+		if (!TestBatch(mat, texture, count))
+			return;
 
 		for (uint i = 0; i < count; i++)
 		{
 			const uint32_t index = indexes[i];
-			_vertices[_vdxIndex].pos = transform.VectorTransform(vertices[index]);
-			_vertices[_vdxIndex].tex = uvs[index];
-			_vertices[_vdxIndex].color = colors[index].ToInt();
-			_vdxIndex++;
+			mat->vertices[mat->vdxIndex].pos = transform.VectorTransform(vertices[index]);
+			mat->vertices[mat->vdxIndex].tex = uvs[index];
+			mat->vertices[mat->vdxIndex].color = colors[index].ToInt();
+			mat->vdxIndex++;
 		}
 	}
 
@@ -382,10 +359,12 @@ namespace uut
 		if (count == 0)
 			return;
 
-		TestBatch(topology, texture, count);
+		auto mat = GetMaterial(_materialType, Topology::TrinagleList, _fillMode);
+		if (!TestBatch(mat, texture, count))
+			return;
 
 		for (uint i = 0; i < count; i++)
-			_vertices[_vdxIndex++] = vertexes[i];
+			mat->vertices[mat->vdxIndex++] = vertexes[i];
 	}
 
 	void Graphics::DrawIndexedPrimitive(Topology topology, const List<Vertex>& vertexes,
@@ -395,10 +374,12 @@ namespace uut
 		if (count == 0)
 			return;
 
-		TestBatch(topology, texture, count);
+		auto mat = GetMaterial(_materialType, Topology::TrinagleList, _fillMode);
+		if (!TestBatch(mat, texture, count))
+			return;
 
 		for (uint i = 0; i < count; i++)
-			_vertices[_vdxIndex++] = vertexes[indexes[i]];
+			mat->vertices[mat->vdxIndex++] = vertexes[indexes[i]];
 	}
 
 	void Graphics::PrintText(const Vector2& position, float z, const String& text, Font* font, const Color32& color)
@@ -423,81 +404,115 @@ namespace uut
 		}
 	}
 
-	void Graphics::Flush()
+	void Graphics::BeginRecord()
 	{
-		DrawAll();
+		for (auto& mat : _materialList)
+		{
+			mat->Reset();
+			mat->commandList->SetVertexBuffer(mat->vbuffer, sizeof(Vertex));
+			mat->vertices = static_cast<Vertex*>(mat->vbuffer->Lock(_vbufCount*Vertex::SIZE));
+		}
+	}
+
+	void Graphics::EndRecord()
+	{
+		for (auto& mat : _materialList)
+		{
+			if (mat->offset < mat->vdxIndex)
+			{
+				int count = mat->vdxIndex - mat->offset;
+				mat->commandList->DrawPrimitive(count, mat->offset);
+				mat->offset = mat->vdxIndex;
+			}
+
+			mat->vbuffer->Unlock();
+			mat->commandList->Close();
+		}
+	}
+
+	void Graphics::Draw()
+	{
+		ModuleInstance<Renderer> render;
+		for (auto& mat : _materialList)
+		{
+			if (mat->vdxIndex == 0)
+				continue;
+
+			render->Execute(mat->commandList);
+		}
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	void Graphics::TestBatch(Topology topology, const SharedPtr<Texture2D>& tex, int vrtCount)
+	SharedPtr<Graphics::Material> Graphics::GetMaterial(MaterialType type, Topology topology /*= Topology::TrinagleList*/, FillMode fillMode /*= FillMode::Solid*/)
 	{
-		if (_topology == topology && _texture == tex &&
-			_vdxIndex + vrtCount < _vbufCount &&
-			_currentMT == _nextMT &&
-			_currentPM == _nextPM &&
-			_currentFM == _nextFM)
-			return;
-
-		if (_vdxIndex > 0)
-			DrawAll();
-
-		_topology = topology;
-		_texture = tex;
-
-		if (_currentMT != _nextMT)
+		for (auto& mat : _materialList)
 		{
-			_currentMT = _nextMT;
-			UpdateMaterial();
+			if (mat->type != type)
+				continue;
+
+			auto& desc = mat->renderState->GetDesc();
+			if (desc.topology != topology || desc.fillMode != fillMode)
+				continue;
+
+			return mat;
 		}
 
-		if (_currentPM != _nextPM)
+		auto mat = SharedPtr<Material>::Make();
+		
+		RenderStateDesc desc;
+		desc.cullMode = CullMode::Disabled;
+		desc.fillMode = fillMode;
+		desc.zwriteEnable = true;
+		desc.alphaRef = 1;
+		desc.alphaFunc = CompareFunc::GreaterEqual;
+// 		desc.sampler[0].minFilter = TextureFilter::Linear;
+// 		desc.sampler[0].magFilter = TextureFilter::Linear;
+		desc.inputLayout = Vertex::DECLARE;
+
+		switch (type)
 		{
-			_currentPM = _nextPM;
-			UpdateProjection();
+		case uut::Graphics::MT_OPAQUE:
+			desc.textureStage[0] = RenderTextureStageState::Opaque;
+			break;
+
+		case uut::Graphics::MT_TRANSPARENT:
+			desc.alphaBlend = true;
+			desc.alphaTest = true;
+			desc.textureStage[0] = RenderTextureStageState::Transparent;
+			break;
 		}
 
-		if (_currentFM != _nextFM)
-		{
-			_currentFM = _nextFM;
-			_renderState.fillMode = _currentFM;
-		}
+		ModuleInstance<Renderer> renderer;
+
+		mat->renderState = renderer->CreateRenderState(desc);
+		mat->commandList = renderer->CreateCommandList();
+		mat->vbuffer = renderer->CreateVertexBuffer(Vertex::SIZE*_vbufCount);
+		mat->vertices = static_cast<Vertex*>(mat->vbuffer->Lock(_vbufCount*Vertex::SIZE));
+		mat->commandList->Reset(mat->renderState);
+
+		_materialList.Add(mat);
+		return mat;
 	}
 
-	void Graphics::DrawAll()
+	bool Graphics::TestBatch(const SharedPtr<Material>& material, const SharedPtr<Texture2D>& tex, int vrtCount)
 	{
-		_vbuf->Unlock();
+		if (material->vdxIndex + vrtCount >= _vbufCount)
+			return false;
 
-		auto render = Renderer::Instance();
-		render->SetState(_renderState);
-		if (_currentPM != PM_NONE)
-			render->SetTransform(RT_PROJECTION, _matProj);
-
-		render->SetTexture(0, _texture);
-		render->SetVertexBuffer(_vbuf, Vertex::SIZE);
-		render->SetVertexDeclaration(_vdec);
-
-		switch (_topology)
+		if (material->texture != tex)
 		{
-		case Topology::PointList:
-			render->DrawPrimitive(_topology, _vdxIndex);
-			break;
+			if (material->offset < material->vdxIndex)
+			{
+				int count = material->vdxIndex - material->offset;
+				material->commandList->DrawPrimitive(count, material->offset);
+				material->offset = material->vdxIndex;
+			}
 
-		case Topology::LineList:
-			render->DrawPrimitive(_topology, _vdxIndex / 2);
-			break;
-
-		case Topology::TrinagleList:
-			render->DrawPrimitive(_topology, _vdxIndex / 3);
-			break;
-
-		default:
-			break;
+			material->commandList->SetTexture(0, tex);
+			material->texture = tex;
 		}
 
-		_vdxIndex = 0;
-		_texture = nullptr;
-		_customMat = nullptr;
-		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
+		return true;
 	}
 
 	void Graphics::UpdateProjection()
@@ -516,21 +531,9 @@ namespace uut
 		}
 	}
 
-	void Graphics::UpdateMaterial()
+	//////////////////////////////////////////////////////////////////////////
+	void Graphics::Material::Reset()
 	{
-		Material* mat = nullptr;
-		switch (_currentMT)
-		{
-		case MT_OPAQUE: mat = _opaqueMat; break;
-		case MT_TRANSPARENT: mat = _transparentMat; break;
-		case MT_CUSTOM: mat = _customMat; break;
-		}
-
-		if (mat == nullptr)
-			return;
-
-		_renderState.alphaBlend = mat->IsAlphaBlend();
-		_renderState.alphaTest = mat->IsAlphaTest();
-		_renderState.textureStage[0] = mat->GetTextureStage();
+		commandList->Reset(renderState);
 	}
 }

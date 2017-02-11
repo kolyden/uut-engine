@@ -33,10 +33,10 @@ namespace uut
 
 	Ray3 FreeCamera::CastRay(const Vector2& screenPos, Renderer* renderer) const
 	{
-		if (renderer == nullptr)
+		//if (renderer == nullptr)
 			return Ray3::Zero;
 
-		auto& viewport = renderer->GetViewport();
+		/*auto& viewport = renderer->GetViewport();
 		auto& matProj = renderer->GetTransform(RT_PROJECTION);
 
 		const Vector3 v(
@@ -52,7 +52,7 @@ namespace uut
 		rayDir.Normalize();
 		Vector3 rayOrigin(m._41, m._42, m._43);
 
-		return Ray3(rayOrigin, rayDir);
+		return Ray3(rayOrigin, rayDir);*/
 	}
 
 	///////////////////////////////////////////////////////////////////////////
