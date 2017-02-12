@@ -94,7 +94,7 @@ namespace uut
 		desc.alphaTest = false;
 		desc.srcBlend = BlendFactor::SrcAlpha;
 		desc.destBlend = BlendFactor::InvSrcAlpha;
-		desc.scissorTest = true;
+// 		desc.scissorTest = true;
 		desc.inputLayout = g_declare;
 
 		desc.textureStage[0].alphaOp = TextureOperation::Modulate;
@@ -142,6 +142,9 @@ namespace uut
 	void DebugGUI::Draw() const
 	{
 		ImGui::Render();
+
+// 		auto render = Renderer::Instance();
+// 		render->Execute(_commandList);
 	}
 
 	///////////////////////////////////////////////////////////////////////////

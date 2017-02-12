@@ -81,7 +81,7 @@ namespace uut
 		, cullMode(CullMode::ConterClockwise)
 		, scissorTest(false)
 
-		, topology(Topology::TrinagleList)
+		, topology(Topology::TriangleList)
 	{
 		textureStage[0] = RenderTextureStageState::Opaque;
 	}

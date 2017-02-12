@@ -11,8 +11,9 @@
 #include <Core/Debug.h>
 
 #include <d3d9.h>
+#include <DxErr.h>
 //#pragma comment(lib, "d3dx9.lib")
-//#pragma comment(lib, "dxerr.lib")
+#pragma comment(lib, "dxerr.lib")
 
 namespace uut
 {
@@ -37,7 +38,10 @@ namespace uut
 		// Vertex declaration
 		const int count = desc.inputLayout.Count();
 		if (count == 0)
+		{
+			Debug::LogError("No input layout");
 			return nullptr;
+		}
 
 		auto declare = new D3DVERTEXELEMENT9[count + 1];
 		for (int i = 0; i < count; i++)
@@ -51,15 +55,15 @@ namespace uut
 			declare[i].UsageIndex = it.usageIndex;
 		}
 		declare[count] = D3DDECL_END();// { 0xFF, 0, D3DDECLTYPE_UNUSED, 0, 0, 0 };
-		LPDIRECT3DVERTEXDECLARATION9 data;
-		HRESULT ret = _d3ddev->CreateVertexDeclaration(declare, &data);
+		LPDIRECT3DVERTEXDECLARATION9 vd;
+		HRESULT ret = _d3ddev->CreateVertexDeclaration(declare, &vd);
 		delete[] declare;
 		if (!TestReturnCode(ret))
 			return nullptr;
 
 		auto state = SharedPtr<DX9RenderState>::Make();
 		state->_desc = desc;
-		state->_data = data;
+		state->_vd = vd;
 
 		return state;
 	}
@@ -106,115 +110,115 @@ namespace uut
 		return false;
 	}
 
-	void DX9Renderer::SetState(const SharedPtr<DX9RenderState>& state)
+	void DX9Renderer::SetState(const RenderStateDesc& state, bool force)
 	{
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::zbuffer, false))
-			_d3ddev->SetRenderState(D3DRS_ZENABLE, Convert(_state->GetDesc().zbuffer));
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::zwriteEnable, false))
-			_d3ddev->SetRenderState(D3DRS_ZWRITEENABLE, _state->GetDesc().zwriteEnable);
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::zfunc, false))
-			_d3ddev->SetRenderState(D3DRS_ZFUNC, Convert(_state->GetDesc().zfunc));
+		const RenderStateDesc& newDesc = state;
+		const RenderStateDesc& oldDesc = _state;
 
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::alphaBlend, false))
-			_d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, _state->GetDesc().alphaBlend);
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::alphaTest, false))
-			_d3ddev->SetRenderState(D3DRS_ALPHATESTENABLE, _state->GetDesc().alphaTest);
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::alphaRef, false))
-			_d3ddev->SetRenderState(D3DRS_ALPHAREF, _state->GetDesc().alphaRef);
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::alphaFunc, false))
-			_d3ddev->SetRenderState(D3DRS_ALPHAFUNC, Convert(_state->GetDesc().alphaFunc));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::zbuffer, force))
+			_d3ddev->SetRenderState(D3DRS_ZENABLE, Convert(oldDesc.zbuffer));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::zwriteEnable, force))
+			_d3ddev->SetRenderState(D3DRS_ZWRITEENABLE, oldDesc.zwriteEnable);
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::zfunc, force))
+			_d3ddev->SetRenderState(D3DRS_ZFUNC, Convert(oldDesc.zfunc));
 
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::blendOp, false))
-			_d3ddev->SetRenderState(D3DRS_BLENDOP, Convert(_state->GetDesc().blendOp));
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::srcBlend, false))
-			_d3ddev->SetRenderState(D3DRS_SRCBLEND, Convert(_state->GetDesc().srcBlend));
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::destBlend, false))
-			_d3ddev->SetRenderState(D3DRS_DESTBLEND, Convert(_state->GetDesc().destBlend));
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::blendOpAlpha, false))
-			_d3ddev->SetRenderState(D3DRS_BLENDOPALPHA, Convert(_state->GetDesc().blendOpAlpha));
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::srcBlendAlpha, false))
-			_d3ddev->SetRenderState(D3DRS_SRCBLENDALPHA, Convert(_state->GetDesc().srcBlendAlpha));
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::destBlendAlpha, false))
-			_d3ddev->SetRenderState(D3DRS_DESTBLENDALPHA, Convert(_state->GetDesc().destBlendAlpha));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::alphaBlend, force))
+			_d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, oldDesc.alphaBlend);
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::alphaTest, force))
+			_d3ddev->SetRenderState(D3DRS_ALPHATESTENABLE, oldDesc.alphaTest);
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::alphaRef, force))
+			_d3ddev->SetRenderState(D3DRS_ALPHAREF, oldDesc.alphaRef);
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::alphaFunc, force))
+			_d3ddev->SetRenderState(D3DRS_ALPHAFUNC, Convert(oldDesc.alphaFunc));
 
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::lightning, false))
-			_d3ddev->SetRenderState(D3DRS_LIGHTING, _state->GetDesc().lightning);
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::ambientColor, false))
-			_d3ddev->SetRenderState(D3DRS_AMBIENT, _state->GetDesc().ambientColor.ToInt());
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::blendOp, force))
+			_d3ddev->SetRenderState(D3DRS_BLENDOP, Convert(oldDesc.blendOp));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::srcBlend, force))
+			_d3ddev->SetRenderState(D3DRS_SRCBLEND, Convert(oldDesc.srcBlend));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::destBlend, force))
+			_d3ddev->SetRenderState(D3DRS_DESTBLEND, Convert(oldDesc.destBlend));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::blendOpAlpha, force))
+			_d3ddev->SetRenderState(D3DRS_BLENDOPALPHA, Convert(oldDesc.blendOpAlpha));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::srcBlendAlpha, force))
+			_d3ddev->SetRenderState(D3DRS_SRCBLENDALPHA, Convert(oldDesc.srcBlendAlpha));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::destBlendAlpha, force))
+			_d3ddev->SetRenderState(D3DRS_DESTBLENDALPHA, Convert(oldDesc.destBlendAlpha));
 
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::fogEnabled, false))
-			_d3ddev->SetRenderState(D3DRS_FOGENABLE, _state->GetDesc().fogEnabled);
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::fogColor, false))
-			_d3ddev->SetRenderState(D3DRS_FOGCOLOR, _state->GetDesc().fogColor.ToInt());
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::fogMode, false))
-			_d3ddev->SetRenderState(D3DRS_FOGTABLEMODE, Convert(_state->GetDesc().fogMode));
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::fogDensity, false))
-			_d3ddev->SetRenderState(D3DRS_FOGDENSITY, *((DWORD*)(&_state->GetDesc().fogDensity)));
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::fogStart, false))
-			_d3ddev->SetRenderState(D3DRS_FOGSTART, *((DWORD*)(&_state->GetDesc().fogStart)));
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::fogEnd, false))
-			_d3ddev->SetRenderState(D3DRS_FOGEND, *((DWORD*)(&_state->GetDesc().fogEnd)));
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::fogRangeEnabled, false))
-			_d3ddev->SetRenderState(D3DRS_RANGEFOGENABLE, _state->GetDesc().fogRangeEnabled);
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::lightning, force))
+			_d3ddev->SetRenderState(D3DRS_LIGHTING, oldDesc.lightning);
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::ambientColor, force))
+			_d3ddev->SetRenderState(D3DRS_AMBIENT, oldDesc.ambientColor.ToInt());
 
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::fillMode, false))
-			_d3ddev->SetRenderState(D3DRS_FILLMODE, Convert(_state->GetDesc().fillMode));
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::shadeMode, false))
-			_d3ddev->SetRenderState(D3DRS_SHADEMODE, Convert(_state->GetDesc().shadeMode));
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::cullMode, false))
-			_d3ddev->SetRenderState(D3DRS_CULLMODE, Convert(_state->GetDesc().cullMode));
-		if (CheckState(_state->GetDesc(), state->GetDesc(), &RenderStateDesc::scissorTest, false))
-			_d3ddev->SetRenderState(D3DRS_SCISSORTESTENABLE, _state->GetDesc().scissorTest);
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogEnabled, force))
+			_d3ddev->SetRenderState(D3DRS_FOGENABLE, oldDesc.fogEnabled);
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogColor, force))
+			_d3ddev->SetRenderState(D3DRS_FOGCOLOR, oldDesc.fogColor.ToInt());
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogMode, force))
+			_d3ddev->SetRenderState(D3DRS_FOGTABLEMODE, Convert(oldDesc.fogMode));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogDensity, force))
+			_d3ddev->SetRenderState(D3DRS_FOGDENSITY, *((DWORD*)(&oldDesc.fogDensity)));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogStart, force))
+			_d3ddev->SetRenderState(D3DRS_FOGSTART, *((DWORD*)(&oldDesc.fogStart)));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogEnd, force))
+			_d3ddev->SetRenderState(D3DRS_FOGEND, *((DWORD*)(&oldDesc.fogEnd)));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogRangeEnabled, force))
+			_d3ddev->SetRenderState(D3DRS_RANGEFOGENABLE, oldDesc.fogRangeEnabled);
+
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fillMode, force))
+			_d3ddev->SetRenderState(D3DRS_FILLMODE, Convert(oldDesc.fillMode));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::shadeMode, force))
+			_d3ddev->SetRenderState(D3DRS_SHADEMODE, Convert(oldDesc.shadeMode));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::cullMode, force))
+			_d3ddev->SetRenderState(D3DRS_CULLMODE, Convert(oldDesc.cullMode));
+		if (CheckState(oldDesc, newDesc, &RenderStateDesc::scissorTest, force))
+			_d3ddev->SetRenderState(D3DRS_SCISSORTESTENABLE, oldDesc.scissorTest);
 
 		for (int i = 0; i < RenderStateDesc::TEXTURE_STAGE_COUNT; i++)
 		{
-			if (CheckState(_state->GetDesc().textureStage[i], state->GetDesc().textureStage[i], &RenderTextureStageState::colorOp, false))
-				_d3ddev->SetTextureStageState(i, D3DTSS_COLOROP, Convert(_state->GetDesc().textureStage[i].colorOp));
+			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::colorOp, force))
+				_d3ddev->SetTextureStageState(i, D3DTSS_COLOROP, Convert(oldDesc.textureStage[i].colorOp));
 
-			if (CheckState(_state->GetDesc().textureStage[i], state->GetDesc().textureStage[i], &RenderTextureStageState::colorArg1, false))
-				_d3ddev->SetTextureStageState(i, D3DTSS_COLORARG1, Convert(_state->GetDesc().textureStage[i].colorArg1));
+			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::colorArg1, force))
+				_d3ddev->SetTextureStageState(i, D3DTSS_COLORARG1, Convert(oldDesc.textureStage[i].colorArg1));
 
-			if (CheckState(_state->GetDesc().textureStage[i], state->GetDesc().textureStage[i], &RenderTextureStageState::colorArg2, false))
-				_d3ddev->SetTextureStageState(i, D3DTSS_COLORARG2, Convert(_state->GetDesc().textureStage[i].colorArg2));
+			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::colorArg2, force))
+				_d3ddev->SetTextureStageState(i, D3DTSS_COLORARG2, Convert(oldDesc.textureStage[i].colorArg2));
 
-			if (CheckState(_state->GetDesc().textureStage[i], state->GetDesc().textureStage[i], &RenderTextureStageState::alphaOp, false))
-				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAOP, Convert(_state->GetDesc().textureStage[i].alphaOp));
+			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::alphaOp, force))
+				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAOP, Convert(oldDesc.textureStage[i].alphaOp));
 
-			if (CheckState(_state->GetDesc().textureStage[i], state->GetDesc().textureStage[i], &RenderTextureStageState::alphaArg1, false))
-				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAARG1, Convert(_state->GetDesc().textureStage[i].alphaArg1));
+			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::alphaArg1, force))
+				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAARG1, Convert(oldDesc.textureStage[i].alphaArg1));
 
-			if (CheckState(_state->GetDesc().textureStage[i], state->GetDesc().textureStage[i], &RenderTextureStageState::alphaArg2, false))
-				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAARG2, Convert(_state->GetDesc().textureStage[i].alphaArg2));
+			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::alphaArg2, force))
+				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAARG2, Convert(oldDesc.textureStage[i].alphaArg2));
 		}
 
 		for (int i = 0; i < RenderStateDesc::SAMPLER_COUNT; i++)
 		{
-			if (CheckState(_state->GetDesc().sampler[i], state->GetDesc().sampler[i], &RenderSamplerState::addressu, false))
-				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSU, Convert(_state->GetDesc().sampler[i].addressu));
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::addressu, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSU, Convert(oldDesc.sampler[i].addressu));
 
-			if (CheckState(_state->GetDesc().sampler[i], state->GetDesc().sampler[i], &RenderSamplerState::addressv, false))
-				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSV, Convert(_state->GetDesc().sampler[i].addressv));
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::addressv, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSV, Convert(oldDesc.sampler[i].addressv));
 
-			if (CheckState(_state->GetDesc().sampler[i], state->GetDesc().sampler[i], &RenderSamplerState::addressw, false))
-				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSW, Convert(_state->GetDesc().sampler[i].addressw));
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::addressw, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSW, Convert(oldDesc.sampler[i].addressw));
 
-			if (CheckState(_state->GetDesc().sampler[i], state->GetDesc().sampler[i], &RenderSamplerState::borderColor, false))
-				_d3ddev->SetSamplerState(i, D3DSAMP_BORDERCOLOR, _state->GetDesc().sampler[i].borderColor.ToInt());
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::borderColor, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_BORDERCOLOR, oldDesc.sampler[i].borderColor.ToInt());
 
-			if (CheckState(_state->GetDesc().sampler[i], state->GetDesc().sampler[i], &RenderSamplerState::minFilter, false))
-				_d3ddev->SetSamplerState(i, D3DSAMP_MINFILTER, Convert(_state->GetDesc().sampler[i].minFilter));
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::minFilter, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_MINFILTER, Convert(oldDesc.sampler[i].minFilter));
 
-			if (CheckState(_state->GetDesc().sampler[i], state->GetDesc().sampler[i], &RenderSamplerState::magFilter, false))
-				_d3ddev->SetSamplerState(i, D3DSAMP_MAGFILTER, Convert(_state->GetDesc().sampler[i].magFilter));
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::magFilter, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_MAGFILTER, Convert(oldDesc.sampler[i].magFilter));
 
-			if (CheckState(_state->GetDesc().sampler[i], state->GetDesc().sampler[i], &RenderSamplerState::mipFilter, false))
-				_d3ddev->SetSamplerState(i, D3DSAMP_MIPFILTER, Convert(_state->GetDesc().sampler[i].mipFilter));
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::mipFilter, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_MIPFILTER, Convert(oldDesc.sampler[i].mipFilter));
 		}
 
-		_state = DynamicCast<DX9RenderState>(state);
-
-		HRESULT ret = _d3ddev->SetVertexDeclaration(_state->_data);
-		TestReturnCode(ret);
+		_state = state;
 	}
 
 // 	void DX9Renderer::SetScissorRect(const IntRect& rect)
@@ -459,16 +463,21 @@ namespace uut
 			return nullptr;
 		}
 
+		renderer->SetState(renderer->_state, true);
 		return renderer;
 	}
 
 	void DX9Renderer::Execute(const SharedPtr<CommandList>& commandList)
 	{
-		if (!commandList  || commandList->GetType() == DX9CommandList::GetTypeStatic())
+		if (!commandList  || commandList->GetType() != DX9CommandList::GetTypeStatic())
 			return;
 
 		auto dx9cmdList = DynamicCast<DX9CommandList>(commandList);
-		SetState(dx9cmdList->_state);
+		auto state = dx9cmdList->_state;
+		SetState(state->GetDesc(), false);
+
+		HRESULT ret = _d3ddev->SetVertexDeclaration(state->_vd);
+		TestReturnCode(ret);
 
 		auto& rect = dx9cmdList->_scissorRect;
 		const RECT r{ rect.GetLeft(),rect.GetTop(),rect.GetRight(),rect.GetBottom() };
@@ -512,12 +521,16 @@ namespace uut
 		if (code == D3D_OK)
 			return true;
 
-		const int size = 256;
-		char buf[size];
+		auto str = DXGetErrorStringA(code);
+		Debug::LogError("D3D9 Error Code %d - \"%s\"", code, str);
+		return false;
 
-		DWORD flags = FORMAT_MESSAGE_FROM_SYSTEM;
-		DWORD ret = ::FormatMessageA(flags, NULL, code, 0, (LPSTR)&buf, size, NULL);
-		if (FAILED(ret) || buf == nullptr)
+		const int size = 1024;
+		static TCHAR buf[size];
+
+		const DWORD flags = FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS;
+		const DWORD ret = ::FormatMessage(flags, NULL, ERROR_BAD_EXE_FORMAT, 0, buf, size, NULL);
+		if (FAILED(ret))
 		{
 			Debug::LogError("D3D9 Error Code %d", code);
 			return false;
@@ -549,9 +562,9 @@ namespace uut
 		case Topology::PointList: return D3DPT_POINTLIST;
 		case Topology::LineList: return D3DPT_LINELIST;
 		case Topology::LineStrip: return D3DPT_LINESTRIP;
-		case Topology::TrinagleList: return D3DPT_TRIANGLELIST;
-		case Topology::TrinagleStrip: return D3DPT_TRIANGLESTRIP;
-		case Topology::TrinagleFan: return D3DPT_TRIANGLEFAN;
+		case Topology::TriangleList: return D3DPT_TRIANGLELIST;
+		case Topology::TriangleStrip: return D3DPT_TRIANGLESTRIP;
+		case Topology::TriangleFan: return D3DPT_TRIANGLEFAN;
 		}
 
 		return D3DPT_POINTLIST;

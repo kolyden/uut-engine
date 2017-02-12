@@ -23,10 +23,10 @@ namespace uut
 
 	Color32::Color32(const Color& color)
 		: ColorBase<uint8_t>(
-			Math::RoundToInt(color.a * 255),
 			Math::RoundToInt(color.r * 255),
 			Math::RoundToInt(color.g * 255),
-			Math::RoundToInt(color.b * 255))
+			Math::RoundToInt(color.b * 255),
+			Math::RoundToInt(color.a * 255))
 	{
 	}
 

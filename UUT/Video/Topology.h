@@ -7,8 +7,8 @@ namespace uut
 		PointList,
 		LineList,
 		LineStrip,
-		TrinagleList,
-		TrinagleStrip,
-		TrinagleFan,
+		TriangleList,
+		TriangleStrip,
+		TriangleFan,
 	};
 }

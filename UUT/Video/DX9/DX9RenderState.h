@@ -11,7 +11,7 @@ namespace uut
 		DX9RenderState();
 		virtual ~DX9RenderState();
 
-		LPDIRECT3DVERTEXDECLARATION9 _data;
+		LPDIRECT3DVERTEXDECLARATION9 _vd;
 
 		friend class DX9Renderer;
 	};

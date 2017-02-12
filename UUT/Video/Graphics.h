@@ -41,6 +41,7 @@ namespace uut
 		void SetProjection(ProjectionMode mode);
 		void SetMaterial(MaterialType type);
 		void SetFillMode(FillMode mode);
+		void Clear(const Color32& color = Color32::White, float z = 1.0f, uint32_t stencil = 0);
 
 		void DrawPoint(const Vector3& point, const Color32& color = Color32::White);
 		void DrawLine(const Vector3& p0, const Vector3& p1, const Color32& color = Color32::White);
@@ -73,6 +74,7 @@ namespace uut
 		struct Material
 		{
 			MaterialType type;
+			ProjectionMode projection;
 			SharedPtr<RenderState> renderState;
 			SharedPtr<CommandList> commandList;
 			SharedPtr<VertexBuffer> vbuffer;
@@ -85,19 +87,18 @@ namespace uut
 			void Reset();
 		};
 
+		MaterialType _nextMT;
+		FillMode _nextFM;
+		ProjectionMode _nextPM;
+
 		uint _vbufCount;
 
 		List<SharedPtr<Material>> _materialList;
-		MaterialType _materialType;
-		FillMode _fillMode;
+		List<SharedPtr<Material>> _freeMaterials;
 
-		Matrix4 _matProj;
-
-		ProjectionMode _currentPM, _nextPM;
-
-		SharedPtr<Material> GetMaterial(MaterialType type, Topology topology = Topology::TrinagleList, FillMode fillMode = FillMode::Solid);
+		SharedPtr<Material> GetMaterial(Topology topology);
 
 		bool TestBatch(const SharedPtr<Material>& material, const SharedPtr<Texture2D>& tex, int vrtCount);
-		void UpdateProjection();
+		static int GetPrimitiveCount(const SharedPtr<Material>& material, int vertexCount);
 	};
 }

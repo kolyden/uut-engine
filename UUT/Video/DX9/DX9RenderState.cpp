@@ -6,12 +6,12 @@ namespace uut
 	{}
 
 	DX9RenderState::DX9RenderState()
-		: _data(nullptr)
+		: _vd(nullptr)
 	{}
 
 	DX9RenderState::~DX9RenderState()
 	{
-		if (_data)
-			_data->Release();
+		if (_vd)
+			_vd->Release();
 	}
 }

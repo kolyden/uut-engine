@@ -156,31 +156,31 @@ namespace uut
 			// cache->Load<Texture2D>("rogueliketiles.png");
 		_font = cache->Load<Font>("Consolas.fnt");
 		_model = cache->Load<Quake1Model>("player.mdl");
-		_level = cache->Load<BSPLevel>("start.bsp");
+// 		_level = cache->Load<BSPLevel>("start.bsp");
 
 		_camera = SharedPtr<FreeCamera>::Make();
 		_camera->SetPosition(Vector3(8.5f, 10, -50));
 
-		auto json = cache->Load<JsonFile>("test.json");
-		if (json)
-		{
-			auto root = json->GetRoot();
-			float f = root["pi"].ToFloat();
-			String str = root["name"].ToString();
+// 		auto json = cache->Load<JsonFile>("test.json");
+// 		if (json)
+// 		{
+// 			auto root = json->GetRoot();
+// 			float f = root["pi"].ToFloat();
+// 			String str = root["name"].ToString();
+// 
+// 			int a = 0;
+// 			a++;
+// 		}
 
-			int a = 0;
-			a++;
-		}
-
-		auto yaml = SharedPtr<YamlFile>::Make();
-		if (yaml)
-		{
-			auto root = yaml->AddMapping();
-			root.AppendMapping("i", 12345);
-			root.AppendMapping("f", 12.345f);
-			root.AppendMapping("vec", Vector2(12, 42));
-			cache->Save(yaml, "test.yaml");
-		}
+// 		auto yaml = SharedPtr<YamlFile>::Make();
+// 		if (yaml)
+// 		{
+// 			auto root = yaml->AddMapping();
+// 			root.AppendMapping("i", 12345);
+// 			root.AppendMapping("f", 12.345f);
+// 			root.AppendMapping("vec", Vector2(12, 42));
+// 			cache->Save(yaml, "test.yaml");
+// 		}
 
 		Variant var1(Vector2(12.111f, 45.6789f));
 		Variant var2(_font);
@@ -311,9 +311,10 @@ namespace uut
 // 			_plasma->Apply(_texture,
 // 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10))
 // 			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
+			graphics->BeginRecord();
 			graphics->SetMaterial(Graphics::MT_OPAQUE);
 			graphics->SetProjection(Graphics::PM_3D);
-			graphics->BeginRecord();
+			graphics->Clear(Color32(114, 144, 154));
 
 			Matrix4 oldMat = renderer->GetTransform(RT_VIEW);
 			auto& cameraMat = _camera->UpdateViewMatrix();

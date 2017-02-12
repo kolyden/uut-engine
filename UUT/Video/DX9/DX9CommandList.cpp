@@ -11,9 +11,9 @@ namespace uut
 		case Topology::PointList: return D3DPT_POINTLIST;
 		case Topology::LineList: return D3DPT_LINELIST;
 		case Topology::LineStrip: return D3DPT_LINESTRIP;
-		case Topology::TrinagleList: return D3DPT_TRIANGLELIST;
-		case Topology::TrinagleStrip: return D3DPT_TRIANGLESTRIP;
-		case Topology::TrinagleFan: return D3DPT_TRIANGLEFAN;
+		case Topology::TriangleList: return D3DPT_TRIANGLELIST;
+		case Topology::TriangleStrip: return D3DPT_TRIANGLESTRIP;
+		case Topology::TriangleFan: return D3DPT_TRIANGLEFAN;
 		}
 
 		return D3DPT_POINTLIST;

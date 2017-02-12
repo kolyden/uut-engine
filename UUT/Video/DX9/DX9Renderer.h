@@ -50,7 +50,7 @@ namespace uut
 	protected:
 		LPDIRECT3D9 _d3d;
 		LPDIRECT3DDEVICE9 _d3ddev;
-		SharedPtr<DX9RenderState> _state;
+		RenderStateDesc _state;
 		RendererStatistics _statistics;
 		Matrix4 _matView;
 		Matrix4 _matWorld;
@@ -58,7 +58,7 @@ namespace uut
 
 		static bool TestReturnCode(HRESULT ret);
 
-		void SetState(const SharedPtr<DX9RenderState>& state);
+		void SetState(const RenderStateDesc& state, bool force);
 
 		static D3DTRANSFORMSTATETYPE Convert(RenderTransform type);
 		static D3DPRIMITIVETYPE Convert(Topology topology);
