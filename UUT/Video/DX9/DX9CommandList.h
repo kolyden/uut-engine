@@ -20,6 +20,9 @@ namespace uut
 		virtual void SetViewport(const Viewport& viewport) override;
 		virtual void SetScissorRect(const IntRect& rect) override;
 
+		virtual void SetTopology(Topology topology) override;
+		virtual Topology GetTopology() const override;
+
 		virtual bool SetTexture(int stage, const SharedPtr<Texture2D>& texture) override;
 		virtual bool SetVertexBuffer(const SharedPtr<VertexBuffer>& buffer, uint16_t stride, uint32_t offset = 0) override;
 		virtual bool SetIndexBuffer(const SharedPtr<IndexBuffer>& buffer) override;
@@ -32,6 +35,7 @@ namespace uut
 		IntRect _scissorRect;
 		List<SharedPtr<IDX9Command>> _commands;
 		SharedPtr<DX9RenderState> _state;
+		Topology _topology;
 
 		friend class DX9Renderer;
 	};

@@ -143,8 +143,8 @@ namespace uut
 	{
 		ImGui::Render();
 
-// 		auto render = Renderer::Instance();
-// 		render->Execute(_commandList);
+		auto render = Renderer::Instance();
+		render->Execute(_commandList);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -193,6 +193,7 @@ namespace uut
 		_commandList->Reset(_pipeline);
 		_commandList->SetVertexBuffer(_vb, sizeof(UIVertex));
 		_commandList->SetIndexBuffer(_ib);
+		_commandList->SetTopology(Topology::TriangleList);
 
 		// Render command lists
 		int vtx_offset = 0;

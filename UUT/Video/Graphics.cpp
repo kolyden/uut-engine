@@ -464,26 +464,33 @@ namespace uut
 	///////////////////////////////////////////////////////////////////////////
 	SharedPtr<Graphics::Material> Graphics::GetMaterial(Topology topology /*= Topology::TrinagleList*/)
 	{
-		SharedPtr<Material> mat;
-
 		if (_materialList.Count() > 0)
 		{
 			auto prevMat = _materialList.Last();
 			auto& desc = prevMat->renderState->GetDesc();
 
-			if (prevMat->type == _nextMT && prevMat->projection == _nextPM &&
-				desc.topology == topology && desc.fillMode == _nextFM)
-				mat = prevMat;
+			if (prevMat->type == _nextMT && prevMat->projection == _nextPM
+				&& desc.fillMode == _nextFM)
+			{
+				if (prevMat->commandList->GetTopology() != topology)
+					prevMat->commandList->SetTopology(topology);
+
+				return prevMat;
+			}
 		}
 
+		SharedPtr<Material> mat;
 		if (!mat)
 		{
 			for (auto freeMat : _freeMaterials)
 			{
 				auto& desc = freeMat->renderState->GetDesc();
-				if (freeMat->type == _nextMT && freeMat->projection == _nextPM &&
-					desc.topology == topology && desc.fillMode == _nextFM)
+				if (freeMat->type == _nextMT && freeMat->projection == _nextPM
+					&& desc.fillMode == _nextFM)
+				{
 					mat = freeMat;
+					break;
+				}
 			}
 		}
 
@@ -493,14 +500,13 @@ namespace uut
 
 			RenderStateDesc desc;
 			desc.fillMode = _nextFM;
-			desc.topology = topology;
 			desc.cullMode = CullMode::Disabled;
 			desc.zwriteEnable = true;
 			desc.alphaRef = 1;
 			desc.alphaFunc = CompareFunc::GreaterEqual;
 			desc.inputLayout = Vertex::DECLARE;
-			// 		desc.sampler[0].minFilter = TextureFilter::Linear;
-			// 		desc.sampler[0].magFilter = TextureFilter::Linear;
+// 			desc.sampler[0].minFilter = TextureFilter::Linear;
+// 			desc.sampler[0].magFilter = TextureFilter::Linear;
 
 			switch (_nextMT)
 			{
@@ -530,6 +536,9 @@ namespace uut
 		mat->commandList->Reset(mat->renderState);
 		mat->commandList->SetVertexBuffer(mat->vbuffer, sizeof(Vertex));
 
+		if (mat->commandList->GetTopology() != topology)
+			mat->commandList->SetTopology(topology);
+
 		_materialList.Add(mat);
 		return mat;
 	}
@@ -557,7 +566,7 @@ namespace uut
 
 	int Graphics::GetPrimitiveCount(const SharedPtr<Material>& material, int vertexCount)
 	{
-		switch (material->renderState->GetDesc().topology)
+		switch (material->commandList->GetTopology())
 		{
 		case uut::Topology::PointList:
 			return vertexCount;

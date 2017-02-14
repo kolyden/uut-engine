@@ -11,9 +11,9 @@
 #include <Core/Debug.h>
 
 #include <d3d9.h>
-#include <DxErr.h>
+//#include <DxErr.h>
 //#pragma comment(lib, "d3dx9.lib")
-#pragma comment(lib, "dxerr.lib")
+//#pragma comment(lib, "dxerr.lib")
 
 namespace uut
 {
@@ -68,21 +68,6 @@ namespace uut
 		return state;
 	}
 
-// 	void DX9Renderer::ResetStates()
-// 	{
-// 		SetState(_state, true);
-// 
-// 		_matWorld = Matrix4::Identity;
-// 		_matView = Matrix4::Identity;
-// 		_matProj = Matrix4::Perspective(
-// 			static_cast<float>(_screenSize.x),
-// 			static_cast<float>(_screenSize.y),
-// 			0.001f, 1000.0f);
-// 		_d3ddev->SetTransform(D3DTS_WORLD, (D3DMATRIX*)&_matWorld);
-// 		_d3ddev->SetTransform(D3DTS_VIEW, (D3DMATRIX*)&_matView);
-// 		_d3ddev->SetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&_matProj);
-// 	}
-
 	template<typename T>
 	static bool CheckState(const RenderStateDesc& state, const RenderStateDesc& check, T (RenderStateDesc::*var), bool force)
 	{
@@ -110,7 +95,7 @@ namespace uut
 		return false;
 	}
 
-	void DX9Renderer::SetState(const RenderStateDesc& state, bool force)
+	void DX9Renderer::SetPipeline(const RenderStateDesc& state, bool force)
 	{
 		const RenderStateDesc& newDesc = state;
 		const RenderStateDesc& oldDesc = _state;
@@ -221,12 +206,6 @@ namespace uut
 		_state = state;
 	}
 
-// 	void DX9Renderer::SetScissorRect(const IntRect& rect)
-// 	{
-// 		const RECT r{ rect.GetLeft(),rect.GetTop(),rect.GetRight(),rect.GetBottom() };
-// 		_d3ddev->SetScissorRect(&r);
-// 	}
-
 	const RendererStatistics& DX9Renderer::GetStatistics() const
 	{
 		return _statistics;
@@ -242,11 +221,6 @@ namespace uut
 // 			_viewport.minZ, _viewport.maxZ 
 // 		};
 // 		_d3ddev->SetViewport(&vp);
-// 	}
-
-// 	const Viewport& DX9Renderer::GetViewport() const
-// 	{
-// 		return _viewport;
 // 	}
 
 	bool DX9Renderer::SetTransform(RenderTransform type, const Matrix4& mat)
@@ -276,6 +250,19 @@ namespace uut
 	bool DX9Renderer::BeginScene()
 	{
 		HRESULT ret = _d3ddev->BeginScene();
+
+		SetPipeline(_state, true);
+
+		_matWorld = Matrix4::Identity;
+		_matView = Matrix4::Identity;
+		_matProj = Matrix4::Perspective(
+			static_cast<float>(_screenSize.x),
+			static_cast<float>(_screenSize.y),
+			0.001f, 1000.0f);
+		_d3ddev->SetTransform(D3DTS_WORLD, (D3DMATRIX*)&_matWorld);
+		_d3ddev->SetTransform(D3DTS_VIEW, (D3DMATRIX*)&_matView);
+		_d3ddev->SetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&_matProj);
+
 		return TestReturnCode(ret);
 	}
 
@@ -283,73 +270,6 @@ namespace uut
 	{
 		_d3ddev->EndScene();
 	}
-
-// 	bool DX9Renderer::SetTexture(int stage, const SharedPtr<Texture2D>& texture)
-// 	{
-// 		HRESULT ret;
-// 		if (texture == nullptr)
-// 			ret = _d3ddev->SetTexture(stage, nullptr);
-// 		else
-// 		{
-// 			auto data = texture ? reinterpret_cast<LPDIRECT3DTEXTURE9>(texture->GetNativeHandle()) : nullptr;
-// 			ret = _d3ddev->SetTexture(stage, data);
-// 		}
-// 	
-// 		return TestReturnCode(ret);
-// 	}
-
-// 	bool DX9Renderer::SetVertexBuffer(const SharedPtr<VertexBuffer>& buffer, uint16_t stride, uint32_t offset)
-// 	{
-// 		auto data = buffer ? reinterpret_cast<LPDIRECT3DVERTEXBUFFER9>(buffer->GetInternalHandle()) : nullptr;
-// 		HRESULT ret = _d3ddev->SetStreamSource(0, data, offset, stride);
-// 		return TestReturnCode(ret);
-// 	}
-
-// 	bool DX9Renderer::SetIndexBuffer(const SharedPtr<IndexBuffer>& buffer)
-// 	{
-// 		auto data = buffer ? reinterpret_cast<LPDIRECT3DINDEXBUFFER9>(buffer->GetInternalHandle()) : nullptr;
-// 		HRESULT ret = _d3ddev->SetIndices(data);
-// 		return TestReturnCode(ret);
-// 	}
-
-// 	bool DX9Renderer::DrawPrimitive(Topology topology, uint32_t primitiveCount, uint32_t offset)
-// 	{
-// 		_statistics.drawCall++;
-// 		_statistics.verticesCount += 0;
-// 
-// 		HRESULT ret = _d3ddev->DrawPrimitive(Convert(topology), offset, primitiveCount);
-// 		return TestReturnCode(ret);
-// 	}
-
-// 	bool DX9Renderer::DrawIndexedPrimitive(Topology topology, int BaseVertexIndex, uint32_t MinVertexIndex, uint32_t NumVertices, uint32_t startIndex, uint32_t primitiveCount)
-// 	{
-// 		_statistics.drawCall++;
-// 		_statistics.verticesCount += 0;
-// 
-// 		HRESULT ret = _d3ddev->DrawIndexedPrimitive(Convert(topology),
-// 			BaseVertexIndex, MinVertexIndex, NumVertices, startIndex, primitiveCount);
-// 		return TestReturnCode(ret);
-// 	}
-
-// 	bool DX9Renderer::Clear(const Color32& color, float z, uint32_t stencil)
-// 	{
-// 		_statistics.drawCall = 0;
-// 		_statistics.verticesCount = 0;
-// 
-// 		bool change = false;
-// 		if (_state->GetDesc().scissorTest)
-// 		{
-// 			change = true;
-// 			_d3ddev->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
-// 		}
-// 
-// 		HRESULT ret = _d3ddev->Clear(0, nullptr,
-// 			D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, color.ToInt(), z, stencil);
-// 
-// 		if (change)
-// 			_d3ddev->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
-// 		return TestReturnCode(ret);
-// 	}
 
 	bool DX9Renderer::Present()
 	{
@@ -463,7 +383,7 @@ namespace uut
 			return nullptr;
 		}
 
-		renderer->SetState(renderer->_state, true);
+		renderer->SetPipeline(renderer->_state, true);
 		return renderer;
 	}
 
@@ -474,7 +394,7 @@ namespace uut
 
 		auto dx9cmdList = DynamicCast<DX9CommandList>(commandList);
 		auto state = dx9cmdList->_state;
-		SetState(state->GetDesc(), false);
+		SetPipeline(state->GetDesc(), false);
 
 		HRESULT ret = _d3ddev->SetVertexDeclaration(state->_vd);
 		TestReturnCode(ret);
@@ -521,9 +441,9 @@ namespace uut
 		if (code == D3D_OK)
 			return true;
 
-		auto str = DXGetErrorStringA(code);
-		Debug::LogError("D3D9 Error Code %d - \"%s\"", code, str);
-		return false;
+// 		auto str = DXGetErrorStringA(code);
+// 		Debug::LogError("D3D9 Error Code %d - \"%s\"", code, str);
+// 		return false;
 
 		const int size = 1024;
 		static TCHAR buf[size];

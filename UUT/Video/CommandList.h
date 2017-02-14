@@ -23,6 +23,9 @@ namespace uut
 		virtual void SetViewport(const Viewport& viewport) = 0;
 		virtual void SetScissorRect(const IntRect& rect) = 0;
 
+		virtual void SetTopology(Topology topology) = 0;
+		virtual Topology GetTopology() const = 0;
+
 		virtual bool SetTexture(int stage, const SharedPtr<Texture2D>& texture) = 0;
 		virtual bool SetVertexBuffer(const SharedPtr<VertexBuffer>& buffer, uint16_t stride, uint32_t offset = 0) = 0;
 		virtual bool SetIndexBuffer(const SharedPtr<IndexBuffer>& buffer) = 0;

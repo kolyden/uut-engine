@@ -930,9 +930,6 @@
     <ClInclude Include="..\UUT\GUI\ContextGUI.h">
       <Filter>UUT\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\Video\PipelineStateDesc.h">
-      <Filter>UUT\Video</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Video\VertexElement.h">
       <Filter>UUT\Video</Filter>
     </ClInclude>
@@ -1468,9 +1465,6 @@
     </ClCompile>
     <ClCompile Include="..\UUT\GUI\ContextGUI.cpp">
       <Filter>UUT\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Video\PipelineStateDesc.cpp">
-      <Filter>UUT\Video</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Video\VertexElement.cpp">
       <Filter>UUT\Video</Filter>

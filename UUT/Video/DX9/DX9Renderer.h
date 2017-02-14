@@ -16,12 +16,8 @@ namespace uut
 		virtual ~DX9Renderer();
 
 		virtual SharedPtr<RenderState> CreateRenderState(const RenderStateDesc& desc) override;
-// 		virtual void SetScissorRect(const IntRect& rect) override;
 
 		virtual const RendererStatistics& GetStatistics() const override;
-
-// 		virtual void SetViewport(const Viewport& viewport) override;
-// 		virtual const Viewport& GetViewport() const override;
 
 		virtual bool SetTransform(RenderTransform type, const Matrix4& mat) override;
 		virtual const Matrix4& GetTransform(RenderTransform type) const override;
@@ -30,13 +26,6 @@ namespace uut
 		virtual void EndScene() override;
 
 		virtual void Execute(const SharedPtr<CommandList>& commandList) override;
-
-// 		virtual bool SetTexture(int stage, const SharedPtr<Texture2D>& texture) override;
-// 		virtual bool SetVertexBuffer(const SharedPtr<VertexBuffer>& buffer, uint16_t stride, uint32_t offset) override;
-// 		virtual bool SetIndexBuffer(const SharedPtr<IndexBuffer>& buffer) override;
-
-// 		virtual bool DrawPrimitive(Topology topology, uint32_t primitiveCount, uint32_t offset) override;
-// 		virtual bool DrawIndexedPrimitive(Topology topology, int baseVertexIndex, uint32_t minVertexIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount) override;
 
 		virtual bool Present() override;
 
@@ -58,7 +47,7 @@ namespace uut
 
 		static bool TestReturnCode(HRESULT ret);
 
-		void SetState(const RenderStateDesc& state, bool force);
+		void SetPipeline(const RenderStateDesc& state, bool force = false);
 
 		static D3DTRANSFORMSTATETYPE Convert(RenderTransform type);
 		static D3DPRIMITIVETYPE Convert(Topology topology);

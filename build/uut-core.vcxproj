@@ -289,7 +289,6 @@
     <ClInclude Include="..\UUT\Video\IndexBuffer.h" />
     <ClInclude Include="..\UUT\Video\Loaders\BitmapFontLoader.h" />
     <ClInclude Include="..\UUT\Video\Loaders\Texture2DLoader.h" />
-    <ClInclude Include="..\UUT\Video\PipelineStateDesc.h" />
     <ClInclude Include="..\UUT\Video\Renderer.h" />
     <ClInclude Include="..\UUT\Video\RenderState.h" />
     <ClInclude Include="..\UUT\Video\RenderStateDesc.h" />
@@ -472,7 +471,6 @@
     <ClCompile Include="..\UUT\Video\IndexBuffer.cpp" />
     <ClCompile Include="..\UUT\Video\Loaders\BitmapFontLoader.cpp" />
     <ClCompile Include="..\UUT\Video\Loaders\Texture2DLoader.cpp" />
-    <ClCompile Include="..\UUT\Video\PipelineStateDesc.cpp" />
     <ClCompile Include="..\UUT\Video\Renderer.cpp" />
     <ClCompile Include="..\UUT\Video\RenderState.cpp" />
     <ClCompile Include="..\UUT\Video\RenderStateDesc.cpp" />

@@ -32,6 +32,7 @@ namespace uut
 	{
 		_commands.Clear();
 		_state = DynamicCast<DX9RenderState>(state);
+		_topology = Topology::TriangleList;
 	}
 
 	void DX9CommandList::Close()
@@ -46,6 +47,16 @@ namespace uut
 	void DX9CommandList::SetScissorRect(const IntRect& rect)
 	{
 		_scissorRect = rect;
+	}
+
+	void DX9CommandList::SetTopology(Topology topology)
+	{
+		_topology = topology;
+	}
+
+	Topology DX9CommandList::GetTopology() const
+	{
+		return _topology;
 	}
 
 	bool DX9CommandList::SetTexture(int stage, const SharedPtr<Texture2D>& texture)
@@ -78,7 +89,7 @@ namespace uut
 	bool DX9CommandList::DrawPrimitive(uint32_t primitiveCount, uint32_t offset /*= 0*/)
 	{
 		auto cmd = SharedPtr<DrawDX9Command>::Make();
-		cmd->primitiveType = Convert(_state->GetDesc().topology);
+		cmd->primitiveType = Convert(_topology);
 		cmd->primitiveCount = primitiveCount;
 		cmd->offset = offset;
 		_commands.Add(cmd);
@@ -88,7 +99,7 @@ namespace uut
 	bool DX9CommandList::DrawIndexedPrimitive(int baseVertexIndex, uint32_t minVertexIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount)
 	{
 		auto cmd = SharedPtr<DrawIndexedDX9Command>::Make();
-		cmd->primitiveType = Convert(_state->GetDesc().topology);
+		cmd->primitiveType = Convert(_topology);
 		cmd->baseVertexIndex = baseVertexIndex;
 		cmd->minVertexIndex = minVertexIndex;
 		cmd->numVertices = numVertices;

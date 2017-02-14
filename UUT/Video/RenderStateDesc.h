@@ -273,6 +273,5 @@ namespace uut
 		RenderSamplerState sampler[SAMPLER_COUNT];
 
 		List<VertexElement> inputLayout;
-		Topology topology;
 	};
 }
