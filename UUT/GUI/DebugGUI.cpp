@@ -94,7 +94,7 @@ namespace uut
 		desc.alphaTest = false;
 		desc.srcBlend = BlendFactor::SrcAlpha;
 		desc.destBlend = BlendFactor::InvSrcAlpha;
-// 		desc.scissorTest = true;
+		desc.scissorTest = true;
 		desc.inputLayout = g_declare;
 
 		desc.textureStage[0].alphaOp = TextureOperation::Modulate;
@@ -213,6 +213,8 @@ namespace uut
 					//const RECT r = { (LONG)pcmd->ClipRect.x, (LONG)pcmd->ClipRect.y, (LONG)pcmd->ClipRect.z, (LONG)pcmd->ClipRect.w };
 					auto texPtr = static_cast<Texture2D*>(pcmd->TextureId);
 					_commandList->SetTexture(0, texPtr != nullptr ? texPtr->GetSharedThis() : nullptr);
+					_commandList->SetScissorRect(
+						IntRect::FromLBRT((int)pcmd->ClipRect.x, (int)pcmd->ClipRect.w, (int)pcmd->ClipRect.z, (int)pcmd->ClipRect.y));
 // 					renderer->SetScissorRect(
 // 						IntRect::FromLBRT((int)pcmd->ClipRect.x, (int)pcmd->ClipRect.w, (int)pcmd->ClipRect.z, (int)pcmd->ClipRect.y));
 					_commandList->DrawIndexedPrimitive(vtx_offset, 0,

@@ -399,10 +399,6 @@ namespace uut
 		HRESULT ret = _d3ddev->SetVertexDeclaration(state->_vd);
 		TestReturnCode(ret);
 
-		auto& rect = dx9cmdList->_scissorRect;
-		const RECT r{ rect.GetLeft(),rect.GetTop(),rect.GetRight(),rect.GetBottom() };
-		_d3ddev->SetScissorRect(&r);
-
 		auto& viewport = dx9cmdList->_viewport;
 		D3DVIEWPORT9 vp
 		{

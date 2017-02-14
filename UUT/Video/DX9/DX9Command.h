@@ -53,6 +53,14 @@ namespace uut
 		virtual HRESULT Execute(LPDIRECT3DDEVICE9 device) override;
 	};
 
+	class ScissorDX9Command : public IDX9Command
+	{
+	public:
+		RECT rect;
+
+		virtual HRESULT Execute(LPDIRECT3DDEVICE9 device) override;
+	};
+
 	class DrawDX9Command : public IDX9Command
 	{
 	public:

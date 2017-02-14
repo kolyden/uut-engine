@@ -46,7 +46,11 @@ namespace uut
 
 	void DX9CommandList::SetScissorRect(const IntRect& rect)
 	{
-		_scissorRect = rect;
+		const RECT r{ rect.GetLeft(),rect.GetTop(),rect.GetRight(),rect.GetBottom() };
+
+		auto cmd = SharedPtr<ScissorDX9Command>::Make();
+		cmd->rect = r;
+		_commands.Add(cmd);
 	}
 
 	void DX9CommandList::SetTopology(Topology topology)

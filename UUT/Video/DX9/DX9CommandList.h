@@ -32,7 +32,6 @@ namespace uut
 
 	protected:
 		Viewport _viewport;
-		IntRect _scissorRect;
 		List<SharedPtr<IDX9Command>> _commands;
 		SharedPtr<DX9PipelineState> _state;
 		Topology _topology;
