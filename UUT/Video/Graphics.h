@@ -3,11 +3,11 @@
 #include <Core/Module.h>
 #include "Topology.h"
 #include "Color32.h"
-#include "RenderState.h"
+#include "PipelineState.h"
 
 namespace uut
 {
-	class RenderState;
+	class PipelineState;
 	class CommandList;
 	class Font;
 	class Mesh;
@@ -75,7 +75,7 @@ namespace uut
 		{
 			MaterialType type;
 			ProjectionMode projection;
-			SharedPtr<RenderState> renderState;
+			SharedPtr<PipelineState> renderState;
 			SharedPtr<CommandList> commandList;
 			SharedPtr<VertexBuffer> vbuffer;
 			SharedPtr<Texture2D> texture;

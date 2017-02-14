@@ -3,7 +3,7 @@
 #include "DX9Texture2D.h"
 #include "DX9VertexBuffer.h"
 #include "DX9IndexBuffer.h"
-#include "DX9RenderState.h"
+#include "DX9PipelineState.h"
 #include "DX9CommandList.h"
 #include "DX9Command.h"
 #include "SDL2/SDL.h"
@@ -33,7 +33,7 @@ namespace uut
 		if (_d3d) _d3d->Release();
 	}
 
-	SharedPtr<RenderState> DX9Renderer::CreateRenderState(const RenderStateDesc& desc)
+	SharedPtr<PipelineState> DX9Renderer::CreateRenderState(const PipelineStateDesc& desc)
 	{
 		// Vertex declaration
 		const int count = desc.inputLayout.Count();
@@ -61,7 +61,7 @@ namespace uut
 		if (!TestReturnCode(ret))
 			return nullptr;
 
-		auto state = SharedPtr<DX9RenderState>::Make();
+		auto state = SharedPtr<DX9PipelineState>::Make();
 		state->_desc = desc;
 		state->_vd = vd;
 
@@ -69,7 +69,7 @@ namespace uut
 	}
 
 	template<typename T>
-	static bool CheckState(const RenderStateDesc& state, const RenderStateDesc& check, T (RenderStateDesc::*var), bool force)
+	static bool CheckState(const PipelineStateDesc& state, const PipelineStateDesc& check, T (PipelineStateDesc::*var), bool force)
 	{
 		if (force || (state.*var) != (check.*var))
 			return true;
@@ -95,70 +95,70 @@ namespace uut
 		return false;
 	}
 
-	void DX9Renderer::SetPipeline(const RenderStateDesc& state, bool force)
+	void DX9Renderer::SetPipeline(const PipelineStateDesc& state, bool force)
 	{
-		const RenderStateDesc& newDesc = state;
-		const RenderStateDesc& oldDesc = _state;
+		const PipelineStateDesc& newDesc = state;
+		const PipelineStateDesc& oldDesc = _state;
 
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::zbuffer, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::zbuffer, force))
 			_d3ddev->SetRenderState(D3DRS_ZENABLE, Convert(oldDesc.zbuffer));
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::zwriteEnable, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::zwriteEnable, force))
 			_d3ddev->SetRenderState(D3DRS_ZWRITEENABLE, oldDesc.zwriteEnable);
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::zfunc, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::zfunc, force))
 			_d3ddev->SetRenderState(D3DRS_ZFUNC, Convert(oldDesc.zfunc));
 
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::alphaBlend, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::alphaBlend, force))
 			_d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, oldDesc.alphaBlend);
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::alphaTest, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::alphaTest, force))
 			_d3ddev->SetRenderState(D3DRS_ALPHATESTENABLE, oldDesc.alphaTest);
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::alphaRef, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::alphaRef, force))
 			_d3ddev->SetRenderState(D3DRS_ALPHAREF, oldDesc.alphaRef);
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::alphaFunc, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::alphaFunc, force))
 			_d3ddev->SetRenderState(D3DRS_ALPHAFUNC, Convert(oldDesc.alphaFunc));
 
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::blendOp, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::blendOp, force))
 			_d3ddev->SetRenderState(D3DRS_BLENDOP, Convert(oldDesc.blendOp));
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::srcBlend, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::srcBlend, force))
 			_d3ddev->SetRenderState(D3DRS_SRCBLEND, Convert(oldDesc.srcBlend));
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::destBlend, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::destBlend, force))
 			_d3ddev->SetRenderState(D3DRS_DESTBLEND, Convert(oldDesc.destBlend));
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::blendOpAlpha, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::blendOpAlpha, force))
 			_d3ddev->SetRenderState(D3DRS_BLENDOPALPHA, Convert(oldDesc.blendOpAlpha));
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::srcBlendAlpha, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::srcBlendAlpha, force))
 			_d3ddev->SetRenderState(D3DRS_SRCBLENDALPHA, Convert(oldDesc.srcBlendAlpha));
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::destBlendAlpha, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::destBlendAlpha, force))
 			_d3ddev->SetRenderState(D3DRS_DESTBLENDALPHA, Convert(oldDesc.destBlendAlpha));
 
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::lightning, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::lightning, force))
 			_d3ddev->SetRenderState(D3DRS_LIGHTING, oldDesc.lightning);
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::ambientColor, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::ambientColor, force))
 			_d3ddev->SetRenderState(D3DRS_AMBIENT, oldDesc.ambientColor.ToInt());
 
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogEnabled, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogEnabled, force))
 			_d3ddev->SetRenderState(D3DRS_FOGENABLE, oldDesc.fogEnabled);
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogColor, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogColor, force))
 			_d3ddev->SetRenderState(D3DRS_FOGCOLOR, oldDesc.fogColor.ToInt());
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogMode, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogMode, force))
 			_d3ddev->SetRenderState(D3DRS_FOGTABLEMODE, Convert(oldDesc.fogMode));
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogDensity, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogDensity, force))
 			_d3ddev->SetRenderState(D3DRS_FOGDENSITY, *((DWORD*)(&oldDesc.fogDensity)));
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogStart, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogStart, force))
 			_d3ddev->SetRenderState(D3DRS_FOGSTART, *((DWORD*)(&oldDesc.fogStart)));
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogEnd, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogEnd, force))
 			_d3ddev->SetRenderState(D3DRS_FOGEND, *((DWORD*)(&oldDesc.fogEnd)));
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fogRangeEnabled, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogRangeEnabled, force))
 			_d3ddev->SetRenderState(D3DRS_RANGEFOGENABLE, oldDesc.fogRangeEnabled);
 
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::fillMode, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fillMode, force))
 			_d3ddev->SetRenderState(D3DRS_FILLMODE, Convert(oldDesc.fillMode));
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::shadeMode, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::shadeMode, force))
 			_d3ddev->SetRenderState(D3DRS_SHADEMODE, Convert(oldDesc.shadeMode));
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::cullMode, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::cullMode, force))
 			_d3ddev->SetRenderState(D3DRS_CULLMODE, Convert(oldDesc.cullMode));
-		if (CheckState(oldDesc, newDesc, &RenderStateDesc::scissorTest, force))
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::scissorTest, force))
 			_d3ddev->SetRenderState(D3DRS_SCISSORTESTENABLE, oldDesc.scissorTest);
 
-		for (int i = 0; i < RenderStateDesc::TEXTURE_STAGE_COUNT; i++)
+		for (int i = 0; i < PipelineStateDesc::TEXTURE_STAGE_COUNT; i++)
 		{
 			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::colorOp, force))
 				_d3ddev->SetTextureStageState(i, D3DTSS_COLOROP, Convert(oldDesc.textureStage[i].colorOp));
@@ -179,7 +179,7 @@ namespace uut
 				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAARG2, Convert(oldDesc.textureStage[i].alphaArg2));
 		}
 
-		for (int i = 0; i < RenderStateDesc::SAMPLER_COUNT; i++)
+		for (int i = 0; i < PipelineStateDesc::SAMPLER_COUNT; i++)
 		{
 			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::addressu, force))
 				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSU, Convert(oldDesc.sampler[i].addressu));

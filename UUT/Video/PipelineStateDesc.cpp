@@ -1,4 +1,4 @@
-#include "RenderStateDesc.h"
+#include "PipelineStateDesc.h"
 
 namespace uut
 {
@@ -48,7 +48,7 @@ namespace uut
 	const BlendingState BlendingState::Texture{ BlendOperation::Add, BlendFactor::SrcAlpha, BlendFactor::InvSrcAlpha };
 	const BlendingState BlendingState::Alpha{ BlendOperation::Add, BlendFactor::One, BlendFactor::One };
 
-	RenderStateDesc::RenderStateDesc()
+	PipelineStateDesc::PipelineStateDesc()
 		: zbuffer(ZBufferMode::ZBuffer)
 		, zwriteEnable(false)
 		, zfunc(CompareFunc::LessEqual)

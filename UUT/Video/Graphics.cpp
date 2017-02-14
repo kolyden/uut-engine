@@ -498,7 +498,7 @@ namespace uut
 		{
 			mat = SharedPtr<Material>::Make();
 
-			RenderStateDesc desc;
+			PipelineStateDesc desc;
 			desc.fillMode = _nextFM;
 			desc.cullMode = CullMode::Disabled;
 			desc.zwriteEnable = true;

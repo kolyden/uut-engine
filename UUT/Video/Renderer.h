@@ -13,8 +13,8 @@ namespace uut
 {
 	class VertexDeclaration;
 	class Viewport;
-	struct RenderStateDesc;
-	class RenderState;
+	struct PipelineStateDesc;
+	class PipelineState;
 	class Window;
 	class Texture2D;
 	class VertexBuffer;
@@ -45,7 +45,7 @@ namespace uut
 		const IntVector2& GetScreenSize() const { return _screenSize; }
 		Window* GetWindow() const { return _window; }
 
-		virtual SharedPtr<RenderState> CreateRenderState(const RenderStateDesc& desc) = 0;
+		virtual SharedPtr<PipelineState> CreateRenderState(const PipelineStateDesc& desc) = 0;
 // 		virtual void SetState(const SharedPtr<RenderState>& state) = 0;
 // 		virtual void SetScissorRect(const IntRect& rect) = 0;
 

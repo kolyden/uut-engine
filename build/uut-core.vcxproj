@@ -276,7 +276,7 @@
     <ClInclude Include="..\UUT\Video\DX9\DX9IndexBuffer.h" />
     <ClInclude Include="..\UUT\Video\DX9\DX9Plugin.h" />
     <ClInclude Include="..\UUT\Video\DX9\DX9Renderer.h" />
-    <ClInclude Include="..\UUT\Video\DX9\DX9RenderState.h" />
+    <ClInclude Include="..\UUT\Video\DX9\DX9PipelineState.h" />
     <ClInclude Include="..\UUT\Video\DX9\DX9Texture2D.h" />
     <ClInclude Include="..\UUT\Video\DX9\DX9VertexBuffer.h" />
     <ClInclude Include="..\UUT\Video\Font.h" />
@@ -290,8 +290,8 @@
     <ClInclude Include="..\UUT\Video\Loaders\BitmapFontLoader.h" />
     <ClInclude Include="..\UUT\Video\Loaders\Texture2DLoader.h" />
     <ClInclude Include="..\UUT\Video\Renderer.h" />
-    <ClInclude Include="..\UUT\Video\RenderState.h" />
-    <ClInclude Include="..\UUT\Video\RenderStateDesc.h" />
+    <ClInclude Include="..\UUT\Video\PipelineState.h" />
+    <ClInclude Include="..\UUT\Video\PipelineStateDesc.h" />
     <ClInclude Include="..\UUT\Video\Sprite.h" />
     <ClInclude Include="..\UUT\Video\Templates\ColorBase.h" />
     <ClInclude Include="..\UUT\Video\Texture.h" />
@@ -459,7 +459,7 @@
     <ClCompile Include="..\UUT\Video\DX9\DX9IndexBuffer.cpp" />
     <ClCompile Include="..\UUT\Video\DX9\DX9Plugin.cpp" />
     <ClCompile Include="..\UUT\Video\DX9\DX9Renderer.cpp" />
-    <ClCompile Include="..\UUT\Video\DX9\DX9RenderState.cpp" />
+    <ClCompile Include="..\UUT\Video\DX9\DX9PipelineState.cpp" />
     <ClCompile Include="..\UUT\Video\DX9\DX9Texture2D.cpp" />
     <ClCompile Include="..\UUT\Video\DX9\DX9VertexBuffer.cpp" />
     <ClCompile Include="..\UUT\Video\Font.cpp" />
@@ -472,8 +472,8 @@
     <ClCompile Include="..\UUT\Video\Loaders\BitmapFontLoader.cpp" />
     <ClCompile Include="..\UUT\Video\Loaders\Texture2DLoader.cpp" />
     <ClCompile Include="..\UUT\Video\Renderer.cpp" />
-    <ClCompile Include="..\UUT\Video\RenderState.cpp" />
-    <ClCompile Include="..\UUT\Video\RenderStateDesc.cpp" />
+    <ClCompile Include="..\UUT\Video\PipelineState.cpp" />
+    <ClCompile Include="..\UUT\Video\PipelineStateDesc.cpp" />
     <ClCompile Include="..\UUT\Video\Sprite.cpp" />
     <ClCompile Include="..\UUT\Video\Texture.cpp" />
     <ClCompile Include="..\UUT\Video\Texture2D.cpp" />

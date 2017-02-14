@@ -1,6 +1,6 @@
 #include "DX9CommandList.h"
 #include "DX9Command.h"
-#include "DX9RenderState.h"
+#include "DX9PipelineState.h"
 
 namespace uut
 {
@@ -28,10 +28,10 @@ namespace uut
 	DX9CommandList::~DX9CommandList()
 	{}
 
-	void DX9CommandList::Reset(const SharedPtr<RenderState>& state)
+	void DX9CommandList::Reset(const SharedPtr<PipelineState>& state)
 	{
 		_commands.Clear();
-		_state = DynamicCast<DX9RenderState>(state);
+		_state = DynamicCast<DX9PipelineState>(state);
 		_topology = Topology::TriangleList;
 	}
 

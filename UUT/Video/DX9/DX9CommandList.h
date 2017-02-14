@@ -4,7 +4,7 @@
 namespace uut
 {
 	class IDX9Command;
-	class DX9RenderState;
+	class DX9PipelineState;
 
 	class DX9CommandList : public CommandList
 	{
@@ -13,7 +13,7 @@ namespace uut
 		DX9CommandList();
 		virtual ~DX9CommandList();
 
-		virtual void Reset(const SharedPtr<RenderState>& state) override;
+		virtual void Reset(const SharedPtr<PipelineState>& state) override;
 		virtual void Close() override;
 
 		virtual bool Clear(const Color32& color, float z, uint32_t stencil) override;
@@ -34,7 +34,7 @@ namespace uut
 		Viewport _viewport;
 		IntRect _scissorRect;
 		List<SharedPtr<IDX9Command>> _commands;
-		SharedPtr<DX9RenderState> _state;
+		SharedPtr<DX9PipelineState> _state;
 		Topology _topology;
 
 		friend class DX9Renderer;

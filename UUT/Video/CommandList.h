@@ -10,13 +10,13 @@ namespace uut
 	class Texture2D;
 	class VertexBuffer;
 	class IndexBuffer;
-	class RenderState;
+	class PipelineState;
 
 	class CommandList : public Object
 	{
 		UUT_OBJECT(uut, CommandList, Object)
 	public:
-		virtual void Reset(const SharedPtr<RenderState>& state) = 0;
+		virtual void Reset(const SharedPtr<PipelineState>& state) = 0;
 		virtual void Close() = 0;
 
 		virtual bool Clear(const Color32& color = Color32::White, float z = 1.0f, uint32_t stencil = 0) = 0;

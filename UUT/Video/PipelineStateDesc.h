@@ -224,9 +224,9 @@ namespace uut
 		bool rangeEnabled = false;
 	};
 
-	struct RenderStateDesc
+	struct PipelineStateDesc
 	{
-		RenderStateDesc();
+		PipelineStateDesc();
 
 		// Z Buffer
 		ZBufferMode zbuffer;

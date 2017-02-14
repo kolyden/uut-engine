@@ -2,7 +2,7 @@
 #include <Core/Module.h>
 #include <Core/Timer.h>
 #include <Core/Math/Matrix4.h>
-#include <Video/RenderState.h>
+#include <Video/PipelineState.h>
 
 struct ImDrawData;
 
@@ -13,7 +13,7 @@ namespace uut
 	class VertexBuffer;
 	class IndexBuffer;
 	class Texture2D;
-	class RenderState;
+	class PipelineState;
 	class CommandList;
 
 	class DebugGUI : public Module
@@ -29,7 +29,7 @@ namespace uut
 
 	protected:
 		Timer _timer;
-		SharedPtr<RenderState> _pipeline;
+		SharedPtr<PipelineState> _pipeline;
 		SharedPtr<CommandList> _commandList;
 		SharedPtr<VertexBuffer> _vb;
 		SharedPtr<IndexBuffer> _ib;

@@ -6,7 +6,7 @@
 #include "DX9IndexBuffer.h"
 #include "DX9Texture2D.h"
 #include "DX9Renderer.h"
-#include "DX9RenderState.h"
+#include "DX9PipelineState.h"
 
 namespace uut
 {
@@ -21,7 +21,7 @@ namespace uut
 		UUT_REGISTER_OBJECT(DX9IndexBuffer);
 		UUT_REGISTER_OBJECT(DX9CommandList);
 		UUT_REGISTER_OBJECT(DX9Texture2D);
-		UUT_REGISTER_OBJECT(DX9RenderState);
+		UUT_REGISTER_OBJECT(DX9PipelineState);
 
 		UUT_REGISTER_MODULE(DX9Renderer);
 	}

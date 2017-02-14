@@ -19,7 +19,7 @@
 #include "Font.h"
 #include "BitmapFont.h"
 #include "TextureAtlas.h"
-#include "RenderState.h"
+#include "PipelineState.h"
 
 namespace uut
 {
@@ -35,7 +35,7 @@ namespace uut
 		UUT_REGISTER_OBJECT(VertexBuffer);
 		UUT_REGISTER_OBJECT(IndexBuffer);
 		UUT_REGISTER_OBJECT(CommandList);
-		UUT_REGISTER_OBJECT(RenderState);
+		UUT_REGISTER_OBJECT(PipelineState);
 
 		UUT_REGISTER_OBJECT(Color);
 		UUT_REGISTER_OBJECT(Color32);

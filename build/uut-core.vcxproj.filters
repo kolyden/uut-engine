@@ -369,9 +369,6 @@
     <ClInclude Include="..\UUT\Video\Renderer.h">
       <Filter>UUT\Video</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\Video\RenderState.h">
-      <Filter>UUT\Video</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Video\Sprite.h">
       <Filter>UUT\Video</Filter>
     </ClInclude>
@@ -933,12 +930,6 @@
     <ClInclude Include="..\UUT\Video\VertexElement.h">
       <Filter>UUT\Video</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\Video\RenderStateDesc.h">
-      <Filter>UUT\Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Video\DX9\DX9RenderState.h">
-      <Filter>UUT\Video\DX9</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Video\CommandList.h">
       <Filter>UUT\Video</Filter>
     </ClInclude>
@@ -946,6 +937,15 @@
       <Filter>UUT\Video\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\UUT\Video\DX9\DX9Command.h">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\PipelineState.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\PipelineStateDesc.h">
+      <Filter>UUT\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Video\DX9\DX9PipelineState.h">
       <Filter>UUT\Video\DX9</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1179,9 +1179,6 @@
       <Filter>UUT\Video</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Video\Renderer.cpp">
-      <Filter>UUT\Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Video\RenderState.cpp">
       <Filter>UUT\Video</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Video\Sprite.cpp">
@@ -1469,12 +1466,6 @@
     <ClCompile Include="..\UUT\Video\VertexElement.cpp">
       <Filter>UUT\Video</Filter>
     </ClCompile>
-    <ClCompile Include="..\UUT\Video\RenderStateDesc.cpp">
-      <Filter>UUT\Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Video\DX9\DX9RenderState.cpp">
-      <Filter>UUT\Video\DX9</Filter>
-    </ClCompile>
     <ClCompile Include="..\UUT\Video\CommandList.cpp">
       <Filter>UUT\Video</Filter>
     </ClCompile>
@@ -1482,6 +1473,15 @@
       <Filter>UUT\Video\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Video\DX9\DX9Command.cpp">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\PipelineState.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\PipelineStateDesc.cpp">
+      <Filter>UUT\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\DX9\DX9PipelineState.cpp">
       <Filter>UUT\Video\DX9</Filter>
     </ClCompile>
   </ItemGroup>

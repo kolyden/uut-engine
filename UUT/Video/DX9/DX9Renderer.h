@@ -1,12 +1,12 @@
 #pragma once
 #include <Video/Renderer.h>
-#include <Video/RenderState.h>
+#include <Video/PipelineState.h>
 #include <Video/Viewport.h>
 #include "DX9Defs.h"
 
 namespace uut
 {
-	class DX9RenderState;
+	class DX9PipelineState;
 
 	class DX9Renderer : public Renderer
 	{
@@ -15,7 +15,7 @@ namespace uut
 		DX9Renderer();
 		virtual ~DX9Renderer();
 
-		virtual SharedPtr<RenderState> CreateRenderState(const RenderStateDesc& desc) override;
+		virtual SharedPtr<PipelineState> CreateRenderState(const PipelineStateDesc& desc) override;
 
 		virtual const RendererStatistics& GetStatistics() const override;
 
@@ -39,7 +39,7 @@ namespace uut
 	protected:
 		LPDIRECT3D9 _d3d;
 		LPDIRECT3DDEVICE9 _d3ddev;
-		RenderStateDesc _state;
+		PipelineStateDesc _state;
 		RendererStatistics _statistics;
 		Matrix4 _matView;
 		Matrix4 _matWorld;
@@ -47,7 +47,7 @@ namespace uut
 
 		static bool TestReturnCode(HRESULT ret);
 
-		void SetPipeline(const RenderStateDesc& state, bool force = false);
+		void SetPipeline(const PipelineStateDesc& state, bool force = false);
 
 		static D3DTRANSFORMSTATETYPE Convert(RenderTransform type);
 		static D3DPRIMITIVETYPE Convert(Topology topology);

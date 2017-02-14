@@ -6,7 +6,7 @@
 #include <Video/VertexBuffer.h>
 #include <Video/IndexBuffer.h>
 #include <Video/CommandList.h>
-#include <Video/RenderState.h>
+#include <Video/PipelineState.h>
 #include <IMGUI/imgui.h>
 #include <SDL2/SDL.h>
 #include <Core/Reflection/ConstructorInfo.h>
@@ -84,7 +84,7 @@ namespace uut
 
 		io.Fonts->TexID = _fontTex.Get();
 
-		RenderStateDesc desc;
+		PipelineStateDesc desc;
 		desc.cullMode = CullMode::Disabled;
 		desc.lightning = false;
 		desc.zbuffer = ZBufferMode::Disable;
