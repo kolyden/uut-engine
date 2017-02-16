@@ -39,6 +39,7 @@ namespace uut
 
 		UUT_REGISTER_OBJECT(Color);
 		UUT_REGISTER_OBJECT(Color32);
+		UUT_REGISTER_OBJECT(Viewport);
 
 		// Textures
 		UUT_REGISTER_OBJECT(Image);

@@ -3,6 +3,7 @@
 #include <Core/Timer.h>
 #include <Core/Math/Matrix4.h>
 #include <Video/PipelineState.h>
+#include <Video/Viewport.h>
 
 struct ImDrawData;
 
@@ -35,6 +36,7 @@ namespace uut
 		SharedPtr<IndexBuffer> _ib;
 		SharedPtr<Texture2D> _fontTex;
 		Matrix4 _matProj;
+		Viewport _viewport;
 
 		int _vbSize;
 		int _ibSize;

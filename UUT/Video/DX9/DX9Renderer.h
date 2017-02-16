@@ -15,7 +15,7 @@ namespace uut
 		DX9Renderer();
 		virtual ~DX9Renderer();
 
-		virtual SharedPtr<PipelineState> CreateRenderState(const PipelineStateDesc& desc) override;
+		virtual SharedPtr<PipelineState> CreatePipelineState(const PipelineStateDesc& desc) override;
 
 		virtual const RendererStatistics& GetStatistics() const override;
 

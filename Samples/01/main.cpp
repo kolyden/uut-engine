@@ -312,6 +312,7 @@ namespace uut
 // 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10))
 // 			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
 			graphics->BeginRecord();
+			graphics->SetViewport(Viewport(0, 0, renderer->GetScreenSize()));
 			graphics->SetMaterial(Graphics::MT_OPAQUE);
 			graphics->SetProjection(Graphics::PM_3D);
 			graphics->Clear(Color32(114, 144, 154));

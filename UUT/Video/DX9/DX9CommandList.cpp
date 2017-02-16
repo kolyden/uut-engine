@@ -1,6 +1,9 @@
 #include "DX9CommandList.h"
 #include "DX9Command.h"
 #include "DX9PipelineState.h"
+#include "DX9Texture2D.h"
+#include "DX9VertexBuffer.h"
+#include "DX9IndexBuffer.h"
 
 namespace uut
 {
@@ -41,15 +44,24 @@ namespace uut
 
 	void DX9CommandList::SetViewport(const Viewport& viewport)
 	{
-		_viewport = viewport;
+		DX9Command cmd;
+		cmd.type = DX9Command::TYPE_VIEWPORT;
+		cmd.viewport = D3DVIEWPORT9
+		{
+			viewport.x, viewport.y,
+			viewport.width, viewport.height,
+			viewport.minZ, viewport.maxZ
+		};
+		_commands.Add(cmd);
 	}
 
 	void DX9CommandList::SetScissorRect(const IntRect& rect)
 	{
 		const RECT r{ rect.GetLeft(),rect.GetTop(),rect.GetRight(),rect.GetBottom() };
 
-		auto cmd = SharedPtr<ScissorDX9Command>::Make();
-		cmd->rect = r;
+		DX9Command cmd;
+		cmd.type = DX9Command::TYPE_SCISSOR;
+		cmd.rect = r;
 		_commands.Add(cmd);
 	}
 
@@ -65,61 +77,67 @@ namespace uut
 
 	bool DX9CommandList::SetTexture(int stage, const SharedPtr<Texture2D>& texture)
 	{
-		auto cmd = SharedPtr<TextureDX9Command>::Make();
-		cmd->stage = stage;
-		cmd->texture = texture;
+		DX9Command cmd;
+		cmd.type = DX9Command::TYPE_TEXTURE;
+		cmd.stage = stage;
+		cmd.object = texture;
 		_commands.Add(cmd);
 		return true;
 	}
 
 	bool DX9CommandList::SetVertexBuffer(const SharedPtr<VertexBuffer>& buffer, uint16_t stride, uint32_t offset /*= 0*/)
 	{
-		auto cmd = SharedPtr<VBufferDX9Command>::Make();
-		cmd->stride = stride;
-		cmd->offset = offset;
-		cmd->buffer = buffer;
+		DX9Command cmd;
+		cmd.type = DX9Command::TYPE_VBUFFER;
+		cmd.stride = stride;
+		cmd.offset = offset;
+		cmd.object = buffer;
 		_commands.Add(cmd);
 		return true;
 	}
 
 	bool DX9CommandList::SetIndexBuffer(const SharedPtr<IndexBuffer>& buffer)
 	{
-		auto cmd = SharedPtr<IBufferDX9Command>::Make();
-		cmd->buffer = buffer;
+		DX9Command cmd;
+		cmd.type = DX9Command::TYPE_IBUFFER;
+		cmd.object = buffer;
 		_commands.Add(cmd);
 		return true;
 	}
 
 	bool DX9CommandList::DrawPrimitive(uint32_t primitiveCount, uint32_t offset /*= 0*/)
 	{
-		auto cmd = SharedPtr<DrawDX9Command>::Make();
-		cmd->primitiveType = Convert(_topology);
-		cmd->primitiveCount = primitiveCount;
-		cmd->offset = offset;
+		DX9Command cmd;
+		cmd.type = DX9Command::TYPE_DRAW;
+		cmd.primitiveType = Convert(_topology);
+		cmd.primitiveCount = primitiveCount;
+		cmd.offset = offset;
 		_commands.Add(cmd);
 		return true;
 	}
 
 	bool DX9CommandList::DrawIndexedPrimitive(int baseVertexIndex, uint32_t minVertexIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount)
 	{
-		auto cmd = SharedPtr<DrawIndexedDX9Command>::Make();
-		cmd->primitiveType = Convert(_topology);
-		cmd->baseVertexIndex = baseVertexIndex;
-		cmd->minVertexIndex = minVertexIndex;
-		cmd->numVertices = numVertices;
-		cmd->startIndex = startIndex;
-		cmd->primitiveCount = primitiveCount;
+		DX9Command cmd;
+		cmd.type = DX9Command::TYPE_DRAWIND;
+		cmd.primitiveType = Convert(_topology);
+		cmd.baseVertexIndex = baseVertexIndex;
+		cmd.minVertexIndex = minVertexIndex;
+		cmd.numVertices = numVertices;
+		cmd.startIndex = startIndex;
+		cmd.primitiveCount = primitiveCount;
 		_commands.Add(cmd);
 		return true;
 	}
 
 	bool DX9CommandList::Clear(const Color32& color /*= Color32::White*/, float z /*= 1.0f*/, uint32_t stencil /*= 0*/)
 	{
-		auto cmd = SharedPtr<ClearDX9Command>::Make();
-		cmd->flags = D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER;
-		cmd->color = color.ToInt();
-		cmd->z = z;
-		cmd->stencil = stencil;
+		DX9Command cmd;
+		cmd.type = DX9Command::TYPE_CLEAR;
+		cmd.flags = D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER;
+		cmd.color = color.ToInt();
+		cmd.z = z;
+		cmd.stencil = stencil;
 		_commands.Add(cmd);
 		return true;
 	}

@@ -33,7 +33,7 @@ namespace uut
 		if (_d3d) _d3d->Release();
 	}
 
-	SharedPtr<PipelineState> DX9Renderer::CreateRenderState(const PipelineStateDesc& desc)
+	SharedPtr<PipelineState> DX9Renderer::CreatePipelineState(const PipelineStateDesc& desc)
 	{
 		// Vertex declaration
 		const int count = desc.inputLayout.Count();
@@ -58,8 +58,8 @@ namespace uut
 		LPDIRECT3DVERTEXDECLARATION9 vd;
 		HRESULT ret = _d3ddev->CreateVertexDeclaration(declare, &vd);
 		delete[] declare;
-		if (!TestReturnCode(ret))
-			return nullptr;
+		TestReturnCode(ret);
+			//return nullptr;
 
 		auto state = SharedPtr<DX9PipelineState>::Make();
 		state->_desc = desc;
@@ -399,18 +399,13 @@ namespace uut
 		HRESULT ret = _d3ddev->SetVertexDeclaration(state->_vd);
 		TestReturnCode(ret);
 
-		auto& viewport = dx9cmdList->_viewport;
-		D3DVIEWPORT9 vp
-		{
-			viewport.x, viewport.y,
-			viewport.width, viewport.height,
-			viewport.minZ, viewport.maxZ
-		};
-		_d3ddev->SetViewport(&vp);
+// 		_d3ddev->SetStreamSource(0, nullptr, 0, 0);
+// 		_d3ddev->SetIndices(nullptr);
+// 		_d3ddev->SetTexture(0, nullptr);
 
-		for (auto& command : dx9cmdList->_commands)
+		for (const auto& command : dx9cmdList->_commands)
 		{
-			HRESULT result = command->Execute(_d3ddev);
+			HRESULT result = command.Execute(_d3ddev);
 			TestReturnCode(result);
 		}
 	}
@@ -419,14 +414,14 @@ namespace uut
 	{
 		auto list = SharedPtr<DX9CommandList>::Make();
 
-		D3DVIEWPORT9 vp;
-		_d3ddev->GetViewport(&vp);
-		list->_viewport.x = vp.X;
-		list->_viewport.y = vp.Y;
-		list->_viewport.width = vp.Width;
-		list->_viewport.height = vp.Height;
-		list->_viewport.minZ = vp.MinZ;
-		list->_viewport.maxZ = vp.MaxZ;
+// 		D3DVIEWPORT9 vp;
+// 		_d3ddev->GetViewport(&vp);
+// 		list->_viewport.x = vp.X;
+// 		list->_viewport.y = vp.Y;
+// 		list->_viewport.width = vp.Width;
+// 		list->_viewport.height = vp.Height;
+// 		list->_viewport.minZ = vp.MinZ;
+// 		list->_viewport.maxZ = vp.MaxZ;
 
 		return list;
 	}

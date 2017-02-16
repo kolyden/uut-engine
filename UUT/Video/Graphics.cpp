@@ -8,6 +8,7 @@
 #include "Mesh.h"
 #include "Font.h"
 #include "CommandList.h"
+#include "Viewport.h"
 
 namespace uut
 {
@@ -41,6 +42,12 @@ namespace uut
 	void Graphics::SetFillMode(FillMode mode)
 	{
 		_nextFM = mode;
+	}
+
+	void Graphics::SetViewport(const Viewport& viewport)
+	{
+		auto mat = GetMaterial(Topology::TriangleList);
+		mat->commandList->SetViewport(viewport);
 	}
 
 	void Graphics::Clear(const Color32& color /*= Color32::White*/, float z /*= 1.0f*/, uint32_t stencil /*= 0*/)
@@ -525,7 +532,7 @@ namespace uut
 
 			mat->type = _nextMT;
 			mat->projection = _nextPM;
-			mat->renderState = renderer->CreateRenderState(desc);
+			mat->renderState = renderer->CreatePipelineState(desc);
 			mat->commandList = renderer->CreateCommandList();
 			mat->vbuffer = renderer->CreateVertexBuffer(Vertex::SIZE*_vbufCount);
 		}

@@ -1,5 +1,6 @@
 #include "DebugGUI.h"
 #include <Core/IO/Input.h>
+#include <Core/Math/Math.h>
 #include <Video/Renderer.h>
 #include <Video/Texture.h>
 #include <Video/Vertex.h>
@@ -103,18 +104,18 @@ namespace uut
 		desc.sampler[0].minFilter = TextureFilter::Linear;
 		desc.sampler[0].magFilter = TextureFilter::Linear;
 
-		_pipeline = renderer->CreateRenderState(desc);
+		_pipeline = renderer->CreatePipelineState(desc);
 		_commandList = renderer->CreateCommandList();
 	}
 
 	void DebugGUI::NewFrame()
 	{
 		_timer.Update();
-		Vector2 size = Renderer::Instance()->GetScreenSize();
+		auto& size = Renderer::Instance()->GetScreenSize();
 		auto& io = ImGui::GetIO();
 
-		io.DisplaySize.x = size.x;
-		io.DisplaySize.y = size.y;
+		io.DisplaySize.x = (float)size.x;
+		io.DisplaySize.y = (float)size.y;
 		io.DeltaTime = _timer.GetDeltaTime();
 		io.MousePos.x = static_cast<float>(Input::GetMousePos().x);
 		io.MousePos.y = static_cast<float>(Input::GetMousePos().y);
@@ -126,7 +127,9 @@ namespace uut
 			io.KeysDown[i] = Input::IsKey((Scancode)i);
 
 		_matProj = Matrix4::OrthoOffCenter(
-			0, size.x, 0, size.y, 0.1f, 100.0f);
+			0, (float)size.x, 0, (float)size.y, 0.1f, 100.0f);
+
+		_viewport = Viewport(0, 0, size.x, size.y);
 
 		ImGui::NewFrame();
 	}
@@ -191,6 +194,7 @@ namespace uut
 		_ib->Unlock();
 
 		_commandList->Reset(_pipeline);
+		_commandList->SetViewport(_viewport);
 		_commandList->SetVertexBuffer(_vb, sizeof(UIVertex));
 		_commandList->SetIndexBuffer(_ib);
 		_commandList->SetTopology(Topology::TriangleList);

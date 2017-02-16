@@ -45,7 +45,7 @@ namespace uut
 		const IntVector2& GetScreenSize() const { return _screenSize; }
 		Window* GetWindow() const { return _window; }
 
-		virtual SharedPtr<PipelineState> CreateRenderState(const PipelineStateDesc& desc) = 0;
+		virtual SharedPtr<PipelineState> CreatePipelineState(const PipelineStateDesc& desc) = 0;
 // 		virtual void SetState(const SharedPtr<RenderState>& state) = 0;
 // 		virtual void SetScissorRect(const IntRect& rect) = 0;
 

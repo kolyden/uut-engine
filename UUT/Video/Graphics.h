@@ -17,6 +17,7 @@ namespace uut
 	class Renderer;
 	class Texture2D;
 	class VertexBuffer;
+	class Viewport;
 
 	class Graphics : public Module
 	{
@@ -41,6 +42,7 @@ namespace uut
 		void SetProjection(ProjectionMode mode);
 		void SetMaterial(MaterialType type);
 		void SetFillMode(FillMode mode);
+		void SetViewport(const Viewport& viewport);
 		void Clear(const Color32& color = Color32::White, float z = 1.0f, uint32_t stencil = 0);
 
 		void DrawPoint(const Vector3& point, const Color32& color = Color32::White);

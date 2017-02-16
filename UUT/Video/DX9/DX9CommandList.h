@@ -1,9 +1,9 @@
 #pragma once
 #include <Video/CommandList.h>
+#include "DX9Command.h"
 
 namespace uut
 {
-	class IDX9Command;
 	class DX9PipelineState;
 
 	class DX9CommandList : public CommandList
@@ -31,8 +31,7 @@ namespace uut
 		virtual bool DrawIndexedPrimitive(int baseVertexIndex, uint32_t minVertexIndex, uint32_t numVertices, uint32_t startIndex, uint32_t primitiveCount) override;
 
 	protected:
-		Viewport _viewport;
-		List<SharedPtr<IDX9Command>> _commands;
+		List<DX9Command> _commands;
 		SharedPtr<DX9PipelineState> _state;
 		Topology _topology;
 
