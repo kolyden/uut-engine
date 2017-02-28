@@ -1,5 +1,7 @@
 #pragma once
 #include "Color32.h"
+#include "VertexElement.h"
+#include "Topology.h"
 
 namespace uut
 {
@@ -222,9 +224,9 @@ namespace uut
 		bool rangeEnabled = false;
 	};
 
-	struct RenderState
+	struct PipelineStateDesc
 	{
-		RenderState();
+		PipelineStateDesc();
 
 		// Z Buffer
 		ZBufferMode zbuffer;
@@ -269,5 +271,7 @@ namespace uut
 		// Texture
 		RenderTextureStageState textureStage[TEXTURE_STAGE_COUNT];
 		RenderSamplerState sampler[SAMPLER_COUNT];
+
+		List<VertexElement> inputLayout;
 	};
 }

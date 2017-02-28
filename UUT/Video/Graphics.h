@@ -3,11 +3,12 @@
 #include <Core/Module.h>
 #include "Topology.h"
 #include "Color32.h"
-#include "RenderState.h"
+#include "PipelineState.h"
 
 namespace uut
 {
-	class Material;
+	class PipelineState;
+	class CommandList;
 	class Font;
 	class Mesh;
 	class Rect;
@@ -16,11 +17,11 @@ namespace uut
 	class Renderer;
 	class Texture2D;
 	class VertexBuffer;
-	class VertexDeclaration;
+	class Viewport;
 
-	class Graphics : public Module
+	class Graphics : public Object
 	{
-		UUT_MODULE(uut, Graphics, Module)
+		UUT_OBJECT(uut, Graphics, Module)
 	public:
 		enum ProjectionMode
 		{
@@ -33,16 +34,13 @@ namespace uut
 		{
 			MT_OPAQUE,
 			MT_TRANSPARENT,
-			MT_CUSTOM,
 		};
 
-		Graphics();
+		Graphics(MaterialType material, ProjectionMode projection, FillMode fillMode = FillMode::Solid);
 		virtual ~Graphics();
 
-		void SetProjection(ProjectionMode mode);
-		void SetMaterial(MaterialType type);
-		void SetMaterial(const SharedPtr<Material>& material);
-		void SetFillMode(FillMode mode);
+		void SetViewport(const Viewport& viewport);
+		void Clear(const Color32& color = Color32::White, float z = 1.0f, uint32_t stencil = 0);
 
 		void DrawPoint(const Vector3& point, const Color32& color = Color32::White);
 		void DrawLine(const Vector3& p0, const Vector3& p1, const Color32& color = Color32::White);
@@ -66,31 +64,25 @@ namespace uut
 
 		void PrintText(const Vector2& position, float z, const String& text, Font* font, const Color32& color = Color32::White);
 
-		void Flush();
+		void BeginRecord();
+		void EndRecord();
+
+		void Draw();
 
 	protected:
-		SharedPtr<VertexBuffer> _vbuf;
-		SharedPtr<VertexDeclaration> _vdec;
-		SharedPtr<Material> _opaqueMat;
-		SharedPtr<Material> _transparentMat;
-		SharedPtr<Material> _customMat;
-
-		int _vbufCount;
-
-		Topology _topology;
+		ProjectionMode _projection;
+		SharedPtr<PipelineState> _renderState;
+		SharedPtr<CommandList> _commandList;
+		SharedPtr<VertexBuffer> _vbuffer;
 		SharedPtr<Texture2D> _texture;
-		Vertex* _vertices;
-		int _vdxIndex;
-		RenderState _renderState;
-		Matrix4 _matProj;
 
-		ProjectionMode _currentPM, _nextPM;
-		MaterialType _currentMT, _nextMT;
-		FillMode _currentFM, _nextFM;
+		Vertex* _vertices = nullptr;
+		uint _vdxIndex = 0;
+		uint _offset = 0;
 
-		void TestBatch(Topology topology, const SharedPtr<Texture2D>& tex, int vrtCount);
-		void DrawAll();
-		void UpdateProjection();
-		void UpdateMaterial();
+		uint _vbufCount;
+
+		bool TestBatch(Topology topology, const SharedPtr<Texture2D>& tex, int vrtCount);
+		int GetPrimitiveCount(int vertexCount) const;
 	};
 }

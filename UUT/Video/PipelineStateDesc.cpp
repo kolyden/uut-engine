@@ -1,8 +1,7 @@
-#include "RenderState.h"
+#include "PipelineStateDesc.h"
 
 namespace uut
 {
-
 	const RenderTextureStageState RenderTextureStageState::Disabled;
 
 	const RenderTextureStageState RenderTextureStageState::Opaque(
@@ -20,7 +19,7 @@ namespace uut
 		, alphaOp(TextureOperation::Disable)
 		, alphaArg1(TextureArgument::Texture)
 		, alphaArg2(TextureArgument::Current)
-	{		
+	{
 	}
 
 	RenderTextureStageState::RenderTextureStageState(
@@ -49,7 +48,7 @@ namespace uut
 	const BlendingState BlendingState::Texture{ BlendOperation::Add, BlendFactor::SrcAlpha, BlendFactor::InvSrcAlpha };
 	const BlendingState BlendingState::Alpha{ BlendOperation::Add, BlendFactor::One, BlendFactor::One };
 
-	RenderState::RenderState()
+	PipelineStateDesc::PipelineStateDesc()
 		: zbuffer(ZBufferMode::ZBuffer)
 		, zwriteEnable(false)
 		, zfunc(CompareFunc::LessEqual)

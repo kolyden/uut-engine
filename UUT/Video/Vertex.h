@@ -3,7 +3,7 @@
 #include <Core/Math/Vector3.h>
 #include <Core/Math/Vector2.h>
 #include <Video/Color32.h>
-#include "VertexDeclaration.h"
+#include "VertexElement.h"
 
 namespace uut
 {

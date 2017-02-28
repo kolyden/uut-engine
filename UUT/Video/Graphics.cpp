@@ -1,90 +1,86 @@
 #include "Graphics.h"
 #include <Core/Math/Rect.h>
 #include <Core/Math/Math.h>
+#include <Core/Reflection/ConstructorInfo.h>
 #include "Renderer.h"
 #include "Vertex.h"
 #include "VertexBuffer.h"
 #include "Mesh.h"
 #include "Font.h"
-#include <Core/Reflection/ConstructorInfo.h>
-#include "Material.h"
+#include "CommandList.h"
+#include "Viewport.h"
 
 namespace uut
 {
-	UUT_MODULE_IMPLEMENT(Graphics)
+	UUT_OBJECT_IMPLEMENT(Graphics)
 	{
-		UUT_REGISTER_CTOR_DEFAULT();
+		//UUT_REGISTER_CTOR_DEFAULT();
 	}
 
-	Graphics::Graphics()
+	Graphics::Graphics(MaterialType material, ProjectionMode projection, FillMode fillMode)
 		: _vbufCount(50000)
-		, _topology(Topology::TrinagleList)
-		, _vertices(nullptr)
-		, _vdxIndex(0)
-		, _currentPM(PM_NONE)
-		, _nextPM(PM_NONE)
-		, _currentMT(MT_OPAQUE)
-		, _nextMT(MT_OPAQUE)
-		, _currentFM(FillMode::Solid)
-		, _nextFM(FillMode::Solid)
+		, _projection(projection)
 	{
+		PipelineStateDesc desc;
+		desc.fillMode = fillMode;
+		desc.cullMode = CullMode::Disabled;
+		desc.alphaFunc = CompareFunc::GreaterEqual;
+		desc.inputLayout = Vertex::DECLARE;
+// 		desc.sampler[0].minFilter = TextureFilter::Linear;
+// 		desc.sampler[0].magFilter = TextureFilter::Linear;
+
+		switch (material)
+		{
+		case uut::Graphics::MT_OPAQUE:
+			desc.zwriteEnable = true;
+			desc.textureStage[0] = RenderTextureStageState::Opaque;
+			break;
+
+		case uut::Graphics::MT_TRANSPARENT:
+			desc.cullMode = CullMode::Disabled;
+			desc.lightning = false;
+			desc.zbuffer = ZBufferMode::Disable;
+			desc.zwriteEnable = false;
+			desc.alphaBlend = true;
+			desc.blendOp = BlendOperation::Add;
+			desc.alphaTest = false;
+			desc.srcBlend = BlendFactor::SrcAlpha;
+			desc.destBlend = BlendFactor::InvSrcAlpha;
+			desc.alphaBlend = true;
+			desc.alphaTest = true;
+			desc.zwriteEnable = false;
+			desc.textureStage[0].alphaOp = TextureOperation::Modulate;
+			desc.textureStage[0].alphaArg1 = TextureArgument::Texture;
+			desc.textureStage[0].alphaArg2 = TextureArgument::Diffuse;
+// 			desc.textureStage[0] = RenderTextureStageState::Transparent;
+			break;
+		}
+
 		ModuleInstance<Renderer> renderer;
-		_vbuf = renderer->CreateVertexBuffer(Vertex::SIZE*_vbufCount);
-		_vdec = renderer->CreateVertexDeclaration(Vertex::DECLARE);
 
-		_opaqueMat = renderer->CreateMaterial();
-		_opaqueMat->SetTextureStage(RenderTextureStageState::Opaque);
-
-		_transparentMat = renderer->CreateMaterial();
-		_transparentMat->SetAlphaBlend(true);
-		_transparentMat->SetAlphaTest(true);
-		_transparentMat->SetTextureStage(RenderTextureStageState::Transparent);
-
-		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
-
-		_renderState.cullMode = CullMode::Disabled;
-		_renderState.fillMode = _currentFM;
-		_renderState.zwriteEnable = true;
-		_renderState.alphaRef = 1;
-		_renderState.alphaFunc = CompareFunc::GreaterEqual;
-// 		_renderState.sampler[0].minFilter = TextureFilter::Linear;
-// 		_renderState.sampler[0].magFilter = TextureFilter::Linear;
-
-		UpdateMaterial();
-		UpdateProjection();
+		_renderState = renderer->CreatePipelineState(desc);
+		_commandList = renderer->CreateCommandList();
+		_vbuffer = renderer->CreateVertexBuffer(Vertex::SIZE*_vbufCount);
 	}
 
 	Graphics::~Graphics()
 	{	
 	}
 
-	void Graphics::SetProjection(ProjectionMode mode)
+	void Graphics::SetViewport(const Viewport& viewport)
 	{
-		_nextPM = mode;
+		_commandList->SetViewport(viewport);
 	}
 
-	void Graphics::SetMaterial(MaterialType type)
+	void Graphics::Clear(const Color32& color /*= Color32::White*/, float z /*= 1.0f*/, uint32_t stencil /*= 0*/)
 	{
-		_nextMT = type;
-	}
-
-	void Graphics::SetMaterial(const SharedPtr<Material>& material)
-	{
-		if (!material)
-			return;
-
-		_nextMT = MT_CUSTOM;
-		_customMat = material;
-	}
-
-	void Graphics::SetFillMode(FillMode mode)
-	{
-		_nextFM = mode;
+		_commandList->Clear(color, z, stencil);
 	}
 
 	void Graphics::DrawPoint(const Vector3& point, const Color32& color /* = Color32::WHITE */)
 	{
-		TestBatch(Topology::PointList, nullptr, 1);
+		if (!TestBatch(Topology::PointList, nullptr, 1))
+			return;
 
 		_vertices[_vdxIndex].pos = point;
 		_vertices[_vdxIndex].color = color.ToInt();
@@ -93,7 +89,8 @@ namespace uut
 
 	void Graphics::DrawLine(const Vector3& p0, const Vector3& p1, const Color32& color /* = Color32::WHITE */)
 	{
-		TestBatch(Topology::LineList, nullptr, 2);
+		if (!TestBatch(Topology::LineList, nullptr, 2))
+			return;
 
 		_vertices[_vdxIndex].pos = p0;
 		_vertices[_vdxIndex].color = color.ToInt();
@@ -109,7 +106,8 @@ namespace uut
 		if (points.Count() < 2)
 			return;
 
-		TestBatch(Topology::LineList, nullptr, (points.Count() - 1) * 2);
+		if (!TestBatch(Topology::LineList, nullptr, (points.Count() - 1) * 2))
+			return;
 
 		const uint32_t col = color.ToInt();
 		for (uint i = 1; i < points.Count(); i++)
@@ -126,7 +124,8 @@ namespace uut
 
 	void Graphics::DrawSolidTriangle(const Vector3& p0, const Vector3& p1, const Vector3& p2, const Color32& color /*= Color32::WHITE*/)
 	{
-		TestBatch(Topology::TrinagleList, nullptr, 3);
+		if (!TestBatch(Topology::TriangleList, nullptr, 3))
+			return;
 
 		_vertices[_vdxIndex].pos = p0;
 		_vertices[_vdxIndex].color = color.ToInt();
@@ -143,7 +142,8 @@ namespace uut
 
 	void Graphics::DrawTrinagle(const Vertex& v0, const Vertex& v1, const Vertex& v2, const SharedPtr<Texture2D>& texture /*= nullptr*/)
 	{
-		TestBatch(Topology::TrinagleList, texture, 3);
+		if (!TestBatch(Topology::TriangleList, texture, 3))
+			return;
 
 		_vertices[_vdxIndex++] = v0;
 		_vertices[_vdxIndex++] = v1;
@@ -152,7 +152,8 @@ namespace uut
 
 	void Graphics::DrawQuad(const Vertex& v0, const Vertex& v1, const Vertex& v2, const Vertex& v3, const SharedPtr<Texture2D>& texture /*= nullptr*/)
 	{
-		TestBatch(Topology::TrinagleList, texture, 6);
+		if (!TestBatch(Topology::TriangleList, texture, 6))
+			return;
 
 		_vertices[_vdxIndex++] = v0;
 		_vertices[_vdxIndex++] = v1;
@@ -364,7 +365,8 @@ namespace uut
 		auto& indexes = mesh->GetIndexes();
 		const uint count = indexes.Count();
 
-		TestBatch(Topology::TrinagleList, texture, count);
+		if (!TestBatch(Topology::TriangleList, texture, count))
+			return;
 
 		for (uint i = 0; i < count; i++)
 		{
@@ -382,7 +384,8 @@ namespace uut
 		if (count == 0)
 			return;
 
-		TestBatch(topology, texture, count);
+		if (!TestBatch(Topology::TriangleList, texture, count))
+			return;
 
 		for (uint i = 0; i < count; i++)
 			_vertices[_vdxIndex++] = vertexes[i];
@@ -395,7 +398,8 @@ namespace uut
 		if (count == 0)
 			return;
 
-		TestBatch(topology, texture, count);
+		if (!TestBatch(Topology::TriangleList, texture, count))
+			return;
 
 		for (uint i = 0; i < count; i++)
 			_vertices[_vdxIndex++] = vertexes[indexes[i]];
@@ -405,9 +409,6 @@ namespace uut
 	{
 		if (font == nullptr || text.IsEmpty())
 			return;
-
-// 		SetMaterial(MT_TRANSPARENT);
-// 		SetProjection(PM_2D);
 
 		Vector2 pos = position;
 		IntRect rect;
@@ -423,114 +424,102 @@ namespace uut
 		}
 	}
 
-	void Graphics::Flush()
+	void Graphics::BeginRecord()
 	{
-		DrawAll();
-	}
-
-	///////////////////////////////////////////////////////////////////////////
-	void Graphics::TestBatch(Topology topology, const SharedPtr<Texture2D>& tex, int vrtCount)
-	{
-		if (_topology == topology && _texture == tex &&
-			_vdxIndex + vrtCount < _vbufCount &&
-			_currentMT == _nextMT &&
-			_currentPM == _nextPM &&
-			_currentFM == _nextFM)
-			return;
-
-		if (_vdxIndex > 0)
-			DrawAll();
-
-		_topology = topology;
-		_texture = tex;
-
-		if (_currentMT != _nextMT)
-		{
-			_currentMT = _nextMT;
-			UpdateMaterial();
-		}
-
-		if (_currentPM != _nextPM)
-		{
-			_currentPM = _nextPM;
-			UpdateProjection();
-		}
-
-		if (_currentFM != _nextFM)
-		{
-			_currentFM = _nextFM;
-			_renderState.fillMode = _currentFM;
-		}
-	}
-
-	void Graphics::DrawAll()
-	{
-		_vbuf->Unlock();
-
-		auto render = Renderer::Instance();
-		render->SetState(_renderState);
-		if (_currentPM != PM_NONE)
-			render->SetTransform(RT_PROJECTION, _matProj);
-
-		render->SetTexture(0, _texture);
-		render->SetVertexBuffer(_vbuf, Vertex::SIZE);
-		render->SetVertexDeclaration(_vdec);
-
-		switch (_topology)
-		{
-		case Topology::PointList:
-			render->DrawPrimitive(_topology, _vdxIndex);
-			break;
-
-		case Topology::LineList:
-			render->DrawPrimitive(_topology, _vdxIndex / 2);
-			break;
-
-		case Topology::TrinagleList:
-			render->DrawPrimitive(_topology, _vdxIndex / 3);
-			break;
-
-		default:
-			break;
-		}
-
+		_vertices = static_cast<Vertex*>(_vbuffer->Lock(_vbufCount*Vertex::SIZE));
 		_vdxIndex = 0;
-		_texture = nullptr;
-		_customMat = nullptr;
-		_vertices = static_cast<Vertex*>(_vbuf->Lock(_vbufCount*Vertex::SIZE));
+		_offset = 0;
+
+		_commandList->Reset(_renderState);
+		_commandList->SetVertexBuffer(_vbuffer, sizeof(Vertex));
 	}
 
-	void Graphics::UpdateProjection()
+	void Graphics::EndRecord()
 	{
-		auto render = Renderer::Instance();
+		if (_offset < _vdxIndex)
+		{
+			int count = GetPrimitiveCount(_vdxIndex - _offset);
+			_commandList->DrawPrimitive(count, _offset);
+			_offset = _vdxIndex;
+		}
+
+		_vbuffer->Unlock();
+		_vertices = nullptr;
+		_commandList->Close();
+	}
+
+	void Graphics::Draw()
+	{
+		ModuleInstance<Renderer> render;
+
 		const Vector2 size = render->GetScreenSize();
-		switch (_currentPM)
+		Matrix4 matrix;
+		switch (_projection)
 		{
 		case PM_2D:
-			_matProj = Matrix4::OrthoOffCenter(0, size.x, 0, size.y, 0.01f, 100.0f);
+			matrix = Matrix4::OrthoOffCenter(0, size.x, 0, size.y, 0.01f, 100.0f);
+			render->SetTransform(RT_PROJECTION, matrix);
 			break;
 
 		case PM_3D:
-			_matProj = Matrix4::PerspectiveFov(Math::PI / 4, size.x / size.y, 1.0f, 1000.0f);
+			matrix = Matrix4::PerspectiveFov(Math::PI / 4, size.x / size.y, 1.0f, 1000.0f);
+			render->SetTransform(RT_PROJECTION, matrix);
 			break;
 		}
+
+		render->Execute(_commandList);
 	}
 
-	void Graphics::UpdateMaterial()
+	///////////////////////////////////////////////////////////////////////////
+	bool Graphics::TestBatch(Topology topology, const SharedPtr<Texture2D>& tex, int vrtCount)
 	{
-		Material* mat = nullptr;
-		switch (_currentMT)
+		if (_vdxIndex + vrtCount >= _vbufCount)
+			return false;
+
+		if (_texture != tex || _commandList->GetTopology() != topology)
 		{
-		case MT_OPAQUE: mat = _opaqueMat; break;
-		case MT_TRANSPARENT: mat = _transparentMat; break;
-		case MT_CUSTOM: mat = _customMat; break;
+			if (_offset < _vdxIndex)
+			{
+				int count = GetPrimitiveCount(_vdxIndex - _offset);
+				_commandList->DrawPrimitive(count, _offset);
+				_offset = _vdxIndex;
+			}
+
+			if (_texture != tex)
+			{
+				_commandList->SetTexture(0, tex);
+				_texture = tex;
+			}
+			if (_commandList->GetTopology() != topology)
+				_commandList->SetTopology(topology);
 		}
 
-		if (mat == nullptr)
-			return;
+		return true;
+	}
 
-		_renderState.alphaBlend = mat->IsAlphaBlend();
-		_renderState.alphaTest = mat->IsAlphaTest();
-		_renderState.textureStage[0] = mat->GetTextureStage();
+	int Graphics::GetPrimitiveCount(int vertexCount) const
+	{
+		switch (_commandList->GetTopology())
+		{
+		case uut::Topology::PointList:
+			return vertexCount;
+
+		case uut::Topology::LineList:
+			return vertexCount / 2;
+
+		case uut::Topology::LineStrip:
+			return vertexCount - 1;
+
+		case uut::Topology::TriangleList:
+			return vertexCount / 3;
+
+		case uut::Topology::TriangleStrip:
+			return vertexCount - 2;
+
+		case uut::Topology::TriangleFan:
+			return vertexCount - 2;
+		}
+
+		return 0;
 	}
 }

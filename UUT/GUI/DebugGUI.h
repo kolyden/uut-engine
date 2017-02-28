@@ -2,7 +2,8 @@
 #include <Core/Module.h>
 #include <Core/Timer.h>
 #include <Core/Math/Matrix4.h>
-#include <Video/RenderState.h>
+#include <Video/PipelineState.h>
+#include <Video/Viewport.h>
 
 struct ImDrawData;
 
@@ -11,9 +12,10 @@ namespace uut
 	class Input;
 	class Renderer;
 	class VertexBuffer;
-	class VertexDeclaration;
 	class IndexBuffer;
 	class Texture2D;
+	class PipelineState;
+	class CommandList;
 
 	class DebugGUI : public Module
 	{
@@ -28,12 +30,13 @@ namespace uut
 
 	protected:
 		Timer _timer;
+		SharedPtr<PipelineState> _pipeline;
+		SharedPtr<CommandList> _commandList;
 		SharedPtr<VertexBuffer> _vb;
-		SharedPtr<VertexDeclaration> _vd;
 		SharedPtr<IndexBuffer> _ib;
 		SharedPtr<Texture2D> _fontTex;
 		Matrix4 _matProj;
-		RenderState _renderState;
+		Viewport _viewport;
 
 		int _vbSize;
 		int _ibSize;

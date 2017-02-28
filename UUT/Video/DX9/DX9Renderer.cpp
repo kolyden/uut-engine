@@ -3,12 +3,15 @@
 #include "DX9Texture2D.h"
 #include "DX9VertexBuffer.h"
 #include "DX9IndexBuffer.h"
-#include "DX9VertexDeclaration.h"
+#include "DX9PipelineState.h"
+#include "DX9CommandList.h"
+#include "DX9Command.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_syswm.h"
 #include <Core/Debug.h>
 
 #include <d3d9.h>
+//#include <DxErr.h>
 //#pragma comment(lib, "d3dx9.lib")
 //#pragma comment(lib, "dxerr.lib")
 
@@ -30,167 +33,177 @@ namespace uut
 		if (_d3d) _d3d->Release();
 	}
 
-	void DX9Renderer::ResetStates()
+	SharedPtr<PipelineState> DX9Renderer::CreatePipelineState(const PipelineStateDesc& desc)
 	{
-		SetState(_state, true);
+		// Vertex declaration
+		const int count = desc.inputLayout.Count();
+		if (count == 0)
+		{
+			Debug::LogError("No input layout");
+			return nullptr;
+		}
 
-		_matWorld = Matrix4::Identity;
-		_matView = Matrix4::Identity;
-		_matProj = Matrix4::Perspective(
-			static_cast<float>(_screenSize.x),
-			static_cast<float>(_screenSize.y),
-			0.001f, 1000.0f);
-		_d3ddev->SetTransform(D3DTS_WORLD, (D3DMATRIX*)&_matWorld);
-		_d3ddev->SetTransform(D3DTS_VIEW, (D3DMATRIX*)&_matView);
-		_d3ddev->SetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&_matProj);
+		auto declare = new D3DVERTEXELEMENT9[count + 1];
+		for (int i = 0; i < count; i++)
+		{
+			auto it = desc.inputLayout[i];
+			declare[i].Stream = it.stream;
+			declare[i].Offset = it.offset;
+			declare[i].Type = static_cast<BYTE>(Convert(it.type));
+			declare[i].Method = D3DDECLMETHOD_DEFAULT;
+			declare[i].Usage = static_cast<BYTE>(Convert(it.usage));
+			declare[i].UsageIndex = it.usageIndex;
+		}
+		declare[count] = D3DDECL_END();// { 0xFF, 0, D3DDECLTYPE_UNUSED, 0, 0, 0 };
+		LPDIRECT3DVERTEXDECLARATION9 vd;
+		HRESULT ret = _d3ddev->CreateVertexDeclaration(declare, &vd);
+		delete[] declare;
+		TestReturnCode(ret);
+			//return nullptr;
+
+		auto state = SharedPtr<DX9PipelineState>::Make();
+		state->_desc = desc;
+		state->_vd = vd;
+
+		return state;
 	}
 
 	template<typename T>
-	static bool CheckState(RenderState& state, const RenderState& check, T (RenderState::*var), bool force)
+	static bool CheckState(const PipelineStateDesc& state, const PipelineStateDesc& check, T (PipelineStateDesc::*var), bool force)
 	{
 		if (force || (state.*var) != (check.*var))
-		{
-			(state.*var) = (check.*var);
 			return true;
-		}
 
 		return false;
 	}
 
 	template<typename T>
-	static bool CheckState(RenderTextureStageState& state, const RenderTextureStageState& check, T(RenderTextureStageState::*var), bool force)
+	static bool CheckState(const RenderTextureStageState& state, const RenderTextureStageState& check, T(RenderTextureStageState::*var), bool force)
 	{
 		if (force || (state.*var) != (check.*var))
-		{
-			(state.*var) = (check.*var);
 			return true;
-		}
 
 		return false;
 	}
 
 	template<typename T>
-	static bool CheckState(RenderSamplerState& state, const RenderSamplerState& check, T(RenderSamplerState::*var), bool force)
+	static bool CheckState(const RenderSamplerState& state, const RenderSamplerState& check, T(RenderSamplerState::*var), bool force)
 	{
 		if (force || (state.*var) != (check.*var))
-		{
-			(state.*var) = (check.*var);
 			return true;
-		}
 
 		return false;
 	}
 
-	void DX9Renderer::SetState(const RenderState& state, bool force)
+	void DX9Renderer::SetPipeline(const PipelineStateDesc& state, bool force)
 	{
-		if (CheckState(_state, state, &RenderState::zbuffer, force))
-			_d3ddev->SetRenderState(D3DRS_ZENABLE, Convert(_state.zbuffer));
-		if (CheckState(_state, state, &RenderState::zwriteEnable, force))
-			_d3ddev->SetRenderState(D3DRS_ZWRITEENABLE, _state.zwriteEnable);
-		if (CheckState(_state, state, &RenderState::zfunc, force))
-			_d3ddev->SetRenderState(D3DRS_ZFUNC, Convert(_state.zfunc));
+		const PipelineStateDesc& newDesc = state;
+		const PipelineStateDesc& oldDesc = _state;
 
-		if (CheckState(_state, state, &RenderState::alphaBlend, force))
-			_d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, _state.alphaBlend);
-		if (CheckState(_state, state, &RenderState::alphaTest, force))
-			_d3ddev->SetRenderState(D3DRS_ALPHATESTENABLE, _state.alphaTest);
-		if (CheckState(_state, state, &RenderState::alphaRef, force))
-			_d3ddev->SetRenderState(D3DRS_ALPHAREF, _state.alphaRef);
-		if (CheckState(_state, state, &RenderState::alphaFunc, force))
-			_d3ddev->SetRenderState(D3DRS_ALPHAFUNC, Convert(_state.alphaFunc));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::zbuffer, force))
+			_d3ddev->SetRenderState(D3DRS_ZENABLE, Convert(newDesc.zbuffer));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::zwriteEnable, force))
+			_d3ddev->SetRenderState(D3DRS_ZWRITEENABLE, newDesc.zwriteEnable);
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::zfunc, force))
+			_d3ddev->SetRenderState(D3DRS_ZFUNC, Convert(newDesc.zfunc));
 
-		if (CheckState(_state, state, &RenderState::blendOp, force))
-			_d3ddev->SetRenderState(D3DRS_BLENDOP, Convert(_state.blendOp));
-		if (CheckState(_state, state, &RenderState::srcBlend, force))
-			_d3ddev->SetRenderState(D3DRS_SRCBLEND, Convert(_state.srcBlend));
-		if (CheckState(_state, state, &RenderState::destBlend, force))
-			_d3ddev->SetRenderState(D3DRS_DESTBLEND, Convert(_state.destBlend));
-		if (CheckState(_state, state, &RenderState::blendOpAlpha, force))
-			_d3ddev->SetRenderState(D3DRS_BLENDOPALPHA, Convert(_state.blendOpAlpha));
-		if (CheckState(_state, state, &RenderState::srcBlendAlpha, force))
-			_d3ddev->SetRenderState(D3DRS_SRCBLENDALPHA, Convert(_state.srcBlendAlpha));
-		if (CheckState(_state, state, &RenderState::destBlendAlpha, force))
-			_d3ddev->SetRenderState(D3DRS_DESTBLENDALPHA, Convert(_state.destBlendAlpha));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::alphaBlend, force))
+			_d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, newDesc.alphaBlend);
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::alphaTest, force))
+			_d3ddev->SetRenderState(D3DRS_ALPHATESTENABLE, newDesc.alphaTest);
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::alphaRef, force))
+			_d3ddev->SetRenderState(D3DRS_ALPHAREF, newDesc.alphaRef);
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::alphaFunc, force))
+			_d3ddev->SetRenderState(D3DRS_ALPHAFUNC, Convert(newDesc.alphaFunc));
 
-		if (CheckState(_state, state, &RenderState::lightning, force))
-			_d3ddev->SetRenderState(D3DRS_LIGHTING, _state.lightning);
-		if (CheckState(_state, state, &RenderState::ambientColor, force))
-			_d3ddev->SetRenderState(D3DRS_AMBIENT, _state.ambientColor.ToInt());
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::blendOp, force))
+			_d3ddev->SetRenderState(D3DRS_BLENDOP, Convert(newDesc.blendOp));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::srcBlend, force))
+			_d3ddev->SetRenderState(D3DRS_SRCBLEND, Convert(newDesc.srcBlend));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::destBlend, force))
+			_d3ddev->SetRenderState(D3DRS_DESTBLEND, Convert(newDesc.destBlend));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::blendOpAlpha, force))
+			_d3ddev->SetRenderState(D3DRS_BLENDOPALPHA, Convert(newDesc.blendOpAlpha));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::srcBlendAlpha, force))
+			_d3ddev->SetRenderState(D3DRS_SRCBLENDALPHA, Convert(newDesc.srcBlendAlpha));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::destBlendAlpha, force))
+			_d3ddev->SetRenderState(D3DRS_DESTBLENDALPHA, Convert(newDesc.destBlendAlpha));
 
-		if (CheckState(_state, state, &RenderState::fogEnabled, force))
-			_d3ddev->SetRenderState(D3DRS_FOGENABLE, _state.fogEnabled);
-		if (CheckState(_state, state, &RenderState::fogColor, force))
-			_d3ddev->SetRenderState(D3DRS_FOGCOLOR, _state.fogColor.ToInt());
-		if (CheckState(_state, state, &RenderState::fogMode, force))
-			_d3ddev->SetRenderState(D3DRS_FOGTABLEMODE, Convert(_state.fogMode));
-		if (CheckState(_state, state, &RenderState::fogDensity, force))
-			_d3ddev->SetRenderState(D3DRS_FOGDENSITY, *((DWORD*)(&_state.fogDensity)));
-		if (CheckState(_state, state, &RenderState::fogStart, force))
-			_d3ddev->SetRenderState(D3DRS_FOGSTART, *((DWORD*)(&_state.fogStart)));
-		if (CheckState(_state, state, &RenderState::fogEnd, force))
-			_d3ddev->SetRenderState(D3DRS_FOGEND, *((DWORD*)(&_state.fogEnd)));
-		if (CheckState(_state, state, &RenderState::fogRangeEnabled, force))
-			_d3ddev->SetRenderState(D3DRS_RANGEFOGENABLE, _state.fogRangeEnabled);
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::lightning, force))
+			_d3ddev->SetRenderState(D3DRS_LIGHTING, newDesc.lightning);
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::ambientColor, force))
+			_d3ddev->SetRenderState(D3DRS_AMBIENT, newDesc.ambientColor.ToInt());
 
-		if (CheckState(_state, state, &RenderState::fillMode, force))
-			_d3ddev->SetRenderState(D3DRS_FILLMODE, Convert(_state.fillMode));
-		if (CheckState(_state, state, &RenderState::shadeMode, force))
-			_d3ddev->SetRenderState(D3DRS_SHADEMODE, Convert(_state.shadeMode));
-		if (CheckState(_state, state, &RenderState::cullMode, force))
-			_d3ddev->SetRenderState(D3DRS_CULLMODE, Convert(_state.cullMode));
-		if (CheckState(_state, state, &RenderState::scissorTest, force))
-			_d3ddev->SetRenderState(D3DRS_SCISSORTESTENABLE, _state.scissorTest);
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogEnabled, force))
+			_d3ddev->SetRenderState(D3DRS_FOGENABLE, newDesc.fogEnabled);
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogColor, force))
+			_d3ddev->SetRenderState(D3DRS_FOGCOLOR, newDesc.fogColor.ToInt());
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogMode, force))
+			_d3ddev->SetRenderState(D3DRS_FOGTABLEMODE, Convert(newDesc.fogMode));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogDensity, force))
+			_d3ddev->SetRenderState(D3DRS_FOGDENSITY, *((DWORD*)(&newDesc.fogDensity)));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogStart, force))
+			_d3ddev->SetRenderState(D3DRS_FOGSTART, *((DWORD*)(&newDesc.fogStart)));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogEnd, force))
+			_d3ddev->SetRenderState(D3DRS_FOGEND, *((DWORD*)(&newDesc.fogEnd)));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogRangeEnabled, force))
+			_d3ddev->SetRenderState(D3DRS_RANGEFOGENABLE, newDesc.fogRangeEnabled);
 
-		for (int i = 0; i < RenderState::TEXTURE_STAGE_COUNT; i++)
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fillMode, force))
+			_d3ddev->SetRenderState(D3DRS_FILLMODE, Convert(newDesc.fillMode));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::shadeMode, force))
+			_d3ddev->SetRenderState(D3DRS_SHADEMODE, Convert(newDesc.shadeMode));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::cullMode, force))
+			_d3ddev->SetRenderState(D3DRS_CULLMODE, Convert(newDesc.cullMode));
+		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::scissorTest, force))
+			_d3ddev->SetRenderState(D3DRS_SCISSORTESTENABLE, newDesc.scissorTest);
+
+		for (int i = 0; i < PipelineStateDesc::TEXTURE_STAGE_COUNT; i++)
 		{
-			if (CheckState(_state.textureStage[i], state.textureStage[i], &RenderTextureStageState::colorOp, force))
-				_d3ddev->SetTextureStageState(i, D3DTSS_COLOROP, Convert(_state.textureStage[i].colorOp));
+			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::colorOp, force))
+				_d3ddev->SetTextureStageState(i, D3DTSS_COLOROP, Convert(newDesc.textureStage[i].colorOp));
 
-			if (CheckState(_state.textureStage[i], state.textureStage[i], &RenderTextureStageState::colorArg1, force))
-				_d3ddev->SetTextureStageState(i, D3DTSS_COLORARG1, Convert(_state.textureStage[i].colorArg1));
+			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::colorArg1, force))
+				_d3ddev->SetTextureStageState(i, D3DTSS_COLORARG1, Convert(newDesc.textureStage[i].colorArg1));
 
-			if (CheckState(_state.textureStage[i], state.textureStage[i], &RenderTextureStageState::colorArg2, force))
-				_d3ddev->SetTextureStageState(i, D3DTSS_COLORARG2, Convert(_state.textureStage[i].colorArg2));
+			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::colorArg2, force))
+				_d3ddev->SetTextureStageState(i, D3DTSS_COLORARG2, Convert(newDesc.textureStage[i].colorArg2));
 
-			if (CheckState(_state.textureStage[i], state.textureStage[i], &RenderTextureStageState::alphaOp, force))
-				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAOP, Convert(_state.textureStage[i].alphaOp));
+			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::alphaOp, force))
+				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAOP, Convert(newDesc.textureStage[i].alphaOp));
 
-			if (CheckState(_state.textureStage[i], state.textureStage[i], &RenderTextureStageState::alphaArg1, force))
-				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAARG1, Convert(_state.textureStage[i].alphaArg1));
+			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::alphaArg1, force))
+				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAARG1, Convert(newDesc.textureStage[i].alphaArg1));
 
-			if (CheckState(_state.textureStage[i], state.textureStage[i], &RenderTextureStageState::alphaArg2, force))
-				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAARG2, Convert(_state.textureStage[i].alphaArg2));
+			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::alphaArg2, force))
+				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAARG2, Convert(newDesc.textureStage[i].alphaArg2));
 		}
 
-		for (int i = 0; i < RenderState::SAMPLER_COUNT; i++)
+		for (int i = 0; i < PipelineStateDesc::SAMPLER_COUNT; i++)
 		{
-			if (CheckState(_state.sampler[i], state.sampler[i], &RenderSamplerState::addressu, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSU, Convert(_state.sampler[i].addressu));
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::addressu, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSU, Convert(newDesc.sampler[i].addressu));
 
-			if (CheckState(_state.sampler[i], state.sampler[i], &RenderSamplerState::addressv, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSV, Convert(_state.sampler[i].addressv));
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::addressv, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSV, Convert(newDesc.sampler[i].addressv));
 
-			if (CheckState(_state.sampler[i], state.sampler[i], &RenderSamplerState::addressw, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSW, Convert(_state.sampler[i].addressw));
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::addressw, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSW, Convert(newDesc.sampler[i].addressw));
 
-			if (CheckState(_state.sampler[i], state.sampler[i], &RenderSamplerState::borderColor, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_BORDERCOLOR, _state.sampler[i].borderColor.ToInt());
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::borderColor, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_BORDERCOLOR, newDesc.sampler[i].borderColor.ToInt());
 
-			if (CheckState(_state.sampler[i], state.sampler[i], &RenderSamplerState::minFilter, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_MINFILTER, Convert(_state.sampler[i].minFilter));
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::minFilter, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_MINFILTER, Convert(newDesc.sampler[i].minFilter));
 
-			if (CheckState(_state.sampler[i], state.sampler[i], &RenderSamplerState::magFilter, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_MAGFILTER, Convert(_state.sampler[i].magFilter));
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::magFilter, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_MAGFILTER, Convert(newDesc.sampler[i].magFilter));
 
-			if (CheckState(_state.sampler[i], state.sampler[i], &RenderSamplerState::mipFilter, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_MIPFILTER, Convert(_state.sampler[i].mipFilter));
+			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::mipFilter, force))
+				_d3ddev->SetSamplerState(i, D3DSAMP_MIPFILTER, Convert(newDesc.sampler[i].mipFilter));
 		}
-	}
 
-	void DX9Renderer::SetScissorRect(const IntRect& rect)
-	{
-		const RECT r{ rect.GetLeft(),rect.GetTop(),rect.GetRight(),rect.GetBottom() };
-		_d3ddev->SetScissorRect(&r);
+		_state = state;
 	}
 
 	const RendererStatistics& DX9Renderer::GetStatistics() const
@@ -198,22 +211,17 @@ namespace uut
 		return _statistics;
 	}
 
-	void DX9Renderer::SetViewport(const Viewport& viewport)
-	{
-		_viewport = viewport;
-		D3DVIEWPORT9 vp
-		{
-			_viewport.x, _viewport.y,
-			_viewport.width, _viewport.height,
-			_viewport.minZ, _viewport.maxZ 
-		};
-		_d3ddev->SetViewport(&vp);
-	}
-
-	const Viewport& DX9Renderer::GetViewport() const
-	{
-		return _viewport;
-	}
+// 	void DX9Renderer::SetViewport(const Viewport& viewport)
+// 	{
+// 		_viewport = viewport;
+// 		D3DVIEWPORT9 vp
+// 		{
+// 			_viewport.x, _viewport.y,
+// 			_viewport.width, _viewport.height,
+// 			_viewport.minZ, _viewport.maxZ 
+// 		};
+// 		_d3ddev->SetViewport(&vp);
+// 	}
 
 	bool DX9Renderer::SetTransform(RenderTransform type, const Matrix4& mat)
 	{
@@ -242,93 +250,25 @@ namespace uut
 	bool DX9Renderer::BeginScene()
 	{
 		HRESULT ret = _d3ddev->BeginScene();
+
+		SetPipeline(_state, true);
+
+		_matWorld = Matrix4::Identity;
+		_matView = Matrix4::Identity;
+		_matProj = Matrix4::Perspective(
+			static_cast<float>(_screenSize.x),
+			static_cast<float>(_screenSize.y),
+			0.001f, 1000.0f);
+		_d3ddev->SetTransform(D3DTS_WORLD, (D3DMATRIX*)&_matWorld);
+		_d3ddev->SetTransform(D3DTS_VIEW, (D3DMATRIX*)&_matView);
+		_d3ddev->SetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&_matProj);
+
 		return TestReturnCode(ret);
 	}
 
 	void DX9Renderer::EndScene()
 	{
 		_d3ddev->EndScene();
-	}
-
-	bool DX9Renderer::SetTexture(int stage, const SharedPtr<Texture2D>& texture)
-	{
-		HRESULT ret;
-		if (texture == nullptr)
-			ret = _d3ddev->SetTexture(stage, nullptr);
-		else
-		{
-			auto data = texture ? reinterpret_cast<LPDIRECT3DTEXTURE9>(texture->GetNativeHandle()) : nullptr;
-			ret = _d3ddev->SetTexture(stage, data);
-		}
-	
-		return TestReturnCode(ret);
-	}
-
-	bool DX9Renderer::SetVertexBuffer(const SharedPtr<VertexBuffer>& buffer, uint16_t stride, uint32_t offset)
-	{
-		auto data = buffer ? reinterpret_cast<LPDIRECT3DVERTEXBUFFER9>(buffer->GetInternalHandle()) : nullptr;
-		HRESULT ret = _d3ddev->SetStreamSource(0, data, offset, stride);
-		return TestReturnCode(ret);
-	}
-
-	bool DX9Renderer::SetIndexBuffer(const SharedPtr<IndexBuffer>& buffer)
-	{
-		auto data = buffer ? reinterpret_cast<LPDIRECT3DINDEXBUFFER9>(buffer->GetInternalHandle()) : nullptr;
-		HRESULT ret = _d3ddev->SetIndices(data);
-		return TestReturnCode(ret);
-	}
-
-	bool DX9Renderer::SetVertexDeclaration(const SharedPtr<VertexDeclaration>& declare)
-	{
-		HRESULT ret;
-		if (declare == nullptr)
-			ret = _d3ddev->SetVertexDeclaration(nullptr);
-		else
-		{
-			auto data = reinterpret_cast<LPDIRECT3DVERTEXDECLARATION9>(declare->GetInternalHandle());
-			ret = _d3ddev->SetVertexDeclaration(data);
-		}
-
-		return TestReturnCode(ret);
-	}
-
-	bool DX9Renderer::DrawPrimitive(Topology topology, uint32_t primitiveCount, uint32_t offset)
-	{
-		_statistics.drawCall++;
-		_statistics.verticesCount += 0;
-
-		HRESULT ret = _d3ddev->DrawPrimitive(Convert(topology), offset, primitiveCount);
-		return TestReturnCode(ret);
-	}
-
-	bool DX9Renderer::DrawIndexedPrimitive(Topology topology, int BaseVertexIndex, uint32_t MinVertexIndex, uint32_t NumVertices, uint32_t startIndex, uint32_t primitiveCount)
-	{
-		_statistics.drawCall++;
-		_statistics.verticesCount += 0;
-
-		HRESULT ret = _d3ddev->DrawIndexedPrimitive(Convert(topology),
-			BaseVertexIndex, MinVertexIndex, NumVertices, startIndex, primitiveCount);
-		return TestReturnCode(ret);
-	}
-
-	bool DX9Renderer::Clear(const Color32& color, float z, uint32_t stencil)
-	{
-		_statistics.drawCall = 0;
-		_statistics.verticesCount = 0;
-
-		bool change = false;
-		if (_state.scissorTest)
-		{
-			change = true;
-			_d3ddev->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
-		}
-
-		HRESULT ret = _d3ddev->Clear(0, nullptr,
-			D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, color.ToInt(), z, stencil);
-
-		if (change)
-			_d3ddev->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
-		return TestReturnCode(ret);
 	}
 
 	bool DX9Renderer::Present()
@@ -384,36 +324,6 @@ namespace uut
 		ib->_data = data;
 		ib->_size = size;
 		return ib;
-	}
-
-	SharedPtr<VertexDeclaration> DX9Renderer::CreateVertexDeclaration(const List<VertexElement>& elements)
-	{
-		const int count = elements.Count();
-		if (count == 0)
-			return nullptr;
-
-		auto declare = new D3DVERTEXELEMENT9[count + 1];
-		for (int i = 0; i < count;i++)
-		{
-			auto it = elements[i];
-			declare[i].Stream = it.stream;
-			declare[i].Offset = it.offset;
-			declare[i].Type = static_cast<BYTE>(Convert(it.type));
-			declare[i].Method = D3DDECLMETHOD_DEFAULT;
-			declare[i].Usage = static_cast<BYTE>(Convert(it.usage));
-			declare[i].UsageIndex = it.usageIndex;
-		}
-		declare[count] = D3DDECL_END();// { 0xFF, 0, D3DDECLTYPE_UNUSED, 0, 0, 0 };
-		LPDIRECT3DVERTEXDECLARATION9 data;
-		HRESULT ret = _d3ddev->CreateVertexDeclaration(declare, &data);
-		delete[] declare;
-		if (!TestReturnCode(ret))
-			return nullptr;
-
-		auto vd = SharedPtr<DX9VertexDeclaration>::Make();
-		vd->_elements = elements;
-		vd->_data = data;
-		return vd;
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -473,34 +383,75 @@ namespace uut
 			return nullptr;
 		}
 
-		D3DVIEWPORT9 vp;
-		renderer->_d3ddev->GetViewport(&vp);
-		renderer->_viewport.x = vp.X;
-		renderer->_viewport.y = vp.Y;
-		renderer->_viewport.width = vp.Width;
-		renderer->_viewport.height = vp.Height;
-		renderer->_viewport.minZ = vp.MinZ;
-		renderer->_viewport.maxZ = vp.MaxZ;
-
+		renderer->SetPipeline(renderer->_state, true);
 		return renderer;
 	}
 
-	///////////////////////////////////////////////////////////////////////////
-	bool DX9Renderer::TestReturnCode(HRESULT ret)
+	void DX9Renderer::Execute(const SharedPtr<CommandList>& commandList)
 	{
-		if (ret != D3D_OK)
+		if (!commandList  || commandList->GetType() != DX9CommandList::GetTypeStatic())
+			return;
+
+		auto dx9cmdList = DynamicCast<DX9CommandList>(commandList);
+		auto state = dx9cmdList->_state;
+		SetPipeline(state->GetDesc(), false);
+
+		HRESULT ret = _d3ddev->SetVertexDeclaration(state->_vd);
+		TestReturnCode(ret);
+
+// 		_d3ddev->SetStreamSource(0, nullptr, 0, 0);
+// 		_d3ddev->SetIndices(nullptr);
+// 		_d3ddev->SetTexture(0, nullptr);
+
+		for (const auto& command : dx9cmdList->_commands)
 		{
-			char* buf;
-			::FormatMessageA(ret, NULL, ret, 0, (LPSTR)&buf, 0, NULL);
-			Debug::LogError("D3D9 Error Code %d - \"%s\"", ret, buf);
-			::LocalFree(buf);
-			/*Debug::LogError("D3D9: %s - %s",
-				DXGetErrorStringA(ret),
-				DXGetErrorDescriptionA(ret));*/
+			HRESULT result = command.Execute(_d3ddev);
+			TestReturnCode(result);
+		}
+	}
+
+	SharedPtr<CommandList> DX9Renderer::CreateCommandList()
+	{
+		auto list = SharedPtr<DX9CommandList>::Make();
+
+// 		D3DVIEWPORT9 vp;
+// 		_d3ddev->GetViewport(&vp);
+// 		list->_viewport.x = vp.X;
+// 		list->_viewport.y = vp.Y;
+// 		list->_viewport.width = vp.Width;
+// 		list->_viewport.height = vp.Height;
+// 		list->_viewport.minZ = vp.MinZ;
+// 		list->_viewport.maxZ = vp.MaxZ;
+
+		return list;
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+	bool DX9Renderer::TestReturnCode(HRESULT code)
+	{
+		if (code == D3D_OK)
+			return true;
+
+// 		auto str = DXGetErrorStringA(code);
+// 		Debug::LogError("D3D9 Error Code %d - \"%s\"", code, str);
+// 		return false;
+
+		const int size = 1024;
+		static TCHAR buf[size];
+
+		const DWORD flags = FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS;
+		const DWORD ret = ::FormatMessage(flags, NULL, ERROR_BAD_EXE_FORMAT, 0, buf, size, NULL);
+		if (FAILED(ret))
+		{
+			Debug::LogError("D3D9 Error Code %d", code);
 			return false;
 		}
 
-		return true;
+		Debug::LogError("D3D9 Error Code %d - \"%s\"", code, buf);
+		/*Debug::LogError("D3D9: %s - %s",
+			DXGetErrorStringA(ret),
+			DXGetErrorDescriptionA(ret));*/
+		return false;
 	}
 
 	D3DTRANSFORMSTATETYPE DX9Renderer::Convert(RenderTransform type)
@@ -522,9 +473,9 @@ namespace uut
 		case Topology::PointList: return D3DPT_POINTLIST;
 		case Topology::LineList: return D3DPT_LINELIST;
 		case Topology::LineStrip: return D3DPT_LINESTRIP;
-		case Topology::TrinagleList: return D3DPT_TRIANGLELIST;
-		case Topology::TrinagleStrip: return D3DPT_TRIANGLESTRIP;
-		case Topology::TrinagleFan: return D3DPT_TRIANGLEFAN;
+		case Topology::TriangleList: return D3DPT_TRIANGLELIST;
+		case Topology::TriangleStrip: return D3DPT_TRIANGLESTRIP;
+		case Topology::TriangleFan: return D3DPT_TRIANGLEFAN;
 		}
 
 		return D3DPT_POINTLIST;

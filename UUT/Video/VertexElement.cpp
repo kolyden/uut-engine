@@ -1,4 +1,4 @@
-#include "VertexDeclaration.h"
+#include "VertexElement.h"
 
 namespace uut
 {
@@ -17,15 +17,4 @@ namespace uut
 		, usage(_usage)
 		, usageIndex(0)
 	{}
-
-	UUT_OBJECT_IMPLEMENT(VertexDeclaration)
-	{}
-
-	VertexDeclaration::VertexDeclaration()
-	{
-	}
-
-	VertexDeclaration::~VertexDeclaration()
-	{
-	}
 }

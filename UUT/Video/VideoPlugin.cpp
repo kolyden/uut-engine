@@ -10,8 +10,8 @@
 #include "Texture.h"
 #include "Texture2D.h"
 #include "VertexBuffer.h"
-#include "VertexDeclaration.h"
 #include "Renderer.h"
+#include "CommandList.h"
 #include "Graphics.h"
 #include "imageEffects/Plasma.h"
 #include "Loaders/Texture2DLoader.h"
@@ -19,6 +19,7 @@
 #include "Font.h"
 #include "BitmapFont.h"
 #include "TextureAtlas.h"
+#include "PipelineState.h"
 
 namespace uut
 {
@@ -33,10 +34,12 @@ namespace uut
 		UUT_REGISTER_OBJECT(BufferObject);
 		UUT_REGISTER_OBJECT(VertexBuffer);
 		UUT_REGISTER_OBJECT(IndexBuffer);
-		UUT_REGISTER_OBJECT(VertexDeclaration);
+		UUT_REGISTER_OBJECT(CommandList);
+		UUT_REGISTER_OBJECT(PipelineState);
 
 		UUT_REGISTER_OBJECT(Color);
 		UUT_REGISTER_OBJECT(Color32);
+		UUT_REGISTER_OBJECT(Viewport);
 
 		// Textures
 		UUT_REGISTER_OBJECT(Image);
