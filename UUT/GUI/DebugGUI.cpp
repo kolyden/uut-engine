@@ -214,13 +214,11 @@ namespace uut
 				}
 				else
 				{
-					//const RECT r = { (LONG)pcmd->ClipRect.x, (LONG)pcmd->ClipRect.y, (LONG)pcmd->ClipRect.z, (LONG)pcmd->ClipRect.w };
 					auto texPtr = static_cast<Texture2D*>(pcmd->TextureId);
 					_commandList->SetTexture(0, texPtr != nullptr ? texPtr->GetSharedThis() : nullptr);
-					_commandList->SetScissorRect(
-						IntRect::FromLBRT((int)pcmd->ClipRect.x, (int)pcmd->ClipRect.w, (int)pcmd->ClipRect.z, (int)pcmd->ClipRect.y));
-// 					renderer->SetScissorRect(
-// 						IntRect::FromLBRT((int)pcmd->ClipRect.x, (int)pcmd->ClipRect.w, (int)pcmd->ClipRect.z, (int)pcmd->ClipRect.y));
+					_commandList->SetScissorRect(IntRect::FromLBRT(
+						(int)pcmd->ClipRect.x, (int)pcmd->ClipRect.w,
+						(int)pcmd->ClipRect.z, (int)pcmd->ClipRect.y));
 					_commandList->DrawIndexedPrimitive(vtx_offset, 0,
 						cmd_list->VtxBuffer.size(), idx_offset, pcmd->ElemCount / 3);
 				}

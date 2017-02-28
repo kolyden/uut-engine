@@ -141,9 +141,7 @@ namespace uut
 		UUT_REGISTER_ENUM(Direction);
 
 		Context::CreateModule<DebugGUI>();
-		Context::CreateModule<Graphics>();
 
-		Graphics::Instance()->SetProjection(Graphics::PM_2D);
 		ModuleInstance<ResourceCache> cache;
 		cache->AddLoader(SharedPtr<Quake1ModelLoader>::Make());
 		cache->AddLoader(SharedPtr<BSPLevelLoader>::Make());
@@ -152,11 +150,13 @@ namespace uut
 
 		cache->AddSaver(SharedPtr<YamlFileSaver>::Make());
 
-		_tex = LoadResource<Texture2D>("rogueliketiles.png", { {"silent", nullptr} });
 			// cache->Load<Texture2D>("rogueliketiles.png");
 		_font = cache->Load<Font>("Consolas.fnt");
 		_model = cache->Load<Quake1Model>("player.mdl");
 // 		_level = cache->Load<BSPLevel>("start.bsp");
+
+		_opaque = SharedPtr<Graphics>::Make(Graphics::MT_OPAQUE, Graphics::PM_3D);
+		_transparent = SharedPtr<Graphics>::Make(Graphics::MT_TRANSPARENT, Graphics::PM_2D);
 
 		_camera = SharedPtr<FreeCamera>::Make();
 		_camera->SetPosition(Vector3(8.5f, 10, -50));
@@ -302,7 +302,6 @@ namespace uut
 
 		///////////////////////////////////////////////////////////////
 		auto renderer = Renderer::Instance();
-		auto graphics = Graphics::Instance();
 		auto gui = DebugGUI::Instance();
 
 		//renderer->Clear(Color32(114, 144, 154));
@@ -311,19 +310,17 @@ namespace uut
 // 			_plasma->Apply(_texture,
 // 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10))
 // 			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
-			graphics->BeginRecord();
-			graphics->SetViewport(Viewport(0, 0, renderer->GetScreenSize()));
-			graphics->SetMaterial(Graphics::MT_OPAQUE);
-			graphics->SetProjection(Graphics::PM_3D);
-			graphics->Clear(Color32(114, 144, 154));
+			_opaque->BeginRecord();
+			_opaque->SetViewport(Viewport(0, 0, renderer->GetScreenSize()));
+			_opaque->Clear(Color32(114, 144, 154));
 
 			Matrix4 oldMat = renderer->GetTransform(RT_VIEW);
 			auto& cameraMat = _camera->UpdateViewMatrix();
 			renderer->SetTransform(RT_VIEW, cameraMat);
 
-			graphics->DrawLine(Vector3::Zero, Vector3::AxisX * 100, Color32::Red);
-			graphics->DrawLine(Vector3::Zero, Vector3::AxisY * 100, Color32::Green);
-			graphics->DrawLine(Vector3::Zero, Vector3::AxisZ * 100, Color32::Blue);
+			_opaque->DrawLine(Vector3::Zero, Vector3::AxisX * 100, Color32::Red);
+			_opaque->DrawLine(Vector3::Zero, Vector3::AxisY * 100, Color32::Green);
+			_opaque->DrawLine(Vector3::Zero, Vector3::AxisZ * 100, Color32::Blue);
 
 			if (_model)
 			{				
@@ -335,7 +332,7 @@ namespace uut
 				static float time = 0;
 
 				const Vector3 pos = Vector3(20, 0, 30);
-				graphics->DrawLine(pos, pos + Vector3::AxisY * 10, Color32::Magenta);
+				_opaque->DrawLine(pos, pos + Vector3::AxisY * 10, Color32::Magenta);
 
 				static const auto rot = Quaternion::RotationAxis(Vector3::AxisX, -Degree::Angle90) *
 					Quaternion::RotationAxis(Vector3::AxisY, Degree::Angle90);
@@ -344,7 +341,7 @@ namespace uut
 				auto& frames = _model->GetFrames();
 				auto it = _model->GetAnimations().Find(anim[index]);
 				if (it != _model->GetAnimations().End())
-					graphics->DrawMesh(mat, frames[it->second], _model->GetSkins()[0]);
+					_opaque->DrawMesh(mat, frames[it->second], _model->GetSkins()[0]);
 
 				time += Time::GetDeltaTime();
 				while (time >= frameTime)
@@ -357,33 +354,32 @@ namespace uut
 			if (_level && _level->GetMeshes().Count() > 0)
 			{
 				static const Matrix4 mat = Matrix4::Scaling(Vector3(0.5f));
-				graphics->DrawMesh(mat, _level->GetMeshes()[0]);
+				_opaque->DrawMesh(mat, _level->GetMeshes()[0]);
 			}
+			_opaque->EndRecord();
+			_opaque->Draw();
 
 			renderer->SetTransform(RT_VIEW, oldMat);
 
-			graphics->SetProjection(Graphics::PM_2D);
-			graphics->SetMaterial(Graphics::MT_TRANSPARENT);
+			_transparent->BeginRecord();
+			//_transparent->DrawQuad(Rect(10, 10, 100, 100), 15, nullptr, Color32(0, 255, 0, 255));
 
 			if (_font)
-				graphics->PrintText(Vector2(10, 10), 15, "qwertyuiopasdfghjklzxcvbnm", _font, Color32::Black);
-// 			if (_tex)
-// 				graphics->DrawQuad(IntRect(10, 30, _tex->GetWidth() * 2, _tex->GetHeight() * 2), 15, _tex);
+				_transparent->PrintText(Vector2(10, 10), 15, "qwertyuiopasdfghjklzxcvbnm", _font, Color32::Black);
 			if (_model)
 			{
-				graphics->SetMaterial(Graphics::MT_OPAQUE);
 				const List<SharedPtr<Texture2D>>& skins = _model->GetSkins();
 				int x = 0;
 				for (size_t i = 0; i < skins.Count(); i++)
 				{
 					x += 10;
 					auto& tex = skins[i];
-					graphics->DrawQuad(IntRect(IntVector2(x, 50), tex->GetSize()), 15, tex);
+					_transparent->DrawQuad(IntRect(x, 50, tex->GetSize()), 15, tex);
 					x += tex->GetSize().x;
 				}
 			}
-			graphics->EndRecord();
-			graphics->Draw();
+			_transparent->EndRecord();
+			_transparent->Draw();
 
 			gui->SetupCamera();
 			gui->Draw();

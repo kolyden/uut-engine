@@ -86,7 +86,7 @@ namespace uut
 		auto tilemap = _tilemap.Lock();
 		if (!tilemap)
 			return;
-
+		/*
 		ModuleInstance<Graphics> graphics;
 		const auto& cellSize = tilemap->GetCellSize();
 		graphics->SetMaterial(_transparent ? Graphics::MT_TRANSPARENT : Graphics::MT_OPAQUE);
@@ -105,7 +105,7 @@ namespace uut
 					Rect(cellSize.x*x, cellSize.y*(tilemap->GetSize().y - y - 1), cellSize.x, cellSize.y),
 					20, tex, item.normalizedRect);
 			}
-		}
+		}*/
 	}
 
 	int TilesetLayer::Pos2Index(int x, int y) const

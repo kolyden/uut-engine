@@ -19,9 +19,9 @@ namespace uut
 	class VertexBuffer;
 	class Viewport;
 
-	class Graphics : public Module
+	class Graphics : public Object
 	{
-		UUT_MODULE(uut, Graphics, Module)
+		UUT_OBJECT(uut, Graphics, Module)
 	public:
 		enum ProjectionMode
 		{
@@ -36,12 +36,9 @@ namespace uut
 			MT_TRANSPARENT,
 		};
 
-		Graphics();
+		Graphics(MaterialType material, ProjectionMode projection, FillMode fillMode = FillMode::Solid);
 		virtual ~Graphics();
 
-		void SetProjection(ProjectionMode mode);
-		void SetMaterial(MaterialType type);
-		void SetFillMode(FillMode mode);
 		void SetViewport(const Viewport& viewport);
 		void Clear(const Color32& color = Color32::White, float z = 1.0f, uint32_t stencil = 0);
 
@@ -73,34 +70,19 @@ namespace uut
 		void Draw();
 
 	protected:
-		struct Material
-		{
-			MaterialType type;
-			ProjectionMode projection;
-			SharedPtr<PipelineState> renderState;
-			SharedPtr<CommandList> commandList;
-			SharedPtr<VertexBuffer> vbuffer;
-			SharedPtr<Texture2D> texture;
+		ProjectionMode _projection;
+		SharedPtr<PipelineState> _renderState;
+		SharedPtr<CommandList> _commandList;
+		SharedPtr<VertexBuffer> _vbuffer;
+		SharedPtr<Texture2D> _texture;
 
-			Vertex* vertices = nullptr;
-			uint vdxIndex = 0;
-			uint offset = 0;
-
-			void Reset();
-		};
-
-		MaterialType _nextMT;
-		FillMode _nextFM;
-		ProjectionMode _nextPM;
+		Vertex* _vertices = nullptr;
+		uint _vdxIndex = 0;
+		uint _offset = 0;
 
 		uint _vbufCount;
 
-		List<SharedPtr<Material>> _materialList;
-		List<SharedPtr<Material>> _freeMaterials;
-
-		SharedPtr<Material> GetMaterial(Topology topology);
-
-		bool TestBatch(const SharedPtr<Material>& material, const SharedPtr<Texture2D>& tex, int vrtCount);
-		static int GetPrimitiveCount(const SharedPtr<Material>& material, int vertexCount);
+		bool TestBatch(Topology topology, const SharedPtr<Texture2D>& tex, int vrtCount);
+		int GetPrimitiveCount(int vertexCount) const;
 	};
 }
