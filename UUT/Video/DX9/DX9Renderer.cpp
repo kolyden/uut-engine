@@ -49,9 +49,9 @@ namespace uut
 			auto it = desc.inputLayout[i];
 			declare[i].Stream = it.stream;
 			declare[i].Offset = it.offset;
-			declare[i].Type = static_cast<BYTE>(Convert(it.type));
+			declare[i].Type = static_cast<BYTE>(dx9::Convert(it.type));
 			declare[i].Method = D3DDECLMETHOD_DEFAULT;
-			declare[i].Usage = static_cast<BYTE>(Convert(it.usage));
+			declare[i].Usage = static_cast<BYTE>(dx9::Convert(it.usage));
 			declare[i].UsageIndex = it.usageIndex;
 		}
 		declare[count] = D3DDECL_END();// { 0xFF, 0, D3DDECLTYPE_UNUSED, 0, 0, 0 };
@@ -68,142 +68,25 @@ namespace uut
 		return state;
 	}
 
-	template<typename T>
-	static bool CheckState(const PipelineStateDesc& state, const PipelineStateDesc& check, T (PipelineStateDesc::*var), bool force)
+	static void CheckRenderState(LPDIRECT3DDEVICE9 dev, D3DRENDERSTATETYPE state, DWORD value)
 	{
-		if (force || (state.*var) != (check.*var))
-			return true;
-
-		return false;
+		DWORD old;
+		if (dev->GetRenderState(state, &old) != D3D_OK || old != value)
+			dev->SetRenderState(state, value);
 	}
 
-	template<typename T>
-	static bool CheckState(const RenderTextureStageState& state, const RenderTextureStageState& check, T(RenderTextureStageState::*var), bool force)
+	static void SetTextureStageState(LPDIRECT3DDEVICE9 dev, DWORD stage, D3DTEXTURESTAGESTATETYPE state, DWORD value)
 	{
-		if (force || (state.*var) != (check.*var))
-			return true;
-
-		return false;
+		DWORD old;
+		if (dev->GetTextureStageState(stage, state, &old) != D3D_OK || old != value)
+			dev->SetTextureStageState(stage, state, value);
 	}
 
-	template<typename T>
-	static bool CheckState(const RenderSamplerState& state, const RenderSamplerState& check, T(RenderSamplerState::*var), bool force)
+	static void SetSamplerState(LPDIRECT3DDEVICE9 dev, DWORD sampler, D3DSAMPLERSTATETYPE state, DWORD value)
 	{
-		if (force || (state.*var) != (check.*var))
-			return true;
-
-		return false;
-	}
-
-	void DX9Renderer::SetPipeline(const PipelineStateDesc& state, bool force)
-	{
-		const PipelineStateDesc& newDesc = state;
-		const PipelineStateDesc& oldDesc = _state;
-
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::zbuffer, force))
-			_d3ddev->SetRenderState(D3DRS_ZENABLE, Convert(newDesc.zbuffer));
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::zwriteEnable, force))
-			_d3ddev->SetRenderState(D3DRS_ZWRITEENABLE, newDesc.zwriteEnable);
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::zfunc, force))
-			_d3ddev->SetRenderState(D3DRS_ZFUNC, Convert(newDesc.zfunc));
-
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::alphaBlend, force))
-			_d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, newDesc.alphaBlend);
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::alphaTest, force))
-			_d3ddev->SetRenderState(D3DRS_ALPHATESTENABLE, newDesc.alphaTest);
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::alphaRef, force))
-			_d3ddev->SetRenderState(D3DRS_ALPHAREF, newDesc.alphaRef);
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::alphaFunc, force))
-			_d3ddev->SetRenderState(D3DRS_ALPHAFUNC, Convert(newDesc.alphaFunc));
-
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::blendOp, force))
-			_d3ddev->SetRenderState(D3DRS_BLENDOP, Convert(newDesc.blendOp));
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::srcBlend, force))
-			_d3ddev->SetRenderState(D3DRS_SRCBLEND, Convert(newDesc.srcBlend));
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::destBlend, force))
-			_d3ddev->SetRenderState(D3DRS_DESTBLEND, Convert(newDesc.destBlend));
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::blendOpAlpha, force))
-			_d3ddev->SetRenderState(D3DRS_BLENDOPALPHA, Convert(newDesc.blendOpAlpha));
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::srcBlendAlpha, force))
-			_d3ddev->SetRenderState(D3DRS_SRCBLENDALPHA, Convert(newDesc.srcBlendAlpha));
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::destBlendAlpha, force))
-			_d3ddev->SetRenderState(D3DRS_DESTBLENDALPHA, Convert(newDesc.destBlendAlpha));
-
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::lightning, force))
-			_d3ddev->SetRenderState(D3DRS_LIGHTING, newDesc.lightning);
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::ambientColor, force))
-			_d3ddev->SetRenderState(D3DRS_AMBIENT, newDesc.ambientColor.ToInt());
-
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogEnabled, force))
-			_d3ddev->SetRenderState(D3DRS_FOGENABLE, newDesc.fogEnabled);
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogColor, force))
-			_d3ddev->SetRenderState(D3DRS_FOGCOLOR, newDesc.fogColor.ToInt());
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogMode, force))
-			_d3ddev->SetRenderState(D3DRS_FOGTABLEMODE, Convert(newDesc.fogMode));
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogDensity, force))
-			_d3ddev->SetRenderState(D3DRS_FOGDENSITY, *((DWORD*)(&newDesc.fogDensity)));
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogStart, force))
-			_d3ddev->SetRenderState(D3DRS_FOGSTART, *((DWORD*)(&newDesc.fogStart)));
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogEnd, force))
-			_d3ddev->SetRenderState(D3DRS_FOGEND, *((DWORD*)(&newDesc.fogEnd)));
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fogRangeEnabled, force))
-			_d3ddev->SetRenderState(D3DRS_RANGEFOGENABLE, newDesc.fogRangeEnabled);
-
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::fillMode, force))
-			_d3ddev->SetRenderState(D3DRS_FILLMODE, Convert(newDesc.fillMode));
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::shadeMode, force))
-			_d3ddev->SetRenderState(D3DRS_SHADEMODE, Convert(newDesc.shadeMode));
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::cullMode, force))
-			_d3ddev->SetRenderState(D3DRS_CULLMODE, Convert(newDesc.cullMode));
-		if (CheckState(oldDesc, newDesc, &PipelineStateDesc::scissorTest, force))
-			_d3ddev->SetRenderState(D3DRS_SCISSORTESTENABLE, newDesc.scissorTest);
-
-		for (int i = 0; i < PipelineStateDesc::TEXTURE_STAGE_COUNT; i++)
-		{
-			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::colorOp, force))
-				_d3ddev->SetTextureStageState(i, D3DTSS_COLOROP, Convert(newDesc.textureStage[i].colorOp));
-
-			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::colorArg1, force))
-				_d3ddev->SetTextureStageState(i, D3DTSS_COLORARG1, Convert(newDesc.textureStage[i].colorArg1));
-
-			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::colorArg2, force))
-				_d3ddev->SetTextureStageState(i, D3DTSS_COLORARG2, Convert(newDesc.textureStage[i].colorArg2));
-
-			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::alphaOp, force))
-				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAOP, Convert(newDesc.textureStage[i].alphaOp));
-
-			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::alphaArg1, force))
-				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAARG1, Convert(newDesc.textureStage[i].alphaArg1));
-
-			if (CheckState(oldDesc.textureStage[i], newDesc.textureStage[i], &RenderTextureStageState::alphaArg2, force))
-				_d3ddev->SetTextureStageState(i, D3DTSS_ALPHAARG2, Convert(newDesc.textureStage[i].alphaArg2));
-		}
-
-		for (int i = 0; i < PipelineStateDesc::SAMPLER_COUNT; i++)
-		{
-			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::addressu, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSU, Convert(newDesc.sampler[i].addressu));
-
-			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::addressv, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSV, Convert(newDesc.sampler[i].addressv));
-
-			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::addressw, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_ADDRESSW, Convert(newDesc.sampler[i].addressw));
-
-			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::borderColor, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_BORDERCOLOR, newDesc.sampler[i].borderColor.ToInt());
-
-			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::minFilter, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_MINFILTER, Convert(newDesc.sampler[i].minFilter));
-
-			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::magFilter, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_MAGFILTER, Convert(newDesc.sampler[i].magFilter));
-
-			if (CheckState(oldDesc.sampler[i], newDesc.sampler[i], &RenderSamplerState::mipFilter, force))
-				_d3ddev->SetSamplerState(i, D3DSAMP_MIPFILTER, Convert(newDesc.sampler[i].mipFilter));
-		}
-
-		_state = state;
+		DWORD old;
+		if (dev->GetSamplerState(sampler, state, &old) != D3D_OK || old != value)
+			dev->SetSamplerState(sampler, state, value);
 	}
 
 	const RendererStatistics& DX9Renderer::GetStatistics() const
@@ -211,21 +94,9 @@ namespace uut
 		return _statistics;
 	}
 
-// 	void DX9Renderer::SetViewport(const Viewport& viewport)
-// 	{
-// 		_viewport = viewport;
-// 		D3DVIEWPORT9 vp
-// 		{
-// 			_viewport.x, _viewport.y,
-// 			_viewport.width, _viewport.height,
-// 			_viewport.minZ, _viewport.maxZ 
-// 		};
-// 		_d3ddev->SetViewport(&vp);
-// 	}
-
 	bool DX9Renderer::SetTransform(RenderTransform type, const Matrix4& mat)
 	{
-		HRESULT ret = _d3ddev->SetTransform(Convert(type), (D3DMATRIX*)&mat);
+		HRESULT ret = _d3ddev->SetTransform(dx9::Convert(type), (D3DMATRIX*)&mat);
 		switch (type)
 		{
 		case RT_VIEW: _matView = mat; break;
@@ -250,8 +121,6 @@ namespace uut
 	bool DX9Renderer::BeginScene()
 	{
 		HRESULT ret = _d3ddev->BeginScene();
-
-		SetPipeline(_state, true);
 
 		_matWorld = Matrix4::Identity;
 		_matView = Matrix4::Identity;
@@ -383,7 +252,6 @@ namespace uut
 			return nullptr;
 		}
 
-		renderer->SetPipeline(renderer->_state, true);
 		return renderer;
 	}
 
@@ -393,18 +261,10 @@ namespace uut
 			return;
 
 		auto dx9cmdList = DynamicCast<DX9CommandList>(commandList);
-		auto state = dx9cmdList->_state;
-		SetPipeline(state->GetDesc(), false);
 
-		HRESULT ret = _d3ddev->SetVertexDeclaration(state->_vd);
-		TestReturnCode(ret);
-
-// 		_d3ddev->SetStreamSource(0, nullptr, 0, 0);
-// 		_d3ddev->SetIndices(nullptr);
-// 		_d3ddev->SetTexture(0, nullptr);
-
-		for (const auto& command : dx9cmdList->_commands)
+		for (int i = 0; i < dx9cmdList->_commands.Count(); i++)
 		{
+			auto& command = dx9cmdList->_commands[i];
 			HRESULT result = command.Execute(_d3ddev);
 			TestReturnCode(result);
 		}
@@ -412,18 +272,7 @@ namespace uut
 
 	SharedPtr<CommandList> DX9Renderer::CreateCommandList()
 	{
-		auto list = SharedPtr<DX9CommandList>::Make();
-
-// 		D3DVIEWPORT9 vp;
-// 		_d3ddev->GetViewport(&vp);
-// 		list->_viewport.x = vp.X;
-// 		list->_viewport.y = vp.Y;
-// 		list->_viewport.width = vp.Width;
-// 		list->_viewport.height = vp.Height;
-// 		list->_viewport.minZ = vp.MinZ;
-// 		list->_viewport.maxZ = vp.MaxZ;
-
-		return list;
+		return SharedPtr<DX9CommandList>::Make();
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -452,254 +301,5 @@ namespace uut
 			DXGetErrorStringA(ret),
 			DXGetErrorDescriptionA(ret));*/
 		return false;
-	}
-
-	D3DTRANSFORMSTATETYPE DX9Renderer::Convert(RenderTransform type)
-	{
-		switch (type)
-		{
-		case RenderTransform::RT_VIEW: return D3DTS_VIEW;
-		case RenderTransform::RT_PROJECTION: return D3DTS_PROJECTION;
-		case RenderTransform::RT_WORLD: return D3DTS_WORLD;
-		}
-
-		return D3DTS_FORCE_DWORD;
-	}
-
-	D3DPRIMITIVETYPE DX9Renderer::Convert(Topology topology)
-	{
-		switch (topology)
-		{
-		case Topology::PointList: return D3DPT_POINTLIST;
-		case Topology::LineList: return D3DPT_LINELIST;
-		case Topology::LineStrip: return D3DPT_LINESTRIP;
-		case Topology::TriangleList: return D3DPT_TRIANGLELIST;
-		case Topology::TriangleStrip: return D3DPT_TRIANGLESTRIP;
-		case Topology::TriangleFan: return D3DPT_TRIANGLEFAN;
-		}
-
-		return D3DPT_POINTLIST;
-	}
-
-	D3DDECLTYPE DX9Renderer::Convert(VertexElement::DeclareType type)
-	{
-		switch (type)
-		{
-		case VertexElement::DT_FLOAT1: return D3DDECLTYPE_FLOAT1;
-		case VertexElement::DT_FLOAT2: return D3DDECLTYPE_FLOAT2;
-		case VertexElement::DT_FLOAT3: return D3DDECLTYPE_FLOAT3;
-		case VertexElement::DT_FLOAT4: return D3DDECLTYPE_FLOAT4;
-		case VertexElement::DT_DWORD: return D3DDECLTYPE_D3DCOLOR;
-		case VertexElement::DT_UBYTE4: return D3DDECLTYPE_UBYTE4;
-		}
-
-		return D3DDECLTYPE_UNUSED;
-	}
-
-	D3DDECLUSAGE DX9Renderer::Convert(VertexElement::UsageType usage)
-	{
-		switch (usage)
-		{
-		case VertexElement::UT_POSITION: return D3DDECLUSAGE_POSITION;
-		case VertexElement::UT_NORMAL: return D3DDECLUSAGE_NORMAL;
-		case VertexElement::UT_TEXCOORD: return D3DDECLUSAGE_TEXCOORD;
-		case VertexElement::UT_COLOR: return D3DDECLUSAGE_COLOR;
-		}
-
-		return D3DDECLUSAGE_POSITION;
-	}
-
-	D3DZBUFFERTYPE DX9Renderer::Convert(ZBufferMode type)
-	{
-		switch (type)
-		{
-		case ZBufferMode::Disable: return D3DZB_FALSE;
-		case ZBufferMode::ZBuffer: return D3DZB_TRUE;
-		case ZBufferMode::WBuffer: return D3DZB_USEW;
-		}
-
-		return D3DZB_FALSE;
-	}
-
-	D3DFILLMODE DX9Renderer::Convert(FillMode mode)
-	{
-		switch (mode)
-		{
-		case FillMode::Point: return D3DFILL_POINT;
-		case FillMode::Wireframe: return D3DFILL_WIREFRAME;
-		case FillMode::Solid: return D3DFILL_SOLID;
-		}
-
-		return D3DFILL_SOLID;
-	}
-
-	D3DSHADEMODE DX9Renderer::Convert(ShadeMode mode)
-	{
-		switch (mode)
-		{
-		case ShadeMode::Flat: return D3DSHADE_FLAT;
-		case ShadeMode::Gourand: return D3DSHADE_GOURAUD;
-		case ShadeMode::Phong: return D3DSHADE_PHONG;
-		}
-
-		return D3DSHADE_GOURAUD;
-	}
-
-	D3DCULL DX9Renderer::Convert(CullMode mode)
-	{
-		switch (mode)
-		{
-		case CullMode::Clockwise: return D3DCULL_CW;
-		case CullMode::ConterClockwise: return D3DCULL_CCW;
-		}
-
-		return D3DCULL_NONE;
-	}
-
-	D3DCMPFUNC DX9Renderer::Convert(CompareFunc func)
-	{
-		switch (func)
-		{
-		case CompareFunc::Never: return D3DCMP_NEVER;
-		case CompareFunc::Less: return D3DCMP_LESS;
-		case CompareFunc::Equal: return D3DCMP_EQUAL;
-		case CompareFunc::LessEqual: return D3DCMP_LESSEQUAL;
-		case CompareFunc::Greater: return D3DCMP_GREATER;
-		case CompareFunc::NotEqual: return D3DCMP_NOTEQUAL;
-		case CompareFunc::GreaterEqual: return D3DCMP_GREATEREQUAL;
-		case CompareFunc::Always: return D3DCMP_ALWAYS;
-		}
-
-		return D3DCMP_LESSEQUAL;
-	}
-
-	D3DFOGMODE DX9Renderer::Convert(FogMode mode)
-	{
-		switch (mode)
-		{
-		case FogMode::None: return D3DFOG_NONE;
-		case FogMode::Exp: return D3DFOG_EXP;
-		case FogMode::Exp2: return D3DFOG_EXP2;
-		case FogMode::Linear: return D3DFOG_LINEAR;
-		}
-
-		return D3DFOG_NONE;
-	}
-
-	D3DTEXTUREOP DX9Renderer::Convert(TextureOperation op)
-	{
-		switch (op)
-		{
-		case TextureOperation::Disable: return D3DTOP_DISABLE;
-		case TextureOperation::SelectArg1: return D3DTOP_SELECTARG1;
-		case TextureOperation::SelectArg2: return D3DTOP_SELECTARG2;
-		case TextureOperation::Modulate: return D3DTOP_MODULATE;
-		case TextureOperation::Modulate2x: return D3DTOP_MODULATE2X;
-		case TextureOperation::Modulate4x: return D3DTOP_MODULATE4X;
-		case TextureOperation::Add: return D3DTOP_ADD;
-		case TextureOperation::AddSigned: return D3DTOP_ADDSIGNED;
-		case TextureOperation::AddSigned2x: return D3DTOP_ADDSIGNED2X;
-		case TextureOperation::Substract: return D3DTOP_SUBTRACT;
-		case TextureOperation::AddSmooth: return D3DTOP_ADDSMOOTH;
-		case TextureOperation::BlendDiffuseAlpha: return D3DTOP_BLENDDIFFUSEALPHA;
-		case TextureOperation::BlendTextureAlpha: return D3DTOP_BLENDTEXTUREALPHA;
-		case TextureOperation::BlendFactorAlpha: return D3DTOP_BLENDFACTORALPHA;
-		case TextureOperation::BlendTextureAlphaPM: return D3DTOP_BLENDTEXTUREALPHAPM;
-		case TextureOperation::BlendCurrentAlpha: return D3DTOP_BLENDCURRENTALPHA;
-		case TextureOperation::PreModulate: return D3DTOP_PREMODULATE;
-		case TextureOperation::ModulateAlphaAddColor: return D3DTOP_MODULATEALPHA_ADDCOLOR;
-		case TextureOperation::ModulateColorAddAlpha: return D3DTOP_MODULATECOLOR_ADDALPHA;
-		case TextureOperation::BumpEnvMap: return D3DTOP_BUMPENVMAP;
-		case TextureOperation::BumpEnvMapLuminance: return D3DTOP_BUMPENVMAPLUMINANCE;
-		case TextureOperation::DotProduct3: return D3DTOP_DOTPRODUCT3;
-		case TextureOperation::MultiplyAdd: return D3DTOP_MULTIPLYADD;
-		case TextureOperation::Lerp: return D3DTOP_LERP;
-		}
-
-		return D3DTOP_ADD;
-	}
-
-	DWORD DX9Renderer::Convert(TextureArgument arg)
-	{
-		switch (arg)
-		{
-		case TextureArgument::Constant: return D3DTA_CONSTANT;
-		case TextureArgument::Current: return D3DTA_CURRENT;
-		case TextureArgument::Diffuse: return D3DTA_DIFFUSE;
-		case TextureArgument::SelectMask: return D3DTA_SELECTMASK;
-		case TextureArgument::Specular: return D3DTA_SPECULAR;
-		case TextureArgument::Temp: return D3DTA_TEMP;
-		case TextureArgument::Texture: return D3DTA_TEXTURE;
-		case TextureArgument::TextureFactor: return D3DTA_TFACTOR;
-		}
-
-		return D3DTA_TEXTURE;
-	}
-
-	D3DTEXTUREFILTERTYPE DX9Renderer::Convert(TextureFilter filter)
-	{
-		switch (filter)
-		{
-		case TextureFilter::NoFilter: return D3DTEXF_NONE;
-		case TextureFilter::Point: return D3DTEXF_POINT;
-		case TextureFilter::Linear: return D3DTEXF_LINEAR;
-		case TextureFilter::Anisotropic: return D3DTEXF_ANISOTROPIC;
-		case TextureFilter::PyramidalQuad: return D3DTEXF_PYRAMIDALQUAD;
-		case TextureFilter::GaussianQuad: return D3DTEXF_GAUSSIANQUAD;
-		}
-
-		return D3DTEXF_LINEAR;
-	}
-
-	D3DTEXTUREADDRESS DX9Renderer::Convert(TextureAddress address)
-	{
-		switch (address)
-		{
-		case TextureAddress::Wrap: return D3DTADDRESS_WRAP;
-		case TextureAddress::Mirror: return D3DTADDRESS_MIRROR;
-		case TextureAddress::Clamp: return D3DTADDRESS_CLAMP;
-		case TextureAddress::Border: return D3DTADDRESS_BORDER;
-		case TextureAddress::MirrorOnce: return D3DTADDRESS_MIRRORONCE;
-		}
-
-		return D3DTADDRESS_WRAP;
-	}
-
-	D3DBLENDOP DX9Renderer::Convert(BlendOperation op)
-	{
-		switch (op)
-		{
-		case BlendOperation::Add: return D3DBLENDOP_ADD;
-		case BlendOperation::Sub: return D3DBLENDOP_SUBTRACT;
-		case BlendOperation::RevSub: return D3DBLENDOP_REVSUBTRACT;
-		case BlendOperation::Min: return D3DBLENDOP_MIN;
-		case BlendOperation::Max: return D3DBLENDOP_MAX;
-		}
-
-		return D3DBLENDOP_ADD;
-	}
-
-	D3DBLEND DX9Renderer::Convert(BlendFactor blend)
-	{
-		switch (blend)
-		{
-		case BlendFactor::Zero: return D3DBLEND_ZERO;
-		case BlendFactor::One: return D3DBLEND_ONE;
-		case BlendFactor::SrcColor: return D3DBLEND_SRCCOLOR;
-		case BlendFactor::InvSrcColor: return D3DBLEND_INVSRCCOLOR;
-		case BlendFactor::SrcAlpha: return D3DBLEND_SRCALPHA;
-		case BlendFactor::InvSrcAlpha: return D3DBLEND_INVSRCALPHA;
-		case BlendFactor::DestColor: return D3DBLEND_DESTCOLOR;
-		case BlendFactor::InvDestColor: return D3DBLEND_INVDESTCOLOR;
-		case BlendFactor::DestAlpha: return D3DBLEND_DESTALPHA;
-		case BlendFactor::InvDestAlpha: return D3DBLEND_INVDESTALPHA;
-		case BlendFactor::SrcAlphaSat: return D3DBLEND_SRCALPHASAT;
-		case BlendFactor::BothSrcAlpha: return D3DBLEND_BOTHSRCALPHA;
-		case BlendFactor::InvBothSrcAlpha: return D3DBLEND_BOTHINVSRCALPHA;
-		case BlendFactor::Factor: return D3DBLEND_BLENDFACTOR;
-		case BlendFactor::InvFactor: return D3DBLEND_INVBLENDFACTOR;
-		}
-
-		return D3DBLEND_ZERO;
 	}
 }

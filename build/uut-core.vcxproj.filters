@@ -1484,5 +1484,8 @@
     <ClCompile Include="..\UUT\Video\DX9\DX9PipelineState.cpp">
       <Filter>UUT\Video\DX9</Filter>
     </ClCompile>
+    <ClCompile Include="..\UUT\Video\DX9\DX9Defs.cpp">
+      <Filter>UUT\Video\DX9</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

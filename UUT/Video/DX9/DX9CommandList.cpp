@@ -36,6 +36,8 @@ namespace uut
 		_commands.Clear();
 		_state = DynamicCast<DX9PipelineState>(state);
 		_topology = Topology::TriangleList;
+
+		SetPipelineState(state);
 	}
 
 	void DX9CommandList::Close()
@@ -62,6 +64,14 @@ namespace uut
 		DX9Command cmd;
 		cmd.type = DX9Command::TYPE_SCISSOR;
 		cmd.rect = r;
+		_commands.Add(cmd);
+	}
+
+	void DX9CommandList::SetPipelineState(const SharedPtr<PipelineState>& state)
+	{
+		DX9Command cmd;
+		cmd.type = DX9Command::TYPE_PIPELINE;
+		cmd.object = state;
 		_commands.Add(cmd);
 	}
 

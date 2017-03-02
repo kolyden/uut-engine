@@ -22,6 +22,7 @@ namespace uut
 		virtual bool Clear(const Color32& color = Color32::White, float z = 1.0f, uint32_t stencil = 0) = 0;
 		virtual void SetViewport(const Viewport& viewport) = 0;
 		virtual void SetScissorRect(const IntRect& rect) = 0;
+		virtual void SetPipelineState(const SharedPtr<PipelineState>& state) = 0;
 
 		virtual void SetTopology(Topology topology) = 0;
 		virtual Topology GetTopology() const = 0;

@@ -456,6 +456,7 @@
     <ClCompile Include="..\UUT\Video\CommandList.cpp" />
     <ClCompile Include="..\UUT\Video\DX9\DX9Command.cpp" />
     <ClCompile Include="..\UUT\Video\DX9\DX9CommandList.cpp" />
+    <ClCompile Include="..\UUT\Video\DX9\DX9Defs.cpp" />
     <ClCompile Include="..\UUT\Video\DX9\DX9IndexBuffer.cpp" />
     <ClCompile Include="..\UUT\Video\DX9\DX9Plugin.cpp" />
     <ClCompile Include="..\UUT\Video\DX9\DX9Renderer.cpp" />
