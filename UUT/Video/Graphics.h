@@ -39,6 +39,7 @@ namespace uut
 		Graphics(MaterialType material, ProjectionMode projection, FillMode fillMode = FillMode::Solid);
 		virtual ~Graphics();
 
+		void SetMaterial(MaterialType material);
 		void SetViewport(const Viewport& viewport);
 		void Clear(const Color32& color = Color32::White, float z = 1.0f, uint32_t stencil = 0);
 
@@ -71,10 +72,13 @@ namespace uut
 
 	protected:
 		ProjectionMode _projection;
-		SharedPtr<PipelineState> _renderState;
+		SharedPtr<PipelineState> _opaqueState;
+		SharedPtr<PipelineState> _alphaState;
 		SharedPtr<CommandList> _commandList;
 		SharedPtr<VertexBuffer> _vbuffer;
 		SharedPtr<Texture2D> _texture;
+
+		MaterialType _currentMT, _nextMT;
 
 		Vertex* _vertices = nullptr;
 		uint _vdxIndex = 0;

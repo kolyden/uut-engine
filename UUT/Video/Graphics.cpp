@@ -20,7 +20,11 @@ namespace uut
 	Graphics::Graphics(MaterialType material, ProjectionMode projection, FillMode fillMode)
 		: _vbufCount(50000)
 		, _projection(projection)
+		, _currentMT(material)
+		, _nextMT(material)
 	{
+		ModuleInstance<Renderer> renderer;
+
 		PipelineStateDesc desc;
 		desc.fillMode = fillMode;
 		desc.cullMode = CullMode::Disabled;
@@ -29,42 +33,39 @@ namespace uut
 // 		desc.sampler[0].minFilter = TextureFilter::Linear;
 // 		desc.sampler[0].magFilter = TextureFilter::Linear;
 
-		switch (material)
-		{
-		case uut::Graphics::MT_OPAQUE:
-			desc.zwriteEnable = true;
-			desc.textureStage[0] = RenderTextureStageState::Opaque;
-			break;
+		desc.zwriteEnable = true;
+		desc.textureStage[0] = RenderTextureStageState::Opaque;
+		_opaqueState = renderer->CreatePipelineState(desc);
 
-		case uut::Graphics::MT_TRANSPARENT:
-			desc.cullMode = CullMode::Disabled;
-			desc.lightning = false;
-			desc.zbuffer = ZBufferMode::Disable;
-			desc.zwriteEnable = false;
-			desc.alphaBlend = true;
-			desc.blendOp = BlendOperation::Add;
-			desc.alphaTest = false;
-			desc.srcBlend = BlendFactor::SrcAlpha;
-			desc.destBlend = BlendFactor::InvSrcAlpha;
-			desc.alphaBlend = true;
-			desc.alphaTest = true;
-			desc.zwriteEnable = false;
-			desc.textureStage[0].alphaOp = TextureOperation::Modulate;
-			desc.textureStage[0].alphaArg1 = TextureArgument::Texture;
-			desc.textureStage[0].alphaArg2 = TextureArgument::Diffuse;
+		desc.cullMode = CullMode::Disabled;
+		desc.lightning = false;
+		desc.zbuffer = ZBufferMode::Disable;
+		desc.zwriteEnable = false;
+		desc.alphaBlend = true;
+		desc.blendOp = BlendOperation::Add;
+		desc.alphaTest = false;
+		desc.srcBlend = BlendFactor::SrcAlpha;
+		desc.destBlend = BlendFactor::InvSrcAlpha;
+		desc.alphaBlend = true;
+		desc.alphaTest = true;
+		desc.zwriteEnable = false;
+		desc.textureStage[0].alphaOp = TextureOperation::Modulate;
+		desc.textureStage[0].alphaArg1 = TextureArgument::Texture;
+		desc.textureStage[0].alphaArg2 = TextureArgument::Diffuse;
 // 			desc.textureStage[0] = RenderTextureStageState::Transparent;
-			break;
-		}
 
-		ModuleInstance<Renderer> renderer;
-
-		_renderState = renderer->CreatePipelineState(desc);
+		_alphaState = renderer->CreatePipelineState(desc);
 		_commandList = renderer->CreateCommandList();
 		_vbuffer = renderer->CreateVertexBuffer(Vertex::SIZE*_vbufCount);
 	}
 
 	Graphics::~Graphics()
 	{	
+	}
+
+	void Graphics::SetMaterial(MaterialType material)
+	{
+		_nextMT = material;
 	}
 
 	void Graphics::SetViewport(const Viewport& viewport)
@@ -429,8 +430,19 @@ namespace uut
 		_vertices = static_cast<Vertex*>(_vbuffer->Lock(_vbufCount*Vertex::SIZE));
 		_vdxIndex = 0;
 		_offset = 0;
+		_nextMT = _currentMT;
 
-		_commandList->Reset(_renderState);
+		switch (_currentMT)
+		{
+		case uut::Graphics::MT_OPAQUE:
+			_commandList->Reset(_opaqueState);
+			break;
+
+		case uut::Graphics::MT_TRANSPARENT:
+			_commandList->Reset(_alphaState);
+			break;
+		}
+		
 		_commandList->SetVertexBuffer(_vbuffer, sizeof(Vertex));
 	}
 
@@ -492,6 +504,21 @@ namespace uut
 			}
 			if (_commandList->GetTopology() != topology)
 				_commandList->SetTopology(topology);
+		}
+
+		if (_nextMT != _currentMT)
+		{
+			_currentMT = _nextMT;
+			switch (_currentMT)
+			{
+			case uut::Graphics::MT_OPAQUE:
+				_commandList->SetPipelineState(_opaqueState);
+				break;
+
+			case uut::Graphics::MT_TRANSPARENT:
+				_commandList->SetPipelineState(_alphaState);
+				break;
+			}
 		}
 
 		return true;

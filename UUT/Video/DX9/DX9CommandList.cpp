@@ -69,6 +69,15 @@ namespace uut
 
 	void DX9CommandList::SetPipelineState(const SharedPtr<PipelineState>& state)
 	{
+		if (!state)
+			return;
+
+		if (_commands.Count() > 0 && _commands.Last().type == DX9Command::TYPE_PIPELINE)
+		{
+			_commands.Last().object = state;
+			return;
+		}
+
 		DX9Command cmd;
 		cmd.type = DX9Command::TYPE_PIPELINE;
 		cmd.object = state;
