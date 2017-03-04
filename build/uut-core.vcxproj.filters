@@ -64,9 +64,6 @@
     <Filter Include="UUT\SDL">
       <UniqueIdentifier>{fc223e81-da9f-429c-9860-ccbd8fa19273}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UUT\Quake1">
-      <UniqueIdentifier>{1364aa19-5bf1-4e09-aea8-c0c3b4e683e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UUT\Core\Math\Templates">
       <UniqueIdentifier>{dd310f13-1266-4b18-a844-adaf271c8291}</UniqueIdentifier>
     </Filter>
@@ -747,30 +744,6 @@
     <ClInclude Include="..\UUT\Core\IO\Scancode.h">
       <Filter>UUT\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\Quake1\Quake1Plugin.h">
-      <Filter>UUT\Quake1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Quake1\Quake1ModelLoader.h">
-      <Filter>UUT\Quake1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Quake1\Quake1Model.h">
-      <Filter>UUT\Quake1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Quake1\BSPLevel.h">
-      <Filter>UUT\Quake1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Quake1\BSPLevelLoader.h">
-      <Filter>UUT\Quake1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Quake1\Constants.h">
-      <Filter>UUT\Quake1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Quake1\Q1Utils.h">
-      <Filter>UUT\Quake1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Quake1\BSP.h">
-      <Filter>UUT\Quake1</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Core\Math\Templates\Vector3Base.h">
       <Filter>UUT\Core\Math\Templates</Filter>
     </ClInclude>
@@ -1327,27 +1300,6 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Core\IO\Scancode.cpp">
       <Filter>UUT\Core\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Quake1\Quake1Plugin.cpp">
-      <Filter>UUT\Quake1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Quake1\Quake1ModelLoader.cpp">
-      <Filter>UUT\Quake1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Quake1\Quake1Model.cpp">
-      <Filter>UUT\Quake1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Quake1\BSPLevel.cpp">
-      <Filter>UUT\Quake1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Quake1\BSPLevelLoader.cpp">
-      <Filter>UUT\Quake1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Quake1\Q1Utils.cpp">
-      <Filter>UUT\Quake1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Quake1\BSP.cpp">
-      <Filter>UUT\Quake1</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Math\Range.cpp">
       <Filter>UUT\Core\Math</Filter>

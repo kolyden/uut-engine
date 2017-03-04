@@ -19,11 +19,6 @@
 #include <GUI/GUI.h>
 #include <GUI/ContextGUI.h>
 #include <Video/FreeCamera.h>
-#include <Quake1/Quake1Plugin.h>
-#include <Quake1/Quake1ModelLoader.h>
-#include <Quake1/Quake1Model.h>
-#include <Quake1/BSPLevel.h>
-#include <Quake1/BSPLevelLoader.h>
 #include <Core/IO/JSONFile.h>
 #include <Core/IO/YamlFile.h>
 #include <Core/IO/YamlSerializer.h>
@@ -138,22 +133,18 @@ namespace uut
 	void SampleApp::OnInit()
 	{
 		Context::RegisterType<TestFlags>();
-		UUT_REGISTER_ENUM(Direction);
+		Context::RegisterType<DirectionEnum>();
 
 		Context::CreateModule<DebugGUI>();
 
 		ModuleInstance<ResourceCache> cache;
-		cache->AddLoader(SharedPtr<Quake1ModelLoader>::Make());
-		cache->AddLoader(SharedPtr<BSPLevelLoader>::Make());
 		cache->AddLoader(SharedPtr<JsonFileLoader>::Make());
 		cache->AddLoader(SharedPtr<YamlFileLoader>::Make());
 
 		cache->AddSaver(SharedPtr<YamlFileSaver>::Make());
 
-			// cache->Load<Texture2D>("rogueliketiles.png");
+		// cache->Load<Texture2D>("rogueliketiles.png");
 		_font = cache->Load<Font>("Consolas.fnt");
-		_model = cache->Load<Quake1Model>("player.mdl");
-// 		_level = cache->Load<BSPLevel>("start.bsp");
 
 		_graphics = SharedPtr<Graphics>::Make(Graphics::MT_OPAQUE, Graphics::PM_3D);
 
@@ -215,8 +206,6 @@ namespace uut
 		auto fstr = var3.Get<String>();
 	}
 
-	static bool show_test_window = false;
-
 	static List<HashString> MakeRange(const String& prefix, int start, int end)
 	{
 		List<HashString> list;
@@ -233,41 +222,6 @@ namespace uut
 
 		///////////////////////////////////////////////////////////////
 		ContextGUI::Draw();
-
-		ImGui::SetNextWindowPos(ImVec2(350, 50), ImGuiSetCond_FirstUseEver);
-		ImGui::SetNextWindowSize(ImVec2(400, 500), ImGuiSetCond_FirstUseEver);
-		ImGui::SetNextWindowCollapsed(true, ImGuiSetCond_FirstUseEver);
-		if (ImGui::Begin("Textures"))
-		{
-			show_test_window = GUI::Toggle("Show Test Window", show_test_window);
-
-			static bool texturesFoldout = true;
-			ImGui::PushItemWidth(-1);
-			texturesFoldout = GUI::Foldout("Textures", texturesFoldout);
-			if (texturesFoldout)
-			{
-				GUI::BeginListBox("##textures");
-				if (_level)
-				{
-					for (auto& it : _level->GetTextures())
-					{
-						GUI::BeginHorizontal();
-						GUI::Image(it.second, it.second->GetSize());
-						GUI::Text(it.first.GetData());
-						GUI::EndHorizontal();
-					}
-				}
-				GUI::EndListBox();
-			}
-			ImGui::PopItemWidth();
-		}
-		ImGui::End();
-
-		if (show_test_window)
-		{
-			ImGui::SetNextWindowPos(ImVec2(650, 20), ImGuiSetCond_FirstUseEver);
-			ImGui::ShowTestWindow(&show_test_window);
-		}
 
 		float moveSpeed = 50.0f;
 		Radian rotateSpeed = Math::PI / 2;
@@ -316,59 +270,13 @@ namespace uut
 			_graphics->DrawLine(Vector3::Zero, Vector3::AxisY * 100, Color32::Green);
 			_graphics->DrawLine(Vector3::Zero, Vector3::AxisZ * 100, Color32::Blue);
 
-			if (_model)
-			{				
-				static const List<HashString> anim = List<HashString>::MakeRange(1, 12,
-					[](int index) -> HashString { return String::Format("axstnd%d", index).GetData(); });
-
-				static const float frameTime = 0.15f;
-				static int index = 0;
-				static float time = 0;
-
-				const Vector3 pos = Vector3(20, 0, 30);
-				_graphics->DrawLine(pos, pos + Vector3::AxisY * 10, Color32::Magenta);
-
-				static const auto rot = Quaternion::RotationAxis(Vector3::AxisX, -Degree::Angle90) *
-					Quaternion::RotationAxis(Vector3::AxisY, Degree::Angle90);
-
-				static const Matrix4 mat = Matrix4::Transformation(pos, Quaternion::Identity, Vector3::One);
-				auto& frames = _model->GetFrames();
-				auto it = _model->GetAnimations().Find(anim[index]);
-				if (it != _model->GetAnimations().End())
-					_graphics->DrawMesh(mat, frames[it->second], _model->GetSkins()[0]);
-
-				time += Time::GetDeltaTime();
-				while (time >= frameTime)
-				{
-					time -= frameTime;
-					index = (index + 1) % anim.Count();
-				}
-			}
-
-			if (_level && _level->GetMeshes().Count() > 0)
-			{
-				static const Matrix4 mat = Matrix4::Scaling(Vector3(0.5f));
-				_graphics->DrawMesh(mat, _level->GetMeshes()[0]);
-			}
-
 			_graphics->SetMaterial(Graphics::MT_TRANSPARENT);
 			_graphics->SetProjection(Graphics::PM_2D);
 			_graphics->SetViewMatrix(Matrix4::Identity);
 
 			if (_font)
 				_graphics->PrintText(Vector2(10, 10), 15, "qwertyuiopasdfghjklzxcvbnm", _font, Color32::Black);
-			if (_model)
-			{
-				const List<SharedPtr<Texture2D>>& skins = _model->GetSkins();
-				int x = 0;
-				for (size_t i = 0; i < skins.Count(); i++)
-				{
-					x += 10;
-					auto& tex = skins[i];
-					_graphics->DrawQuad(IntRect(x, 50, tex->GetSize()), 15, tex);
-					x += tex->GetSize().x;
-				}
-			}
+
 			_graphics->EndRecord();
 			_graphics->Draw();
 
