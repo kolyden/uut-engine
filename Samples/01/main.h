@@ -7,10 +7,11 @@
 
 namespace uut
 {
-	class EntityPool;
 	class Tilemap;
 	class Player;
 	class FreeCamera;
+	class Mesh;
+	class Texture2D;
 
 	class SampleApp : public Application
 	{
@@ -23,6 +24,8 @@ namespace uut
 		SharedPtr<Font> _font;
 		SharedPtr<FreeCamera> _camera;
 		SharedPtr<Graphics> _graphics;
+		SharedPtr<Mesh> _mesh;
+		SharedPtr<Texture2D> _tex;
 
 		virtual void OnInit() override;
 		virtual void OnFrame() override;

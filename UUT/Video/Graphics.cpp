@@ -29,7 +29,6 @@ namespace uut
 
 		PipelineStateDesc desc;
 		desc.fillMode = fillMode;
-		desc.cullMode = CullMode::Disabled;
 		desc.alphaFunc = CompareFunc::GreaterEqual;
 		desc.inputLayout = Vertex::DECLARE;
 // 		desc.sampler[0].minFilter = TextureFilter::Linear;
@@ -39,7 +38,6 @@ namespace uut
 		desc.textureStage[0] = RenderTextureStageState::Opaque;
 		_opaqueState = renderer->CreatePipelineState(desc);
 
-		desc.cullMode = CullMode::Disabled;
 		desc.lightning = false;
 		desc.zbuffer = ZBufferMode::Disable;
 		desc.zwriteEnable = false;
@@ -48,13 +46,8 @@ namespace uut
 		desc.alphaTest = false;
 		desc.srcBlend = BlendFactor::SrcAlpha;
 		desc.destBlend = BlendFactor::InvSrcAlpha;
-		desc.alphaBlend = true;
-		desc.alphaTest = true;
 		desc.zwriteEnable = false;
-		desc.textureStage[0].alphaOp = TextureOperation::Modulate;
-		desc.textureStage[0].alphaArg1 = TextureArgument::Texture;
-		desc.textureStage[0].alphaArg2 = TextureArgument::Diffuse;
-// 			desc.textureStage[0] = RenderTextureStageState::Transparent;
+		desc.textureStage[0] = RenderTextureStageState::Transparent;
 
 		_alphaState = renderer->CreatePipelineState(desc);
 		_commandList = renderer->CreateCommandList();

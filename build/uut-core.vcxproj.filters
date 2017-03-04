@@ -91,6 +91,9 @@
     <Filter Include="Extern\LibYAML">
       <UniqueIdentifier>{c061528c-55b8-442b-93d1-68b3cb01ab6d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UUT\Video\Primitives">
+      <UniqueIdentifier>{ac1c03c3-a22d-496e-9054-eb7ee1d89478}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\UUT\Core\Assert.h">
@@ -921,6 +924,9 @@
     <ClInclude Include="..\UUT\Video\DX9\DX9PipelineState.h">
       <Filter>UUT\Video\DX9</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Video\Primitives\Sphere.h">
+      <Filter>UUT\Video\Primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1438,6 +1444,9 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Video\DX9\DX9Defs.cpp">
       <Filter>UUT\Video\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Video\Primitives\Sphere.cpp">
+      <Filter>UUT\Video\Primitives</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

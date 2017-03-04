@@ -22,6 +22,7 @@
 #include <Core/IO/JSONFile.h>
 #include <Core/IO/YamlFile.h>
 #include <Core/IO/YamlSerializer.h>
+#include <Video/Primitives/Sphere.h>
 #include <IMGUI/imgui.h>
 
 namespace uut
@@ -143,10 +144,12 @@ namespace uut
 
 		cache->AddSaver(SharedPtr<YamlFileSaver>::Make());
 
-		// cache->Load<Texture2D>("rogueliketiles.png");
+		_tex = cache->Load<Texture2D>("brick_dark0.png");
 		_font = cache->Load<Font>("Consolas.fnt");
 
 		_graphics = SharedPtr<Graphics>::Make(Graphics::MT_OPAQUE, Graphics::PM_3D);
+
+		_mesh = CreateSphere(5);
 
 		_camera = SharedPtr<FreeCamera>::Make();
 		_camera->SetPosition(Vector3(8.5f, 10, -50));
@@ -270,6 +273,9 @@ namespace uut
 			_graphics->DrawLine(Vector3::Zero, Vector3::AxisY * 100, Color32::Green);
 			_graphics->DrawLine(Vector3::Zero, Vector3::AxisZ * 100, Color32::Blue);
 
+			if (_mesh)
+				_graphics->DrawMesh(Matrix4::Translation(10, 10, 10), _mesh, _tex);
+
 			_graphics->SetMaterial(Graphics::MT_TRANSPARENT);
 			_graphics->SetProjection(Graphics::PM_2D);
 			_graphics->SetViewMatrix(Matrix4::Identity);
@@ -285,6 +291,8 @@ namespace uut
 			renderer->EndScene();
 		}
 	}
+
+	
 }
 
 int CALLBACK WinMain(

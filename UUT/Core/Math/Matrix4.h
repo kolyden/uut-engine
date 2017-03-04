@@ -76,6 +76,7 @@ namespace uut
 		static Matrix4 Scaling(float sx, float sy, float sz);
 
 		static Matrix4 Transformation(const Vector3& translation, const Quaternion& rotation, const Vector3& scale);
+		static Matrix4 TRS(const Vector3& translation, const Quaternion& rotation, const Vector3& scale);
 
 		static const Matrix4 Zero;
 		static const Matrix4 Identity;

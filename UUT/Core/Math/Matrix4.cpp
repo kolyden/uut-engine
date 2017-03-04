@@ -553,4 +553,9 @@ namespace uut
 	{
 		return RotationQuaternion(rotation) * Translation(translation) * Scaling(scale);
 	}
+
+	Matrix4 Matrix4::TRS(const Vector3& translation, const Quaternion& rotation, const Vector3& scale)
+	{
+		return RotationQuaternion(rotation) * Translation(translation) * Scaling(scale);
+	}
 }
