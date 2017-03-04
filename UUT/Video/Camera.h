@@ -6,6 +6,7 @@
 namespace uut
 {
 	class IntVector2;
+	class CommandList;
 	class Renderer;
 
 	class Camera : public Object
@@ -15,7 +16,7 @@ namespace uut
 		Camera();
 		virtual ~Camera();
 
-		void Setup(Renderer* renderer);
+		void Setup(const SharedPtr<CommandList>& commandList);
 		const Matrix4& UpdateViewMatrix();
 
 		virtual Ray3 CastRay(const Vector2& screenPos, Renderer* renderer) const = 0;

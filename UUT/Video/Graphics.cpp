@@ -9,6 +9,7 @@
 #include "Font.h"
 #include "CommandList.h"
 #include "Viewport.h"
+#include "Camera.h"
 
 namespace uut
 {
@@ -19,9 +20,10 @@ namespace uut
 
 	Graphics::Graphics(MaterialType material, ProjectionMode projection, FillMode fillMode)
 		: _vbufCount(50000)
-		, _projection(projection)
 		, _currentMT(material)
 		, _nextMT(material)
+		, _currentPM(projection)
+		, _nextPM(projection)
 	{
 		ModuleInstance<Renderer> renderer;
 
@@ -68,9 +70,26 @@ namespace uut
 		_nextMT = material;
 	}
 
+	void Graphics::SetProjection(ProjectionMode projection)
+	{
+		_nextPM = projection;
+	}
+
 	void Graphics::SetViewport(const Viewport& viewport)
 	{
 		_commandList->SetViewport(viewport);
+	}
+
+	void Graphics::SetCamera(const SharedPtr<Camera>& camera)
+	{
+		Flush();
+		camera->Setup(_commandList);
+	}
+
+	void Graphics::SetViewMatrix(const Matrix4& matrix)
+	{
+		Flush();
+		_commandList->SetTransform(RT_VIEW, matrix);
 	}
 
 	void Graphics::Clear(const Color32& color /*= Color32::White*/, float z /*= 1.0f*/, uint32_t stencil /*= 0*/)
@@ -430,20 +449,14 @@ namespace uut
 		_vertices = static_cast<Vertex*>(_vbuffer->Lock(_vbufCount*Vertex::SIZE));
 		_vdxIndex = 0;
 		_offset = 0;
-		_nextMT = _currentMT;
-
-		switch (_currentMT)
-		{
-		case uut::Graphics::MT_OPAQUE:
-			_commandList->Reset(_opaqueState);
-			break;
-
-		case uut::Graphics::MT_TRANSPARENT:
-			_commandList->Reset(_alphaState);
-			break;
-		}
+		_nextMT = _currentMT;		
+		_nextPM = _currentPM;
 		
 		_commandList->SetVertexBuffer(_vbuffer, sizeof(Vertex));
+		UpdatePipeline();
+		UpdateProjection();
+		_commandList->SetTransform(RT_VIEW, Matrix4::Identity);
+		_commandList->SetTransform(RT_WORLD, Matrix4::Identity);
 	}
 
 	void Graphics::EndRecord()
@@ -463,26 +476,20 @@ namespace uut
 	void Graphics::Draw()
 	{
 		ModuleInstance<Renderer> render;
-
-		const Vector2 size = render->GetScreenSize();
-		Matrix4 matrix;
-		switch (_projection)
-		{
-		case PM_2D:
-			matrix = Matrix4::OrthoOffCenter(0, size.x, 0, size.y, 0.01f, 100.0f);
-			render->SetTransform(RT_PROJECTION, matrix);
-			break;
-
-		case PM_3D:
-			matrix = Matrix4::PerspectiveFov(Math::PI / 4, size.x / size.y, 1.0f, 1000.0f);
-			render->SetTransform(RT_PROJECTION, matrix);
-			break;
-		}
-
 		render->Execute(_commandList);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
+	void Graphics::Flush()
+	{
+		if (_offset < _vdxIndex)
+		{
+			int count = GetPrimitiveCount(_vdxIndex - _offset);
+			_commandList->DrawPrimitive(count, _offset);
+			_offset = _vdxIndex;
+		}
+	}
+
 	bool Graphics::TestBatch(Topology topology, const SharedPtr<Texture2D>& tex, int vrtCount)
 	{
 		if (_vdxIndex + vrtCount >= _vbufCount)
@@ -490,12 +497,7 @@ namespace uut
 
 		if (_texture != tex || _commandList->GetTopology() != topology)
 		{
-			if (_offset < _vdxIndex)
-			{
-				int count = GetPrimitiveCount(_vdxIndex - _offset);
-				_commandList->DrawPrimitive(count, _offset);
-				_offset = _vdxIndex;
-			}
+			Flush();
 
 			if (_texture != tex)
 			{
@@ -509,16 +511,13 @@ namespace uut
 		if (_nextMT != _currentMT)
 		{
 			_currentMT = _nextMT;
-			switch (_currentMT)
-			{
-			case uut::Graphics::MT_OPAQUE:
-				_commandList->SetPipelineState(_opaqueState);
-				break;
+			UpdatePipeline();
+		}
 
-			case uut::Graphics::MT_TRANSPARENT:
-				_commandList->SetPipelineState(_alphaState);
-				break;
-			}
+		if (_nextPM != _currentPM)
+		{
+			_currentPM = _nextPM;
+			UpdateProjection();
 		}
 
 		return true;
@@ -548,5 +547,40 @@ namespace uut
 		}
 
 		return 0;
+	}
+
+	void Graphics::UpdateProjection()
+	{
+		ModuleInstance<Renderer> render;
+
+
+		const Vector2 size = render->GetScreenSize();
+		Matrix4 matrix;
+		switch (_currentPM)
+		{
+		case PM_2D:
+			matrix = Matrix4::OrthoOffCenter(0, size.x, 0, size.y, 0.01f, 100.0f);
+			_commandList->SetTransform(RT_PROJECTION, matrix);
+			break;
+
+		case PM_3D:
+			matrix = Matrix4::PerspectiveFov(Math::PI / 4, size.x / size.y, 1.0f, 1000.0f);
+			_commandList->SetTransform(RT_PROJECTION, matrix);
+			break;
+		}
+	}
+
+	void Graphics::UpdatePipeline()
+	{
+		switch (_currentMT)
+		{
+		case uut::Graphics::MT_OPAQUE:
+			_commandList->SetPipelineState(_opaqueState);
+			break;
+
+		case uut::Graphics::MT_TRANSPARENT:
+			_commandList->SetPipelineState(_alphaState);
+			break;
+		}
 	}
 }

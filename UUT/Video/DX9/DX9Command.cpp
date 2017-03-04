@@ -104,6 +104,9 @@ namespace uut
 			}
 			break;
 
+		case TYPE_TRANSFORM:
+			return device->SetTransform(transform, matrix);
+
 		case TYPE_TEXTURE:
 			if (object == nullptr)
 				return device->SetTexture(stage, nullptr);

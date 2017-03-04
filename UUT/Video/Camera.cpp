@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "Renderer.h"
+#include "CommandList.h"
 
 namespace uut
 {
@@ -15,9 +16,9 @@ namespace uut
 	{		
 	}
 
-	void Camera::Setup(Renderer* renderer)
+	void Camera::Setup(const SharedPtr<CommandList>& commandList)
 	{
-		if (renderer == nullptr)
+		if (commandList == nullptr)
 			return;
 
 		if (_viewUpdate)
@@ -26,7 +27,7 @@ namespace uut
 			UpdateView();
 		}
 
-		renderer->SetTransform(RT_VIEW, _matView);
+		commandList->SetTransform(RT_VIEW, _matView);
 	}
 
 	const Matrix4& Camera::UpdateViewMatrix()

@@ -24,8 +24,6 @@ namespace uut
 		DebugGUI();
 
 		void NewFrame();
-
-		void SetupCamera();
 		void Draw() const;
 
 	protected:

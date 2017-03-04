@@ -19,9 +19,6 @@ namespace uut
 
 		virtual const RendererStatistics& GetStatistics() const override;
 
-		virtual bool SetTransform(RenderTransform type, const Matrix4& mat) override;
-		virtual const Matrix4& GetTransform(RenderTransform type) const override;
-
 		virtual bool BeginScene() override;
 		virtual void EndScene() override;
 
@@ -40,9 +37,6 @@ namespace uut
 		LPDIRECT3D9 _d3d;
 		LPDIRECT3DDEVICE9 _d3ddev;
 		RendererStatistics _statistics;
-		Matrix4 _matView;
-		Matrix4 _matWorld;
-		Matrix4 _matProj;
 
 		static bool TestReturnCode(HRESULT ret);
 	};

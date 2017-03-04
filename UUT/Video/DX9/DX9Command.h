@@ -17,6 +17,7 @@ namespace uut
 			TYPE_VIEWPORT,
 			TYPE_SCISSOR,
 			TYPE_PIPELINE,
+			TYPE_TRANSFORM,
 			TYPE_TEXTURE,
 			TYPE_VBUFFER,
 			TYPE_IBUFFER,
@@ -31,6 +32,7 @@ namespace uut
 			D3DCOLOR color;
 			D3DVIEWPORT9 viewport;
 			D3DPRIMITIVETYPE primitiveType;
+			D3DTRANSFORMSTATETYPE transform;
 			RECT rect;
 		};
 		union
@@ -51,6 +53,7 @@ namespace uut
 			DWORD stencil;
 			uint32_t offset;
 			uint32_t numVertices;
+			const D3DMATRIX* matrix;
 		};
 
 		uint32_t startIndex;

@@ -34,6 +34,7 @@ namespace uut
 	void DX9CommandList::Reset(const SharedPtr<PipelineState>& state)
 	{
 		_commands.Clear();
+		_matrixList.clear();
 		_state = DynamicCast<DX9PipelineState>(state);
 		_topology = Topology::TriangleList;
 
@@ -81,6 +82,17 @@ namespace uut
 		DX9Command cmd;
 		cmd.type = DX9Command::TYPE_PIPELINE;
 		cmd.object = state;
+		_commands.Add(cmd);
+	}
+
+	void DX9CommandList::SetTransform(RenderTransform type, const Matrix4& mat)
+	{
+		_matrixList.push_back(mat);
+
+		DX9Command cmd;
+		cmd.type = DX9Command::TYPE_TRANSFORM;
+		cmd.transform = dx9::Convert(type);
+		cmd.matrix = (D3DMATRIX*)&(_matrixList.back());
 		_commands.Add(cmd);
 	}
 

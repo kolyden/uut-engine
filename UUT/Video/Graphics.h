@@ -18,6 +18,7 @@ namespace uut
 	class Texture2D;
 	class VertexBuffer;
 	class Viewport;
+	class Camera;
 
 	class Graphics : public Object
 	{
@@ -40,7 +41,11 @@ namespace uut
 		virtual ~Graphics();
 
 		void SetMaterial(MaterialType material);
+		void SetProjection(ProjectionMode projection);
 		void SetViewport(const Viewport& viewport);
+		void SetCamera(const SharedPtr<Camera>& camera);
+		void SetViewMatrix(const Matrix4& matrix);
+
 		void Clear(const Color32& color = Color32::White, float z = 1.0f, uint32_t stencil = 0);
 
 		void DrawPoint(const Vector3& point, const Color32& color = Color32::White);
@@ -71,7 +76,6 @@ namespace uut
 		void Draw();
 
 	protected:
-		ProjectionMode _projection;
 		SharedPtr<PipelineState> _opaqueState;
 		SharedPtr<PipelineState> _alphaState;
 		SharedPtr<CommandList> _commandList;
@@ -79,6 +83,7 @@ namespace uut
 		SharedPtr<Texture2D> _texture;
 
 		MaterialType _currentMT, _nextMT;
+		ProjectionMode _currentPM, _nextPM;
 
 		Vertex* _vertices = nullptr;
 		uint _vdxIndex = 0;
@@ -86,7 +91,10 @@ namespace uut
 
 		uint _vbufCount;
 
+		void Flush();
 		bool TestBatch(Topology topology, const SharedPtr<Texture2D>& tex, int vrtCount);
 		int GetPrimitiveCount(int vertexCount) const;
+		void UpdateProjection();
+		void UpdatePipeline();
 	};
 }

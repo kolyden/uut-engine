@@ -11,6 +11,14 @@ namespace uut
 	class VertexBuffer;
 	class IndexBuffer;
 	class PipelineState;
+	class Matrix4;
+
+	enum RenderTransform
+	{
+		RT_VIEW,
+		RT_WORLD,
+		RT_PROJECTION,
+	};
 
 	class CommandList : public Object
 	{
@@ -23,6 +31,7 @@ namespace uut
 		virtual void SetViewport(const Viewport& viewport) = 0;
 		virtual void SetScissorRect(const IntRect& rect) = 0;
 		virtual void SetPipelineState(const SharedPtr<PipelineState>& state) = 0;
+		virtual void SetTransform(RenderTransform type, const Matrix4& mat) = 0;
 
 		virtual void SetTopology(Topology topology) = 0;
 		virtual Topology GetTopology() const = 0;

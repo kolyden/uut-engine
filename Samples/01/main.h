@@ -26,8 +26,7 @@ namespace uut
 		SharedPtr<FreeCamera> _camera;
 		SharedPtr<Quake1Model> _model;
 		SharedPtr<BSPLevel> _level;
-		SharedPtr<Graphics> _opaque;
-		SharedPtr<Graphics> _transparent;
+		SharedPtr<Graphics> _graphics;
 
 		virtual void OnInit() override;
 		virtual void OnFrame() override;

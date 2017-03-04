@@ -1,5 +1,6 @@
 #pragma once
 #include <Video/CommandList.h>
+#include <list>
 #include "DX9Command.h"
 
 namespace uut
@@ -20,6 +21,7 @@ namespace uut
 		virtual void SetViewport(const Viewport& viewport) override;
 		virtual void SetScissorRect(const IntRect& rect) override;
 		virtual void SetPipelineState(const SharedPtr<PipelineState>& state) override;
+		virtual void SetTransform(RenderTransform type, const Matrix4& mat) override;
 
 		virtual void SetTopology(Topology topology) override;
 		virtual Topology GetTopology() const override;
@@ -35,6 +37,7 @@ namespace uut
 		List<DX9Command> _commands;
 		SharedPtr<DX9PipelineState> _state;
 		Topology _topology;
+		std::list<Matrix4> _matrixList;
 
 		friend class DX9Renderer;
 	};

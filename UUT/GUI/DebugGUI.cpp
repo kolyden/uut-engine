@@ -134,14 +134,6 @@ namespace uut
 		ImGui::NewFrame();
 	}
 
-	void DebugGUI::SetupCamera()
-	{
-		auto render = Renderer::Instance();
-		render->SetTransform(RT_VIEW, Matrix4::Identity);
-		render->SetTransform(RT_WORLD, Matrix4::Identity);
-		render->SetTransform(RT_PROJECTION, _matProj);
-	}
-
 	void DebugGUI::Draw() const
 	{
 		ImGui::Render();
@@ -198,6 +190,10 @@ namespace uut
 		_commandList->SetVertexBuffer(_vb, sizeof(UIVertex));
 		_commandList->SetIndexBuffer(_ib);
 		_commandList->SetTopology(Topology::TriangleList);
+
+		_commandList->SetTransform(RT_VIEW, Matrix4::Identity);
+		_commandList->SetTransform(RT_WORLD, Matrix4::Identity);
+		_commandList->SetTransform(RT_PROJECTION, _matProj);
 
 		// Render command lists
 		int vtx_offset = 0;

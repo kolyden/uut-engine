@@ -155,8 +155,7 @@ namespace uut
 		_model = cache->Load<Quake1Model>("player.mdl");
 // 		_level = cache->Load<BSPLevel>("start.bsp");
 
-		_opaque = SharedPtr<Graphics>::Make(Graphics::MT_OPAQUE, Graphics::PM_3D);
-		_transparent = SharedPtr<Graphics>::Make(Graphics::MT_TRANSPARENT, Graphics::PM_2D);
+		_graphics = SharedPtr<Graphics>::Make(Graphics::MT_OPAQUE, Graphics::PM_3D);
 
 		_camera = SharedPtr<FreeCamera>::Make();
 		_camera->SetPosition(Vector3(8.5f, 10, -50));
@@ -304,23 +303,18 @@ namespace uut
 		auto renderer = Renderer::Instance();
 		auto gui = DebugGUI::Instance();
 
-		//renderer->Clear(Color32(114, 144, 154));
 		if (renderer->BeginScene())
 		{
-// 			_plasma->Apply(_texture,
-// 				Math::RoundToInt(1000.0f * _timer.GetElapsedTime() / 10))
-// 			_graphics->DrawQuad(IntRect(10, 10, texSize, texSize), 15, _texture);
-			_opaque->BeginRecord();
-			_opaque->SetViewport(Viewport(0, 0, renderer->GetScreenSize()));
-			_opaque->Clear(Color32(114, 144, 154));
+			_graphics->BeginRecord();
+			_graphics->SetViewport(Viewport(0, 0, renderer->GetScreenSize()));
+			_graphics->Clear(Color32(114, 144, 154));
+			_graphics->SetProjection(Graphics::PM_3D);
+			_graphics->SetMaterial(Graphics::MT_OPAQUE);
+			_graphics->SetCamera(_camera);
 
-			Matrix4 oldMat = renderer->GetTransform(RT_VIEW);
-			auto& cameraMat = _camera->UpdateViewMatrix();
-			renderer->SetTransform(RT_VIEW, cameraMat);
-
-			_opaque->DrawLine(Vector3::Zero, Vector3::AxisX * 100, Color32::Red);
-			_opaque->DrawLine(Vector3::Zero, Vector3::AxisY * 100, Color32::Green);
-			_opaque->DrawLine(Vector3::Zero, Vector3::AxisZ * 100, Color32::Blue);
+			_graphics->DrawLine(Vector3::Zero, Vector3::AxisX * 100, Color32::Red);
+			_graphics->DrawLine(Vector3::Zero, Vector3::AxisY * 100, Color32::Green);
+			_graphics->DrawLine(Vector3::Zero, Vector3::AxisZ * 100, Color32::Blue);
 
 			if (_model)
 			{				
@@ -332,7 +326,7 @@ namespace uut
 				static float time = 0;
 
 				const Vector3 pos = Vector3(20, 0, 30);
-				_opaque->DrawLine(pos, pos + Vector3::AxisY * 10, Color32::Magenta);
+				_graphics->DrawLine(pos, pos + Vector3::AxisY * 10, Color32::Magenta);
 
 				static const auto rot = Quaternion::RotationAxis(Vector3::AxisX, -Degree::Angle90) *
 					Quaternion::RotationAxis(Vector3::AxisY, Degree::Angle90);
@@ -341,7 +335,7 @@ namespace uut
 				auto& frames = _model->GetFrames();
 				auto it = _model->GetAnimations().Find(anim[index]);
 				if (it != _model->GetAnimations().End())
-					_opaque->DrawMesh(mat, frames[it->second], _model->GetSkins()[0]);
+					_graphics->DrawMesh(mat, frames[it->second], _model->GetSkins()[0]);
 
 				time += Time::GetDeltaTime();
 				while (time >= frameTime)
@@ -354,18 +348,15 @@ namespace uut
 			if (_level && _level->GetMeshes().Count() > 0)
 			{
 				static const Matrix4 mat = Matrix4::Scaling(Vector3(0.5f));
-				_opaque->DrawMesh(mat, _level->GetMeshes()[0]);
+				_graphics->DrawMesh(mat, _level->GetMeshes()[0]);
 			}
-			_opaque->EndRecord();
-			_opaque->Draw();
 
-			renderer->SetTransform(RT_VIEW, oldMat);
-
-			_transparent->BeginRecord();
-			//_transparent->DrawQuad(Rect(10, 10, 100, 100), 15, nullptr, Color32(0, 255, 0, 255));
+			_graphics->SetMaterial(Graphics::MT_TRANSPARENT);
+			_graphics->SetProjection(Graphics::PM_2D);
+			_graphics->SetViewMatrix(Matrix4::Identity);
 
 			if (_font)
-				_transparent->PrintText(Vector2(10, 10), 15, "qwertyuiopasdfghjklzxcvbnm", _font, Color32::Black);
+				_graphics->PrintText(Vector2(10, 10), 15, "qwertyuiopasdfghjklzxcvbnm", _font, Color32::Black);
 			if (_model)
 			{
 				const List<SharedPtr<Texture2D>>& skins = _model->GetSkins();
@@ -374,14 +365,13 @@ namespace uut
 				{
 					x += 10;
 					auto& tex = skins[i];
-					_transparent->DrawQuad(IntRect(x, 50, tex->GetSize()), 15, tex);
+					_graphics->DrawQuad(IntRect(x, 50, tex->GetSize()), 15, tex);
 					x += tex->GetSize().x;
 				}
 			}
-			_transparent->EndRecord();
-			_transparent->Draw();
+			_graphics->EndRecord();
+			_graphics->Draw();
 
-			gui->SetupCamera();
 			gui->Draw();
 
 			renderer->EndScene();

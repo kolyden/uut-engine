@@ -10,11 +10,6 @@
 #include "SDL2/SDL_syswm.h"
 #include <Core/Debug.h>
 
-#include <d3d9.h>
-//#include <DxErr.h>
-//#pragma comment(lib, "d3dx9.lib")
-//#pragma comment(lib, "dxerr.lib")
-
 namespace uut
 {
 	UUT_MODULE_IMPLEMENT(DX9Renderer)
@@ -94,45 +89,9 @@ namespace uut
 		return _statistics;
 	}
 
-	bool DX9Renderer::SetTransform(RenderTransform type, const Matrix4& mat)
-	{
-		HRESULT ret = _d3ddev->SetTransform(dx9::Convert(type), (D3DMATRIX*)&mat);
-		switch (type)
-		{
-		case RT_VIEW: _matView = mat; break;
-		case RT_WORLD: _matWorld = mat; break;
-		case RT_PROJECTION: _matProj = mat; break;
-		}
-		return TestReturnCode(ret);
-	}
-
-	const Matrix4& DX9Renderer::GetTransform(RenderTransform type) const
-	{
-		switch (type)
-		{
-		case RT_VIEW: return _matView;
-		case RT_WORLD: return _matWorld;
-		case RT_PROJECTION: return _matProj;
-		}
-
-		return Matrix4::Identity;
-	}
-
 	bool DX9Renderer::BeginScene()
 	{
-		HRESULT ret = _d3ddev->BeginScene();
-
-		_matWorld = Matrix4::Identity;
-		_matView = Matrix4::Identity;
-		_matProj = Matrix4::Perspective(
-			static_cast<float>(_screenSize.x),
-			static_cast<float>(_screenSize.y),
-			0.001f, 1000.0f);
-		_d3ddev->SetTransform(D3DTS_WORLD, (D3DMATRIX*)&_matWorld);
-		_d3ddev->SetTransform(D3DTS_VIEW, (D3DMATRIX*)&_matView);
-		_d3ddev->SetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&_matProj);
-
-		return TestReturnCode(ret);
+		return TestReturnCode(_d3ddev->BeginScene());
 	}
 
 	void DX9Renderer::EndScene()
