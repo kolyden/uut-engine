@@ -52,9 +52,6 @@
     <Filter Include="Extern\STB">
       <UniqueIdentifier>{844ef482-55f4-4aa9-879a-443adcba0346}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UUT\Tilemap">
-      <UniqueIdentifier>{2c2e1770-aa02-4694-88ff-720f944a2643}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Extern\AStar">
       <UniqueIdentifier>{af93feeb-d732-4047-aceb-173318a3e49e}</UniqueIdentifier>
     </Filter>
@@ -621,18 +618,6 @@
     <ClInclude Include="..\Extern\STB\stb_truetype.h">
       <Filter>Extern\STB</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\Tilemap.h">
-      <Filter>UUT\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\Tileset.h">
-      <Filter>UUT\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\TilemapLayer.h">
-      <Filter>UUT\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\TilesetLayer.h">
-      <Filter>UUT\Tilemap</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Video\Font.h">
       <Filter>UUT\Video</Filter>
     </ClInclude>
@@ -645,20 +630,11 @@
     <ClInclude Include="..\UUT\Core\IO\BinaryReader.h">
       <Filter>UUT\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\ObjectLayer.h">
-      <Filter>UUT\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\InfoLayer.h">
-      <Filter>UUT\Tilemap</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Core\Nullable.h">
       <Filter>UUT\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\UUT\Core\IntPtr.h">
       <Filter>UUT\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\BlockedLayer.h">
-      <Filter>UUT\Tilemap</Filter>
     </ClInclude>
     <ClInclude Include="..\Extern\AStar\fsa.h">
       <Filter>Extern\AStar</Filter>
@@ -710,15 +686,6 @@
     </ClInclude>
     <ClInclude Include="..\UUT\Core\DateTime.h">
       <Filter>UUT\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\ObjectLayerItem.h">
-      <Filter>UUT\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\ObjectLayerFlags.h">
-      <Filter>UUT\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\Tilemap\TilemapPlugin.h">
-      <Filter>UUT\Tilemap</Filter>
     </ClInclude>
     <ClInclude Include="..\UUT\Video\TextureAtlas.h">
       <Filter>UUT\Video</Filter>
@@ -1193,18 +1160,6 @@
     <ClCompile Include="..\Extern\ImGui\imgui_draw.cpp">
       <Filter>Extern\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\Tilemap.cpp">
-      <Filter>UUT\Tilemap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\Tileset.cpp">
-      <Filter>UUT\Tilemap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\TilemapLayer.cpp">
-      <Filter>UUT\Tilemap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\TilesetLayer.cpp">
-      <Filter>UUT\Tilemap</Filter>
-    </ClCompile>
     <ClCompile Include="..\UUT\Video\Font.cpp">
       <Filter>UUT\Video</Filter>
     </ClCompile>
@@ -1217,17 +1172,11 @@
     <ClCompile Include="..\UUT\Core\IO\BinaryReader.cpp">
       <Filter>UUT\Core\IO</Filter>
     </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\ObjectLayer.cpp">
-      <Filter>UUT\Tilemap</Filter>
-    </ClCompile>
     <ClCompile Include="..\UUT\Core\Nullable.cpp">
       <Filter>UUT\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\IntPtr.cpp">
       <Filter>UUT\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\BlockedLayer.cpp">
-      <Filter>UUT\Tilemap</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Version.cpp">
       <Filter>UUT\Core</Filter>
@@ -1267,15 +1216,6 @@
     </ClCompile>
     <ClCompile Include="..\UUT\Core\DateTime.cpp">
       <Filter>UUT\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\ObjectLayerItem.cpp">
-      <Filter>UUT\Tilemap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\ObjectLayerFlags.cpp">
-      <Filter>UUT\Tilemap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Tilemap\TilemapPlugin.cpp">
-      <Filter>UUT\Tilemap</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Reflection\MethodAttributes.cpp">
       <Filter>UUT\Core\Reflection</Filter>
