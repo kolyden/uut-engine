@@ -22,6 +22,8 @@
 #include <Core/IO/JSONFile.h>
 #include <Core/IO/YamlFile.h>
 #include <Core/IO/YamlSerializer.h>
+#include <Core/IO/XMLFile.h>
+#include <Core/IO/XMLFileLoader.h>
 #include <Video/Primitives/Sphere.h>
 #include <IMGUI/imgui.h>
 
@@ -141,6 +143,7 @@ namespace uut
 		ModuleInstance<ResourceCache> cache;
 		cache->AddLoader(SharedPtr<JsonFileLoader>::Make());
 		cache->AddLoader(SharedPtr<YamlFileLoader>::Make());
+		cache->AddLoader(SharedPtr<XMLFileLoader>::Make());
 
 		cache->AddSaver(SharedPtr<YamlFileSaver>::Make());
 
@@ -153,6 +156,17 @@ namespace uut
 
 		_camera = SharedPtr<FreeCamera>::Make();
 		_camera->SetPosition(Vector3(8.5f, 10, -50));
+
+		auto xml = cache->Load<XMLFile>("tilemap.xml");
+		if (xml)
+		{
+			auto root = xml->GetRoot();
+			for (auto attr = root.FirstAttribute(); attr.Valid(); attr = attr.Next())
+			{
+				auto name = attr.GetName();
+				auto val = attr.GetValue();
+			}
+		}
 
 // 		auto json = cache->Load<JsonFile>("test.json");
 // 		if (json)

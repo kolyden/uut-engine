@@ -8,6 +8,8 @@
 #include "IO/InputSystem.h"
 #include <Core/IO/JSONFile.h>
 #include <Core/IO/YamlFile.h>
+#include <Core/IO/XMLFile.h>
+#include <Core/IO/XMLFileLoader.h>
 #include "Resources/Resource.h"
 #include "Resources/ResourceLoader.h"
 #include "Resources/ResourceCache.h"
@@ -110,6 +112,11 @@ namespace uut
 		UUT_REGISTER_OBJECT(YamlFile);
 		UUT_REGISTER_OBJECT(YamlFileLoader);
 		UUT_REGISTER_OBJECT(YamlFileSaver);
+
+		// XML
+		UUT_REGISTER_OBJECT(XMLNode);
+		UUT_REGISTER_OBJECT(XMLFile);
+		UUT_REGISTER_OBJECT(XMLFileLoader);
 
 		// WINDOWS
 		UUT_REGISTER_OBJECT(Window);

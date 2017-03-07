@@ -125,6 +125,7 @@
     <ClInclude Include="..\Extern\STB\stb_rect_pack.h" />
     <ClInclude Include="..\Extern\STB\stb_textedit.h" />
     <ClInclude Include="..\Extern\STB\stb_truetype.h" />
+    <ClInclude Include="..\Extern\TinyXML2\tinyxml2.h" />
     <ClInclude Include="..\UUT\CES\Component.h" />
     <ClInclude Include="..\UUT\CES\Entity.h" />
     <ClInclude Include="..\UUT\CES\EntityGroup.h" />
@@ -177,6 +178,9 @@
     <ClInclude Include="..\UUT\Core\IO\Stream.h" />
     <ClInclude Include="..\UUT\Core\IO\StreamContainer.h" />
     <ClInclude Include="..\UUT\Core\IO\TextReader.h" />
+    <ClInclude Include="..\UUT\Core\IO\XMLFile.h" />
+    <ClInclude Include="..\UUT\Core\IO\XMLFileLoader.h" />
+    <ClInclude Include="..\UUT\Core\IO\XMLNode.h" />
     <ClInclude Include="..\UUT\Core\IO\YamlFile.h" />
     <ClInclude Include="..\UUT\Core\IO\YamlNode.h" />
     <ClInclude Include="..\UUT\Core\IO\YamlSerializer.h" />
@@ -313,6 +317,7 @@
     <ClCompile Include="..\Extern\LibYAML\reader.c" />
     <ClCompile Include="..\Extern\LibYAML\scanner.c" />
     <ClCompile Include="..\Extern\LibYAML\writer.c" />
+    <ClCompile Include="..\Extern\TinyXML2\tinyxml2.cpp" />
     <ClCompile Include="..\UUT\CES\Component.cpp" />
     <ClCompile Include="..\UUT\CES\Entity.cpp" />
     <ClCompile Include="..\UUT\CES\EntityGroup.cpp" />
@@ -354,6 +359,9 @@
     <ClCompile Include="..\UUT\Core\IO\Stream.cpp" />
     <ClCompile Include="..\UUT\Core\IO\StreamContainer.cpp" />
     <ClCompile Include="..\UUT\Core\IO\TextReader.cpp" />
+    <ClCompile Include="..\UUT\Core\IO\XMLFile.cpp" />
+    <ClCompile Include="..\UUT\Core\IO\XMLFileLoader.cpp" />
+    <ClCompile Include="..\UUT\Core\IO\XMLNode.cpp" />
     <ClCompile Include="..\UUT\Core\IO\YamlFile.cpp" />
     <ClCompile Include="..\UUT\Core\IO\YamlNode.cpp" />
     <ClCompile Include="..\UUT\Core\IO\YamlSerializer.cpp" />
