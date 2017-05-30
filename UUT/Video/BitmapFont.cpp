@@ -1,6 +1,6 @@
 #include "BitmapFont.h"
 #include <Core/Math/Vector2.h>
-#include <Core/Math/IntRect.h>
+#include <Core/Math/Recti.h>
 #include <Core/Math/Math.h>
 #include "Texture2D.h"
 
@@ -39,7 +39,7 @@ namespace uut
 		return _textures[index];
 	}
 
-	bool BitmapFont::PrintToQuad(Vector2& pos, uint32_t code, uint32_t next, IntRect& rect, Rect& tex, uint8_t& page) const
+	bool BitmapFont::PrintToQuad(Vector2& pos, uint32_t code, uint32_t next, Recti& rect, Rect& tex, uint8_t& page) const
 	{
 		auto glyph = GetGlyph(code);
 		if (glyph == nullptr)
@@ -47,7 +47,7 @@ namespace uut
 
 		page = glyph->page;
 
-		rect = IntRect(
+		rect = Recti(
 			Math::RoundToInt(pos.x + glyph->offsetX),
 			Math::RoundToInt(pos.y + _info.lineHeight - glyph->offsetY - glyph->h),
 			glyph->w, glyph->h);

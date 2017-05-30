@@ -21,12 +21,12 @@ namespace uut
 		return _texture;
 	}
 
-	void Sprite::SetRect(const IntRect& rect)
+	void Sprite::SetRect(const Recti& rect)
 	{
 		_rect = rect;
 	}
 
-	const IntRect& Sprite::GetRect() const
+	const Recti& Sprite::GetRect() const
 	{
 		return _rect;
 	}
@@ -41,7 +41,7 @@ namespace uut
 		return _textureRect;
 	}
 
-	SharedPtr<Sprite> Sprite::Create(const SharedPtr<Texture2D>& texture, const IntRect& rect)
+	SharedPtr<Sprite> Sprite::Create(const SharedPtr<Texture2D>& texture, const Recti& rect)
 	{
 		if (texture == nullptr)
 			return nullptr;

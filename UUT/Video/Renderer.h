@@ -3,7 +3,7 @@
 #include <Core/Module.h>
 #include <Core/Math/Vector2i.h>
 #include <Core/Math/Matrix4.h>
-#include <Core/Math/IntRect.h>
+#include <Core/Math/Recti.h>
 #include "Texture2D.h"
 #include "Color32.h"
 #include "Topology.h"

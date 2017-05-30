@@ -1,16 +1,16 @@
-#include "IntRect.h"
+#include "Recti.h"
 #include <algorithm>
 #include "Math.h"
 #include "Rect.h"
 
 namespace uut
 {
-	UUT_VALUETYPE_IMPLEMENT(IntRect)
+	UUT_VALUETYPE_IMPLEMENT(Recti)
 	{}
 
-	const IntRect IntRect::Zero(0, 0, 0, 0);
+	const Recti Recti::Zero(0, 0, 0, 0);
 
-	IntRect::IntRect(const Rect& rect)
+	Recti::Recti(const Rect& rect)
 		: RectBase<int>(
 			Math::RoundToInt(rect.x),
 			Math::RoundToInt(rect.y),
@@ -19,7 +19,7 @@ namespace uut
 	{
 	}
 
-	IntRect& IntRect::operator=(const IntRect& rect)
+	Recti& Recti::operator=(const Recti& rect)
 	{
 		x = rect.x;
 		y = rect.y;
@@ -28,24 +28,24 @@ namespace uut
 		return *this;
 	}
 
-	IntRect& IntRect::operator=(IntRect&& rect)
+	Recti& Recti::operator=(Recti&& rect)
 	{
 		std::swap_ranges(data, data + 4, rect.data);
 		return *this;
 	}
 
-	bool IntRect::operator==(const IntRect& rect) const
+	bool Recti::operator==(const Recti& rect) const
 	{
 		return x == rect.x&&y == rect.y&&width == rect.width&&height == rect.height;
 	}
 
-	bool IntRect::operator!=(const IntRect& rect) const
+	bool Recti::operator!=(const Recti& rect) const
 	{
 		return !(*this == rect);
 	}
 
-	IntRect IntRect::FromLBRT(int left, int bottom, int right, int top)
+	Recti Recti::FromLBRT(int left, int bottom, int right, int top)
 	{
-		return IntRect(left, bottom, right - left, top - bottom);
+		return Recti(left, bottom, right - left, top - bottom);
 	}
 }

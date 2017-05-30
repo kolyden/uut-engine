@@ -58,7 +58,7 @@ namespace uut
 		_commands.Add(cmd);
 	}
 
-	void DX9CommandList::SetScissorRect(const IntRect& rect)
+	void DX9CommandList::SetScissorRect(const Recti& rect)
 	{
 		const RECT r{ rect.GetLeft(),rect.GetTop(),rect.GetRight(),rect.GetBottom() };
 

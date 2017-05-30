@@ -19,7 +19,7 @@ namespace uut
 
 		virtual bool Clear(const Color32& color, float z, uint32_t stencil) override;
 		virtual void SetViewport(const Viewport& viewport) override;
-		virtual void SetScissorRect(const IntRect& rect) override;
+		virtual void SetScissorRect(const Recti& rect) override;
 		virtual void SetPipelineState(const SharedPtr<PipelineState>& state) override;
 		virtual void SetTransform(RenderTransform type, const Matrix4& mat) override;
 

@@ -212,7 +212,7 @@ namespace uut
 				{
 					auto texPtr = static_cast<Texture2D*>(pcmd->TextureId);
 					_commandList->SetTexture(0, texPtr != nullptr ? texPtr->GetSharedThis() : nullptr);
-					_commandList->SetScissorRect(IntRect::FromLBRT(
+					_commandList->SetScissorRect(Recti::FromLBRT(
 						(int)pcmd->ClipRect.x, (int)pcmd->ClipRect.w,
 						(int)pcmd->ClipRect.z, (int)pcmd->ClipRect.y));
 					_commandList->DrawIndexedPrimitive(vtx_offset, 0,

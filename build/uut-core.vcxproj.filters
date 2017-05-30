@@ -231,9 +231,6 @@
     <ClInclude Include="..\UUT\Core\Math\Degree.h">
       <Filter>UUT\Core\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\Core\Math\IntRect.h">
-      <Filter>UUT\Core\Math</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Core\Math\Math.h">
       <Filter>UUT\Core\Math</Filter>
     </ClInclude>
@@ -909,6 +906,9 @@
     <ClInclude Include="..\UUT\Core\Math\Vector3i.h">
       <Filter>UUT\Core\Math</Filter>
     </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Recti.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UUT\Core\Attribute.cpp">
@@ -1011,9 +1011,6 @@
       <Filter>UUT\Core\IO</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Math\Degree.cpp">
-      <Filter>UUT\Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\Core\Math\IntRect.cpp">
       <Filter>UUT\Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Math\Math.cpp">
@@ -1413,6 +1410,9 @@
       <Filter>UUT\Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Math\Vector3i.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Recti.cpp">
       <Filter>UUT\Core\Math</Filter>
     </ClCompile>
   </ItemGroup>

@@ -34,7 +34,7 @@
 #include "IO/StreamContainer.h"
 #include "IO/DirectoryContainer.h"
 #include "Math/Rect.h"
-#include "Math/IntRect.h"
+#include "Math/Recti.h"
 
 namespace uut
 {
@@ -84,7 +84,7 @@ namespace uut
 		UUT_REGISTER_OBJECT(Vector3i);
 		UUT_REGISTER_OBJECT(Vector4);
 		UUT_REGISTER_OBJECT(Rect);
-		UUT_REGISTER_OBJECT(IntRect);
+		UUT_REGISTER_OBJECT(Recti);
 
 		// IO
 		UUT_REGISTER_OBJECT(Stream);

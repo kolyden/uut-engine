@@ -4,7 +4,7 @@
 
 namespace uut
 {
-	class IntRect;
+	class Recti;
 
 	class Rect : public RectBase<float>
 	{
@@ -27,7 +27,7 @@ namespace uut
 		constexpr Rect(const Rect& rect)
 			: RectBase<float>(rect.x, rect.y, rect.width, rect.height) {}
 
-		Rect(const IntRect& rect);
+		Rect(const Recti& rect);
 
 		bool Intersect(const Vector2& point) const { return IntersectPoint(point.x, point.y); }
 

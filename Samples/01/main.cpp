@@ -119,12 +119,12 @@ namespace uut
 		auto it = params.Find("rect");
 		if (it != params.End())
 		{
-			IntRect rect;
-			if (it->second.TryGet<IntRect>(rect))
+			Recti rect;
+			if (it->second.TryGet<Recti>(rect))
 				return Sprite::Create(tex, rect);
 		}
 
-		return Sprite::Create(tex, IntRect(0, 0, tex->GetSize()));
+		return Sprite::Create(tex, Recti(0, 0, tex->GetSize()));
 	}
 
 	////////////////////////////////////////////////////////////////////////////

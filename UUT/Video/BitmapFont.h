@@ -2,7 +2,7 @@
 #include "Font.h"
 #include <Core/Collections/Array.h>
 #include <Core/Collections/Dictionary.h>
-#include <Core/Math/IntRect.h>
+#include <Core/Math/Recti.h>
 #include <Core/Math/Rect.h>
 #include <Core/Math/Vector2.h>
 
@@ -37,7 +37,7 @@ namespace uut
 		int16_t GetKerning(uint32_t a, uint32_t b) const;
 
 		const SharedPtr<Texture2D>& GetTexture(int index) const override;
-		bool PrintToQuad(Vector2& pos, uint32_t code, uint32_t next, IntRect& rect, Rect& tex, uint8_t& page) const override;
+		bool PrintToQuad(Vector2& pos, uint32_t code, uint32_t next, Recti& rect, Rect& tex, uint8_t& page) const override;
 
 	protected:
 		struct FaceInfo

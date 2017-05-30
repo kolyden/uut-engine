@@ -424,7 +424,7 @@ namespace uut
 			return;
 
 		Vector2 pos = position;
-		IntRect rect;
+		Recti rect;
 		Rect tex;
 		uint8_t page;
 

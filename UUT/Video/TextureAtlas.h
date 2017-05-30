@@ -14,18 +14,18 @@ namespace uut
 		void SetTexture(const SharedPtr<Texture2D>& texture);
 		const SharedPtr<Texture2D>& GetTexture() const;
 
-		void SetPixelRects(const List<IntRect>& rects);
-		const List<IntRect>& GetPixelRects() const;
+		void SetPixelRects(const List<Recti>& rects);
+		const List<Recti>& GetPixelRects() const;
 
 		void SetRects(const List<Rect>& rects);
 		const List<Rect>& GetRects() const;
 
-		static SharedPtr<TextureAtlas> Create(const SharedPtr<Texture2D>& texture, const List<IntRect>& rects);
+		static SharedPtr<TextureAtlas> Create(const SharedPtr<Texture2D>& texture, const List<Recti>& rects);
 		static SharedPtr<TextureAtlas> Create(const SharedPtr<Texture2D>& texture, int width, int height, uint count = 0);
 
 	protected:
 		SharedPtr<Texture2D> _texture;
-		List<IntRect> _pixelRects;
+		List<Recti> _pixelRects;
 		List<Rect> _rects;
 	};
 }

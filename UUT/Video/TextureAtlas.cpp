@@ -1,6 +1,6 @@
 #include "TextureAtlas.h"
 #include "Texture2D.h"
-#include <Core/Math/IntRect.h>
+#include <Core/Math/Recti.h>
 
 namespace uut
 {
@@ -25,7 +25,7 @@ namespace uut
 		return _texture;
 	}
 
-	void TextureAtlas::SetPixelRects(const List<IntRect>& rects)
+	void TextureAtlas::SetPixelRects(const List<Recti>& rects)
 	{
 		if (!_texture)
 			return;
@@ -51,7 +51,7 @@ namespace uut
 		_pixelRects = rects;
 	}
 
-	const List<IntRect>& TextureAtlas::GetPixelRects() const
+	const List<Recti>& TextureAtlas::GetPixelRects() const
 	{
 		return _pixelRects;
 	}
@@ -66,7 +66,7 @@ namespace uut
 		return _rects;
 	}
 
-	SharedPtr<TextureAtlas> TextureAtlas::Create(const SharedPtr<Texture2D>& texture, const List<IntRect>& rects)
+	SharedPtr<TextureAtlas> TextureAtlas::Create(const SharedPtr<Texture2D>& texture, const List<Recti>& rects)
 	{
 		if (texture == nullptr || rects.IsEmpty())
 			return nullptr;
@@ -96,14 +96,14 @@ namespace uut
 		if (count == 0)
 			count = countX*countY;
 
-		List<IntRect> list;
+		List<Recti> list;
 
 		int i = 0;
 		for (int y = 0; y < countY; y++)
 		{
 			for (int x = 0; x < countX; x++)
 			{
-				list.Add(IntRect(x * width, y * width, width, height));
+				list.Add(Recti(x * width, y * width, width, height));
 
 				if (i == count)
 					break;

@@ -187,7 +187,7 @@
     <ClInclude Include="..\UUT\Core\Math\Degree.h" />
     <ClInclude Include="..\UUT\Core\Math\Hash.h" />
     <ClInclude Include="..\UUT\Core\Math\IntRange.h" />
-    <ClInclude Include="..\UUT\Core\Math\IntRect.h" />
+    <ClInclude Include="..\UUT\Core\Math\Recti.h" />
     <ClInclude Include="..\UUT\Core\Math\Vector2i.h" />
     <ClInclude Include="..\UUT\Core\Math\Vector3i.h" />
     <ClInclude Include="..\UUT\Core\Math\Math.h" />
@@ -368,7 +368,7 @@
     <ClCompile Include="..\UUT\Core\Math\Degree.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Hash.cpp" />
     <ClCompile Include="..\UUT\Core\Math\IntRange.cpp" />
-    <ClCompile Include="..\UUT\Core\Math\IntRect.cpp" />
+    <ClCompile Include="..\UUT\Core\Math\Recti.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Vector2i.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Vector3i.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Math.cpp" />

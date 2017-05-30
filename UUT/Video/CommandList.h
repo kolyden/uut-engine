@@ -1,6 +1,6 @@
 #pragma once
 #include <Core/Object.h>
-#include <Core/Math/IntRect.h>
+#include <Core/Math/Recti.h>
 #include "Topology.h"
 #include "Color32.h"
 #include "Viewport.h"
@@ -29,7 +29,7 @@ namespace uut
 
 		virtual bool Clear(const Color32& color = Color32::White, float z = 1.0f, uint32_t stencil = 0) = 0;
 		virtual void SetViewport(const Viewport& viewport) = 0;
-		virtual void SetScissorRect(const IntRect& rect) = 0;
+		virtual void SetScissorRect(const Recti& rect) = 0;
 		virtual void SetPipelineState(const SharedPtr<PipelineState>& state) = 0;
 		virtual void SetTransform(RenderTransform type, const Matrix4& mat) = 0;
 
