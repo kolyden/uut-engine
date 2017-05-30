@@ -1,6 +1,6 @@
 #pragma once
 #include <Core/Object.h>
-#include <Core/Math/IntVector2.h>
+#include <Core/Math/Vector2i.h>
 #include <Video/Color32.h>
 
 namespace uut
@@ -11,17 +11,17 @@ namespace uut
 	{
 		UUT_OBJECT(uut, Plasma, Object)
 	public:
-		explicit Plasma(const IntVector2& size);
+		explicit Plasma(const Vector2i& size);
 		virtual ~Plasma();
 
 		void SetPaletteColor(int index, const Color32& color);
 
 		bool Apply(Texture2D* texture, int shift = 0);
 
-		const IntVector2& GetSize() const { return _size; }
+		const Vector2i& GetSize() const { return _size; }
 
 	protected:
-		IntVector2 _size;
+		Vector2i _size;
 		uint32_t _lookupCount;
 		int* _lookupTable;
 		uint32_t _palette[256];

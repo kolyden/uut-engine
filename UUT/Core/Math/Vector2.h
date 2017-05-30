@@ -3,7 +3,7 @@
 
 namespace uut
 {
-	class IntVector2;
+	class Vector2i;
 
 	class Vector2
 		: public ValueType
@@ -15,7 +15,7 @@ namespace uut
 		constexpr Vector2() : Vector2Data<float>(0, 0) {}
 		constexpr Vector2(float fx, float fy) : Vector2Data<float>(fx, fy) {}
 		explicit constexpr Vector2(float val) : Vector2Data<float>(val, val) {}
-		Vector2(const IntVector2& vec);
+		Vector2(const Vector2i& vec);
 
 		float Length() const;
 

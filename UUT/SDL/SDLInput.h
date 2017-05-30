@@ -22,7 +22,7 @@ namespace uut
 		void AddEvent(const SDL_MouseWheelEvent& evt);
 
 		virtual bool IsMouseButton(int button) const override;
-		virtual const IntVector2& GetMousePos() const override;
+		virtual const Vector2i& GetMousePos() const override;
 		virtual float GetMouseDelta() const override;
 
 		virtual bool IsKey(Scancode key) const override;
@@ -32,7 +32,7 @@ namespace uut
 	private:
 		static const int KEYS_COUNT = 512;
 
-		IntVector2 _mousePos;
+		Vector2i _mousePos;
 		float _mouseDelta;
 		Array<bool, KEYS_COUNT> _prevKbState;
 		Array<bool, KEYS_COUNT> _kbState;

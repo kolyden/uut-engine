@@ -1,6 +1,6 @@
 #pragma once
 #include <Core/Object.h>
-#include <Core/Math/IntVector2.h>
+#include <Core/Math/Vector2i.h>
 
 namespace uut
 {
@@ -20,8 +20,8 @@ namespace uut
 		void SetTitle(const String& title);
 		const String& GetTitle() const;
 
-		void SetSize(const IntVector2& size);
-		const IntVector2& GetSize() const;
+		void SetSize(const Vector2i& size);
+		const Vector2i& GetSize() const;
 
 		void SetIcon(const SharedPtr<Image>& icon);
 		const SharedPtr<Image>& GetIcon() const;
@@ -34,7 +34,7 @@ namespace uut
 
 	protected:
 		String _title;
-		IntVector2 _size;
+		Vector2i _size;
 		SharedPtr<Image> _icon;
 		SDL_Window* _data;
 	};

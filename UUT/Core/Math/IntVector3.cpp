@@ -2,7 +2,7 @@
 #include <algorithm>
 #include "Math.h"
 #include "Vector3.h"
-#include "IntVector2.h"
+#include "Vector2i.h"
 #include <Core/Reflection/ConstructorInfo.h>
 #include <Core/Reflection/ConverterInfo.h>
 #include <Core/Math/Hash.h>
@@ -13,7 +13,7 @@ namespace uut
 	{
 		UUT_REGISTER_CTOR(int, int);
 		UUT_REGISTER_CTOR(int, int, int);
-		UUT_REGISTER_CTOR(IntVector2);
+		UUT_REGISTER_CTOR(Vector2i);
 	}
 
 	const IntVector3 IntVector3::Zero(0, 0, 0);

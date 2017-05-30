@@ -1,5 +1,5 @@
 #include "Vector2.h"
-#include "IntVector2.h"
+#include "Vector2i.h"
 #include "Math.h"
 #include <Core/Reflection/PropertyInfo.h>
 #include <Core/Reflection/ConstructorInfo.h>
@@ -9,8 +9,8 @@ namespace uut
 {
 	UUT_VALUETYPE_IMPLEMENT(Vector2)
 	{
-		UUT_REGISTER_CTOR(IntVector2);
-		UUT_REGISTER_CONVERTER_DEFAULT(IntVector2);
+		UUT_REGISTER_CTOR(Vector2i);
+		UUT_REGISTER_CONVERTER_DEFAULT(Vector2i);
 
 		UUT_REGISTER_PROPERTY("x", float, x);
 		UUT_REGISTER_PROPERTY("y", float, y);
@@ -27,7 +27,7 @@ namespace uut
 	const Vector2 Vector2::Up(0, 1);
 	const Vector2 Vector2::Down(0, -1);
 
-	Vector2::Vector2(const IntVector2& vec)
+	Vector2::Vector2(const Vector2i& vec)
 		: Vector2Data<float>(
 			static_cast<float>(vec.x),
 			static_cast<float>(vec.y))

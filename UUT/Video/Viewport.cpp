@@ -1,5 +1,5 @@
 #include "Viewport.h"
-#include <Core/Math/IntVector2.h>
+#include <Core/Math/Vector2i.h>
 
 namespace uut
 {
@@ -11,7 +11,7 @@ namespace uut
 	{
 	}
 
-	Viewport::Viewport(uint32_t _x, uint32_t _y, const IntVector2& size)
+	Viewport::Viewport(uint32_t _x, uint32_t _y, const Vector2i& size)
 		: x(_x), y(_y), width(size.x), height(size.y), minZ(0), maxZ(1)
 	{
 	}

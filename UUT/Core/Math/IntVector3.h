@@ -1,6 +1,6 @@
 #pragma once
 #include "Templates/Vector3Base.h"
-#include "IntVector2.h"
+#include "Vector2i.h"
 
 namespace uut
 {
@@ -14,7 +14,7 @@ namespace uut
 		explicit constexpr IntVector3(int val) : Vector3Base<int>(val, val, val) {}
 		constexpr IntVector3(int ix, int iy) : Vector3Base<int>(ix, iy, 0) {}
 		constexpr IntVector3(int ix, int iy, int iz) : Vector3Base<int>(ix, iy, iz) {}
-		constexpr IntVector3(const IntVector2& vec) : Vector3Base<int>(vec.x, vec.y, 0) {}
+		constexpr IntVector3(const Vector2i& vec) : Vector3Base<int>(vec.x, vec.y, 0) {}
 		IntVector3(const Vector3& vec);
 
 		IntVector3& operator += (const IntVector3& vec);

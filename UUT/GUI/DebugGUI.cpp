@@ -71,7 +71,7 @@ namespace uut
 		int width, height, pitch;
 		io.Fonts->GetTexDataAsAlpha8(&pixels, &width, &height);
 
-		_fontTex = renderer->CreateTexture(IntVector2(width, height), TextureAccess::Streaming);
+		_fontTex = renderer->CreateTexture(Vector2i(width, height), TextureAccess::Streaming);
 		auto pBits = static_cast<uint8_t*>(_fontTex->Lock(&pitch));
 		for (int y = 0; y < height; y++)
 		for (int x = 0; x < width; x++)

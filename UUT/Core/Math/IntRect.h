@@ -1,6 +1,6 @@
 #pragma once
 #include "Templates/RectBase.h"
-#include "IntVector2.h"
+#include "Vector2i.h"
 
 namespace uut
 {
@@ -15,13 +15,13 @@ namespace uut
 		constexpr IntRect(int x, int y, int width, int height)
 			: RectBase<int>(x, y, width, height) {}
 
-		constexpr IntRect(const IntVector2& pos, int width, int height)
+		constexpr IntRect(const Vector2i& pos, int width, int height)
 			: RectBase<int>(pos.x, pos.y, width, height) {}
 
-		constexpr IntRect(int x, int y, const IntVector2& size)
+		constexpr IntRect(int x, int y, const Vector2i& size)
 			: RectBase<int>(x, y, size.x, size.y) {}
 
-		constexpr IntRect(const IntVector2& pos, const IntVector2& size)
+		constexpr IntRect(const Vector2i& pos, const Vector2i& size)
 			: RectBase<int>(pos.x, pos.y, size.x, size.y) {}
 
 		constexpr IntRect(const IntRect& rect)
@@ -29,7 +29,7 @@ namespace uut
 
 		IntRect(const Rect& rect);
 
-		bool Intersect(const IntVector2& point) const { return IntersectPoint(point.x, point.y); }
+		bool Intersect(const Vector2i& point) const { return IntersectPoint(point.x, point.y); }
 
 		IntRect& operator =(const IntRect& rect);
 		IntRect& operator =(IntRect&& rect);

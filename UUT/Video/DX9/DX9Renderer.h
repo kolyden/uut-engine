@@ -26,7 +26,7 @@ namespace uut
 
 		virtual bool Present() override;
 
-		virtual SharedPtr<Texture2D> CreateTexture(const IntVector2& size, TextureAccess access) override;
+		virtual SharedPtr<Texture2D> CreateTexture(const Vector2i& size, TextureAccess access) override;
 		virtual SharedPtr<VertexBuffer> CreateVertexBuffer(uint32_t size) override;
 		virtual SharedPtr<IndexBuffer> CreateIndexBuffer(uint32_t size, bool use32) override;
 		virtual SharedPtr<CommandList> CreateCommandList() override;

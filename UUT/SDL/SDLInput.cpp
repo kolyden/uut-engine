@@ -45,7 +45,7 @@ namespace uut
 
 	void SDLInput::AddEvent(const SDL_MouseMotionEvent& evt)
 	{
-		_mousePos = IntVector2(evt.x, evt.y);
+		_mousePos = Vector2i(evt.x, evt.y);
 	}
 
 	void SDLInput::AddEvent(const SDL_MouseWheelEvent& evt)
@@ -58,7 +58,7 @@ namespace uut
 		return _mouseButton[button];
 	}
 
-	const uut::IntVector2& SDLInput::GetMousePos() const
+	const uut::Vector2i& SDLInput::GetMousePos() const
 	{
 		return _mousePos;
 	}

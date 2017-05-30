@@ -1,5 +1,5 @@
 #pragma once
-#include <Core/Math/IntVector2.h>
+#include <Core/Math/Vector2i.h>
 #include <Core/IO/Scancode.h>
 
 namespace uut
@@ -8,7 +8,7 @@ namespace uut
 	{
 	public:
 		static bool IsMouseButton(int button);
-		static const IntVector2& GetMousePos();
+		static const Vector2i& GetMousePos();
 		static float GetMouseDelta();
 
 		static bool IsKey(Scancode key);

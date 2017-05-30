@@ -1,5 +1,5 @@
 #pragma once
-#include <Core/Math/IntVector2.h>
+#include <Core/Math/Vector2i.h>
 #include <Resources/Resource.h>
 
 namespace uut
@@ -18,14 +18,14 @@ namespace uut
 		Texture();
 		virtual ~Texture();
 
-		const IntVector2& GetSize() const { return _size; }
+		const Vector2i& GetSize() const { return _size; }
 		int GetWidth() const { return _size.x; }
 		int GetHeight() const { return _size.y; }
 
 		virtual intptr_t GetNativeHandle() const = 0;
 
 	protected:
-		IntVector2 _size;
+		Vector2i _size;
 		TextureAccess _access;
 	};
 }

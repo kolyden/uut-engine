@@ -1,7 +1,7 @@
 #pragma once
 #include <Core/Collections/List.h>
 #include <Core/Module.h>
-#include <Core/Math/IntVector2.h>
+#include <Core/Math/Vector2i.h>
 #include <Core/Math/Matrix4.h>
 #include <Core/Math/IntRect.h>
 #include "Texture2D.h"
@@ -37,7 +37,7 @@ namespace uut
 		Renderer();
 		virtual ~Renderer();
 
-		const IntVector2& GetScreenSize() const { return _screenSize; }
+		const Vector2i& GetScreenSize() const { return _screenSize; }
 		Window* GetWindow() const { return _window; }
 
 		virtual SharedPtr<PipelineState> CreatePipelineState(const PipelineStateDesc& desc) = 0;
@@ -67,14 +67,14 @@ namespace uut
 		//virtual bool Clear(const Color32& color = Color32::White, float z = 1.0f, uint32_t stencil = 0) = 0;
 		virtual bool Present() = 0;
 
-		virtual SharedPtr<Texture2D> CreateTexture(const IntVector2& size, TextureAccess access = TextureAccess::Streaming) = 0;
+		virtual SharedPtr<Texture2D> CreateTexture(const Vector2i& size, TextureAccess access = TextureAccess::Streaming) = 0;
 		virtual SharedPtr<VertexBuffer> CreateVertexBuffer(uint32_t size) = 0;
 		virtual SharedPtr<IndexBuffer> CreateIndexBuffer(uint32_t size, bool use32 = false) = 0;
 		virtual SharedPtr<CommandList> CreateCommandList() = 0;
 
 	protected:
 		SharedPtr<Window> _window;
-		IntVector2 _screenSize;
+		Vector2i _screenSize;
 
 		bool OnInit() override;
 		void OnDone() override;

@@ -46,7 +46,7 @@ namespace uut
 		if (texture == nullptr)
 			return nullptr;
 
-		const IntVector2& size = texture->GetSize();
+		const Vector2i& size = texture->GetSize();
 		const float invW = 1.0f / size.x;
 		const float invH = 1.0f / size.y;
 		const Rect textureRect(

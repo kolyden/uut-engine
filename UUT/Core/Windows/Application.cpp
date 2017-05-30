@@ -36,7 +36,7 @@ namespace uut
 
 		_window = MakeShared<Window>();
 		_window->SetTitle("Sample 01");
-		_window->SetSize(IntVector2(_windowSize));
+		_window->SetSize(Vector2i(_windowSize));
 		_window->Create();
 
 		Context::CreateModule<SDLInput>();

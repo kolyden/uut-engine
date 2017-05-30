@@ -105,7 +105,7 @@ namespace uut
 		return TestReturnCode(ret);
 	}
 
-	SharedPtr<Texture2D> DX9Renderer::CreateTexture(const IntVector2& size, TextureAccess access)
+	SharedPtr<Texture2D> DX9Renderer::CreateTexture(const Vector2i& size, TextureAccess access)
 	{
 		LPDIRECT3DTEXTURE9 data;
 		HRESULT ret = _d3ddev->CreateTexture(size.x, size.y, 1,

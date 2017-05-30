@@ -5,7 +5,7 @@
 
 namespace uut
 {
-	class IntVector2;
+	class Vector2i;
 	class CommandList;
 	class Renderer;
 

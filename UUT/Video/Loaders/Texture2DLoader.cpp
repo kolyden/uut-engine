@@ -43,7 +43,7 @@ namespace uut
 	{
 		stbi_io_callbacks callbacks{ &ReadStream, &SeekStream, &IsEOFStream };
 
-		IntVector2 size;
+		Vector2i size;
 		int comp;
 		auto source = stbi_load_from_callbacks(&callbacks, stream, &size.x, &size.y, &comp, STBI_rgb_alpha);
 		if (source == nullptr)

@@ -130,7 +130,7 @@ namespace uut
 	////////////////////////////////////////////////////////////////////////////
 	SampleApp::SampleApp()
 	{
-		_windowSize = IntVector2(800, 600);
+		_windowSize = Vector2i(800, 600);
 	}
 
 	void SampleApp::OnInit()
@@ -203,10 +203,10 @@ namespace uut
 		auto& float_def = GetDefault<float>(); UUT_ASSERT(float_def == 0.0f);
 		auto& int_def = GetDefault<int>(); UUT_ASSERT(int_def == 0);
 		auto& enum_def = GetDefault<Test>(); UUT_ASSERT(enum_def == Test::ValueA);
-		auto& ivec2_def = GetDefault<IntVector2>(); UUT_ASSERT(ivec2_def == IntVector2::Zero);
+		auto& ivec2_def = GetDefault<Vector2i>(); UUT_ASSERT(ivec2_def == Vector2i::Zero);
 
 		auto vec = var1.Get<Vector2>();
-		auto ivec = var1.Get<IntVector2>(); UUT_ASSERT(ivec == Vector2(12, 46));
+		auto ivec = var1.Get<Vector2i>(); UUT_ASSERT(ivec == Vector2(12, 46));
 		auto obj = var2.Get<Object>(); UUT_ASSERT(obj == _font);
 		auto i = var3.Get<int>(); UUT_ASSERT(i == 666);
 		auto b = var4.Get<bool>(); UUT_ASSERT(b == true);

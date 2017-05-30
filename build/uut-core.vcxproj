@@ -188,7 +188,7 @@
     <ClInclude Include="..\UUT\Core\Math\Hash.h" />
     <ClInclude Include="..\UUT\Core\Math\IntRange.h" />
     <ClInclude Include="..\UUT\Core\Math\IntRect.h" />
-    <ClInclude Include="..\UUT\Core\Math\IntVector2.h" />
+    <ClInclude Include="..\UUT\Core\Math\Vector2i.h" />
     <ClInclude Include="..\UUT\Core\Math\IntVector3.h" />
     <ClInclude Include="..\UUT\Core\Math\Math.h" />
     <ClInclude Include="..\UUT\Core\Math\Matrix4.h" />
@@ -369,7 +369,7 @@
     <ClCompile Include="..\UUT\Core\Math\Hash.cpp" />
     <ClCompile Include="..\UUT\Core\Math\IntRange.cpp" />
     <ClCompile Include="..\UUT\Core\Math\IntRect.cpp" />
-    <ClCompile Include="..\UUT\Core\Math\IntVector2.cpp" />
+    <ClCompile Include="..\UUT\Core\Math\Vector2i.cpp" />
     <ClCompile Include="..\UUT\Core\Math\IntVector3.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Math.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Matrix4.cpp" />

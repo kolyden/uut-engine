@@ -7,7 +7,7 @@ namespace uut
 	UUT_OBJECT_IMPLEMENT(Plasma)
 	{}
 
-	Plasma::Plasma(const IntVector2& size)
+	Plasma::Plasma(const Vector2i& size)
 		: _size(size)
 		, _lookupCount(_size.Area())
 	{

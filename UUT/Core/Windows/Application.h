@@ -20,7 +20,7 @@ namespace uut
 	protected:
 		SharedPtr<Engine> _engine;
 		SharedPtr<Window> _window;
-		IntVector2 _windowSize;
+		Vector2i _windowSize;
 
 		virtual void OnRegister() {}
 		virtual void OnInit() {}

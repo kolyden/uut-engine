@@ -8,7 +8,7 @@ namespace uut
 		return InputSystem::Instance()->IsMouseButton(button);
 	}
 
-	const uut::IntVector2& Input::GetMousePos()
+	const uut::Vector2i& Input::GetMousePos()
 	{
 		return InputSystem::Instance()->GetMousePos();
 	}

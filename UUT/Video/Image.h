@@ -1,6 +1,6 @@
 #pragma once
 #include <Core/Object.h>
-#include <Core/Math/IntVector2.h>
+#include <Core/Math/Vector2i.h>
 
 namespace uut
 {
@@ -11,16 +11,16 @@ namespace uut
 		Image();
 		virtual ~Image();
 
-		bool Create(const IntVector2& size);
+		bool Create(const Vector2i& size);
 		void Destroy();
 		bool IsCreated() const;
 
-		const IntVector2& GetSize() const { return _size; }
+		const Vector2i& GetSize() const { return _size; }
 
 		uintptr_t GetInternalHandle() const;
 
 	protected:
-		IntVector2 _size;
+		Vector2i _size;
 		SDL_Surface* _data;
 	};
 }

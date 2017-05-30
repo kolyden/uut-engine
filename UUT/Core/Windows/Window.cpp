@@ -75,7 +75,7 @@ namespace uut
 		return _title;
 	}
 
-	void Window::SetSize(const IntVector2& size)
+	void Window::SetSize(const Vector2i& size)
 	{
 		if (_size == size)
 			return;
@@ -85,7 +85,7 @@ namespace uut
 			SDL_SetWindowSize(_data, _size.x, _size.y);
 	}
 
-	const IntVector2& Window::GetSize() const
+	const Vector2i& Window::GetSize() const
 	{
 		return _size;
 	}

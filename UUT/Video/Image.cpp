@@ -15,7 +15,7 @@ namespace uut
 		Destroy();
 	}
 
-	bool Image::Create(const IntVector2& size)
+	bool Image::Create(const Vector2i& size)
 	{
 		if (_size == size)
 			return true;

@@ -35,7 +35,7 @@ namespace uut
 
 	SharedPtr<Texture2D> Renderer::CreateMonoTexture(const Color32& color)
 	{
-		auto tex = CreateTexture(IntVector2(1), TextureAccess::Static);
+		auto tex = CreateTexture(Vector2i(1), TextureAccess::Static);
 		uint32_t* buf = static_cast<uint32_t*>(tex->Lock());
 		if (buf == nullptr)
 			return nullptr;
