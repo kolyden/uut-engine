@@ -14,7 +14,7 @@ namespace uut
 	{
 	}
 
-	Variant::Variant(nullptr_t)
+	Variant::Variant(std::nullptr_t)
 		: _type(VariantType::Empty)
 		, _dataType(nullptr)
 	{}
@@ -126,7 +126,7 @@ namespace uut
 		_type = VariantType::Struct;
 		_dataType = type;
 		_data.resize(size);
-		memcpy(_data.data(), &value, size);
+		SDL_memcpy(_data.data(), &value, size);
 	}
 
 	void Variant::SetObject(const Type* type, const SharedPtr<Object>& obj)

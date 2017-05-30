@@ -12,7 +12,7 @@ namespace uut
 		typedef std::shared_ptr<T> StdShared;
 
 		constexpr SharedPtr() noexcept {}
-		constexpr SharedPtr(nullptr_t) noexcept {}
+		constexpr SharedPtr(std::nullptr_t) noexcept {}
 		explicit SharedPtr(T* ptr) : _data(ptr) {}
 		SharedPtr(const StdShared& ptr) : _data(ptr) {}
 		SharedPtr(StdShared&& ptr) : _data(ptr) {}
