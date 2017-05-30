@@ -189,7 +189,7 @@
     <ClInclude Include="..\UUT\Core\Math\IntRange.h" />
     <ClInclude Include="..\UUT\Core\Math\IntRect.h" />
     <ClInclude Include="..\UUT\Core\Math\Vector2i.h" />
-    <ClInclude Include="..\UUT\Core\Math\IntVector3.h" />
+    <ClInclude Include="..\UUT\Core\Math\Vector3i.h" />
     <ClInclude Include="..\UUT\Core\Math\Math.h" />
     <ClInclude Include="..\UUT\Core\Math\Matrix4.h" />
     <ClInclude Include="..\UUT\Core\Math\Plane.h" />
@@ -370,7 +370,7 @@
     <ClCompile Include="..\UUT\Core\Math\IntRange.cpp" />
     <ClCompile Include="..\UUT\Core\Math\IntRect.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Vector2i.cpp" />
-    <ClCompile Include="..\UUT\Core\Math\IntVector3.cpp" />
+    <ClCompile Include="..\UUT\Core\Math\Vector3i.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Math.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Matrix4.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Plane.cpp" />

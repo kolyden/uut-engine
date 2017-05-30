@@ -1,6 +1,6 @@
 #include "Vector3.h"
 #include "Vector2.h"
-#include "IntVector3.h"
+#include "Vector3i.h"
 #include <algorithm>
 #include "Math.h"
 #include <Core/Reflection/ConstructorInfo.h>
@@ -27,7 +27,7 @@ namespace uut
 	const Vector3 Vector3::Forward(0, 0, 1);
 	const Vector3 Vector3::Back(0, 0, -1);
 
-	Vector3::Vector3(const IntVector3& vec)
+	Vector3::Vector3(const Vector3i& vec)
 		: Vector3Base<float>(
 			1.0f * vec.x,
 			1.0f * vec.y,

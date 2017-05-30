@@ -4,7 +4,7 @@
 
 namespace uut
 {
-	class IntVector3;
+	class Vector3i;
 
 	class Vector3 : public Vector3Base<float>
 	{
@@ -15,7 +15,7 @@ namespace uut
 		constexpr Vector3(float fx, float fy) : Vector3Base<float>(fx, fy, 0) {}
 		constexpr Vector3(float fx, float fy, float fz) : Vector3Base<float>(fx, fy, fz) {}
 		constexpr Vector3(const Vector2& v) : Vector3Base<float>(v.x, v.y, 0) {}
-		Vector3(const IntVector3& vec);
+		Vector3(const Vector3i& vec);
 	
 		Vector3& operator += (const Vector3& v);
 		Vector3& operator -= (const Vector3& v);
