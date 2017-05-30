@@ -723,9 +723,6 @@
     <ClInclude Include="..\UUT\Core\Math\Range.h">
       <Filter>UUT\Core\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\Core\Math\IntRange.h">
-      <Filter>UUT\Core\Math</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Core\Input\ActionBinding.h">
       <Filter>UUT\Core\Input</Filter>
     </ClInclude>
@@ -907,6 +904,9 @@
       <Filter>UUT\Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\UUT\Core\Math\Recti.h">
+      <Filter>UUT\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UUT\Core\Math\Rangei.h">
       <Filter>UUT\Core\Math</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1256,9 +1256,6 @@
     <ClCompile Include="..\UUT\Core\Math\Range.cpp">
       <Filter>UUT\Core\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\UUT\Core\Math\IntRange.cpp">
-      <Filter>UUT\Core\Math</Filter>
-    </ClCompile>
     <ClCompile Include="..\UUT\Core\Input\ActionBinding.cpp">
       <Filter>UUT\Core\Input</Filter>
     </ClCompile>
@@ -1413,6 +1410,9 @@
       <Filter>UUT\Core\Math</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\Math\Recti.cpp">
+      <Filter>UUT\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UUT\Core\Math\Rangei.cpp">
       <Filter>UUT\Core\Math</Filter>
     </ClCompile>
   </ItemGroup>

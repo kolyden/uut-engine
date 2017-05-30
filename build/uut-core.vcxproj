@@ -186,7 +186,7 @@
     <ClInclude Include="..\UUT\Core\IO\YamlSerializer.h" />
     <ClInclude Include="..\UUT\Core\Math\Degree.h" />
     <ClInclude Include="..\UUT\Core\Math\Hash.h" />
-    <ClInclude Include="..\UUT\Core\Math\IntRange.h" />
+    <ClInclude Include="..\UUT\Core\Math\Rangei.h" />
     <ClInclude Include="..\UUT\Core\Math\Recti.h" />
     <ClInclude Include="..\UUT\Core\Math\Vector2i.h" />
     <ClInclude Include="..\UUT\Core\Math\Vector3i.h" />
@@ -367,7 +367,7 @@
     <ClCompile Include="..\UUT\Core\IO\YamlSerializer.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Degree.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Hash.cpp" />
-    <ClCompile Include="..\UUT\Core\Math\IntRange.cpp" />
+    <ClCompile Include="..\UUT\Core\Math\Rangei.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Recti.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Vector2i.cpp" />
     <ClCompile Include="..\UUT\Core\Math\Vector3i.cpp" />
