@@ -62,5 +62,5 @@ namespace uut
 	extern Radian operator"" _rad(long double angle);
 	extern Radian operator"" _rad(unsigned long long int angle);
 
-	UUT_DEFAULT(Radian, Radian::Zero)
+	UUT_DEFAULT_VALUE(Radian, Radian::Zero)
 }

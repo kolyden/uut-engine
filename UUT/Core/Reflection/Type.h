@@ -96,7 +96,7 @@ namespace uut
 	protected:
 		static constexpr const Type* CtorGetBaseType()
 		{
-			return std::is_same<C, typename C::Super>::value ? nullptr : C::Super::GetTypeStatic();
+			return std::is_same<C,		typename C::Super>::value ? nullptr : C::Super::GetTypeStatic();
 		}
 	};
 
@@ -121,23 +121,23 @@ namespace uut
 	typedef parentType Super; \
 	static const Type* GetTypeStatic() { return _GetTypeInternal(); } \
 	private: \
-	static Type* _GetTypeInternal(); \
+	static Type* _GetTypeInternal() \
+	{ static TypeImpl<typeName> type(_LibraryName(), \
+	  #typeName, &typeName::_RegisterInternal); return &type; } \
 	static void _RegisterInternal(Type* internalType); \
 	static const char* _LibraryName() { return #library; } \
 	friend class Context;
 
 #define UUT_BASETYPE_IMPLEMENT(type) \
-	Type* type::_GetTypeInternal() \
-	{ static TypeImpl<type> type(_LibraryName(), #type, &type::_RegisterInternal); return &type; } \
 	void type::_RegisterInternal(Type* internalType)
 
 #define UUT_REGISTER_TYPE(type) Context::RegisterType<type>()
 
-#define UUT_DEFAULT(type, value) \
+#define UUT_DEFAULT_VALUE(type, value) \
 	template<> static const type& GetDefault<type>() \
 	{ static type ret(value); return ret; }
 
-#define UUT_VALUE_TYPE(type, value) \
+#define UUT_TYPEOF_VALUE(type, value) \
 	template<> static const Type* TypeOf<type>() \
 	{ return TypeOf<value>(); }
 }

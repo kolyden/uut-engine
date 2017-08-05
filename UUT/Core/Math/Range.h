@@ -17,5 +17,5 @@ namespace uut
 	};
 
 	static_assert(sizeof(Range) == sizeof(float) * 2, "Invalid Range size");
-	UUT_DEFAULT(Range, Range::Zero)
+	UUT_DEFAULT_VALUE(Range, Range::Zero)
 }

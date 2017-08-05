@@ -44,5 +44,5 @@ namespace uut
 	};
 
 	static_assert(sizeof(Rect) == sizeof(float) * 4, "Invalid Rect size");
-	UUT_DEFAULT(Rect, Rect::Zero)
+	UUT_DEFAULT_VALUE(Rect, Rect::Zero)
 }

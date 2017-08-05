@@ -21,5 +21,5 @@ namespace uut
 	};
 
 	UUT_FUNDAMENTAL(float, Single)
-	UUT_DEFAULT(Single, Single::Zero)
+	UUT_DEFAULT_VALUE(Single, Single::Zero)
 }

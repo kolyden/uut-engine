@@ -71,7 +71,7 @@ namespace uut
 	UUT_NUMERIC_OPERATORS(type) \
 	static const name Zero; }; \
  	UUT_FUNDAMENTAL(type, name) \
-	UUT_DEFAULT(name, name::Zero)
+	UUT_DEFAULT_VALUE(name, name::Zero)
 
 #define UUT_NUMERIC_IMPLEMENT(name) \
 	const name name::Zero(0); \

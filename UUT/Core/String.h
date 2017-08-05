@@ -132,5 +132,5 @@ namespace uut
 	template<typename T>
 	static String ToString(T value) { return detail::StringConvert<T>::ToString(value); }
 
-	UUT_DEFAULT(String, String::Empty)
+	UUT_DEFAULT_VALUE(String, String::Empty)
 }

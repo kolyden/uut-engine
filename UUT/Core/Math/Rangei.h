@@ -16,6 +16,7 @@ namespace uut
 		static const Rangei Zero;
 	};
 
-	static_assert(sizeof(Rangei) == sizeof(int) * 2, "Invalid IntRange size");
-	UUT_DEFAULT(Rangei, Rangei::Zero)
+	UUT_TEST_VALUETYPE(Rangei);
+	UUT_TEST_VALUETYPE_SIZE(Rangei, sizeof(int) * 2);
+	UUT_DEFAULT_VALUE(Rangei, Rangei::Zero)
 }

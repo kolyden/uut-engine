@@ -18,7 +18,7 @@ namespace uut
 	};
 
 	namespace detail { template<>struct Fundamental<void*> { typedef IntPtr TYPE; }; }
-	UUT_VALUE_TYPE(void*, IntPtr)
+	UUT_TYPEOF_VALUE(void*, IntPtr)
 	template<> static constexpr void* const& GetDefault<void*>() \
 	{ return IntPtr::DefaultValue; }
 }

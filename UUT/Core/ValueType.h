@@ -17,4 +17,10 @@ namespace uut
 	public:
 		constexpr ValueType() {};
 	};
+
+#define UUT_TEST_VALUETYPE(type) \
+	static_assert(!std::is_polymorphic<type>::value, #type " is polymorphic");
+
+#define UUT_TEST_VALUETYPE_SIZE(type, typeSize) \
+	static_assert(sizeof(type) == typeSize, "Invalid " #type " size");
 }

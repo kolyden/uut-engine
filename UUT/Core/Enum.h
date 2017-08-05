@@ -153,8 +153,8 @@ namespace uut
 	}; \
 	namespace detail { \
 	template<> struct Enum<type> { typedef type##Enum TYPE; }; } \
-	UUT_DEFAULT(type, (type)0); \
-	UUT_VALUE_TYPE(type, type##Enum)
+	UUT_DEFAULT_VALUE(type, (type)0); \
+	UUT_TYPEOF_VALUE(type, type##Enum)
 
 #define UUT_ENUM_IMPLEMENT(type) \
 	const char* Enum<type>::Name = #type; \

@@ -43,5 +43,5 @@ namespace uut
 	};
 
 	static_assert(sizeof(Vector4) == sizeof(float) * 4, "Invalid Vector4 size");
-	UUT_DEFAULT(Vector4, Vector4::Zero)
+	UUT_DEFAULT_VALUE(Vector4, Vector4::Zero)
 }

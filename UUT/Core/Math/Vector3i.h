@@ -52,6 +52,7 @@ namespace uut
 		static const Vector3i AxisZ;  // ( 0,  0,  1)
 	};
 
-	static_assert(sizeof(Vector3i) == sizeof(int) * 3, "Invalid Vector3i size");
-	UUT_DEFAULT(Vector3i, Vector3i::Zero)
+	UUT_TEST_VALUETYPE(Vector3i);
+	UUT_TEST_VALUETYPE_SIZE(Vector3i, sizeof(int) * 3);
+	UUT_DEFAULT_VALUE(Vector3i, Vector3i::Zero)
 }

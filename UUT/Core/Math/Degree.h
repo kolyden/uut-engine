@@ -73,5 +73,5 @@ namespace uut
 	extern Degree operator"" _deg(long double angle);
 	extern Degree operator"" _deg(unsigned long long int angle);
 
-	UUT_DEFAULT(Degree, Degree::Zero)
+	UUT_DEFAULT_VALUE(Degree, Degree::Zero)
 }

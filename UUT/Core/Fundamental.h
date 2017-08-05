@@ -32,6 +32,6 @@ namespace uut
 
 #define UUT_FUNDAMENTAL(type, value) \
 	namespace detail { template<>struct Fundamental<type> { typedef value TYPE; }; } \
-	UUT_VALUE_TYPE(type, value) \
-	UUT_DEFAULT(type, value::DefaultValue)
+	UUT_TYPEOF_VALUE(type, value) \
+	UUT_DEFAULT_VALUE(type, value::DefaultValue)
 }

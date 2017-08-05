@@ -42,6 +42,7 @@ namespace uut
 		static const Recti Zero; // (0, 0, 0, 0)
 	};
 
-	static_assert(sizeof(Recti) == sizeof(int) * 4, "Invalid Recti size");
-	UUT_DEFAULT(Recti, Recti::Zero)
+	UUT_TEST_VALUETYPE(Recti);
+	UUT_TEST_VALUETYPE_SIZE(Recti, sizeof(int) * 4);
+	UUT_DEFAULT_VALUE(Recti, Recti::Zero)
 }
