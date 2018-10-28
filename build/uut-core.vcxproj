@@ -126,12 +126,6 @@
     <ClInclude Include="..\Extern\STB\stb_textedit.h" />
     <ClInclude Include="..\Extern\STB\stb_truetype.h" />
     <ClInclude Include="..\Extern\TinyXML2\tinyxml2.h" />
-    <ClInclude Include="..\UUT\CES\Component.h" />
-    <ClInclude Include="..\UUT\CES\Entity.h" />
-    <ClInclude Include="..\UUT\CES\EntityGroup.h" />
-    <ClInclude Include="..\UUT\CES\EntityPool.h" />
-    <ClInclude Include="..\UUT\CES\EntityMatcher.h" />
-    <ClInclude Include="..\UUT\CES\EntitySystem.h" />
     <ClInclude Include="..\UUT\Core\Assert.h" />
     <ClInclude Include="..\UUT\Core\Attribute.h" />
     <ClInclude Include="..\UUT\Core\BaseObject.h" />
@@ -318,12 +312,6 @@
     <ClCompile Include="..\Extern\LibYAML\scanner.c" />
     <ClCompile Include="..\Extern\LibYAML\writer.c" />
     <ClCompile Include="..\Extern\TinyXML2\tinyxml2.cpp" />
-    <ClCompile Include="..\UUT\CES\Component.cpp" />
-    <ClCompile Include="..\UUT\CES\Entity.cpp" />
-    <ClCompile Include="..\UUT\CES\EntityGroup.cpp" />
-    <ClCompile Include="..\UUT\CES\EntityPool.cpp" />
-    <ClCompile Include="..\UUT\CES\EntityMatcher.cpp" />
-    <ClCompile Include="..\UUT\CES\EntitySystem.cpp" />
     <ClCompile Include="..\UUT\Core\Attribute.cpp" />
     <ClCompile Include="..\UUT\Core\BaseObject.cpp" />
     <ClCompile Include="..\UUT\Core\Boolean.cpp" />

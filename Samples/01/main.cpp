@@ -8,10 +8,6 @@
 #include <Core/Reflection/PropertyInfo.h>
 #include <Windows.h>
 #include <Video/BitmapFont.h>
-#include <Core/Attribute.h>
-#include <CES/EntityPool.h>
-#include <CES/Entity.h>
-#include <CES/EntityMatcher.h>
 #include <Video/Color.h>
 #include <Video/Sprite.h>
 #include <Video/Mesh.h>

@@ -55,9 +55,6 @@
     <Filter Include="Extern\AStar">
       <UniqueIdentifier>{af93feeb-d732-4047-aceb-173318a3e49e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UUT\CES">
-      <UniqueIdentifier>{54481c06-1877-4b56-bf5e-214a9127d13f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UUT\SDL">
       <UniqueIdentifier>{fc223e81-da9f-429c-9860-ccbd8fa19273}</UniqueIdentifier>
     </Filter>
@@ -645,32 +642,14 @@
     <ClInclude Include="..\UUT\Core\EnumFlags.h">
       <Filter>UUT\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\UUT\CES\Component.h">
-      <Filter>UUT\CES</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\CES\Entity.h">
-      <Filter>UUT\CES</Filter>
-    </ClInclude>
     <ClInclude Include="..\UUT\Core\Delegate.h">
       <Filter>UUT\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\CES\EntityPool.h">
-      <Filter>UUT\CES</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\CES\EntityGroup.h">
-      <Filter>UUT\CES</Filter>
     </ClInclude>
     <ClInclude Include="..\UUT\Core\StringFormat.h">
       <Filter>UUT\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\UUT\Resources\ResourceLoaderAttribute.h">
       <Filter>UUT\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\CES\EntitySystem.h">
-      <Filter>UUT\CES</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UUT\CES\EntityMatcher.h">
-      <Filter>UUT\CES</Filter>
     </ClInclude>
     <ClInclude Include="..\UUT\Core\IO\StreamContainer.h">
       <Filter>UUT\Core\IO</Filter>
@@ -1193,26 +1172,8 @@
     <ClCompile Include="..\UUT\Core\EnumFlags.cpp">
       <Filter>UUT\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\UUT\CES\Component.cpp">
-      <Filter>UUT\CES</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\CES\Entity.cpp">
-      <Filter>UUT\CES</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\CES\EntityPool.cpp">
-      <Filter>UUT\CES</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\CES\EntityGroup.cpp">
-      <Filter>UUT\CES</Filter>
-    </ClCompile>
     <ClCompile Include="..\UUT\Resources\ResourceLoaderAttribute.cpp">
       <Filter>UUT\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\CES\EntitySystem.cpp">
-      <Filter>UUT\CES</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UUT\CES\EntityMatcher.cpp">
-      <Filter>UUT\CES</Filter>
     </ClCompile>
     <ClCompile Include="..\UUT\Core\IO\StreamContainer.cpp">
       <Filter>UUT\Core\IO</Filter>
